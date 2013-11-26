@@ -1,29 +1,29 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Číselník způsobů ochrany nemovitosti".
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
- *
+ * 
  */
 public class ZpOchranyNem {
 
-	private int kod;
+	private Integer kod;
 	private String nazev;
-	private DateTime platnostOd;
-	private DateTime platnostDo;
+	private Date platnostOd;
+	private Date platnostDo;
 	private String pozemek;
 	private String budova;
 	private String jednotka;
-	private int nemochr;
+	private Integer nemochr;
 
-	public int getKod() {
+	public Integer getKod() {
 		return kod;
 	}
 
-	public void setKod(int kod) {
+	public void setKod(Integer kod) {
 		this.kod = kod;
 	}
 
@@ -35,19 +35,19 @@ public class ZpOchranyNem {
 		this.nazev = nazev;
 	}
 
-	public DateTime getPlatnostOd() {
+	public Date getPlatnostOd() {
 		return platnostOd;
 	}
 
-	public void setPlatnostOd(DateTime platnostOd) {
+	public void setPlatnostOd(Date platnostOd) {
 		this.platnostOd = platnostOd;
 	}
 
-	public DateTime getPlatnostDo() {
+	public Date getPlatnostDo() {
 		return platnostDo;
 	}
 
-	public void setPlatnostDo(DateTime platnostDo) {
+	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
 	}
 
@@ -75,11 +75,11 @@ public class ZpOchranyNem {
 		this.jednotka = jednotka;
 	}
 
-	public int getNemochr() {
+	public Integer getNemochr() {
 		return nemochr;
 	}
 
-	public void setNemochr(int nemochr) {
+	public void setNemochr(Integer nemochr) {
 		this.nemochr = nemochr;
 	}
 

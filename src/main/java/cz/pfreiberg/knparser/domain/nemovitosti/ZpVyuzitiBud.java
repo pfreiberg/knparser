@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Způsob využití budov".
@@ -10,17 +10,17 @@ import org.joda.time.DateTime;
  */
 public class ZpVyuzitiBud {
 
-	private int kod;
+	private Integer kod;
 	private String nazev;
-	private DateTime platnostOd;
-	private DateTime plastnostDo;
+	private Date platnostOd;
+	private Date plastnostDo;
 	private String zkratka;
 
-	public int getKod() {
+	public Integer getKod() {
 		return kod;
 	}
 
-	public void setKod(int kod) {
+	public void setKod(Integer kod) {
 		this.kod = kod;
 	}
 
@@ -32,19 +32,19 @@ public class ZpVyuzitiBud {
 		this.nazev = nazev;
 	}
 
-	public DateTime getPlatnostOd() {
+	public Date getPlatnostOd() {
 		return platnostOd;
 	}
 
-	public void setPlatnostOd(DateTime platnostOd) {
+	public void setPlatnostOd(Date platnostOd) {
 		this.platnostOd = platnostOd;
 	}
 
-	public DateTime getPlastnostDo() {
+	public Date getPlastnostDo() {
 		return plastnostDo;
 	}
 
-	public void setPlastnostDo(DateTime plastnostDo) {
+	public void setPlastnostDo(Date plastnostDo) {
 		this.plastnostDo = plastnostDo;
 	}
 

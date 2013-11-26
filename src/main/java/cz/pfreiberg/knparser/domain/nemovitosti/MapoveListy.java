@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Číselník mapových listů dle exportovaných parcel".
@@ -10,17 +10,17 @@ import org.joda.time.DateTime;
  */
 public class MapoveListy {
 
-	private long id;
+	private Long id;
 	private String oznaceniMapovehoListu;
-	private DateTime platnostOd;
-	private DateTime platnostDo;
+	private Date platnostOd;
+	private Date platnostDo;
 	private String mapa;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -32,19 +32,19 @@ public class MapoveListy {
 		this.oznaceniMapovehoListu = oznaceniMapovehoListu;
 	}
 
-	public DateTime getPlatnostOd() {
+	public Date getPlatnostOd() {
 		return platnostOd;
 	}
 
-	public void setPlatnostOd(DateTime platnostOd) {
+	public void setPlatnostOd(Date platnostOd) {
 		this.platnostOd = platnostOd;
 	}
 
-	public DateTime getPlatnostDo() {
+	public Date getPlatnostDo() {
 		return platnostDo;
 	}
 
-	public void setPlatnostDo(DateTime platnostDo) {
+	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
 	}
 

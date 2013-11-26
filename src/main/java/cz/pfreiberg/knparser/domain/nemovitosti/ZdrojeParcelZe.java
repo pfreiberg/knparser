@@ -1,26 +1,26 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Číselník zdrojů parcel ZE".
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
- *
+ * 
  */
 public class ZdrojeParcelZe {
 
-	private int kod;
+	private Integer kod;
 	private String nazev;
-	private DateTime platnostOd;
-	private DateTime platnostDo;
+	private Date platnostOd;
+	private Date platnostDo;
 	private String zkratka;
 
-	public int getKod() {
+	public Integer getKod() {
 		return kod;
 	}
 
-	public void setKod(int kod) {
+	public void setKod(Integer kod) {
 		this.kod = kod;
 	}
 
@@ -32,19 +32,19 @@ public class ZdrojeParcelZe {
 		this.nazev = nazev;
 	}
 
-	public DateTime getPlatnostOd() {
+	public Date getPlatnostOd() {
 		return platnostOd;
 	}
 
-	public void setPlatnostOd(DateTime platnostOd) {
+	public void setPlatnostOd(Date platnostOd) {
 		this.platnostOd = platnostOd;
 	}
 
-	public DateTime getPlatnostDo() {
+	public Date getPlatnostDo() {
 		return platnostDo;
 	}
 
-	public void setPlatnostDo(DateTime platnostDo) {
+	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
 	}
 

@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Výběr katastrálních území dle exportovaných parcel".
@@ -10,25 +10,25 @@ import org.joda.time.DateTime;
  */
 public class KatastrUzemi {
 
-	private int kod;
-	private int obceKod;
+	private Integer kod;
+	private Integer obceKod;
 	private String nazev;
-	private DateTime platnostOd;
-	private DateTime platnostDo;
+	private Date platnostOd;
+	private Date platnostDo;
 
-	public int getKod() {
+	public Integer getKod() {
 		return kod;
 	}
 
-	public void setKod(int kod) {
+	public void setKod(Integer kod) {
 		this.kod = kod;
 	}
 
-	public int getObceKod() {
+	public Integer getObceKod() {
 		return obceKod;
 	}
 
-	public void setObceKod(int obceKod) {
+	public void setObceKod(Integer obceKod) {
 		this.obceKod = obceKod;
 	}
 
@@ -40,19 +40,19 @@ public class KatastrUzemi {
 		this.nazev = nazev;
 	}
 
-	public DateTime getPlatnostOd() {
+	public Date getPlatnostOd() {
 		return platnostOd;
 	}
 
-	public void setPlatnostOd(DateTime platnostOd) {
+	public void setPlatnostOd(Date platnostOd) {
 		this.platnostOd = platnostOd;
 	}
 
-	public DateTime getPlatnostDo() {
+	public Date getPlatnostDo() {
 		return platnostDo;
 	}
 
-	public void setPlatnostDo(DateTime platnostDo) {
+	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
 	}
 

@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Budovy".
@@ -10,121 +10,121 @@ import org.joda.time.DateTime;
  */
 public class Budovy {
 
-	private long id;
-	private int stavDat;
-	private DateTime datumVzniku;
-	private DateTime datumZaniku;
-	private int priznakKontextu;
-	private long rizeniIdVzniku;
-	private long rizeniIdZaniku;
-	private int typBudKod;
-	private int caoObceKod;
-	private int cisloDomovni;
-	private int cenaNemovitosti;
-	private int zpvybuKod;
-	private int telId;
+	private Long id;
+	private Integer stavDat;
+	private Date datumVzniku;
+	private Date datumZaniku;
+	private Integer priznakKontextu;
+	private Long rizeniIdVzniku;
+	private Long rizeniIdZaniku;
+	private Integer typBudKod;
+	private Integer caoObceKod;
+	private Integer cisloDomovni;
+	private Integer cenaNemovitosti;
+	private Integer zpvybuKod;
+	private Integer telId;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public int getStavDat() {
+	public Integer getStavDat() {
 		return stavDat;
 	}
 
-	public void setStavDat(int stavDat) {
+	public void setStavDat(Integer stavDat) {
 		this.stavDat = stavDat;
 	}
 
-	public DateTime getDatumVzniku() {
+	public Date getDatumVzniku() {
 		return datumVzniku;
 	}
 
-	public void setDatumVzniku(DateTime datumVzniku) {
+	public void setDatumVzniku(Date datumVzniku) {
 		this.datumVzniku = datumVzniku;
 	}
 
-	public DateTime getDatumZaniku() {
+	public Date getDatumZaniku() {
 		return datumZaniku;
 	}
 
-	public void setDatumZaniku(DateTime datumZaniku) {
+	public void setDatumZaniku(Date datumZaniku) {
 		this.datumZaniku = datumZaniku;
 	}
 
-	public int getPriznakKontextu() {
+	public Integer getPriznakKontextu() {
 		return priznakKontextu;
 	}
 
-	public void setPriznakKontextu(int priznakKontextu) {
+	public void setPriznakKontextu(Integer priznakKontextu) {
 		this.priznakKontextu = priznakKontextu;
 	}
 
-	public long getRizeniIdVzniku() {
+	public Long getRizeniIdVzniku() {
 		return rizeniIdVzniku;
 	}
 
-	public void setRizeniIdVzniku(long rizeniIdVzniku) {
+	public void setRizeniIdVzniku(Long rizeniIdVzniku) {
 		this.rizeniIdVzniku = rizeniIdVzniku;
 	}
 
-	public long getRizeniIdZaniku() {
+	public Long getRizeniIdZaniku() {
 		return rizeniIdZaniku;
 	}
 
-	public void setRizeniIdZaniku(long rizeniIdZaniku) {
+	public void setRizeniIdZaniku(Long rizeniIdZaniku) {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public int getTypBudKod() {
+	public Integer getTypBudKod() {
 		return typBudKod;
 	}
 
-	public void setTypBudKod(int typBudKod) {
+	public void setTypBudKod(Integer typBudKod) {
 		this.typBudKod = typBudKod;
 	}
 
-	public int getCaoObceKod() {
+	public Integer getCaoObceKod() {
 		return caoObceKod;
 	}
 
-	public void setCaoObceKod(int caoObceKod) {
+	public void setCaoObceKod(Integer caoObceKod) {
 		this.caoObceKod = caoObceKod;
 	}
 
-	public int getCisloDomovni() {
+	public Integer getCisloDomovni() {
 		return cisloDomovni;
 	}
 
-	public void setCisloDomovni(int cisloDomovni) {
+	public void setCisloDomovni(Integer cisloDomovni) {
 		this.cisloDomovni = cisloDomovni;
 	}
 
-	public int getCenaNemovitosti() {
+	public Integer getCenaNemovitosti() {
 		return cenaNemovitosti;
 	}
 
-	public void setCenaNemovitosti(int cenaNemovitosti) {
+	public void setCenaNemovitosti(Integer cenaNemovitosti) {
 		this.cenaNemovitosti = cenaNemovitosti;
 	}
 
-	public int getZpvybuKod() {
+	public Integer getZpvybuKod() {
 		return zpvybuKod;
 	}
 
-	public void setZpvybuKod(int zpvybuKod) {
+	public void setZpvybuKod(Integer zpvybuKod) {
 		this.zpvybuKod = zpvybuKod;
 	}
 
-	public int getTelId() {
+	public Integer getTelId() {
 		return telId;
 	}
 
-	public void setTelId(int telId) {
+	public void setTelId(Integer telId) {
 		this.telId = telId;
 	}
 

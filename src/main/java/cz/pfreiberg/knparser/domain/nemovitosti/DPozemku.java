@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Číselník druhů pozemku".
@@ -10,20 +10,20 @@ import org.joda.time.DateTime;
  */
 public class DPozemku {
 
-	private int kod;
+	private Integer kod;
 	private String nazev;
 	private String zemedelskaKultura;
-	private DateTime platnostOd;
-	private int typppdKod;
-	private DateTime platnostDo;
+	private Date platnostOd;
+	private Integer typppdKod;
+	private Date platnostDo;
 	private String zkratka;
 	private String stavebniParcela;
 
-	public int getKod() {
+	public Integer getKod() {
 		return kod;
 	}
 
-	public void setKod(int kod) {
+	public void setKod(Integer kod) {
 		this.kod = kod;
 	}
 
@@ -43,27 +43,27 @@ public class DPozemku {
 		this.zemedelskaKultura = zemedelskaKultura;
 	}
 
-	public DateTime getPlatnostOd() {
+	public Date getPlatnostOd() {
 		return platnostOd;
 	}
 
-	public void setPlatnostOd(DateTime platnostOd) {
+	public void setPlatnostOd(Date platnostOd) {
 		this.platnostOd = platnostOd;
 	}
 
-	public int getTypppdKod() {
+	public Integer getTypppdKod() {
 		return typppdKod;
 	}
 
-	public void setTypppdKod(int typppdKod) {
+	public void setTypppdKod(Integer typppdKod) {
 		this.typppdKod = typppdKod;
 	}
 
-	public DateTime getPlatnostDo() {
+	public Date getPlatnostDo() {
 		return platnostDo;
 	}
 
-	public void setPlatnostDo(DateTime platnostDo) {
+	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
 	}
 

@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Parcely".
@@ -10,96 +10,96 @@ import org.joda.time.DateTime;
  */
 public class Parcely {
 
-	private long id;
-	private int stavDat;
-	private DateTime datumVzniku;
-	private DateTime datumZaniku;
-	private int priznakKontextu;
-	private long rizeniIdVzniku;
-	private long rizeniIdZaniku;
-	private long pknId;
+	private Long id;
+	private Integer stavDat;
+	private Date datumVzniku;
+	private Date datumZaniku;
+	private Integer priznakKontextu;
+	private Long rizeniIdVzniku;
+	private Long rizeniIdZaniku;
+	private Long pknId;
 	private String partType;
-	private int katuzeKod;
-	private int katuzeKodPuv;
-	private int druhCislovaniPar;
-	private int kmenoveCisloPar;
-	private int zdpazeKod;
-	private int poddeleniCislaPar;
-	private int dilParcely;
-	private long maplisKod;
-	private int zpurvyKod;
-	private int drupozKod;
-	private int zpvypaKod;
-	private int typParcely;
-	private int vymeraParcely;
-	private float cenaNemovitosti;
+	private Integer katuzeKod;
+	private Integer katuzeKodPuv;
+	private Integer druhCislovaniPar;
+	private Integer kmenoveCisloPar;
+	private Integer zdpazeKod;
+	private Integer poddeleniCislaPar;
+	private Integer dilParcely;
+	private Long maplisKod;
+	private Integer zpurvyKod;
+	private Integer drupozKod;
+	private Integer zpvypaKod;
+	private Integer typParcely;
+	private Integer vymeraParcely;
+	private Float cenaNemovitosti;
 	private String definiciniBodPar;
-	private long telId;
-	private long parId;
-	private long budId;
+	private Long telId;
+	private Long parId;
+	private Long budId;
 	private String identBud;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public int getStavDat() {
+	public Integer getStavDat() {
 		return stavDat;
 	}
 
-	public void setStavDat(int stavDat) {
+	public void setStavDat(Integer stavDat) {
 		this.stavDat = stavDat;
 	}
 
-	public DateTime getDatumVzniku() {
+	public Date getDatumVzniku() {
 		return datumVzniku;
 	}
 
-	public void setDatumVzniku(DateTime datumVzniku) {
+	public void setDatumVzniku(Date datumVzniku) {
 		this.datumVzniku = datumVzniku;
 	}
 
-	public DateTime getDatumZaniku() {
+	public Date getDatumZaniku() {
 		return datumZaniku;
 	}
 
-	public void setDatumZaniku(DateTime datumZaniku) {
+	public void setDatumZaniku(Date datumZaniku) {
 		this.datumZaniku = datumZaniku;
 	}
 
-	public int getPriznakKontextu() {
+	public Integer getPriznakKontextu() {
 		return priznakKontextu;
 	}
 
-	public void setPriznakKontextu(int priznakKontextu) {
+	public void setPriznakKontextu(Integer priznakKontextu) {
 		this.priznakKontextu = priznakKontextu;
 	}
 
-	public long getRizeniIdVzniku() {
+	public Long getRizeniIdVzniku() {
 		return rizeniIdVzniku;
 	}
 
-	public void setRizeniIdVzniku(long rizeniIdVzniku) {
+	public void setRizeniIdVzniku(Long rizeniIdVzniku) {
 		this.rizeniIdVzniku = rizeniIdVzniku;
 	}
 
-	public long getRizeniIdZaniku() {
+	public Long getRizeniIdZaniku() {
 		return rizeniIdZaniku;
 	}
 
-	public void setRizeniIdZaniku(long rizeniIdZaniku) {
+	public void setRizeniIdZaniku(Long rizeniIdZaniku) {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public long getPknId() {
+	public Long getPknId() {
 		return pknId;
 	}
 
-	public void setPknId(long pknId) {
+	public void setPknId(Long pknId) {
 		this.pknId = pknId;
 	}
 
@@ -111,115 +111,115 @@ public class Parcely {
 		this.partType = partType;
 	}
 
-	public int getKatuzeKod() {
+	public Integer getKatuzeKod() {
 		return katuzeKod;
 	}
 
-	public void setKatuzeKod(int katuzeKod) {
+	public void setKatuzeKod(Integer katuzeKod) {
 		this.katuzeKod = katuzeKod;
 	}
 
-	public int getKatuzeKodPuv() {
+	public Integer getKatuzeKodPuv() {
 		return katuzeKodPuv;
 	}
 
-	public void setKatuzeKodPuv(int katuzeKodPuv) {
+	public void setKatuzeKodPuv(Integer katuzeKodPuv) {
 		this.katuzeKodPuv = katuzeKodPuv;
 	}
 
-	public int getDruhCislovaniPar() {
+	public Integer getDruhCislovaniPar() {
 		return druhCislovaniPar;
 	}
 
-	public void setDruhCislovaniPar(int druhCislovaniPar) {
+	public void setDruhCislovaniPar(Integer druhCislovaniPar) {
 		this.druhCislovaniPar = druhCislovaniPar;
 	}
 
-	public int getKmenoveCisloPar() {
+	public Integer getKmenoveCisloPar() {
 		return kmenoveCisloPar;
 	}
 
-	public void setKmenoveCisloPar(int kmenoveCisloPar) {
+	public void setKmenoveCisloPar(Integer kmenoveCisloPar) {
 		this.kmenoveCisloPar = kmenoveCisloPar;
 	}
 
-	public int getZdpazeKod() {
+	public Integer getZdpazeKod() {
 		return zdpazeKod;
 	}
 
-	public void setZdpazeKod(int zdpazeKod) {
+	public void setZdpazeKod(Integer zdpazeKod) {
 		this.zdpazeKod = zdpazeKod;
 	}
 
-	public int getPoddeleniCislaPar() {
+	public Integer getPoddeleniCislaPar() {
 		return poddeleniCislaPar;
 	}
 
-	public void setPoddeleniCislaPar(int poddeleniCislaPar) {
+	public void setPoddeleniCislaPar(Integer poddeleniCislaPar) {
 		this.poddeleniCislaPar = poddeleniCislaPar;
 	}
 
-	public int getDilParcely() {
+	public Integer getDilParcely() {
 		return dilParcely;
 	}
 
-	public void setDilParcely(int dilParcely) {
+	public void setDilParcely(Integer dilParcely) {
 		this.dilParcely = dilParcely;
 	}
 
-	public long getMaplisKod() {
+	public Long getMaplisKod() {
 		return maplisKod;
 	}
 
-	public void setMaplisKod(long maplisKod) {
+	public void setMaplisKod(Long maplisKod) {
 		this.maplisKod = maplisKod;
 	}
 
-	public int getZpurvyKod() {
+	public Integer getZpurvyKod() {
 		return zpurvyKod;
 	}
 
-	public void setZpurvyKod(int zpurvyKod) {
+	public void setZpurvyKod(Integer zpurvyKod) {
 		this.zpurvyKod = zpurvyKod;
 	}
 
-	public int getDrupozKod() {
+	public Integer getDrupozKod() {
 		return drupozKod;
 	}
 
-	public void setDrupozKod(int drupozKod) {
+	public void setDrupozKod(Integer drupozKod) {
 		this.drupozKod = drupozKod;
 	}
 
-	public int getZpvypaKod() {
+	public Integer getZpvypaKod() {
 		return zpvypaKod;
 	}
 
-	public void setZpvypaKod(int zpvypaKod) {
+	public void setZpvypaKod(Integer zpvypaKod) {
 		this.zpvypaKod = zpvypaKod;
 	}
 
-	public int getTypParcely() {
+	public Integer getTypParcely() {
 		return typParcely;
 	}
 
-	public void setTypParcely(int typParcely) {
+	public void setTypParcely(Integer typParcely) {
 		this.typParcely = typParcely;
 	}
 
-	public int getVymeraParcely() {
+	public Integer getVymeraParcely() {
 		return vymeraParcely;
 	}
 
-	public void setVymeraParcely(int vymeraParcely) {
+	public void setVymeraParcely(Integer vymeraParcely) {
 		this.vymeraParcely = vymeraParcely;
 	}
 
-	public float getCenaNemovitosti() {
+	public Float getCenaNemovitosti() {
 		return cenaNemovitosti;
 	}
 
-	public void setCenaNemovitosti(float cenaNemovitosti) {
+	public void setCenaNemovitosti(Float cenaNemovitosti) {
 		this.cenaNemovitosti = cenaNemovitosti;
 	}
 
@@ -231,27 +231,27 @@ public class Parcely {
 		this.definiciniBodPar = definiciniBodPar;
 	}
 
-	public long getTelId() {
+	public Long getTelId() {
 		return telId;
 	}
 
-	public void setTelId(long telId) {
+	public void setTelId(Long telId) {
 		this.telId = telId;
 	}
 
-	public long getParId() {
+	public Long getParId() {
 		return parId;
 	}
 
-	public void setParId(long parId) {
+	public void setParId(Long parId) {
 		this.parId = parId;
 	}
 
-	public long getBudId() {
+	public Long getBudId() {
 		return budId;
 	}
 
-	public void setBudId(long budId) {
+	public void setBudId(Long budId) {
 		this.budId = budId;
 	}
 

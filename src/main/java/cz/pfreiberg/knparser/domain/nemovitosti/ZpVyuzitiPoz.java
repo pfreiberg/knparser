@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 /**
  * Třída reprezentující "Číselník způsobů využití pozemku".
@@ -10,18 +10,18 @@ import org.joda.time.DateTime;
  */
 public class ZpVyuzitiPoz {
 
-	private int kod;
+	private Integer kod;
 	private String nazev;
-	private DateTime platnostOd;
-	private int typppKod;
-	private DateTime platnostDo;
+	private Date platnostOd;
+	private Integer typppKod;
+	private Date platnostDo;
 	private String zkratka;
 
-	public int getKod() {
+	public Integer getKod() {
 		return kod;
 	}
 
-	public void setKod(int kod) {
+	public void setKod(Integer kod) {
 		this.kod = kod;
 	}
 
@@ -33,27 +33,27 @@ public class ZpVyuzitiPoz {
 		this.nazev = nazev;
 	}
 
-	public DateTime getPlatnostOd() {
+	public Date getPlatnostOd() {
 		return platnostOd;
 	}
 
-	public void setPlatnostOd(DateTime platnostOd) {
+	public void setPlatnostOd(Date platnostOd) {
 		this.platnostOd = platnostOd;
 	}
 
-	public int getTypppKod() {
+	public Integer getTypppKod() {
 		return typppKod;
 	}
 
-	public void setTypppKod(int typppKod) {
+	public void setTypppKod(Integer typppKod) {
 		this.typppKod = typppKod;
 	}
 
-	public DateTime getPlatnostDo() {
+	public Date getPlatnostDo() {
 		return platnostDo;
 	}
 
-	public void setPlatnostDo(DateTime platnostDo) {
+	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
 	}
 
