@@ -15,20 +15,16 @@ public class Parser {
 		this.configuration = configuration;
 
 		File file = new File(configuration.getPathToFile());
-		
-
 		String encoding = getEncoding(file);
 		Scanner scanner = setEncoding(file, encoding);
-
 	}
 
 	private String getEncoding(File file) throws FileNotFoundException {
-		// TODO bude třeba vyzkoušet, čím to číst
+		// TODO bude třeba promyslet jak to číst
 		Scanner scanner = new Scanner(file, "windows-1250");
 		scanner.useDelimiter("\r\n");
 		while (scanner.hasNext()) {
 			String nextToken = scanner.next();
-			System.out.println(nextToken);
 			if (nextToken.contains("&HCODEPAGE")) {
 				scanner.close();
 				return nextToken.split("\"")[1];
@@ -43,10 +39,10 @@ public class Parser {
 			throws ParserException, FileNotFoundException {
 		if (encoding == "")
 			throw new ParserException("Encoding was NOT found in the file.");
-		else if (EncodingCzech.windows1250.equals(encoding)) {
-			return new Scanner(file, "windows-1250");
-		} else if (EncodingCzech.iso88592.equals(encoding)) {
-			return new Scanner(file, "iso-8859-2");
+		else if (EncodingCzech.windows1250.equalsVfk(encoding)) {
+			return new Scanner(file, EncodingCzech.windows1250.getEncoding());
+		} else if (EncodingCzech.iso88592.equalsVfk(encoding)) {
+			return new Scanner(file, EncodingCzech.iso88592.getEncoding());
 		}
 		throw new ParserException("Unsupported encoding.");
 	}
