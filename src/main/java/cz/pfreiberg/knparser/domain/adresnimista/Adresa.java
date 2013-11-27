@@ -20,4 +20,68 @@ public class Adresa {
 	private Date platnostDo;
 	private String uliceNazev;
 
+	public Integer getKod() {
+		return kod;
+	}
+
+	public void setKod(Integer kod) {
+		this.kod = kod;
+	}
+
+	public Integer getObjektKod() {
+		return objektKod;
+	}
+
+	public void setObjektKod(Integer objektKod) {
+		this.objektKod = objektKod;
+	}
+
+	public Integer getUliceKod() {
+		return uliceKod;
+	}
+
+	public void setUliceKod(Integer uliceKod) {
+		this.uliceKod = uliceKod;
+	}
+
+	public String getCisOrient() {
+		return cisOrient;
+	}
+
+	public void setCisOrient(String cisOrient) {
+		this.cisOrient = cisOrient;
+	}
+
+	public Integer getPsc() {
+		return psc;
+	}
+
+	public void setPsc(Integer psc) {
+		this.psc = psc;
+	}
+
+	public Date getPlatnostOd() {
+		return platnostOd;
+	}
+
+	public void setPlatnostOd(Date platnostOd) {
+		this.platnostOd = platnostOd;
+	}
+
+	public Date getPlatnostDo() {
+		return platnostDo;
+	}
+
+	public void setPlatnostDo(Date platnostDo) {
+		this.platnostDo = platnostDo;
+	}
+
+	public String getUliceNazev() {
+		return uliceNazev;
+	}
+
+	public void setUliceNazev(String uliceNazev) {
+		this.uliceNazev = uliceNazev;
+	}
+
 }
