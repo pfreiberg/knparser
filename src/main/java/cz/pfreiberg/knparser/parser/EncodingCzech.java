@@ -2,7 +2,7 @@ package cz.pfreiberg.knparser.parser;
 
 public enum EncodingCzech {
 
-	WE8ISO8859P2("charset=iso-8859-2"), EE8MSWIN1250("charset=windows-1250");
+	iso88592("WE8ISO8859P2"), windows1250("EE8MSWIN1250");
 	private String encoding;
 
 	private EncodingCzech(String encoding) {
