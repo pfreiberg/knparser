@@ -33,7 +33,7 @@ public class Controller {
 
 		try {
 			Parser parser = new Parser(configuration);
-			parser.parseFile();
+			parser.parse();
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {

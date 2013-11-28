@@ -14,7 +14,7 @@ public class Parser {
 	Vfk vfk;
 	Scanner scanner;
 	String actualLine;
-	
+
 	private final String EOF = "\r\n";
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
@@ -24,19 +24,40 @@ public class Parser {
 		vfk = new Vfk();
 		vfk.setCodepage(VfkUtil.getEncoding(file));
 		scanner = getScanner(file, vfk.getCodepage());
-		actualLine = "";
+		scanner.useDelimiter(EOF);
 	}
 
-	public void parseFile() {
+	public void parse() {
+		actualLine = "";
+		Scanner scannerForLine = new Scanner(actualLine);
+		scannerForLine.useDelimiter(";");	
 		
+		while (scanner.hasNext()) {
+			actualLine = scanner.next();
+			String actualNode = actualLine.split(";")[0];
+			actualLine = actualLine.replace(actualNode + ";", "");
+			
+			switch (actualNode) {
+			case "&DPAR":
+				vfk.getParcely().add(
+						ParserParcely.parse(actualLine, scannerForLine));
+			}
+			
+		}
+		System.out.println("End of file.");
 	}
 
 	private Scanner getScanner(File file, String codepage)
 			throws ParserException, FileNotFoundException {
+		return new Scanner(file, getEncodingForScanner(codepage));
+	}
+
+	private String getEncodingForScanner(String codepage)
+			throws ParserException {
 		if (EncodingCzech.windows1250.equalsVfk(codepage)) {
-			return new Scanner(file, EncodingCzech.windows1250.getEncoding());
+			return EncodingCzech.windows1250.getEncoding();
 		} else if (EncodingCzech.iso88592.equalsVfk(codepage)) {
-			return new Scanner(file, EncodingCzech.iso88592.getEncoding());
+			return EncodingCzech.iso88592.getEncoding();
 		}
 		throw new ParserException("Unsupported encoding.");
 	}

@@ -4,10 +4,8 @@ import java.util.Scanner;
 
 public class ParserVfkHead {
 	
-	public static void parse(Scanner scanner, String EOF, Vfk vfk) throws ParserException
+	public static void parse(Scanner scanner, Vfk vfk) throws ParserException
 	{
-		scanner.useDelimiter(EOF);
-
 		while (scanner.hasNext()) {
 			String nextToken = scanner.next();
 			if (nextToken.contains("&HZMENY")) {

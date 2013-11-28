@@ -1,5 +1,6 @@
 package cz.pfreiberg.knparser.parser;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,13 @@ public class Vfk {
 	private int polyg;
 
 	private List<Parcely> parcely;
+	
+	public Vfk()
+	{
+		skupina = new ArrayList<String>();
+		platnost = new ArrayList<Date>();
+		parcely = new ArrayList<Parcely>();
+	}
 
 	public String getVerze() {
 		return verze;
