@@ -2,6 +2,7 @@ package cz.pfreiberg.knparser.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import cz.pfreiberg.knparser.Configuration;
@@ -9,13 +10,20 @@ import cz.pfreiberg.knparser.Configuration;
 public class Parser {
 
 	Configuration configuration;
+	File file;
+	Vfk vfk;
+	Scanner scanner;
+	String actualLine = "";
+	
+	private final String EOF = "\r\n";
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
-			ParserException {
+			ParserException, IOException {
 		this.configuration = configuration;
-		File file = new File(configuration.getPathToFile());
-		String encoding = getEncoding(file);
-		Scanner scanner = getScanner(file, encoding);
+		file = new File(configuration.getPathToFile());
+		vfk = new Vfk();
+		vfk.setCodepage(VfkUtil.getEncoding(file));
+		Scanner scanner = getScanner(file, vfk.getCodepage());
 		setConfiguration(scanner);
 	}
 
@@ -23,39 +31,19 @@ public class Parser {
 
 	}
 
-	private String getEncoding(File file) throws FileNotFoundException {
-		// TODO jak vybrat správné kódování?
-		Scanner tempScanner = new Scanner(file, "windows-1250");
-		tempScanner.useDelimiter("\r\n");
 
-		while (tempScanner.hasNext()) {
-			String nextToken = tempScanner.next();
-			if (nextToken.contains("&HCODEPAGE")) {
-				tempScanner.close();
-				return nextToken.split("\"")[1];
-			}
-		}
-
-		tempScanner.close();
-		return "";
-	}
-
-	private Scanner getScanner(File file, String encoding)
+	private Scanner getScanner(File file, String codepage)
 			throws ParserException, FileNotFoundException {
-		if (encoding == "")
-			throw new ParserException("Encoding was NOT found in the file.");
-		else if (EncodingCzech.windows1250.equalsVfk(encoding)) {
-			configuration.setEncoding(EncodingCzech.windows1250);
+		if (EncodingCzech.windows1250.equalsVfk(codepage)) {
 			return new Scanner(file, EncodingCzech.windows1250.getEncoding());
-		} else if (EncodingCzech.iso88592.equalsVfk(encoding)) {
-			configuration.setEncoding(EncodingCzech.iso88592);
+		} else if (EncodingCzech.iso88592.equalsVfk(codepage)) {
 			return new Scanner(file, EncodingCzech.iso88592.getEncoding());
 		}
 		throw new ParserException("Unsupported encoding.");
 	}
 
 	private void setConfiguration(Scanner scanner) throws ParserException {
-		scanner.useDelimiter("\r\n");
+		scanner.useDelimiter(EOF);
 
 		while (scanner.hasNext()) {
 			String nextToken = scanner.next();
@@ -63,18 +51,18 @@ public class Parser {
 				try {
 					int hzmenyValue = Integer.parseInt(nextToken.split(";")[1]);
 					if (hzmenyValue == 1) {
-						configuration.setPrefix("TMP_");
+						vfk.setZmeny(1);
 					} else if (hzmenyValue == 0) {
-						configuration.setPrefix("");
+						vfk.setZmeny(0);
 					} else
 						throw new ParserException("HZMENY has undefine value.");
-					return;
 				} catch (NumberFormatException e) {
 					throw new ParserException(
 							"HZMENY must have number value (0 | 1).");
+				} catch (ArrayIndexOutOfBoundsException e) {
+					throw new ParserException("HZMENY has undefine value.");
 				}
 			}
 		}
-
 	}
 }

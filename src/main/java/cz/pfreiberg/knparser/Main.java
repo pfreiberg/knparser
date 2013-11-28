@@ -1,6 +1,7 @@
 package cz.pfreiberg.knparser;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
@@ -8,7 +9,7 @@ import cz.pfreiberg.knparser.parser.ParserException;
 public class Main {
 
 	public static void main(String[] args) {
-		
+
 		if (args.length == 0) {
 			return;
 		}
@@ -37,7 +38,9 @@ public class Main {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {
 			System.out.println(e.getMessage());
-		} 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
