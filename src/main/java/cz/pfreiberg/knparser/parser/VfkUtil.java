@@ -62,20 +62,19 @@ public class VfkUtil {
 	}
 
 	public static Date getDate(String value) {
+		Date output  = null;
 		SimpleDateFormat format = new SimpleDateFormat(
 				"\"dd.MM.yyyy HH:mm:ss\"");
-		Date output = null;
 		try {
 			output = format.parse(value);
 		} catch (ParseException e) {
 			return null;
 		}
-
 		return output;
 	}
 
 	public static String getString(String value) {
-		if (value.equals("\"\""))
+		if (value == null || value.equals("\"\""))
 			return null;
 		return value;
 	}

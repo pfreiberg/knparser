@@ -1,7 +1,6 @@
-package cz.pfreiberg.knparser.domain.nemovitosti.parser;
+package cz.pfreiberg.knparser.parser;
 
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
-import cz.pfreiberg.knparser.parser.VfkUtil;
 
 public class ParserParcely {
 
