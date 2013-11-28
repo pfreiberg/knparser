@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.parser;
 
 import java.util.Scanner;
 
+import cz.pfreiberg.knparser.domain.Vfk;
+
 public class ParserVfkHead {
 	
 	public static void parse(Scanner scanner, Vfk vfk) throws ParserException

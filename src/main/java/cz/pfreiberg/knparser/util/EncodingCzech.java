@@ -1,4 +1,4 @@
-package cz.pfreiberg.knparser.parser;
+package cz.pfreiberg.knparser.util;
 
 public enum EncodingCzech {
 

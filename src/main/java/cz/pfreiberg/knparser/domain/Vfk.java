@@ -1,4 +1,4 @@
-package cz.pfreiberg.knparser.parser;
+package cz.pfreiberg.knparser.domain;
 
 import java.util.ArrayList;
 import java.util.Date;

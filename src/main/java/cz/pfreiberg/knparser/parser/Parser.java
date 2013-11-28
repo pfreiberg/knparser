@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import cz.pfreiberg.knparser.Configuration;
+import cz.pfreiberg.knparser.domain.Vfk;
+import cz.pfreiberg.knparser.util.EncodingCzech;
+import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class Parser {
 

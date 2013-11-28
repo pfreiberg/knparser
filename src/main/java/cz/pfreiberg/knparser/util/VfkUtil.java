@@ -1,4 +1,4 @@
-package cz.pfreiberg.knparser.parser;
+package cz.pfreiberg.knparser.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import cz.pfreiberg.knparser.parser.ParserException;
 
 public class VfkUtil {
 
