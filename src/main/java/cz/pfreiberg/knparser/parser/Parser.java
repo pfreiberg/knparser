@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import cz.pfreiberg.knparser.Configuration;
+import cz.pfreiberg.knparser.domain.parser.nemovitosti.ParserParcely;
 
 public class Parser {
 
