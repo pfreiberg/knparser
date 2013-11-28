@@ -13,7 +13,7 @@ public class Parser {
 	File file;
 	Vfk vfk;
 	Scanner scanner;
-	String actualLine = "";
+	String actualLine;
 	
 	private final String EOF = "\r\n";
 
@@ -23,14 +23,13 @@ public class Parser {
 		file = new File(configuration.getPathToFile());
 		vfk = new Vfk();
 		vfk.setCodepage(VfkUtil.getEncoding(file));
-		Scanner scanner = getScanner(file, vfk.getCodepage());
-		setConfiguration(scanner);
+		scanner = getScanner(file, vfk.getCodepage());
+		actualLine = "";
 	}
 
 	public void parseFile() {
-
+		
 	}
-
 
 	private Scanner getScanner(File file, String codepage)
 			throws ParserException, FileNotFoundException {
@@ -42,27 +41,4 @@ public class Parser {
 		throw new ParserException("Unsupported encoding.");
 	}
 
-	private void setConfiguration(Scanner scanner) throws ParserException {
-		scanner.useDelimiter(EOF);
-
-		while (scanner.hasNext()) {
-			String nextToken = scanner.next();
-			if (nextToken.contains("&HZMENY")) {
-				try {
-					int hzmenyValue = Integer.parseInt(nextToken.split(";")[1]);
-					if (hzmenyValue == 1) {
-						vfk.setZmeny(1);
-					} else if (hzmenyValue == 0) {
-						vfk.setZmeny(0);
-					} else
-						throw new ParserException("HZMENY has undefine value.");
-				} catch (NumberFormatException e) {
-					throw new ParserException(
-							"HZMENY must have number value (0 | 1).");
-				} catch (ArrayIndexOutOfBoundsException e) {
-					throw new ParserException("HZMENY has undefine value.");
-				}
-			}
-		}
-	}
 }

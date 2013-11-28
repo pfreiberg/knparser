@@ -6,7 +6,7 @@ import java.io.IOException;
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
 
-public class Main {
+public class Controller {
 
 	public static void main(String[] args) {
 
