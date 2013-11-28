@@ -9,6 +9,7 @@ import cz.pfreiberg.knparser.Configuration;
 public class Parser {
 
 	Configuration configuration;
+	String prefix;
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException {
@@ -17,21 +18,23 @@ public class Parser {
 		File file = new File(configuration.getPathToFile());
 		String encoding = getEncoding(file);
 		Scanner scanner = setEncoding(file, encoding);
+		scanner.useDelimiter("\r\n");
+		setPrefix(scanner);
 	}
 
 	private String getEncoding(File file) throws FileNotFoundException {
-		// TODO bude třeba promyslet jak to číst
-		Scanner scanner = new Scanner(file, "windows-1250");
-		scanner.useDelimiter("\r\n");
-		while (scanner.hasNext()) {
-			String nextToken = scanner.next();
+		// TODO jak vybrat správné kódování?
+		Scanner tempScanner = new Scanner(file, "windows-1250");
+		tempScanner.useDelimiter("\r\n");
+		while (tempScanner.hasNext()) {
+			String nextToken = tempScanner.next();
 			if (nextToken.contains("&HCODEPAGE")) {
-				scanner.close();
+				tempScanner.close();
 				return nextToken.split("\"")[1];
 			}
 		}
 
-		scanner.close();
+		tempScanner.close();
 		return "";
 	}
 
@@ -47,4 +50,26 @@ public class Parser {
 		throw new ParserException("Unsupported encoding.");
 	}
 
+	private void setPrefix(Scanner scanner) throws ParserException {
+
+		while (scanner.hasNext()) {
+			String nextToken = scanner.next();
+			if (nextToken.contains("&HZMENY")) {
+
+				try {
+					int hzmenyValue = Integer.parseInt(nextToken.split(";")[1]);
+					if (hzmenyValue == 1) {
+						prefix = "TMP_";
+					} else if (hzmenyValue == 0) {
+						prefix = "";
+					} else
+						throw new ParserException("HZMENY has undefine value.");
+					return;
+				} catch (NumberFormatException e) {
+					throw new ParserException(
+							"HZMENY must have number value (0 | 1).");
+				}
+			}
+		}
+	}
 }

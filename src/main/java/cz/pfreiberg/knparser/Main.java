@@ -27,7 +27,6 @@ public class Main {
 			default:
 				System.out.println("Invalid command line switch.");
 				return;
-
 			}
 		}
 
@@ -37,7 +36,7 @@ public class Main {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {
 			System.out.println(e.getMessage());
-		}
+		} 
 
 	}
 
