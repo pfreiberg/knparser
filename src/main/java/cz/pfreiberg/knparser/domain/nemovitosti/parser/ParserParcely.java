@@ -1,4 +1,4 @@
-package cz.pfreiberg.knparser.domain.parser.nemovitosti;
+package cz.pfreiberg.knparser.domain.nemovitosti.parser;
 
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
 import cz.pfreiberg.knparser.parser.VfkUtil;

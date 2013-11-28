@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import cz.pfreiberg.knparser.Configuration;
-import cz.pfreiberg.knparser.domain.parser.nemovitosti.ParserParcely;
+import cz.pfreiberg.knparser.domain.nemovitosti.parser.ParserParcely;
 
 public class Parser {
 
@@ -43,6 +43,8 @@ public class Parser {
 			i++;
 		}
 		System.out.println("End of file.");
+		
+		//TODO testovací výpis
 		for (i = 0; i < 10; i++) {
 			System.out.println(vfk.getParcely().get(i));
 		}
