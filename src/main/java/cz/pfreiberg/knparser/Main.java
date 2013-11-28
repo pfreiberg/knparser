@@ -32,6 +32,7 @@ public class Main {
 
 		try {
 			Parser parser = new Parser(configuration);
+			parser.parseFile();
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {
