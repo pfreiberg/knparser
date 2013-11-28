@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class VfkUtil {
 
@@ -27,4 +30,54 @@ public class VfkUtil {
 		br.close();
 		throw new ParserException("HCODEPAGE was NOT found in the file.");
 	}
+
+	public static Integer getInteger(String value) {
+		Integer output = null;
+		try {
+			output = Integer.valueOf(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+		return output;
+	}
+
+	public static Long getLong(String value) {
+		Long output = null;
+		try {
+			output = Long.valueOf(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+		return output;
+	}
+
+	public static Float getFloat(String value) {
+		Float output = null;
+		try {
+			output = Float.valueOf(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+		return output;
+	}
+
+	public static Date getDate(String value) {
+		SimpleDateFormat format = new SimpleDateFormat(
+				"\"dd.MM.yyyy HH:mm:ss\"");
+		Date output = null;
+		try {
+			output = format.parse(value);
+		} catch (ParseException e) {
+			return null;
+		}
+
+		return output;
+	}
+
+	public static String getString(String value) {
+		if (value.equals("\"\""))
+			return null;
+		return value;
+	}
+
 }
