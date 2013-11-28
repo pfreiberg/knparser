@@ -29,22 +29,22 @@ public class Parser {
 
 	public void parse() {
 		actualLine = "";
-		Scanner scannerForLine = new Scanner(actualLine);
-		scannerForLine.useDelimiter(";");	
-		
+		int i = 0;
 		while (scanner.hasNext()) {
 			actualLine = scanner.next();
 			String actualNode = actualLine.split(";")[0];
 			actualLine = actualLine.replace(actualNode + ";", "");
-			
+
 			switch (actualNode) {
 			case "&DPAR":
-				vfk.getParcely().add(
-						ParserParcely.parse(actualLine, scannerForLine));
+				vfk.getParcely().add(ParserParcely.parse(actualLine));
 			}
-			
+			i++;
 		}
 		System.out.println("End of file.");
+		for (i = 0; i < 10; i++) {
+			System.out.println(vfk.getParcely().get(i));
+		}
 	}
 
 	private Scanner getScanner(File file, String codepage)

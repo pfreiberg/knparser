@@ -263,4 +263,26 @@ public class Parcely {
 		this.identBud = identBud;
 	}
 
+	@Override
+	public String toString() {
+		return "Parcely [id=" + id + ", stavDat=" + stavDat + ", datumVzniku="
+				+ datumVzniku + ", datumZaniku=" + datumZaniku
+				+ ", priznakKontextu=" + priznakKontextu + ", rizeniIdVzniku="
+				+ rizeniIdVzniku + ", rizeniIdZaniku=" + rizeniIdZaniku
+				+ ", pknId=" + pknId + ", partType=" + partType
+				+ ", katuzeKod=" + katuzeKod + ", katuzeKodPuv=" + katuzeKodPuv
+				+ ", druhCislovaniPar=" + druhCislovaniPar
+				+ ", kmenoveCisloPar=" + kmenoveCisloPar + ", zdpazeKod="
+				+ zdpazeKod + ", poddeleniCislaPar=" + poddeleniCislaPar
+				+ ", dilParcely=" + dilParcely + ", maplisKod=" + maplisKod
+				+ ", zpurvyKod=" + zpurvyKod + ", drupozKod=" + drupozKod
+				+ ", zpvypaKod=" + zpvypaKod + ", typParcely=" + typParcely
+				+ ", vymeraParcely=" + vymeraParcely + ", cenaNemovitosti="
+				+ cenaNemovitosti + ", definiciniBodPar=" + definiciniBodPar
+				+ ", telId=" + telId + ", parId=" + parId + ", budId=" + budId
+				+ ", identBud=" + identBud + "]";
+	}
+	
+	
+
 }
