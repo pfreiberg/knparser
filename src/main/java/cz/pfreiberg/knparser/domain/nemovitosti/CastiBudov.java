@@ -19,7 +19,7 @@ public class CastiBudov {
 	private Long budId;
 	private Integer typBudKod;
 	private Integer cisloDomovni;
-	private Float cenaNemovitosti;
+	private Double cenaNemovitosti;
 
 	public Integer getStavDat() {
 		return stavDat;
@@ -93,12 +93,23 @@ public class CastiBudov {
 		this.cisloDomovni = cisloDomovni;
 	}
 
-	public Float getCenaNemovitosti() {
+	public Double getCenaNemovitosti() {
 		return cenaNemovitosti;
 	}
 
-	public void setCenaNemovitosti(Float cenaNemovitosti) {
+	public void setCenaNemovitosti(Double cenaNemovitosti) {
 		this.cenaNemovitosti = cenaNemovitosti;
+	}
+
+	@Override
+	public String toString() {
+		return "CastiBudov [stavDat=" + stavDat + ", datumVzniku="
+				+ datumVzniku + ", datumZaniku=" + datumZaniku
+				+ ", priznakKontextu=" + priznakKontextu + ", rizeniIdVzniku="
+				+ rizeniIdVzniku + ", rizeniIdZaniku=" + rizeniIdZaniku
+				+ ", budId=" + budId + ", typBudKod=" + typBudKod
+				+ ", cisloDomovni=" + cisloDomovni + ", cenaNemovitosti="
+				+ cenaNemovitosti + "]";
 	}
 
 }

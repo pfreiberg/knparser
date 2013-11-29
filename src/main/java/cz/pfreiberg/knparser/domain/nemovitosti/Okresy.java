@@ -66,11 +66,11 @@ public class Okresy {
 		this.nuts4 = nuts4;
 	}
 
-	public Integer getnKrajeKod() {
+	public Integer getNKrajeKod() {
 		return nKrajeKod;
 	}
 
-	public void setnKrajeKod(Integer nKrajeKod) {
+	public void setNKrajeKod(Integer nKrajeKod) {
 		this.nKrajeKod = nKrajeKod;
 	}
 

@@ -32,7 +32,7 @@ public class Parcely {
 	private Integer zpvypaKod;
 	private Integer typParcely;
 	private Integer vymeraParcely;
-	private Float cenaNemovitosti;
+	private Double cenaNemovitosti;
 	private String definiciniBodPar;
 	private Long telId;
 	private Long parId;
@@ -215,11 +215,11 @@ public class Parcely {
 		this.vymeraParcely = vymeraParcely;
 	}
 
-	public Float getCenaNemovitosti() {
+	public Double getCenaNemovitosti() {
 		return cenaNemovitosti;
 	}
 
-	public void setCenaNemovitosti(Float cenaNemovitosti) {
+	public void setCenaNemovitosti(Double cenaNemovitosti) {
 		this.cenaNemovitosti = cenaNemovitosti;
 	}
 
@@ -282,7 +282,5 @@ public class Parcely {
 				+ ", telId=" + telId + ", parId=" + parId + ", budId=" + budId
 				+ ", identBud=" + identBud + "]";
 	}
-	
-	
 
 }

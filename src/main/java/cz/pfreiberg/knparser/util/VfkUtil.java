@@ -52,11 +52,11 @@ public class VfkUtil {
 		}
 		return output;
 	}
-
-	public static Float getFloat(String value) {
-		Float output = null;
+	
+	public static Double getDouble(String value) {
+		Double output = null;
 		try {
-			output = Float.valueOf(value);
+			output = Double.valueOf(value);
 		} catch (NumberFormatException e) {
 			return null;
 		}

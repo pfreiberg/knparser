@@ -22,7 +22,7 @@ public class Budovy {
 	private Integer cisloDomovni;
 	private Integer cenaNemovitosti;
 	private Integer zpvybuKod;
-	private Integer telId;
+	private Long telId;
 
 	public Long getId() {
 		return id;
@@ -120,12 +120,24 @@ public class Budovy {
 		this.zpvybuKod = zpvybuKod;
 	}
 
-	public Integer getTelId() {
+	public Long getTelId() {
 		return telId;
 	}
 
-	public void setTelId(Integer telId) {
+	public void setTelId(Long telId) {
 		this.telId = telId;
+	}
+
+	@Override
+	public String toString() {
+		return "Budovy [id=" + id + ", stavDat=" + stavDat + ", datumVzniku="
+				+ datumVzniku + ", datumZaniku=" + datumZaniku
+				+ ", priznakKontextu=" + priznakKontextu + ", rizeniIdVzniku="
+				+ rizeniIdVzniku + ", rizeniIdZaniku=" + rizeniIdZaniku
+				+ ", typBudKod=" + typBudKod + ", caoObceKod=" + caoObceKod
+				+ ", cisloDomovni=" + cisloDomovni + ", cenaNemovitosti="
+				+ cenaNemovitosti + ", zpvybuKod=" + zpvybuKod + ", telId="
+				+ telId + "]";
 	}
 
 }

@@ -32,7 +32,7 @@ public class ParserParcely {
 		parcela.setZpvypaKod(VfkUtil.getInteger(tokens[i++]));
 		parcela.setTypParcely(VfkUtil.getInteger(tokens[i++]));
 		parcela.setVymeraParcely(VfkUtil.getInteger(tokens[i++]));
-		parcela.setCenaNemovitosti(VfkUtil.getFloat(tokens[i++]));
+		parcela.setCenaNemovitosti(VfkUtil.getDouble(tokens[i++]));
 		parcela.setDefiniciniBodPar(VfkUtil.getString(tokens[i++]));
 		parcela.setTelId(VfkUtil.getLong(tokens[i++]));
 		parcela.setParId(VfkUtil.getLong(tokens[i++]));

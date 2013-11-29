@@ -32,23 +32,77 @@ public class Parser {
 
 	public void parse() {
 		actualLine = "";
-		int i = 0;
 		while (scanner.hasNext()) {
 			actualLine = scanner.next();
 			String actualNode = actualLine.split(";")[0];
 			actualLine = actualLine.replace(actualNode + ";", "");
+			actualLine += "; ";
 
 			switch (actualNode) {
 			case "&DPAR":
 				vfk.getParcely().add(ParserParcely.parse(actualLine));
+				break;
+			case "&DBUD":
+				vfk.getBudovy().add(ParserBudovy.parse(actualLine));
+				break;
+			case "&DCABU":
+				vfk.getCastiBudov().add(ParserCastiBudov.parse(actualLine));
+				break;
+			case "&DZPOCHN":
+				vfk.getZpOchranyNem().add(ParserZpOchranyNem.parse(actualLine));
+				break;
+			case "&DDRUPOZ":
+				vfk.getDPozemku().add(ParserDPozemku.parse(actualLine));
+				break;
+			case "&DZPVYPO":
+				vfk.getZpVyuzitiPoz().add(ParserZpVyuzitiPoz.parse(actualLine));
+				break;
+			case "&DZDPAZE":
+				vfk.getZdrojeParcelZe().add(
+						ParserZdrojeParcelZe.parse(actualLine));
+				break;
+			case "&DZPURVY":
+				vfk.getZpUrceniVymery().add(
+						ParserZpUrceniVymery.parse(actualLine));
+				break;
+			case "&DTYPBUD":
+				vfk.getTBudov().add(ParserTBudov.parse(actualLine));
+				break;
+			case "&DMAPLIS":
+				vfk.getMapoveListy().add(ParserMapoveListy.parse(actualLine));
+				break;
+			case "&DKATUZE":
+				vfk.getKatastrUzemi().add(ParserKatastrUzemi.parse(actualLine));
+				break;
+			case "&DOBCE":
+				vfk.getObce().add(ParserObce.parse(actualLine));
+				break;
+			case "&DCASOBC":
+				vfk.getCastiObci().add(ParserCastiObci.parse(actualLine));
+				break;
+			case "&DOKRESY":
+				vfk.getOkresy().add(ParserOkresy.parse(actualLine));
+				break;
+			case "&DKRAJE":
+				vfk.getKraje().add(ParserKraje.parse(actualLine));
+				break;
+			case "&DNKRAJE":
+				vfk.getNoveKraje().add(ParserNoveKraje.parse(actualLine));
+				break;
+			case "&DRZO":
+				vfk.getRZpochr().add(ParserRZpochr.parse(actualLine));
+				break;
+			case "&DZPVYBU":
+				vfk.getZpVyuzitiBud().add(ParserZpVyuzitiBud.parse(actualLine));
+				break;
+
 			}
-			i++;
 		}
 		System.out.println("End of file.");
-		
-		//TODO testovací výpis
-		for (i = 0; i < 10; i++) {
-			System.out.println(vfk.getParcely().get(i));
+
+		// TODO testovací výpis
+		for (int i = 0; i < 10; i++) {
+			System.out.println(vfk.getBudovy().get(i));
 		}
 	}
 
