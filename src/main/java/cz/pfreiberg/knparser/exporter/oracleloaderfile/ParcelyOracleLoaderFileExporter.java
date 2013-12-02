@@ -15,6 +15,7 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	}
 	
 	@Override
+	// TODO private
 	public void makeControlFile() {
 		String loadFile = super.loadFile;
 		loadFile = loadFile.replace("characterset_value", characterSet);
