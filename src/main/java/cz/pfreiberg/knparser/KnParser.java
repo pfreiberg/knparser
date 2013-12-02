@@ -3,12 +3,12 @@ package cz.pfreiberg.knparser;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Main {
+public class KnParser {
 
 	public static void main(String[] args) {
 		Properties properties = new Properties();
 		try {
-			properties.load(Main.class
+			properties.load(KnParser.class
 					.getResourceAsStream("knparser.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
