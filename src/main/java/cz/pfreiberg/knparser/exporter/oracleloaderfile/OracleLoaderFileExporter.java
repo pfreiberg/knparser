@@ -4,6 +4,8 @@ import cz.pfreiberg.knparser.exporter.Exporter;
 
 public abstract class OracleLoaderFileExporter implements Exporter,
 		OracleLoaderFileOperations {
+	
+	protected String loadFile = "LOAD DATA\nCHARACTERSET characterset_value\nINFILE \"infile_value\" \"STR '|'\"\nAPPEND\nINTO TABLE into_table_value\nFIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'";
 
 	@Override
 	public void appendLoadFile() {
@@ -14,7 +16,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	@Override
 	public void makeControlFile() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override

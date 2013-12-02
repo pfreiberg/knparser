@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import cz.pfreiberg.knparser.Configuration;
 import cz.pfreiberg.knparser.domain.Vfk;
+import cz.pfreiberg.knparser.exporterfactory.ExporterFactory;
 import cz.pfreiberg.knparser.util.EncodingCzech;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
@@ -102,8 +103,9 @@ public class Parser {
 
 		// TODO testovací výpis
 		for (int i = 0; i < 5; i++) {
-			System.out.println(vfk.getRZpochr().get(i));
+			System.out.println(vfk.getParcely().get(i));
 		}
+
 	}
 
 	private Scanner getScanner(File file, String codepage)
@@ -120,5 +122,4 @@ public class Parser {
 		}
 		throw new ParserException("Unsupported encoding.");
 	}
-
 }
