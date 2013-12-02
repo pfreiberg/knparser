@@ -56,4 +56,11 @@ public class ZpVyuzitiBud {
 		this.zkratka = zkratka;
 	}
 
+	@Override
+	public String toString() {
+		return "ZpVyuzitiBud [kod=" + kod + ", nazev=" + nazev
+				+ ", platnostOd=" + platnostOd + ", plastnostDo=" + plastnostDo
+				+ ", zkratka=" + zkratka + "]";
+	}
+
 }

@@ -56,4 +56,11 @@ public class Obce {
 		this.platnostDo = platnostDo;
 	}
 
+	@Override
+	public String toString() {
+		return "Obce [kod=" + kod + ", okresyKod=" + okresyKod + ", nazev="
+				+ nazev + ", platnostOd=" + platnostOd + ", platnostDo="
+				+ platnostDo + "]";
+	}
+
 }

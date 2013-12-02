@@ -83,4 +83,13 @@ public class DPozemku {
 		this.stavebniParcela = stavebniParcela;
 	}
 
+	@Override
+	public String toString() {
+		return "DPozemku [kod=" + kod + ", nazev=" + nazev
+				+ ", zemedelskaKultura=" + zemedelskaKultura + ", platnostOd="
+				+ platnostOd + ", typppdKod=" + typppdKod + ", platnostDo="
+				+ platnostDo + ", zkratka=" + zkratka + ", stavebniParcela="
+				+ stavebniParcela + "]";
+	}
+
 }

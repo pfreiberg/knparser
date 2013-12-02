@@ -3,7 +3,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 import java.util.Date;
 
 /**
- * Třída reprezentující "Výběr způsobu ochrany k nemovitostem na základě exportovaných parcel".
+ * Třída reprezentující
+ * "Výběr způsobu ochrany k nemovitostem na základě exportovaných parcel".
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
@@ -108,6 +109,16 @@ public class RZpochr {
 
 	public void setJedId(Long jedId) {
 		this.jedId = jedId;
+	}
+
+	@Override
+	public String toString() {
+		return "RZpochr [id=" + id + ", stavDat=" + stavDat + ", datumVzniku="
+				+ datumVzniku + ", datumZaniku=" + datumZaniku
+				+ ", priznakKontextu=" + priznakKontextu + ", rizeniIdVzniku="
+				+ rizeniIdVzniku + ", rizeniIdZaniku=" + rizeniIdZaniku
+				+ ", zpochrKod=" + zpochrKod + ", parId=" + parId + ", budId="
+				+ budId + ", jedId=" + jedId + "]";
 	}
 
 }

@@ -74,4 +74,12 @@ public class Okresy {
 		this.nKrajeKod = nKrajeKod;
 	}
 
+	@Override
+	public String toString() {
+		return "Okresy [kod=" + kod + ", krajeKod=" + krajeKod + ", nazev="
+				+ nazev + ", platnostOd=" + platnostOd + ", platnostDo="
+				+ platnostDo + ", nuts4=" + nuts4 + ", nKrajeKod=" + nKrajeKod
+				+ "]";
+	}
+
 }

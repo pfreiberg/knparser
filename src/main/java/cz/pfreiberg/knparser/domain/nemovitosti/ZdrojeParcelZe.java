@@ -56,4 +56,11 @@ public class ZdrojeParcelZe {
 		this.zkratka = zkratka;
 	}
 
+	@Override
+	public String toString() {
+		return "ZdrojeParcelZe [kod=" + kod + ", nazev=" + nazev
+				+ ", platnostOd=" + platnostOd + ", platnostDo=" + platnostDo
+				+ ", zkratka=" + zkratka + "]";
+	}
+
 }

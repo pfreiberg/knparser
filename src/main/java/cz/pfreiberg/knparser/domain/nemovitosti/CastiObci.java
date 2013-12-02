@@ -56,4 +56,11 @@ public class CastiObci {
 		this.platnostDo = platnostDo;
 	}
 
+	@Override
+	public String toString() {
+		return "CastiObci [kod=" + kod + ", obceKod=" + obceKod + ", nazev="
+				+ nazev + ", platnostOd=" + platnostOd + ", platnostDo="
+				+ platnostDo + "]";
+	}
+
 }

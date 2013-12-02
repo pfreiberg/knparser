@@ -101,8 +101,8 @@ public class Parser {
 		System.out.println("End of file.");
 
 		// TODO testovací výpis
-		for (int i = 0; i < 10; i++) {
-			System.out.println(vfk.getBudovy().get(i));
+		for (int i = 0; i < 5; i++) {
+			System.out.println(vfk.getRZpochr().get(i));
 		}
 	}
 

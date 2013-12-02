@@ -47,4 +47,10 @@ public class Kraje {
 		this.platnostDo = platnostDo;
 	}
 
+	@Override
+	public String toString() {
+		return "Kraje [kod=" + kod + ", nazev=" + nazev + ", platnostOd="
+				+ platnostOd + ", platnostDo=" + platnostDo + "]";
+	}
+
 }

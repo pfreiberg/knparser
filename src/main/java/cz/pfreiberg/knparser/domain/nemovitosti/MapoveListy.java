@@ -56,4 +56,11 @@ public class MapoveListy {
 		this.mapa = mapa;
 	}
 
+	@Override
+	public String toString() {
+		return "MapoveListy [id=" + id + ", oznaceniMapovehoListu="
+				+ oznaceniMapovehoListu + ", platnostOd=" + platnostOd
+				+ ", platnostDo=" + platnostDo + ", mapa=" + mapa + "]";
+	}
+
 }

@@ -56,4 +56,11 @@ public class NoveKraje {
 		this.platnostDo = platnostDo;
 	}
 
+	@Override
+	public String toString() {
+		return "NoveKraje [kod=" + kod + ", nazev=" + nazev + ", nuts3="
+				+ nuts3 + ", platnostOd=" + platnostOd + ", platnostDo="
+				+ platnostDo + "]";
+	}
+
 }

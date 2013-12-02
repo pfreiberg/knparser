@@ -65,4 +65,11 @@ public class TBudov {
 		this.zkratka = zkratka;
 	}
 
+	@Override
+	public String toString() {
+		return "TBudov [kod=" + kod + ", nazev=" + nazev + ", platnostOd="
+				+ platnostOd + ", platnostDo=" + platnostDo + ", zadaniCd="
+				+ zadaniCd + ", zkratka=" + zkratka + "]";
+	}
+
 }

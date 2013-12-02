@@ -47,4 +47,11 @@ public class ZpUrceniVymery {
 		this.platnostDo = platnostDo;
 	}
 
+	@Override
+	public String toString() {
+		return "ZpUrceniVymery [kod=" + kod + ", nazev=" + nazev
+				+ ", platnostOd=" + platnostOd + ", platnostDo=" + platnostDo
+				+ "]";
+	}
+
 }

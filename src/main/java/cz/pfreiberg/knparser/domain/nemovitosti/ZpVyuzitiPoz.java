@@ -65,4 +65,11 @@ public class ZpVyuzitiPoz {
 		this.zkratka = zkratka;
 	}
 
+	@Override
+	public String toString() {
+		return "ZpVyuzitiPoz [kod=" + kod + ", nazev=" + nazev
+				+ ", platnostOd=" + platnostOd + ", typppKod=" + typppKod
+				+ ", platnostDo=" + platnostDo + ", zkratka=" + zkratka + "]";
+	}
+
 }

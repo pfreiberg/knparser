@@ -83,4 +83,12 @@ public class ZpOchranyNem {
 		this.nemochr = nemochr;
 	}
 
+	@Override
+	public String toString() {
+		return "ZpOchranyNem [kod=" + kod + ", nazev=" + nazev
+				+ ", platnostOd=" + platnostOd + ", platnostDo=" + platnostDo
+				+ ", pozemek=" + pozemek + ", budova=" + budova + ", jednotka="
+				+ jednotka + ", nemochr=" + nemochr + "]";
+	}
+
 }

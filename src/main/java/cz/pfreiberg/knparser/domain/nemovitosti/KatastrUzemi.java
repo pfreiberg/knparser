@@ -56,4 +56,11 @@ public class KatastrUzemi {
 		this.platnostDo = platnostDo;
 	}
 
+	@Override
+	public String toString() {
+		return "KatastrUzemi [kod=" + kod + ", obceKod=" + obceKod + ", nazev="
+				+ nazev + ", platnostOd=" + platnostOd + ", platnostDo="
+				+ platnostDo + "]";
+	}
+
 }
