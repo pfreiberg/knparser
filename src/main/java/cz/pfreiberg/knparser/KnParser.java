@@ -9,7 +9,7 @@ public class KnParser {
 		Properties properties = new Properties();
 		try {
 			properties.load(KnParser.class
-					.getResourceAsStream("knparser.properties"));
+					.getResourceAsStream("KnParser.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
