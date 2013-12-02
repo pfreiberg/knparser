@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.TBudov;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserTBudov {
+public class TBudovParser {
 
 	public static TBudov parse(String actualLine) {
 		int i = 0;

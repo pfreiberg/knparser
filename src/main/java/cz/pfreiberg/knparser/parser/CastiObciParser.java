@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.CastiObci;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserCastiObci {
+public class CastiObciParser {
 
 	public static CastiObci parse(String actualLine) {
 		int i = 0;

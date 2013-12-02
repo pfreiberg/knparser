@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.Okresy;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserOkresy {
+public class OkresyParser {
 
 	public static Okresy parse(String actualLine) {
 		int i = 0;

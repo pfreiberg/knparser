@@ -40,60 +40,60 @@ public class Parser {
 
 			switch (actualNode) {
 			case "&DPAR":
-				vfk.getParcely().add(ParserParcely.parse(actualLine));
+				vfk.getParcely().add(ParcelyParser.parse(actualLine));
 				break;
 			case "&DBUD":
-				vfk.getBudovy().add(ParserBudovy.parse(actualLine));
+				vfk.getBudovy().add(BudovyParser.parse(actualLine));
 				break;
 			case "&DCABU":
-				vfk.getCastiBudov().add(ParserCastiBudov.parse(actualLine));
+				vfk.getCastiBudov().add(CastiBudovParser.parse(actualLine));
 				break;
 			case "&DZPOCHN":
-				vfk.getZpOchranyNem().add(ParserZpOchranyNem.parse(actualLine));
+				vfk.getZpOchranyNem().add(ZpOchranyNemParser.parse(actualLine));
 				break;
 			case "&DDRUPOZ":
-				vfk.getDPozemku().add(ParserDPozemku.parse(actualLine));
+				vfk.getDPozemku().add(DPozemkuParser.parse(actualLine));
 				break;
 			case "&DZPVYPO":
-				vfk.getZpVyuzitiPoz().add(ParserZpVyuzitiPoz.parse(actualLine));
+				vfk.getZpVyuzitiPoz().add(ZpVyuzitiPozParser.parse(actualLine));
 				break;
 			case "&DZDPAZE":
 				vfk.getZdrojeParcelZe().add(
-						ParserZdrojeParcelZe.parse(actualLine));
+						ZdrojeParcelZeParser.parse(actualLine));
 				break;
 			case "&DZPURVY":
 				vfk.getZpUrceniVymery().add(
-						ParserZpUrceniVymery.parse(actualLine));
+						ZpUrceniVymeryParser.parse(actualLine));
 				break;
 			case "&DTYPBUD":
-				vfk.getTBudov().add(ParserTBudov.parse(actualLine));
+				vfk.getTBudov().add(TBudovParser.parse(actualLine));
 				break;
 			case "&DMAPLIS":
-				vfk.getMapoveListy().add(ParserMapoveListy.parse(actualLine));
+				vfk.getMapoveListy().add(MapoveListyParser.parse(actualLine));
 				break;
 			case "&DKATUZE":
-				vfk.getKatastrUzemi().add(ParserKatastrUzemi.parse(actualLine));
+				vfk.getKatastrUzemi().add(KatastrUzemiParser.parse(actualLine));
 				break;
 			case "&DOBCE":
-				vfk.getObce().add(ParserObce.parse(actualLine));
+				vfk.getObce().add(ObceParser.parse(actualLine));
 				break;
 			case "&DCASOBC":
-				vfk.getCastiObci().add(ParserCastiObci.parse(actualLine));
+				vfk.getCastiObci().add(CastiObciParser.parse(actualLine));
 				break;
 			case "&DOKRESY":
-				vfk.getOkresy().add(ParserOkresy.parse(actualLine));
+				vfk.getOkresy().add(OkresyParser.parse(actualLine));
 				break;
 			case "&DKRAJE":
-				vfk.getKraje().add(ParserKraje.parse(actualLine));
+				vfk.getKraje().add(KrajeParser.parse(actualLine));
 				break;
 			case "&DNKRAJE":
-				vfk.getNoveKraje().add(ParserNoveKraje.parse(actualLine));
+				vfk.getNoveKraje().add(NoveKrajeParser.parse(actualLine));
 				break;
 			case "&DRZO":
-				vfk.getRZpochr().add(ParserRZpochr.parse(actualLine));
+				vfk.getRZpochr().add(RZpochrParser.parse(actualLine));
 				break;
 			case "&DZPVYBU":
-				vfk.getZpVyuzitiBud().add(ParserZpVyuzitiBud.parse(actualLine));
+				vfk.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(actualLine));
 				break;
 
 			}

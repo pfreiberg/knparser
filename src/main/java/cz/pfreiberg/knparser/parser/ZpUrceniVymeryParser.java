@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpUrceniVymery;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserZpUrceniVymery {
+public class ZpUrceniVymeryParser {
 
 	public static ZpUrceniVymery parse(String actualLine) {
 		int i = 0;

@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpOchranyNem;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserZpOchranyNem {
+public class ZpOchranyNemParser {
 	
 	public static ZpOchranyNem parse(String actualLine) {
 		int i = 0;

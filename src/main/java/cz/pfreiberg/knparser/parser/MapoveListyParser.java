@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.MapoveListy;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserMapoveListy {
+public class MapoveListyParser {
 
 	public static MapoveListy parse(String actualLine) {
 		int i = 0;

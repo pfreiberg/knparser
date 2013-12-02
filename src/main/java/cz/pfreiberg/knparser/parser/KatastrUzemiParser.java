@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.KatastrUzemi;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserKatastrUzemi {
+public class KatastrUzemiParser {
 	
 	public static KatastrUzemi parse(String actualLine) {
 		int i = 0;

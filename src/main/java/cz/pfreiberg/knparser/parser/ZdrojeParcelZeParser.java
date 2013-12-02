@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZdrojeParcelZe;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserZdrojeParcelZe {
+public class ZdrojeParcelZeParser {
 
 	public static ZdrojeParcelZe parse(String actualLine) {
 		int i = 0;

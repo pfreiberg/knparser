@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpVyuzitiBud;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserZpVyuzitiBud {
+public class ZpVyuzitiBudParser {
 
 	public static ZpVyuzitiBud parse(String actualLine) {
 		int i = 0;

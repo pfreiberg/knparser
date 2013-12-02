@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.DPozemku;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserDPozemku {
+public class DPozemkuParser {
 
 	public static DPozemku parse(String actualLine) {
 		int i = 0;

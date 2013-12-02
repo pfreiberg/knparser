@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.RZpochr;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserRZpochr {
+public class RZpochrParser {
 
 	public static RZpochr parse(String actualLine) {
 		int i = 0;

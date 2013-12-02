@@ -1,6 +1,11 @@
 package cz.pfreiberg.knparser;
 
-
+/**
+ * Zapouzdržuje parametry, se kterými byl parser spuštěn.
+ *
+ * @author Petr Freiberg (freibergp@gmail.com)
+ *
+ */
 public class Configuration {
 
 	private String pathToFile;

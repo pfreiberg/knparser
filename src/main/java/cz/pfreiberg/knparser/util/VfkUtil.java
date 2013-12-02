@@ -10,6 +10,12 @@ import java.util.Date;
 
 import cz.pfreiberg.knparser.parser.ParserException;
 
+/**
+ * Pomocná třída s metodami pro práci nad VFK.
+ * 
+ * @author Petr Freiberg (freibergp@gmail.com)
+ * 
+ */
 public class VfkUtil {
 
 	public static String getEncoding(File file) throws ParserException,
@@ -52,7 +58,7 @@ public class VfkUtil {
 		}
 		return output;
 	}
-	
+
 	public static Double getDouble(String value) {
 		Double output = null;
 		try {
@@ -64,7 +70,7 @@ public class VfkUtil {
 	}
 
 	public static Date getDate(String value) {
-		Date output  = null;
+		Date output = null;
 		SimpleDateFormat format = new SimpleDateFormat(
 				"\"dd.MM.yyyy HH:mm:ss\"");
 		try {

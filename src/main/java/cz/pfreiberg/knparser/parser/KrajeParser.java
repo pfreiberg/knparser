@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.Kraje;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserKraje {
+public class KrajeParser {
 
 	public static Kraje parse(String actualLine) {
 		int i = 0;

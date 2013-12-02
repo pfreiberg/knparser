@@ -3,7 +3,7 @@ package cz.pfreiberg.knparser.parser;
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParserParcely {
+public class ParcelyParser {
 
 	public static Parcely parse(String actualLine) {
 		int i = 0;
