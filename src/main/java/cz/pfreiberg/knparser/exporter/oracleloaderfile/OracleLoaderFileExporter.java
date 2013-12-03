@@ -16,12 +16,12 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 		loadFile = loadFile.replace("characterset_value", characterSet);
 	}
 
-	protected void setInfileValue(String file) {
-		loadFile = loadFile.replace("infile_value", file);
+	protected void setInfile(String fileName) {
+		loadFile = loadFile.replace("infile_value", fileName);
 	}
 
-	protected void setIntoTable(String table) {
-		loadFile = loadFile.replace("into_table_value", table);
+	protected void setIntoTable(String tableName) {
+		loadFile = loadFile.replace("into_table_value", tableName);
 	}
 
 	@Override

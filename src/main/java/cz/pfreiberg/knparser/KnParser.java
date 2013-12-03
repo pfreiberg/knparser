@@ -3,6 +3,14 @@ package cz.pfreiberg.knparser;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Vstupní třída programu. Zpracuje parametry, se kterými byl program spuštěn,
+ * vytvoří Controller, který zodpovídá za parsování VFK a předá mu kontrolu nad
+ * během.
+ * 
+ * @author Petr Freiberg (freibergp@gmail.com)
+ * 
+ */
 public class KnParser {
 
 	public static void main(String[] args) {

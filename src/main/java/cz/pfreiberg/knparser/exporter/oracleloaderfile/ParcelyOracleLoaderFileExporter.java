@@ -18,7 +18,7 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	public void makeControlFile() {
 		String loadFile = super.loadFile;
 		super.setCharacterSet(characterSet);
-		super.setInfileValue(name);
+		super.setInfile(name);
 		super.setIntoTable(name);
 
 		System.out.println(loadFile);

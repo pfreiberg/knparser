@@ -1,7 +1,7 @@
 package cz.pfreiberg.knparser;
 
 /**
- * Zapouzdržuje parametry, se kterými byl parser spuštěn.
+ * Zapouzdržuje parametry, se kterými byl program spuštěn.
  *
  * @author Petr Freiberg (freibergp@gmail.com)
  *
