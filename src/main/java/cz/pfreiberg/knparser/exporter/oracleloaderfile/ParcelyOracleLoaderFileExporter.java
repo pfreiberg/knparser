@@ -18,7 +18,10 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	@Override
 	public String makeControlFile() {
 		String loadFile = super.makeControlFile();
-		loadFile = super.fillFile(loadFile, characterSet, name, name);
+		loadFile = super.fillHeader(loadFile, characterSet, name);
+		loadFile = super.insertColumn(loadFile, "KOD");
+		loadFile = super.insertDate(loadFile, "PLATNOST_OD");
+		loadFile = super.end(loadFile);
 		System.out.println(loadFile);
 		return loadFile;
 	}
