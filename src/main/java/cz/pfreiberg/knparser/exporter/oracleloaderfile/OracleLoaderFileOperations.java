@@ -2,7 +2,7 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 
 public interface OracleLoaderFileOperations {
 
-	public void makeControlFile();
+	public String makeControlFile();
 
 	public void appendLoadFile();
 

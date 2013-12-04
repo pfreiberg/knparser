@@ -17,10 +17,9 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class Parser {
 
-	Configuration configuration;
-	File file;
-	Vfk vfk;
-	BufferedReader br;
+	private File file;
+	private Vfk vfk;
+	private BufferedReader br;
 
 	private final char escapeCharacter = '\\';
 	private final char quoteCharacter = '"';
@@ -29,12 +28,24 @@ public class Parser {
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
-		this.configuration = configuration;
 		file = new File(configuration.getPathToFile());
 		vfk = new Vfk();
 		vfk.setCodepage(VfkUtil.getEncoding(file));
 		br = new BufferedReader(new InputStreamReader(
-				new FileInputStream(file), getEncoding(vfk.getCodepage())));
+				new FileInputStream(file), getEncoding()));
+	}
+	
+	public String getEncoding() throws ParserException {
+		if (EncodingCzech.windows1250.equalsVfk(vfk.getCodepage())) {
+			return EncodingCzech.windows1250.getEncoding();
+		} else if (EncodingCzech.iso88592.equalsVfk(vfk.getCodepage())) {
+			return EncodingCzech.iso88592.getEncoding();
+		}
+		throw new ParserException("Unsupported encoding.");
+	}
+
+	public Vfk getVfk() {
+		return vfk;
 	}
 
 	public void parse() throws IOException, ParserException {
@@ -49,12 +60,6 @@ public class Parser {
 			}
 
 		}
-
-		// TODO testovací výpis
-		for (int i = 0; i < 5; i++) {
-			System.out.println(vfk.getParcely().get(i));
-		}
-
 	}
 
 	private String[] processNextRow() throws IOException {
@@ -164,13 +169,5 @@ public class Parser {
 	private boolean isRowProcessing() {
 		return buffer != null;
 	}
-
-	private String getEncoding(String codepage) throws ParserException {
-		if (EncodingCzech.windows1250.equalsVfk(codepage)) {
-			return EncodingCzech.windows1250.getEncoding();
-		} else if (EncodingCzech.iso88592.equalsVfk(codepage)) {
-			return EncodingCzech.iso88592.getEncoding();
-		}
-		throw new ParserException("Unsupported encoding.");
-	}
+	
 }

@@ -3,6 +3,8 @@ package cz.pfreiberg.knparser;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import cz.pfreiberg.knparser.domain.Vfk;
+import cz.pfreiberg.knparser.exporterfactory.OracleLoaderExporterFactory;
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
 
@@ -19,6 +21,10 @@ public class Controller {
 		try {
 			Parser parser = new Parser(configuration);
 			parser.parse();
+			
+			Vfk vfk = parser.getVfk();
+			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(parser.getEncoding());
+			loaderExporterFactory.getParcelyExporter(vfk.getParcely());
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {

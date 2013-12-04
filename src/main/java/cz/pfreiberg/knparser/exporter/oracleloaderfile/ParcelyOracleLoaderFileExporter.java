@@ -12,16 +12,17 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	public ParcelyOracleLoaderFileExporter(List<Parcely> parcely,
 			String characterSet) {
 		this.characterSet = characterSet;
+		makeControlFile();
 	}
 
 	@Override
-	public void makeControlFile() {
-		String loadFile = super.loadFile;
-		super.setCharacterSet(characterSet);
-		super.setInfile(name);
-		super.setIntoTable(name);
-
+	public String makeControlFile() {
+		String loadFile = super.makeControlFile();
+		loadFile = super.fillFile(loadFile, characterSet, name, name);
 		System.out.println(loadFile);
+		return loadFile;
 	}
+	
+	
 
 }
