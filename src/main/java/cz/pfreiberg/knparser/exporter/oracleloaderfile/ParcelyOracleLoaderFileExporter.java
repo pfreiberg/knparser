@@ -1,6 +1,10 @@
 package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
 
@@ -12,7 +16,15 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	public ParcelyOracleLoaderFileExporter(List<Parcely> parcely,
 			String characterSet) {
 		this.characterSet = characterSet;
-		makeControlFile();
+		String output = makeControlFile();
+
+		try {
+			FileUtils.writeStringToFile(new File("C:/Users/pfreiberg/Desktop/output.txt"), output);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -50,7 +62,6 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		loadFile = super.insertColumn(loadFile, "IDENT_ID");
 		loadFile = super.end(loadFile);
 		
-		System.out.println(loadFile);
 		return loadFile;
 	}
 	
