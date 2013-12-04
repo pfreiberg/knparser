@@ -34,15 +34,6 @@ public class Parser {
 		br = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), getEncoding()));
 	}
-	
-	public String getEncoding() throws ParserException {
-		if (EncodingCzech.windows1250.equalsVfk(vfk.getCodepage())) {
-			return EncodingCzech.windows1250.getEncoding();
-		} else if (EncodingCzech.iso88592.equalsVfk(vfk.getCodepage())) {
-			return EncodingCzech.iso88592.getEncoding();
-		}
-		throw new ParserException("Unsupported encoding.");
-	}
 
 	public Vfk getVfk() {
 		return vfk;
@@ -169,5 +160,14 @@ public class Parser {
 	private boolean isRowProcessing() {
 		return buffer != null;
 	}
-	
+
+	private String getEncoding() throws ParserException {
+		if (EncodingCzech.windows1250.equalsVfk(vfk.getCodepage())) {
+			return EncodingCzech.windows1250.getEncoding();
+		} else if (EncodingCzech.iso88592.equalsVfk(vfk.getCodepage())) {
+			return EncodingCzech.iso88592.getEncoding();
+		}
+		throw new ParserException("Unsupported encoding.");
+	}
+
 }

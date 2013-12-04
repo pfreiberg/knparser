@@ -7,13 +7,18 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	
 	@Override
 	public String makeControlFile() {
-		return "LOAD DATA\nCHARACTERSET characterset_value\nINFILE \"infile_value\" \"STR '|'\"\nAPPEND\nINTO TABLE into_table_value\nFIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'";
+		return "LOAD DATA\n"
+				+ "CHARACTERSET characterset_value\n"
+				+ "INFILE \"infile_value.TXT\"\n"
+				+ "APPEND\n"
+				+ "INTO TABLE into_table_value\n"
+				+ "FIELDS TERMINATED BY '|' ";
 	}
 
 	protected String fillFile(String loadFile, String characterSet, String file, String table) {
 		String output = loadFile.replace("characterset_value", characterSet);
-		output = loadFile.replace("infile_value", file);
-		output = loadFile.replace("into_table_value", table);
+		output = output.replace("infile_value", file);
+		output = output.replace("into_table_value", table);
 		return output;
 	}
 

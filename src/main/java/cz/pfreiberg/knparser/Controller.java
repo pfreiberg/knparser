@@ -23,7 +23,7 @@ public class Controller {
 			parser.parse();
 			
 			Vfk vfk = parser.getVfk();
-			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(parser.getEncoding());
+			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(vfk.getCodepage());
 			loaderExporterFactory.getParcelyExporter(vfk.getParcely());
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
