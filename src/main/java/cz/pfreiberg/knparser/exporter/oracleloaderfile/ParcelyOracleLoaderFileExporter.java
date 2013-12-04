@@ -19,7 +19,7 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		String output = makeControlFile();
 
 		try {
-			FileUtils.writeStringToFile(new File("C:/Users/pfreiberg/Desktop/output.txt"), output);
+			FileUtils.writeStringToFile(new File("C:/Users/pfreiberg/Desktop/output.CFG"), output);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
