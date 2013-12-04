@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ParcelyParser {
 
-	public static Parcely parse(String actualLine) {
+	public static Parcely parse(String[] tokens) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		Parcely parcela = new Parcely();
 		parcela.setId(VfkUtil.getLong(tokens[i++]));

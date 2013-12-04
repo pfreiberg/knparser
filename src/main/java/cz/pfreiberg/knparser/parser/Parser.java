@@ -22,6 +22,11 @@ public class Parser {
 	Vfk vfk;
 	BufferedReader br;
 
+	private final char escapeCharacter = '\\';
+	private final char quoteCharacter = '"';
+	private final char separator = ';';
+	private String buffer;
+
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
 		this.configuration = configuration;
@@ -34,11 +39,25 @@ public class Parser {
 
 	public void parse() throws IOException, ParserException {
 		for (String[] values = processNextRow(); values != null; values = processNextRow()) {
-			System.out.println(Arrays.asList(values));
+			String node = values[0];
+			String[] tokens = Arrays.copyOfRange(values, 1, values.length);
+
+			switch (node) {
+			case "&DPAR":
+				vfk.getParcely().add(ParcelyParser.parse(tokens));
+				break;
+			}
+
 		}
+
+		// TODO testovací výpis
+		for (int i = 0; i < 5; i++) {
+			System.out.println(vfk.getParcely().get(i));
+		}
+
 	}
 
-	public String[] processNextRow() throws IOException {
+	private String[] processNextRow() throws IOException {
 		String[] row = null;
 		do {
 			String nextRow = getNextRow();
@@ -56,21 +75,16 @@ public class Parser {
 					row = temp;
 				}
 			}
-			return row;
-		} while (true);
+		} while (isRowProcessing());
+		return row;
 	}
 
-	public String getNextRow() throws IOException {
+	private String getNextRow() throws IOException {
 		String nextRow = br.readLine();
 		return nextRow;
 	}
 
-	private final char escapeCharacter = '\\';
-	private final char quoteCharacter = '"';
-	private final char separator = ';';
-	private String buffer;
-
-	public String[] parseRow(String row) {
+	private String[] parseRow(String row) {
 
 		List<String> tokensOnRow = new ArrayList<String>();
 		StringBuilder sb = new StringBuilder(64);
@@ -91,7 +105,6 @@ public class Parser {
 					sb.append(getNextCharacter(row, i));
 					i++;
 				}
-				sb.append(actualCharacter);
 				break;
 			case quoteCharacter:
 				sb.append(actualCharacter);
@@ -114,6 +127,7 @@ public class Parser {
 		if (inQuotes) {
 			sb.append("\n");
 			buffer = sb.toString();
+			sb = null;
 		}
 
 		if (sb != null) {
@@ -124,7 +138,7 @@ public class Parser {
 		return tokensOnRow.toArray(new String[tokensOnRow.size()]);
 	}
 
-	public boolean isNextCharacterEscapable(String row, boolean inQuotes,
+	private boolean isNextCharacterEscapable(String row, boolean inQuotes,
 			int position) {
 		if (hasNextCharacter(row, position)) {
 			char nextCharacter = getNextCharacter(row, position);
@@ -133,26 +147,22 @@ public class Parser {
 		return false;
 	}
 
-	public boolean isNextCharacterSeparator(String row, int position) {
-		if (hasNextCharacter(row, position)) {
-			char nextCharacter = getNextCharacter(row, position);
-			return (nextCharacter == separator);
-		}
-		return false;
-	}
-
-	public char getActualCharacter(String row, int position) {
+	private char getActualCharacter(String row, int position) {
 		return row.charAt(position);
 	}
 
-	public boolean hasNextCharacter(String row, int position) {
+	private boolean hasNextCharacter(String row, int position) {
 		position++;
 		return (row.length() > position);
 	}
 
-	public char getNextCharacter(String row, int position) {
+	private char getNextCharacter(String row, int position) {
 		position++;
 		return row.charAt(position);
+	}
+
+	private boolean isRowProcessing() {
+		return buffer != null;
 	}
 
 	private String getEncoding(String codepage) throws ParserException {
