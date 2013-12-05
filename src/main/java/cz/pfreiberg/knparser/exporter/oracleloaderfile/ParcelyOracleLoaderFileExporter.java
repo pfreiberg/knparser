@@ -12,17 +12,19 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private List<Parcely> parcely;
 	private final String characterSet;
+	private final String output;
 	private final String name = "PARCELY";
 
 	public ParcelyOracleLoaderFileExporter(List<Parcely> parcely,
-			String characterSet) {
+			String characterSet, String output) {
 		this.parcely = parcely;
 		this.characterSet = characterSet;
-		String output = makeControlFile();
-
+		this.output = output;
+		String controlFile = makeControlFile();
+		System.out.println(output);
 		try {
 			FileUtils.writeStringToFile(new File(
-					"C:/Users/pfreiberg/Desktop/output.CFG"), output);
+					output + name + ".CFG"), controlFile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -32,46 +34,46 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	@Override
 	public String makeControlFile() {
-		String loadFile = super.makeControlFile();
-		loadFile = super.fillHeader(loadFile, characterSet, name);
+		String controlFile = super.makeControlFile();
+		controlFile = super.fillHeader(controlFile, characterSet, name);
 
-		loadFile = super.insertColumn(loadFile, "ID");
-		loadFile = super.insertColumn(loadFile, "STAV_DAT");
-		loadFile = super.insertDate(loadFile, "DATUM_VZNIKU");
-		loadFile = super.insertDate(loadFile, "DATUM_ZANIKU");
-		loadFile = super.insertColumn(loadFile, "PRIZNAK_KONTEXTU");
-		loadFile = super.insertColumn(loadFile, "RIZENI_ID_VZNIKU");
-		loadFile = super.insertColumn(loadFile, "RIZENI_ID_ZANIKU");
-		loadFile = super.insertColumn(loadFile, "PKN_ID");
-		loadFile = super.insertColumn(loadFile, "PAR_TYPE");
-		loadFile = super.insertColumn(loadFile, "KATUZE_KOD");
-		loadFile = super.insertColumn(loadFile, "KATUZE_KOD_PUV");
-		loadFile = super.insertColumn(loadFile, "DRUH_CISLOVANI_PAR");
-		loadFile = super.insertColumn(loadFile, "KMENOVE_CISLO_PAR");
-		loadFile = super.insertColumn(loadFile, "ZDPAZE_KOD");
-		loadFile = super.insertColumn(loadFile, "PODDELENI_CISLA_PAR");
-		loadFile = super.insertColumn(loadFile, "DIL_PARCELY");
-		loadFile = super.insertColumn(loadFile, "MAPLIS_KOD");
-		loadFile = super.insertColumn(loadFile, "ZPURVY_KOD");
-		loadFile = super.insertColumn(loadFile, "DRUPOZ_KOD");
-		loadFile = super.insertColumn(loadFile, "ZPVYPA_KOD");
-		loadFile = super.insertColumn(loadFile, "TYP_PARCELY");
-		loadFile = super.insertColumn(loadFile, "VYMERA_PARCELY");
-		loadFile = super.insertColumn(loadFile, "CENA_NEMOVITOSTI");
-		loadFile = super.insertColumn(loadFile, "DEFINICNI_BOD_PAR");
-		loadFile = super.insertColumn(loadFile, "TEL_ID");
-		loadFile = super.insertColumn(loadFile, "PAR_ID");
-		loadFile = super.insertColumn(loadFile, "BUD_ID");
-		loadFile = super.insertColumn(loadFile, "IDENT_ID");
-		loadFile = super.end(loadFile);
+		controlFile = super.insertColumn(controlFile, "ID");
+		controlFile = super.insertColumn(controlFile, "STAV_DAT");
+		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
+		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
+		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
+		controlFile = super.insertColumn(controlFile, "PKN_ID");
+		controlFile = super.insertColumn(controlFile, "PAR_TYPE");
+		controlFile = super.insertColumn(controlFile, "KATUZE_KOD");
+		controlFile = super.insertColumn(controlFile, "KATUZE_KOD_PUV");
+		controlFile = super.insertColumn(controlFile, "DRUH_CISLOVANI_PAR");
+		controlFile = super.insertColumn(controlFile, "KMENOVE_CISLO_PAR");
+		controlFile = super.insertColumn(controlFile, "ZDPAZE_KOD");
+		controlFile = super.insertColumn(controlFile, "PODDELENI_CISLA_PAR");
+		controlFile = super.insertColumn(controlFile, "DIL_PARCELY");
+		controlFile = super.insertColumn(controlFile, "MAPLIS_KOD");
+		controlFile = super.insertColumn(controlFile, "ZPURVY_KOD");
+		controlFile = super.insertColumn(controlFile, "DRUPOZ_KOD");
+		controlFile = super.insertColumn(controlFile, "ZPVYPA_KOD");
+		controlFile = super.insertColumn(controlFile, "TYP_PARCELY");
+		controlFile = super.insertColumn(controlFile, "VYMERA_PARCELY");
+		controlFile = super.insertColumn(controlFile, "CENA_NEMOVITOSTI");
+		controlFile = super.insertColumn(controlFile, "DEFINICNI_BOD_PAR");
+		controlFile = super.insertColumn(controlFile, "TEL_ID");
+		controlFile = super.insertColumn(controlFile, "PAR_ID");
+		controlFile = super.insertColumn(controlFile, "BUD_ID");
+		controlFile = super.insertColumn(controlFile, "IDENT_ID");
+		controlFile = super.end(controlFile);
 
-		return loadFile;
+		return controlFile;
 	}
 
 	@Override
 	public void insert() {
 		try {
-			File file = new File("C:/Users/pfreiberg/Desktop/output.TXT");
+			File file = new File(output + name + ".TXT");
 			FileUtils.writeLines(file, parcely);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
