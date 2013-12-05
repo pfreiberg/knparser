@@ -13,15 +13,18 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private List<Parcely> parcely;
+	private final String prefix;
 	private final String characterSet;
 	private final String output;
 	private final String name = "PARCELY";
 
 	public ParcelyOracleLoaderFileExporter(List<Parcely> parcely,
-			String characterSet, String output) {
+			String prefix, String characterSet, String output) {
 		this.parcely = parcely;
+		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
+
 		makeControlFile();
 		appendLoadFile();
 	}
@@ -60,11 +63,11 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "BUD_ID");
 		controlFile = super.insertColumn(controlFile, "IDENT_ID");
 		controlFile = super.end(controlFile);
-		
+
 		try {
-			FileUtils.writeStringToFile(new File(
-					output + name + ".CFG"), controlFile, VfkUtil.convertEncoding(characterSet));
-		} catch (IOException | ParserException e ) {
+			FileUtils.writeStringToFile(new File(output + prefix + name + ".CFG"),
+					controlFile, VfkUtil.convertEncoding(characterSet));
+		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -75,8 +78,9 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	@Override
 	public void appendLoadFile() {
 		try {
-			File file = new File(output + name + ".TXT");
-			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet), parcely);
+			File file = new File(output + prefix + name + ".TXT");
+			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
+					parcely);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

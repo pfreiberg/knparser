@@ -27,10 +27,11 @@ public class Controller {
 		try {
 			Parser parser = new Parser(configuration);
 			parser.parse();
-		
+			
 			Vfk vfk = parser.getVfk();
 			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
-					vfk.getCodepage(), configuration.getDestinationOfOutput());
+					vfk.getZmeny(), vfk.getCodepage(),
+					configuration.getDestinationOfOutput());
 			loaderExporterFactory.getParcelyExporter(vfk.getParcely());
 
 		} catch (FileNotFoundException e) {

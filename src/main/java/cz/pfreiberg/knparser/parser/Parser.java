@@ -44,6 +44,9 @@ public class Parser {
 			String node = values[0];
 			String[] tokens = Arrays.copyOfRange(values, 1, values.length);
 			switch (node) {
+			case "&HZMENY":
+				vfk.setZmeny(Integer.parseInt(tokens[0]));
+				break;
 			case "&DPAR":
 				vfk.getParcely().add(ParcelyParser.parse(tokens));
 				break;
@@ -72,10 +75,10 @@ public class Parser {
 
 		}
 
-		// TODO testovací výpis
+		/*// TODO testovací výpis
 		for (int i = 0; i < 5; i++) {
 			System.out.println(vfk.getRZpochr().get(i));
-		}
+		}*/
 	}
 
 	private String[] processNextRow() throws IOException {
