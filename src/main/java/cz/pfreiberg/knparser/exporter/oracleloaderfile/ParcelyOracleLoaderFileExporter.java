@@ -20,16 +20,8 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		this.parcely = parcely;
 		this.characterSet = characterSet;
 		this.output = output;
-		String controlFile = makeControlFile();
-		System.out.println(output);
-		try {
-			FileUtils.writeStringToFile(new File(
-					output + name + ".CFG"), controlFile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		makeControlFile();
+		appendLoadFile();
 	}
 
 	@Override
@@ -66,12 +58,20 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "BUD_ID");
 		controlFile = super.insertColumn(controlFile, "IDENT_ID");
 		controlFile = super.end(controlFile);
+		
+		try {
+			FileUtils.writeStringToFile(new File(
+					output + name + ".CFG"), controlFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return controlFile;
 	}
 
 	@Override
-	public void insert() {
+	public void appendLoadFile() {
 		try {
 			File file = new File(output + name + ".TXT");
 			FileUtils.writeLines(file, parcely);

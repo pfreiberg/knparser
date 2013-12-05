@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import cz.pfreiberg.knparser.domain.Vfk;
-import cz.pfreiberg.knparser.exporter.Exporter;
 import cz.pfreiberg.knparser.exporterfactory.OracleLoaderExporterFactory;
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
@@ -25,8 +24,7 @@ public class Controller {
 			
 			Vfk vfk = parser.getVfk();
 			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(vfk.getCodepage(), configuration.getDestinationOfOutput());
-			Exporter parcely = loaderExporterFactory.getParcelyExporter(vfk.getParcely());
-			parcely.insert();
+			loaderExporterFactory.getParcelyExporter(vfk.getParcely());
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {

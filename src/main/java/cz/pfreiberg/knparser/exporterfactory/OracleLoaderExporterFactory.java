@@ -18,7 +18,8 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getParcelyExporter(List<Parcely> parcely) {
-		return new ParcelyOracleLoaderFileExporter(parcely, characterSet, output);
+		return new ParcelyOracleLoaderFileExporter(parcely, characterSet,
+				output);
 	}
 
 }

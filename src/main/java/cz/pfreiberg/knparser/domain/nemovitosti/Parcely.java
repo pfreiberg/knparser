@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cz.pfreiberg.knparser.util.VfkUtil;

@@ -39,13 +39,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 		String output = loadFile.replace(",\ncolumns_value", "");
 		return output;
 	}
-
-	@Override
-	public void appendLoadFile() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Override
 	public void find() {
 		// TODO Auto-generated method stub
