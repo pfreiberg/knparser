@@ -8,6 +8,13 @@ import cz.pfreiberg.knparser.exporterfactory.OracleLoaderExporterFactory;
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
 
+/**
+ * Řídící část programu. Využívá parser k naplnění doménových tříd ze souboru.
+ * Následně iniciuje jejich zpracování a převedení do load filu, nebo databáze.
+ * 
+ * @author Petr Freiberg (freibergp@gmail.com)
+ * 
+ */
 public class Controller {
 
 	Configuration configuration;
@@ -17,14 +24,15 @@ public class Controller {
 	}
 
 	public void run() {
-
 		try {
 			Parser parser = new Parser(configuration);
 			parser.parse();
-			
+		
 			Vfk vfk = parser.getVfk();
-			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(vfk.getCodepage(), configuration.getDestinationOfOutput());
+			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
+					vfk.getCodepage(), configuration.getDestinationOfOutput());
 			loaderExporterFactory.getParcelyExporter(vfk.getParcely());
+
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {
@@ -32,7 +40,6 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }

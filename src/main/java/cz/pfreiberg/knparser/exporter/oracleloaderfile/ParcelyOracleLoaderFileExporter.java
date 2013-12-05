@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
+import cz.pfreiberg.knparser.parser.ParserException;
+import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
@@ -61,8 +63,8 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		
 		try {
 			FileUtils.writeStringToFile(new File(
-					output + name + ".CFG"), controlFile);
-		} catch (IOException e) {
+					output + name + ".CFG"), controlFile, VfkUtil.convertEncoding(characterSet));
+		} catch (IOException | ParserException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -74,8 +76,8 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	public void appendLoadFile() {
 		try {
 			File file = new File(output + name + ".TXT");
-			FileUtils.writeLines(file, parcely);
-		} catch (IOException e) {
+			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet), parcely);
+		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

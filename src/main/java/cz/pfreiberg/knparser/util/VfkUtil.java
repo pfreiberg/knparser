@@ -40,6 +40,15 @@ public class VfkUtil {
 		throw new ParserException("HCODEPAGE was NOT found in the file.");
 	}
 
+	public static String convertEncoding(String encoding) throws ParserException {
+		if (EncodingCzech.windows1250.equalsVfk(encoding)) {
+			return EncodingCzech.windows1250.getEncoding();
+		} else if (EncodingCzech.iso88592.equalsVfk(encoding)) {
+			return EncodingCzech.iso88592.getEncoding();
+		}
+		throw new ParserException("Unsupported encoding.");
+	}
+
 	public static Integer getInteger(String value) {
 		Integer output = null;
 		try {
@@ -86,14 +95,6 @@ public class VfkUtil {
 		if (value == null || value.equals("\"\""))
 			return null;
 		return value;
-	}
-
-	public static String formatDate(Date date) {
-		if (date == null)
-			return "\"NULL\"";
-		DateFormat df = new SimpleDateFormat("\"dd.MM.yyyy HH:mm:ss\"");
-		return df.format(date);
-
 	}
 
 	public static String formatValue(Object value) {
