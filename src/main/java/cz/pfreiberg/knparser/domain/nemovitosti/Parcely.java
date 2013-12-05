@@ -277,7 +277,7 @@ public class Parcely {
 				+ VfkUtil.formatValue(drupozKod) + "," + VfkUtil.formatValue(zpvypaKod) + "," + VfkUtil.formatValue(typParcely) + ","
 				+ VfkUtil.formatValue(vymeraParcely) + "," + VfkUtil.formatValue(cenaNemovitosti) + ","
 				+ VfkUtil.formatValue(definiciniBodPar) + "," + VfkUtil.formatValue(telId) + "," + VfkUtil.formatValue(parId)+ "," + VfkUtil.formatValue(budId)
-				+ "," + VfkUtil.formatValue(identBud) + "|";
+				+ "," + VfkUtil.formatValue(identBud) + "|" + Character.toString((char)21) + "\n";
 		return output;
 	}
 
