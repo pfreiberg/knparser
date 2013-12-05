@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class OkresyParser {
 
-	public static Okresy parse(String actualLine) {
+	public static Okresy parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		Okresy okres = new Okresy();
 		okres.setKod(VfkUtil.getInteger(tokens[i++]));

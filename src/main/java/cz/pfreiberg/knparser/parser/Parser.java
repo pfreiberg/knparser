@@ -12,7 +12,6 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.Configuration;
 import cz.pfreiberg.knparser.domain.Vfk;
-import cz.pfreiberg.knparser.util.EncodingCzech;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class Parser {
@@ -48,8 +47,34 @@ public class Parser {
 			case "&DPAR":
 				vfk.getParcely().add(ParcelyParser.parse(tokens));
 				break;
+			case "&DBUD":
+				vfk.getBudovy().add(BudovyParser.parse(tokens));
+				break;
+			case "&DKATUZE":
+				vfk.getKatastrUzemi().add(KatastrUzemiParser.parse(tokens));
+				break;
+			case "&DOBCE":
+				vfk.getObce().add(ObceParser.parse(tokens));
+				break;
+			case "&DOKRESY":
+				vfk.getOkresy().add(OkresyParser.parse(tokens));
+				break;
+			case "&DNKRAJE":
+				vfk.getNoveKraje().add(NoveKrajeParser.parse(tokens));
+				break;
+			case "&DRZO":
+				vfk.getRZpochr().add(RZpochrParser.parse(tokens));
+				break;
+			case "&DZPVYBU":
+				vfk.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
+				break;
 			}
 
+		}
+
+		// TODO testovací výpis
+		for (int i = 0; i < 5; i++) {
+			System.out.println(vfk.getRZpochr().get(i));
 		}
 	}
 

@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class BudovyParser {
 
-	public static Budovy parse(String actualLine) {
+	public static Budovy parse(String[] tokens) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		Budovy budova = new Budovy();
 		budova.setId(VfkUtil.getLong(tokens[i++]));

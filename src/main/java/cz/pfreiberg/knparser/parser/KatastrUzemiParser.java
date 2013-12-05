@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class KatastrUzemiParser {
 	
-	public static KatastrUzemi parse(String actualLine) {
+	public static KatastrUzemi parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		KatastrUzemi katastrUzemi = new KatastrUzemi();
 		katastrUzemi.setKod(VfkUtil.getInteger(tokens[i++]));

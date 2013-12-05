@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ObceParser {
 
-	public static Obce parse(String actualLine) {
+	public static Obce parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		Obce obec = new Obce();
 		obec.setKod(VfkUtil.getInteger(tokens[i++]));

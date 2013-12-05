@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class NoveKrajeParser {
 
-	public static NoveKraje parse(String actualLine) {
+	public static NoveKraje parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		NoveKraje novyKraj = new NoveKraje();
 		novyKraj.setKod(VfkUtil.getInteger(tokens[i++]));

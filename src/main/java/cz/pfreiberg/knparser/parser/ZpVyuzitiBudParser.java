@@ -5,10 +5,9 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ZpVyuzitiBudParser {
 
-	public static ZpVyuzitiBud parse(String actualLine) {
+	public static ZpVyuzitiBud parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
-
+		
 		ZpVyuzitiBud zpVyuzitiBud = new ZpVyuzitiBud();
 		zpVyuzitiBud.setKod(VfkUtil.getInteger(tokens[i++]));
 		zpVyuzitiBud.setNazev(VfkUtil.getString(tokens[i++]));

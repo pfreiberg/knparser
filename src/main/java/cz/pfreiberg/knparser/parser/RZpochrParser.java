@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class RZpochrParser {
 
-	public static RZpochr parse(String actualLine) {
+	public static RZpochr parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		RZpochr rZpochr = new RZpochr();
 		rZpochr.setId(VfkUtil.getLong(tokens[i++]));
