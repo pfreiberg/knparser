@@ -10,28 +10,31 @@ import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
 
 public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
+	private List<Parcely> parcely;
 	private final String characterSet;
 	private final String name = "PARCELY";
 
 	public ParcelyOracleLoaderFileExporter(List<Parcely> parcely,
 			String characterSet) {
+		this.parcely = parcely;
 		this.characterSet = characterSet;
 		String output = makeControlFile();
 
 		try {
-			FileUtils.writeStringToFile(new File("C:/Users/pfreiberg/Desktop/output.CFG"), output);
+			FileUtils.writeStringToFile(new File(
+					"C:/Users/pfreiberg/Desktop/output.CFG"), output);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
 	public String makeControlFile() {
 		String loadFile = super.makeControlFile();
 		loadFile = super.fillHeader(loadFile, characterSet, name);
-		
+
 		loadFile = super.insertColumn(loadFile, "ID");
 		loadFile = super.insertColumn(loadFile, "STAV_DAT");
 		loadFile = super.insertDate(loadFile, "DATUM_VZNIKU");
@@ -61,10 +64,19 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		loadFile = super.insertColumn(loadFile, "BUD_ID");
 		loadFile = super.insertColumn(loadFile, "IDENT_ID");
 		loadFile = super.end(loadFile);
-		
+
 		return loadFile;
 	}
-	
-	
+
+	@Override
+	public void insert() {
+		try {
+			File file = new File("C:/Users/pfreiberg/Desktop/output.TXT");
+			FileUtils.writeLines(file, parcely);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

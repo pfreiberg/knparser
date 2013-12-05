@@ -1,6 +1,9 @@
 package cz.pfreiberg.knparser.domain.nemovitosti;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
  * Třída reprezentující "Parcely".
@@ -265,22 +268,17 @@ public class Parcely {
 
 	@Override
 	public String toString() {
-		return "Parcely [id=" + id + ", stavDat=" + stavDat + ", datumVzniku="
-				+ datumVzniku + ", datumZaniku=" + datumZaniku
-				+ ", priznakKontextu=" + priznakKontextu + ", rizeniIdVzniku="
-				+ rizeniIdVzniku + ", rizeniIdZaniku=" + rizeniIdZaniku
-				+ ", pknId=" + pknId + ", partType=" + partType
-				+ ", katuzeKod=" + katuzeKod + ", katuzeKodPuv=" + katuzeKodPuv
-				+ ", druhCislovaniPar=" + druhCislovaniPar
-				+ ", kmenoveCisloPar=" + kmenoveCisloPar + ", zdpazeKod="
-				+ zdpazeKod + ", poddeleniCislaPar=" + poddeleniCislaPar
-				+ ", dilParcely=" + dilParcely + ", maplisKod=" + maplisKod
-				+ ", zpurvyKod=" + zpurvyKod + ", drupozKod=" + drupozKod
-				+ ", zpvypaKod=" + zpvypaKod + ", typParcely=" + typParcely
-				+ ", vymeraParcely=" + vymeraParcely + ", cenaNemovitosti="
-				+ cenaNemovitosti + ", definiciniBodPar=" + definiciniBodPar
-				+ ", telId=" + telId + ", parId=" + parId + ", budId=" + budId
-				+ ", identBud=" + identBud + "]";
+		String output = "" + VfkUtil.formatValue(id) + "," + VfkUtil.formatValue(stavDat) + "," + VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + "," + VfkUtil.formatValue(priznakKontextu) + "," + VfkUtil.formatValue(rizeniIdVzniku)
+				+ "," + VfkUtil.formatValue(rizeniIdZaniku) + "," + VfkUtil.formatValue(pknId) + "," + VfkUtil.formatValue(partType) + ","
+				+ VfkUtil.formatValue(katuzeKod) + "," + VfkUtil.formatValue(katuzeKodPuv) + "," + VfkUtil.formatValue(druhCislovaniPar) + ","
+				+ VfkUtil.formatValue(kmenoveCisloPar) + "," + VfkUtil.formatValue(zdpazeKod) + "," + VfkUtil.formatValue(poddeleniCislaPar)
+				+ "," + VfkUtil.formatValue(dilParcely) + "," + VfkUtil.formatValue(maplisKod) + "," + VfkUtil.formatValue(zpurvyKod) + ","
+				+ VfkUtil.formatValue(drupozKod) + "," + VfkUtil.formatValue(zpvypaKod) + "," + VfkUtil.formatValue(typParcely) + ","
+				+ VfkUtil.formatValue(vymeraParcely) + "," + VfkUtil.formatValue(cenaNemovitosti) + ","
+				+ VfkUtil.formatValue(definiciniBodPar) + "," + VfkUtil.formatValue(telId) + "," + VfkUtil.formatValue(parId)+ "," + VfkUtil.formatValue(budId)
+				+ "," + VfkUtil.formatValue(identBud) + "|";
+		return output;
 	}
 
 }

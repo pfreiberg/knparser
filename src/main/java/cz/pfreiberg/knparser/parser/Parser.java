@@ -43,13 +43,12 @@ public class Parser {
 		for (String[] values = processNextRow(); values != null; values = processNextRow()) {
 			String node = values[0];
 			String[] tokens = Arrays.copyOfRange(values, 1, values.length);
-
 			switch (node) {
 			case "&DPAR":
 				vfk.getParcely().add(ParcelyParser.parse(tokens));
 				break;
 			}
-
+			
 		}
 	}
 
