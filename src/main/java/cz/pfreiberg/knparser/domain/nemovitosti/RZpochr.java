@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující
  * "Výběr způsobu ochrany k nemovitostem na základě exportovaných parcel".
@@ -113,12 +115,18 @@ public class RZpochr {
 
 	@Override
 	public String toString() {
-		return "RZpochr [id=" + id + ", stavDat=" + stavDat + ", datumVzniku="
-				+ datumVzniku + ", datumZaniku=" + datumZaniku
-				+ ", priznakKontextu=" + priznakKontextu + ", rizeniIdVzniku="
-				+ rizeniIdVzniku + ", rizeniIdZaniku=" + rizeniIdZaniku
-				+ ", zpochrKod=" + zpochrKod + ", parId=" + parId + ", budId="
-				+ budId + ", jedId=" + jedId + "]";
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(zpochrKod) + ","
+				+ VfkUtil.formatValue(parId) + "," 
+				+ VfkUtil.formatValue(budId) + "," 
+				+ VfkUtil.formatValue(jedId)
+				+ VfkUtil.getTerminator();
 	}
 
 }

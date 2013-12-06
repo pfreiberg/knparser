@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník druhů pozemku".
  * 
@@ -85,11 +87,15 @@ public class DPozemku {
 
 	@Override
 	public String toString() {
-		return "DPozemku [kod=" + kod + ", nazev=" + nazev
-				+ ", zemedelskaKultura=" + zemedelskaKultura + ", platnostOd="
-				+ platnostOd + ", typppdKod=" + typppdKod + ", platnostDo="
-				+ platnostDo + ", zkratka=" + zkratka + ", stavebniParcela="
-				+ stavebniParcela + "]";
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(zemedelskaKultura) + ","
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(typppdKod) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(zkratka) + ","
+				+ VfkUtil.formatValue(stavebniParcela)
+				+ VfkUtil.getTerminator();
 	}
 
 }

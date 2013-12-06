@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Části budov".
  * 
@@ -103,13 +105,17 @@ public class CastiBudov {
 
 	@Override
 	public String toString() {
-		return "CastiBudov [stavDat=" + stavDat + ", datumVzniku="
-				+ datumVzniku + ", datumZaniku=" + datumZaniku
-				+ ", priznakKontextu=" + priznakKontextu + ", rizeniIdVzniku="
-				+ rizeniIdVzniku + ", rizeniIdZaniku=" + rizeniIdZaniku
-				+ ", budId=" + budId + ", typBudKod=" + typBudKod
-				+ ", cisloDomovni=" + cisloDomovni + ", cenaNemovitosti="
-				+ cenaNemovitosti + "]";
+		return "" + VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(budId) + ","
+				+ VfkUtil.formatValue(typBudKod) + ","
+				+ VfkUtil.formatValue(cisloDomovni) + ","
+				+ VfkUtil.formatValue(cenaNemovitosti)
+				+ VfkUtil.getTerminator();
 	}
 
 }

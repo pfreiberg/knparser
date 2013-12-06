@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class MapoveListyParser {
 
-	public static MapoveListy parse(String actualLine) {
+	public static MapoveListy parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		MapoveListy mapoveListy = new MapoveListy();
 		mapoveListy.setId(VfkUtil.getLong(tokens[i++]));

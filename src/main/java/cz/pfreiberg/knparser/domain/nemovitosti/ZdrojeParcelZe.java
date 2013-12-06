@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník zdrojů parcel ZE".
  * 
@@ -58,9 +60,12 @@ public class ZdrojeParcelZe {
 
 	@Override
 	public String toString() {
-		return "ZdrojeParcelZe [kod=" + kod + ", nazev=" + nazev
-				+ ", platnostOd=" + platnostOd + ", platnostDo=" + platnostDo
-				+ ", zkratka=" + zkratka + "]";
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(zkratka)
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník okresů – vázaně".
  * 
@@ -76,10 +78,13 @@ public class Okresy {
 
 	@Override
 	public String toString() {
-		return "Okresy [kod=" + kod + ", krajeKod=" + krajeKod + ", nazev="
-				+ nazev + ", platnostOd=" + platnostOd + ", platnostDo="
-				+ platnostDo + ", nuts4=" + nuts4 + ", nKrajeKod=" + nKrajeKod
-				+ "]";
+		return "" + VfkUtil.formatValue(kod) + ","
+				+ VfkUtil.formatValue(krajeKod) + ","
+				+ VfkUtil.formatValue(nazev) + ","
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(nuts4) + ","
+				+ VfkUtil.formatValue(nKrajeKod) 
+				+ VfkUtil.getTerminator();
 	}
-
 }

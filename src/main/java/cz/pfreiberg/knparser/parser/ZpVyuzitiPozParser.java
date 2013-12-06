@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ZpVyuzitiPozParser {
 
-	public static ZpVyuzitiPoz parse(String actualLine) {
+	public static ZpVyuzitiPoz parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		ZpVyuzitiPoz zpVyuzitiPoz = new ZpVyuzitiPoz();
 		zpVyuzitiPoz.setKod(VfkUtil.getInteger(tokens[i++]));

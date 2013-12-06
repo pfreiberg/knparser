@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Výběr katastrálních území dle exportovaných parcel".
  * 
@@ -58,9 +60,12 @@ public class KatastrUzemi {
 
 	@Override
 	public String toString() {
-		return "KatastrUzemi [kod=" + kod + ", obceKod=" + obceKod + ", nazev="
-				+ nazev + ", platnostOd=" + platnostOd + ", platnostDo="
-				+ platnostDo + "]";
+		return "" + VfkUtil.formatValue(kod) + ","
+				+ VfkUtil.formatValue(obceKod) + ","
+				+ VfkUtil.formatValue(nazev) + ","
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

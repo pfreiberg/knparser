@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník typů budov".
  * 
@@ -67,9 +69,13 @@ public class TBudov {
 
 	@Override
 	public String toString() {
-		return "TBudov [kod=" + kod + ", nazev=" + nazev + ", platnostOd="
-				+ platnostOd + ", platnostDo=" + platnostDo + ", zadaniCd="
-				+ zadaniCd + ", zkratka=" + zkratka + "]";
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + ","
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(zadaniCd) + ","
+				+ VfkUtil.formatValue(zkratka)
+				+ VfkUtil.getTerminator();
 	}
 
 }

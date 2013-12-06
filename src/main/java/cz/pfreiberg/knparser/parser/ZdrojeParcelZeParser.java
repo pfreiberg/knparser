@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ZdrojeParcelZeParser {
 
-	public static ZdrojeParcelZe parse(String actualLine) {
+	public static ZdrojeParcelZe parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		ZdrojeParcelZe zdrojeParcelZe = new ZdrojeParcelZe();
 		zdrojeParcelZe.setKod(VfkUtil.getInteger(tokens[i++]));

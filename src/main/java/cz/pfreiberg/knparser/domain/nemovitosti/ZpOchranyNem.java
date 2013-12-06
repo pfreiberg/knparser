@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník způsobů ochrany nemovitosti".
  * 
@@ -85,10 +87,15 @@ public class ZpOchranyNem {
 
 	@Override
 	public String toString() {
-		return "ZpOchranyNem [kod=" + kod + ", nazev=" + nazev
-				+ ", platnostOd=" + platnostOd + ", platnostDo=" + platnostDo
-				+ ", pozemek=" + pozemek + ", budova=" + budova + ", jednotka="
-				+ jednotka + ", nemochr=" + nemochr + "]";
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(pozemek) + ","
+				+ VfkUtil.formatValue(budova) + ","
+				+ VfkUtil.formatValue(jednotka) + ","
+				+ VfkUtil.formatValue(nemochr)
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník způsobů využití pozemku".
  * 
@@ -67,9 +69,12 @@ public class ZpVyuzitiPoz {
 
 	@Override
 	public String toString() {
-		return "ZpVyuzitiPoz [kod=" + kod + ", nazev=" + nazev
-				+ ", platnostOd=" + platnostOd + ", typppKod=" + typppKod
-				+ ", platnostDo=" + platnostDo + ", zkratka=" + zkratka + "]";
+		return "" + VfkUtil.formatValue(kod) + ","
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(typppKod) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(zkratka) + VfkUtil.getTerminator();
 	}
 
 }

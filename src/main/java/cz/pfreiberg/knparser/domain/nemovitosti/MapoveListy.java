@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník mapových listů dle exportovaných parcel".
  * 
@@ -58,9 +60,12 @@ public class MapoveListy {
 
 	@Override
 	public String toString() {
-		return "MapoveListy [id=" + id + ", oznaceniMapovehoListu="
-				+ oznaceniMapovehoListu + ", platnostOd=" + platnostOd
-				+ ", platnostDo=" + platnostDo + ", mapa=" + mapa + "]";
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(oznaceniMapovehoListu) + ","
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(mapa) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

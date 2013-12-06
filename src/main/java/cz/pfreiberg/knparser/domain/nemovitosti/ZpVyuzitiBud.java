@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Způsob využití budov".
  * 
@@ -58,9 +60,12 @@ public class ZpVyuzitiBud {
 
 	@Override
 	public String toString() {
-		return "ZpVyuzitiBud [kod=" + kod + ", nazev=" + nazev
-				+ ", platnostOd=" + platnostOd + ", plastnostDo=" + plastnostDo
-				+ ", zkratka=" + zkratka + "]";
+		return "" + VfkUtil.formatValue(kod) + ","
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(plastnostDo) + ","
+				+ VfkUtil.formatValue(zkratka)
+				+ VfkUtil.getTerminator();
 	}
 
 }

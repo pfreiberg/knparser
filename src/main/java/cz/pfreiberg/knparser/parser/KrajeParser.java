@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class KrajeParser {
 
-	public static Kraje parse(String actualLine) {
+	public static Kraje parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		Kraje kraj = new Kraje();
 		kraj.setKod(VfkUtil.getInteger(tokens[i++]));

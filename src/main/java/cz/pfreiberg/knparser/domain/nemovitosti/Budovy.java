@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Budovy".
  * 
@@ -130,14 +132,20 @@ public class Budovy {
 
 	@Override
 	public String toString() {
-		return "Budovy [id=" + id + ", stavDat=" + stavDat + ", datumVzniku="
-				+ datumVzniku + ", datumZaniku=" + datumZaniku
-				+ ", priznakKontextu=" + priznakKontextu + ", rizeniIdVzniku="
-				+ rizeniIdVzniku + ", rizeniIdZaniku=" + rizeniIdZaniku
-				+ ", typBudKod=" + typBudKod + ", caoObceKod=" + caoObceKod
-				+ ", cisloDomovni=" + cisloDomovni + ", cenaNemovitosti="
-				+ cenaNemovitosti + ", zpvybuKod=" + zpvybuKod + ", telId="
-				+ telId + "]";
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(typBudKod) + ","
+				+ VfkUtil.formatValue(caoObceKod) + ","
+				+ VfkUtil.formatValue(cisloDomovni) + ","
+				+ VfkUtil.formatValue(cenaNemovitosti) + ","
+				+ VfkUtil.formatValue(zpvybuKod) + ","
+				+ VfkUtil.formatValue(telId) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

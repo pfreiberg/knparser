@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník krajů - vázaně".
  * 
@@ -49,8 +51,11 @@ public class Kraje {
 
 	@Override
 	public String toString() {
-		return "Kraje [kod=" + kod + ", nazev=" + nazev + ", platnostOd="
-				+ platnostOd + ", platnostDo=" + platnostDo + "]";
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

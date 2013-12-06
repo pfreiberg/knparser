@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ZpUrceniVymeryParser {
 
-	public static ZpUrceniVymery parse(String actualLine) {
+	public static ZpUrceniVymery parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		ZpUrceniVymery zpUrceniVymery = new ZpUrceniVymery();
 		zpUrceniVymery.setKod(VfkUtil.getInteger(tokens[i++]));

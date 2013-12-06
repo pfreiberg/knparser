@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník obcí – vázaně".
  * 
@@ -58,9 +60,12 @@ public class Obce {
 
 	@Override
 	public String toString() {
-		return "Obce [kod=" + kod + ", okresyKod=" + okresyKod + ", nazev="
-				+ nazev + ", platnostOd=" + platnostOd + ", platnostDo="
-				+ platnostDo + "]";
+		return "" + VfkUtil.formatValue(kod) + ","
+				+ VfkUtil.formatValue(okresyKod) + ","
+				+ VfkUtil.formatValue(nazev) + ","
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

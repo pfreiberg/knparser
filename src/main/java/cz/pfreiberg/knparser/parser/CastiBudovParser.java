@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class CastiBudovParser {
 
-	public static CastiBudov parse(String actualLine) {
+	public static CastiBudov parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		CastiBudov castiBudovy = new CastiBudov();
 		castiBudovy.setStavDat(VfkUtil.getInteger(tokens[i++]));

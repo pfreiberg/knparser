@@ -32,8 +32,26 @@ public class Controller {
 			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
 					vfk.getZmeny(), vfk.getCodepage(),
 					configuration.getDestinationOfOutput());
+			
 			loaderExporterFactory.getParcelyExporter(vfk.getParcely());
-
+			loaderExporterFactory.getBudovyExporter(vfk.getBudovy());
+			loaderExporterFactory.getCastiBudovExporter(vfk.getCastiBudov());
+			loaderExporterFactory.getZpOchranyNemExporter(vfk.getZpOchranyNem());
+			loaderExporterFactory.getDPozemkuExporter(vfk.getDPozemku());
+			loaderExporterFactory.getZpVyuzitiPozExporter(vfk.getZpVyuzitiPoz());
+			loaderExporterFactory.getZdrojeParcelZeExporter(vfk.getZdrojeParcelZe());
+			loaderExporterFactory.getZpUrceniVymeryExporter(vfk.getZpUrceniVymery());
+			loaderExporterFactory.getTBudovExporter(vfk.getTBudov());
+			loaderExporterFactory.getMapoveListyExporter(vfk.getMapoveListy());
+			loaderExporterFactory.getKatastrUzemiExporter(vfk.getKatastrUzemi());
+			loaderExporterFactory.getObceExporter(vfk.getObce());
+			loaderExporterFactory.getCastiObciExporter(vfk.getCastiObci());
+			loaderExporterFactory.getOkresyExporter(vfk.getOkresy());
+			loaderExporterFactory.getKrajeExporter(vfk.getKraje());
+			loaderExporterFactory.getNoveKrajeExporter(vfk.getNoveKraje());
+			loaderExporterFactory.getRZpochrExporter(vfk.getRZpochr());
+			loaderExporterFactory.getZpVyuzitiBudExporter(vfk.getZpVyuzitiBud());
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {

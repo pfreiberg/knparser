@@ -113,6 +113,10 @@ public class VfkUtil {
 				return "\"" + value + "\"";
 			}
 		}
-
+	}
+	
+	public static String getTerminator()
+	{
+		return "|" + Character.toString((char)21) + "\n";
 	}
 }

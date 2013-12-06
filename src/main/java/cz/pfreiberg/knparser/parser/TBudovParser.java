@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TBudovParser {
 
-	public static TBudov parse(String actualLine) {
+	public static TBudov parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		TBudov tBudov = new TBudov();
 		tBudov.setKod(VfkUtil.getInteger(tokens[i++]));

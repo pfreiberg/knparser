@@ -4,10 +4,9 @@ import cz.pfreiberg.knparser.domain.nemovitosti.ZpOchranyNem;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ZpOchranyNemParser {
-	
-	public static ZpOchranyNem parse(String actualLine) {
+
+	public static ZpOchranyNem parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		ZpOchranyNem zpOchranyNem = new ZpOchranyNem();
 		zpOchranyNem.setKod(VfkUtil.getInteger(tokens[i++]));

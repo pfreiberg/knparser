@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class DPozemkuParser {
 
-	public static DPozemku parse(String actualLine) {
+	public static DPozemku parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		DPozemku dPozemku = new DPozemku();
 		dPozemku.setKod(VfkUtil.getInteger(tokens[i++]));

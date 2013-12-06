@@ -267,17 +267,35 @@ public class Parcely {
 
 	@Override
 	public String toString() {
-		String output = "" + VfkUtil.formatValue(id) + "," + VfkUtil.formatValue(stavDat) + "," + VfkUtil.formatValue(datumVzniku) + ","
-				+ VfkUtil.formatValue(datumZaniku) + "," + VfkUtil.formatValue(priznakKontextu) + "," + VfkUtil.formatValue(rizeniIdVzniku)
-				+ "," + VfkUtil.formatValue(rizeniIdZaniku) + "," + VfkUtil.formatValue(pknId) + "," + VfkUtil.formatValue(partType) + ","
-				+ VfkUtil.formatValue(katuzeKod) + "," + VfkUtil.formatValue(katuzeKodPuv) + "," + VfkUtil.formatValue(druhCislovaniPar) + ","
-				+ VfkUtil.formatValue(kmenoveCisloPar) + "," + VfkUtil.formatValue(zdpazeKod) + "," + VfkUtil.formatValue(poddeleniCislaPar)
-				+ "," + VfkUtil.formatValue(dilParcely) + "," + VfkUtil.formatValue(maplisKod) + "," + VfkUtil.formatValue(zpurvyKod) + ","
-				+ VfkUtil.formatValue(drupozKod) + "," + VfkUtil.formatValue(zpvypaKod) + "," + VfkUtil.formatValue(typParcely) + ","
-				+ VfkUtil.formatValue(vymeraParcely) + "," + VfkUtil.formatValue(cenaNemovitosti) + ","
-				+ VfkUtil.formatValue(definiciniBodPar) + "," + VfkUtil.formatValue(telId) + "," + VfkUtil.formatValue(parId)+ "," + VfkUtil.formatValue(budId)
-				+ "," + VfkUtil.formatValue(identBud) + "|" + Character.toString((char)21) + "\n";
-		return output;
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(pknId) + ","
+				+ VfkUtil.formatValue(partType) + ","
+				+ VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(katuzeKodPuv) + ","
+				+ VfkUtil.formatValue(druhCislovaniPar) + ","
+				+ VfkUtil.formatValue(kmenoveCisloPar) + ","
+				+ VfkUtil.formatValue(zdpazeKod) + ","
+				+ VfkUtil.formatValue(poddeleniCislaPar) + ","
+				+ VfkUtil.formatValue(dilParcely) + ","
+				+ VfkUtil.formatValue(maplisKod) + ","
+				+ VfkUtil.formatValue(zpurvyKod) + ","
+				+ VfkUtil.formatValue(drupozKod) + ","
+				+ VfkUtil.formatValue(zpvypaKod) + ","
+				+ VfkUtil.formatValue(typParcely) + ","
+				+ VfkUtil.formatValue(vymeraParcely) + ","
+				+ VfkUtil.formatValue(cenaNemovitosti) + ","
+				+ VfkUtil.formatValue(definiciniBodPar) + ","
+				+ VfkUtil.formatValue(telId) + "," 
+				+ VfkUtil.formatValue(parId) + ","
+				+ VfkUtil.formatValue(budId) + ","
+				+ VfkUtil.formatValue(identBud) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -5,9 +5,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class CastiObciParser {
 
-	public static CastiObci parse(String actualLine) {
+	public static CastiObci parse(String tokens[]) {
 		int i = 0;
-		String tokens[] = actualLine.split(";");
 
 		CastiObci castiObce = new CastiObci();
 		castiObce.setKod(VfkUtil.getInteger(tokens[i++]));
