@@ -17,7 +17,7 @@ public class ParcelyParser {
 		parcela.setRizeniIdVzniku(VfkUtil.getLong(tokens[i++]));
 		parcela.setRizeniIdZaniku(VfkUtil.getLong(tokens[i++]));
 		parcela.setPknId(VfkUtil.getLong(tokens[i++]));
-		parcela.setPartType(VfkUtil.getString(tokens[i++]));
+		parcela.setParType(VfkUtil.getString(tokens[i++]));
 		parcela.setKatuzeKod(VfkUtil.getInteger(tokens[i++]));
 		parcela.setKatuzeKodPuv(VfkUtil.getInteger(tokens[i++]));
 		parcela.setDruhCislovaniPar(VfkUtil.getInteger(tokens[i++]));

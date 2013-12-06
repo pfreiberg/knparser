@@ -19,7 +19,7 @@ public class CastiBudov {
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
 	private Long budId;
-	private Integer typBudKod;
+	private Integer typbudKod;
 	private Integer cisloDomovni;
 	private Double cenaNemovitosti;
 
@@ -79,12 +79,12 @@ public class CastiBudov {
 		this.budId = budId;
 	}
 
-	public Integer getTypBudKod() {
-		return typBudKod;
+	public Integer getTypbudKod() {
+		return typbudKod;
 	}
 
-	public void setTypBudKod(Integer typBudKod) {
-		this.typBudKod = typBudKod;
+	public void setTypbudKod(Integer typbudKod) {
+		this.typbudKod = typbudKod;
 	}
 
 	public Integer getCisloDomovni() {
@@ -112,7 +112,7 @@ public class CastiBudov {
 				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
 				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
 				+ VfkUtil.formatValue(budId) + ","
-				+ VfkUtil.formatValue(typBudKod) + ","
+				+ VfkUtil.formatValue(typbudKod) + ","
 				+ VfkUtil.formatValue(cisloDomovni) + ","
 				+ VfkUtil.formatValue(cenaNemovitosti)
 				+ VfkUtil.getTerminator();

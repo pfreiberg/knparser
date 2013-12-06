@@ -16,8 +16,8 @@ public class BudovyParser {
 		budova.setPriznakKontextu(VfkUtil.getInteger(tokens[i++]));
 		budova.setRizeniIdVzniku(VfkUtil.getLong(tokens[i++]));
 		budova.setRizeniIdZaniku(VfkUtil.getLong(tokens[i++]));
-		budova.setTypBudKod(VfkUtil.getInteger(tokens[i++]));
-		budova.setCaoObceKod(VfkUtil.getInteger(tokens[i++]));
+		budova.setTypbudKod(VfkUtil.getInteger(tokens[i++]));
+		budova.setCaobceKod(VfkUtil.getInteger(tokens[i++]));
 		budova.setCisloDomovni(VfkUtil.getInteger(tokens[i++]));
 		budova.setCenaNemovitosti(VfkUtil.getInteger(tokens[i++]));
 		budova.setZpvybuKod(VfkUtil.getInteger(tokens[i++]));

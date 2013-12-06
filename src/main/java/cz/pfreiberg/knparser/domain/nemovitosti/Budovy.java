@@ -19,8 +19,8 @@ public class Budovy {
 	private Integer priznakKontextu;
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
-	private Integer typBudKod;
-	private Integer caoObceKod;
+	private Integer typbudKod;
+	private Integer caobceKod;
 	private Integer cisloDomovni;
 	private Integer cenaNemovitosti;
 	private Integer zpvybuKod;
@@ -82,20 +82,20 @@ public class Budovy {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public Integer getTypBudKod() {
-		return typBudKod;
+	public Integer getTypbudKod() {
+		return typbudKod;
 	}
 
-	public void setTypBudKod(Integer typBudKod) {
-		this.typBudKod = typBudKod;
+	public void setTypbudKod(Integer typbudKod) {
+		this.typbudKod = typbudKod;
 	}
 
-	public Integer getCaoObceKod() {
-		return caoObceKod;
+	public Integer getCaobceKod() {
+		return caobceKod;
 	}
 
-	public void setCaoObceKod(Integer caoObceKod) {
-		this.caoObceKod = caoObceKod;
+	public void setCaobceKod(Integer caobceKod) {
+		this.caobceKod = caobceKod;
 	}
 
 	public Integer getCisloDomovni() {
@@ -139,8 +139,8 @@ public class Budovy {
 				+ VfkUtil.formatValue(priznakKontextu) + ","
 				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
 				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
-				+ VfkUtil.formatValue(typBudKod) + ","
-				+ VfkUtil.formatValue(caoObceKod) + ","
+				+ VfkUtil.formatValue(typbudKod) + ","
+				+ VfkUtil.formatValue(caobceKod) + ","
 				+ VfkUtil.formatValue(cisloDomovni) + ","
 				+ VfkUtil.formatValue(cenaNemovitosti) + ","
 				+ VfkUtil.formatValue(zpvybuKod) + ","

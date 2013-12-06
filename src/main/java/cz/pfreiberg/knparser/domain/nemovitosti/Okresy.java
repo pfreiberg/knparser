@@ -18,7 +18,7 @@ public class Okresy {
 	private Date platnostOd;
 	private Date platnostDo;
 	private String nuts4;
-	private Integer nKrajeKod;
+	private Integer nkrajeKod;
 
 	public Integer getKod() {
 		return kod;
@@ -68,12 +68,12 @@ public class Okresy {
 		this.nuts4 = nuts4;
 	}
 
-	public Integer getNKrajeKod() {
-		return nKrajeKod;
+	public Integer getNkrajeKod() {
+		return nkrajeKod;
 	}
 
-	public void setNKrajeKod(Integer nKrajeKod) {
-		this.nKrajeKod = nKrajeKod;
+	public void setNkrajeKod(Integer nkrajeKod) {
+		this.nkrajeKod = nkrajeKod;
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class Okresy {
 				+ VfkUtil.formatValue(platnostOd) + ","
 				+ VfkUtil.formatValue(platnostDo) + ","
 				+ VfkUtil.formatValue(nuts4) + ","
-				+ VfkUtil.formatValue(nKrajeKod) 
+				+ VfkUtil.formatValue(nkrajeKod) 
 				+ VfkUtil.getTerminator();
 	}
 }

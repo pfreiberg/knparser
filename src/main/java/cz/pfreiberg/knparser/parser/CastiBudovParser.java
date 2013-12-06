@@ -16,7 +16,7 @@ public class CastiBudovParser {
 		castiBudovy.setRizeniIdVzniku(VfkUtil.getLong(tokens[i++]));
 		castiBudovy.setRizeniIdZaniku(VfkUtil.getLong(tokens[i++]));
 		castiBudovy.setBudId(VfkUtil.getLong(tokens[i++]));
-		castiBudovy.setTypBudKod(VfkUtil.getInteger(tokens[i++]));
+		castiBudovy.setTypbudKod(VfkUtil.getInteger(tokens[i++]));
 		castiBudovy.setCisloDomovni(VfkUtil.getInteger(tokens[i++]));
 		castiBudovy.setCenaNemovitosti(VfkUtil.getDouble(tokens[i++]));
 

@@ -15,7 +15,7 @@ public class OkresyParser {
 		okres.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
 		okres.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
 		okres.setNuts4(VfkUtil.getString(tokens[i++]));
-		okres.setNKrajeKod(VfkUtil.getInteger(tokens[i++]));
+		okres.setNkrajeKod(VfkUtil.getInteger(tokens[i++]));
 
 		return okres;
 	}

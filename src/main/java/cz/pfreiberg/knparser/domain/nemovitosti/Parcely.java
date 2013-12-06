@@ -20,7 +20,7 @@ public class Parcely {
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
 	private Long pknId;
-	private String partType;
+	private String parType;
 	private Integer katuzeKod;
 	private Integer katuzeKodPuv;
 	private Integer druhCislovaniPar;
@@ -105,12 +105,12 @@ public class Parcely {
 		this.pknId = pknId;
 	}
 
-	public String getPartType() {
-		return partType;
+	public String getParType() {
+		return parType;
 	}
 
-	public void setPartType(String partType) {
-		this.partType = partType;
+	public void setParType(String parType) {
+		this.parType = parType;
 	}
 
 	public Integer getKatuzeKod() {
@@ -275,7 +275,7 @@ public class Parcely {
 				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
 				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
 				+ VfkUtil.formatValue(pknId) + ","
-				+ VfkUtil.formatValue(partType) + ","
+				+ VfkUtil.formatValue(parType) + ","
 				+ VfkUtil.formatValue(katuzeKod) + ","
 				+ VfkUtil.formatValue(katuzeKodPuv) + ","
 				+ VfkUtil.formatValue(druhCislovaniPar) + ","
