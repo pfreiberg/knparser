@@ -48,67 +48,11 @@ public class Parser {
 			for (String[] values = processNextRow(); values != null; values = processNextRow()) {
 				String node = values[0];
 				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
-				switch (node) {
-				case "&HZMENY":
-					vfk.setZmeny(Integer.parseInt(tokens[0]));
-					break;
-				case "&DPAR":
-					vfk.getParcely().add(ParcelyParser.parse(tokens));
-					break;
-				case "&DBUD":
-					vfk.getBudovy().add(BudovyParser.parse(tokens));
-					break;
-				case "&DCABU":
-					vfk.getCastiBudov().add(CastiBudovParser.parse(tokens));
-					break;
-				case "&DZPOCHN":
-					vfk.getZpOchranyNem().add(ZpOchranyNemParser.parse(tokens));
-					break;
-				case "&DDRUPOZ":
-					vfk.getDPozemku().add(DPozemkuParser.parse(tokens));
-					break;
-				case "&DZPVYPO":
-					vfk.getZpVyuzitiPoz().add(ZpVyuzitiPozParser.parse(tokens));
-					break;
-				case "&DZDPAZE":
-					vfk.getZdrojeParcelZe().add(
-							ZdrojeParcelZeParser.parse(tokens));
-					break;
-				case "&DZPURVY":
-					vfk.getZpUrceniVymery().add(
-							ZpUrceniVymeryParser.parse(tokens));
-					break;
-				case "&DTYPBUD":
-					vfk.getTBudov().add(TBudovParser.parse(tokens));
-					break;
-				case "&DMAPLIS":
-					vfk.getMapoveListy().add(MapoveListyParser.parse(tokens));
-					break;
-				case "&DKATUZE":
-					vfk.getKatastrUzemi().add(KatastrUzemiParser.parse(tokens));
-					break;
-				case "&DOBCE":
-					vfk.getObce().add(ObceParser.parse(tokens));
-					break;
-				case "&DCASOBC":
-					vfk.getCastiObci().add(CastiObciParser.parse(tokens));
-					break;
-				case "&DOKRESY":
-					vfk.getOkresy().add(OkresyParser.parse(tokens));
-					break;
-				case "&KRAJE":
-					vfk.getKraje().add(KrajeParser.parse(tokens));
-					break;
-				case "&DNKRAJE":
-					vfk.getNoveKraje().add(NoveKrajeParser.parse(tokens));
-					break;
-				case "&DRZO":
-					vfk.getRZpochr().add(RZpochrParser.parse(tokens));
-					break;
-				case "&DZPVYBU":
-					vfk.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
-					break;
+
+				if (tryParseHlavicka(node, tokens)) {
+				} else if (tryParseNemovitosti(node, tokens)) {
 				}
+
 			}
 		} catch (ParserException e) {
 			System.out.println(e);
@@ -124,7 +68,7 @@ public class Parser {
 		if (actualRow % 10000 == 0) {
 			System.out.println("Actual row: " + actualRow);
 		}
-		
+
 		String[] row = null;
 		do {
 			String nextRow = getNextRow();
@@ -245,5 +189,78 @@ public class Parser {
 
 	private boolean isRowProcessing() {
 		return buffer != null;
+	}
+
+	private boolean tryParseHlavicka(String node, String[] tokens) {
+		switch (node) {
+		case "&HZMENY":
+			vfk.setZmeny(Integer.parseInt(tokens[0]));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tryParseNemovitosti(String node, String[] tokens) {
+		switch (node) {
+		case "&DPAR":
+			vfk.getParcely().add(ParcelyParser.parse(tokens));
+			break;
+		case "&DBUD":
+			vfk.getBudovy().add(BudovyParser.parse(tokens));
+			break;
+		case "&DCABU":
+			vfk.getCastiBudov().add(CastiBudovParser.parse(tokens));
+			break;
+		case "&DZPOCHN":
+			vfk.getZpOchranyNem().add(ZpOchranyNemParser.parse(tokens));
+			break;
+		case "&DDRUPOZ":
+			vfk.getDPozemku().add(DPozemkuParser.parse(tokens));
+			break;
+		case "&DZPVYPO":
+			vfk.getZpVyuzitiPoz().add(ZpVyuzitiPozParser.parse(tokens));
+			break;
+		case "&DZDPAZE":
+			vfk.getZdrojeParcelZe().add(ZdrojeParcelZeParser.parse(tokens));
+			break;
+		case "&DZPURVY":
+			vfk.getZpUrceniVymery().add(ZpUrceniVymeryParser.parse(tokens));
+			break;
+		case "&DTYPBUD":
+			vfk.getTBudov().add(TBudovParser.parse(tokens));
+			break;
+		case "&DMAPLIS":
+			vfk.getMapoveListy().add(MapoveListyParser.parse(tokens));
+			break;
+		case "&DKATUZE":
+			vfk.getKatastrUzemi().add(KatastrUzemiParser.parse(tokens));
+			break;
+		case "&DOBCE":
+			vfk.getObce().add(ObceParser.parse(tokens));
+			break;
+		case "&DCASOBC":
+			vfk.getCastiObci().add(CastiObciParser.parse(tokens));
+			break;
+		case "&DOKRESY":
+			vfk.getOkresy().add(OkresyParser.parse(tokens));
+			break;
+		case "&KRAJE":
+			vfk.getKraje().add(KrajeParser.parse(tokens));
+			break;
+		case "&DNKRAJE":
+			vfk.getNoveKraje().add(NoveKrajeParser.parse(tokens));
+			break;
+		case "&DRZO":
+			vfk.getRZpochr().add(RZpochrParser.parse(tokens));
+			break;
+		case "&DZPVYBU":
+			vfk.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
 	}
 }
