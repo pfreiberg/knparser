@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Číselník typů předmětu řízení".
@@ -55,6 +57,16 @@ public class TPredmetuR {
 
 	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(popis) + ","
+				+ VfkUtil.formatValue(platnostDo)
+				+ VfkUtil.getTerminator();
 	}
 
 }

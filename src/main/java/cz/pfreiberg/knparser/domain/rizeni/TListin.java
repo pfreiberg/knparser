@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Číselník typů listin".
@@ -64,6 +66,17 @@ public class TListin {
 
 	public void setDruhList(Integer druhList) {
 		this.druhList = druhList;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(popis) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(druhList)
+				+ VfkUtil.getTerminator();
 	}
 
 }

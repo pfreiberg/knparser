@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Řízení (vklad, záznam)".
@@ -172,6 +174,29 @@ public class Rizeni {
 
 	public void setPraresKod(Integer praresKod) {
 		this.praresKod = praresKod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(typrizKod) + ","
+				+ VfkUtil.formatValue(poradoveCislo) + ","
+				+ VfkUtil.formatValue(rok) + "," 
+				+ VfkUtil.formatValue(stav) + "," 
+				+ VfkUtil.formatValue(funkceKod) + ","
+				+ VfkUtil.formatValue(typopeKod) + ","
+				+ VfkUtil.formatValue(funkceKodVyznamna) + ","
+				+ VfkUtil.formatValue(typopeKodVyznamna) + ","
+				+ VfkUtil.formatValue(uzisysUsername) + ","
+				+ VfkUtil.formatValue(uzirolNazev) + ","
+				+ VfkUtil.formatValue(osvobozeno) + ","
+				+ VfkUtil.formatValue(hodnotaKolku) + ","
+				+ VfkUtil.formatValue(datum) + ","
+				+ VfkUtil.formatValue(datum2) + ","
+				+ VfkUtil.formatValue(popis) + ","
+				+ VfkUtil.formatValue(datumUzavreni) + ","
+				+ VfkUtil.formatValue(praresKod)
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rezervovanacisla;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Rezervovaná parcelní čísla".
@@ -53,6 +55,16 @@ public class RezParcelniCisla {
 
 	public void setRezzpmzCisloZpmz(Integer rezzpmzCisloZpmz) {
 		this.rezzpmzCisloZpmz = rezzpmzCisloZpmz;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(kmenoveCisloPar) + ","
+				+ VfkUtil.formatValue(druhCislovaniPar) + ","
+				+ VfkUtil.formatValue(poddeleniCislaPar) + ","
+				+ VfkUtil.formatValue(rezzpmzCisloZpmz)
+				+ VfkUtil.getTerminator();
 	}
 
 }

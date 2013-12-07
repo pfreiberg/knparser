@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Obeslání účastníků řízení".
@@ -73,6 +75,18 @@ public class ObeslaniMf {
 
 	public void setOpsubId(Long opsubId) {
 		this.opsubId = opsubId;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(obeslaniId) + ","
+				+ VfkUtil.formatValue(zpusobObeslani) + ","
+				+ VfkUtil.formatValue(typopeKod) + ","
+				+ VfkUtil.formatValue(ucastId) + ","
+				+ VfkUtil.formatValue(stavObeslani) + ","
+				+ VfkUtil.formatValue(datumPrijetiDorucenky) + ","
+				+ VfkUtil.formatValue(opsubId)
+				+ VfkUtil.getTerminator();
 	}
 
 }

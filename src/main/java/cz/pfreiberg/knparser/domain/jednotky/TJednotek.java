@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.jednotky;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník typů jednotek".
  * 
@@ -54,6 +56,16 @@ public class TJednotek {
 
 	public void setZkratka(String zkratka) {
 		this.zkratka = zkratka;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(zkratka) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

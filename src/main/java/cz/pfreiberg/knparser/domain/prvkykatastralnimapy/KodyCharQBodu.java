@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Číselník kódů charakteristiky kvality bodu".
@@ -46,6 +48,15 @@ public class KodyCharQBodu {
 
 	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

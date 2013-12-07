@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rizeni;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Typy řízení".
@@ -44,6 +46,15 @@ public class TypyRizeni {
 
 	public void setZpoplatneni(String zpoplatneni) {
 		this.zpoplatneni = zpoplatneni;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(popis) + ","
+				+ VfkUtil.formatValue(zpoplatneni)
+				+ VfkUtil.getTerminator();
 	}
 
 }

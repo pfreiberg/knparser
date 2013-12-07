@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující
@@ -101,6 +103,21 @@ public class SpojeniBMapy {
 
 	public void setPriznakKontextu(Integer priznakKontextu) {
 		this.priznakKontextu = priznakKontextu;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(poradoveCisloBodu) + ","
+				+ VfkUtil.formatValue(souradniceY) + ","
+				+ VfkUtil.formatValue(souradniceX) + ","
+				+ VfkUtil.formatValue(opId) + "," 
+				+ VfkUtil.formatValue(dmpId) + "," 
+				+ VfkUtil.formatValue(hbpejId) + ","
+				+ VfkUtil.formatValue(parametrySpojeni) + "," 
+				+ VfkUtil.formatValue(priznakKontextu)
+				+ VfkUtil.getTerminator();
 	}
 
 }

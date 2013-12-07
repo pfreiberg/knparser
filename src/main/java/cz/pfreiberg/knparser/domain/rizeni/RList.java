@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující
@@ -146,6 +148,26 @@ public class RList {
 
 	public void setRizeniIdVzniku2(Long rizeniIdVzniku2) {
 		this.rizeniIdVzniku2 = rizeniIdVzniku2;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(listinId) + ","
+				+ VfkUtil.formatValue(parId) + "," 
+				+ VfkUtil.formatValue(budId) + ","
+				+ VfkUtil.formatValue(jedId) + ","
+				+ VfkUtil.formatValue(opsubId) + ","
+				+ VfkUtil.formatValue(jpvId) + "," 
+				+ VfkUtil.formatValue(datumVzniku2) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku2)
+				+ VfkUtil.getTerminator();
 	}
 
 }

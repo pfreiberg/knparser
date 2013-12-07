@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Číselník typů prvků prostorových dat".
@@ -82,6 +84,19 @@ public class TPrvkuPDat {
 
 	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + ","
+				+ VfkUtil.formatValue(polohopis) + ","
+				+ VfkUtil.formatValue(editovatelny) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(vyznam) + ","
+				+ VfkUtil.formatValue(krivka) + ","
+				+ VfkUtil.formatValue(typPrvku) + ","
+				+ VfkUtil.formatValue(platnostDo)
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rizeni;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Předměty řízení".
@@ -26,6 +28,13 @@ public class PredmetyRizeni {
 
 	public void setTyppreKod(Integer typpreKod) {
 		this.typpreKod = typpreKod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(rizeniId) + ","
+				+ VfkUtil.formatValue(typpreKod) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

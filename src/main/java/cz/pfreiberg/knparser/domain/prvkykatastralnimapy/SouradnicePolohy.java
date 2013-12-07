@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Souřadnice polohy bodů poloho-pisu (měřené)".
@@ -116,6 +118,23 @@ public class SouradnicePolohy {
 
 	public void setCisloZpmzMer(Integer cisloZpmzMer) {
 		this.cisloZpmzMer = cisloZpmzMer;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(cisloZpmz) + ","
+				+ VfkUtil.formatValue(cisloTl) + ","
+				+ VfkUtil.formatValue(cisloBodu) + ","
+				+ VfkUtil.formatValue(uplneCislo) + ","
+				+ VfkUtil.formatValue(souradniceY) + ","
+				+ VfkUtil.formatValue(souradniceX) + ","
+				+ VfkUtil.formatValue(kodchbKod) + ","
+				+ VfkUtil.formatValue(katuzeKodMer) + ","
+				+ VfkUtil.formatValue(cisloZpmzMer)
+				+ VfkUtil.getTerminator();
 	}
 
 }

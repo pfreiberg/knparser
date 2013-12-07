@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.vlastnictvi;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Katastrální tělesa".
  * 
@@ -90,6 +92,20 @@ public class Telesa {
 
 	public void setCisloTel(Integer cisloTel) {
 		this.cisloTel = cisloTel;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(cisloTel)
+				+ VfkUtil.getTerminator();
 	}
 
 }

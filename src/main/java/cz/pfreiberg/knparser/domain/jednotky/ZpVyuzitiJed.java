@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.jednotky;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Způsob využití jednotek".
  * 
@@ -63,6 +65,17 @@ public class ZpVyuzitiJed {
 
 	public void setDoplKod(Integer doplKod) {
 		this.doplKod = doplKod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(zkratka) + ","
+				+ VfkUtil.formatValue(doplKod) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

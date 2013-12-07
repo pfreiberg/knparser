@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.jinepravnivztahy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Jiné právní vztahy".
  * 
@@ -216,6 +218,34 @@ public class JinePravVztahy {
 
 	public void setOpsubId2Pro(Long opsubId2Pro) {
 		this.opsubId2Pro = opsubId2Pro;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(parIdPro) + ","
+				+ VfkUtil.formatValue(budIdPro) + ","
+				+ VfkUtil.formatValue(jedIdPro) + ","
+				+ VfkUtil.formatValue(parIdK) + ","
+				+ VfkUtil.formatValue(budIdK) + ","
+				+ VfkUtil.formatValue(jedIdK) + ","
+				+ VfkUtil.formatValue(typravKod) + ","
+				+ VfkUtil.formatValue(popisPravnihoVztahu) + ","
+				+ VfkUtil.formatValue(telId) + ","
+				+ VfkUtil.formatValue(opsubIdPro) + ","
+				+ VfkUtil.formatValue(opsubIdK) + ","
+				+ VfkUtil.formatValue(podilPohledavka) + ","
+				+ VfkUtil.formatValue(hjpvId) + ","
+				+ VfkUtil.formatValue(datumVzniku2) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku2) + ","
+				+ VfkUtil.formatValue(opsubId2Pro) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

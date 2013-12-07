@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující
@@ -92,6 +94,19 @@ public class SpojeniPoMapy {
 
 	public void setParametrySpojeni(String parametrySpojeni) {
 		this.parametrySpojeni = parametrySpojeni;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(poradoveCisloBodu) + ","
+				+ VfkUtil.formatValue(souradniceY) + ","
+				+ VfkUtil.formatValue(souradniceX) + ","
+				+ VfkUtil.formatValue(pomId) + ","
+				+ VfkUtil.formatValue(parametrySpojeni);
 	}
 
 }

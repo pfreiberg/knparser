@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující
@@ -137,6 +139,25 @@ public class SpojeniBPoloh {
 
 	public void setZvbId(Long zvbId) {
 		this.zvbId = zvbId;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(bpId) + ","
+				+ VfkUtil.formatValue(poradoveCisloBodu) + ","
+				+ VfkUtil.formatValue(obId) + "," 
+				+ VfkUtil.formatValue(hpId) + "," 
+				+ VfkUtil.formatValue(dpmId) + ","
+				+ VfkUtil.formatValue(parametrySpojeni) + ","
+				+ VfkUtil.formatValue(zvbId) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rizeni;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Adresy účastníků řízení".
@@ -143,6 +145,26 @@ public class Adresy {
 
 	public void setKodAdrm(Integer kodAdrm) {
 		this.kodAdrm = kodAdrm;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(ucastId) + ","
+				+ VfkUtil.formatValue(typAdresy) + ","
+				+ VfkUtil.formatValue(okres) + "," 
+				+ VfkUtil.formatValue(obec) + "," 
+				+ VfkUtil.formatValue(castObce) + ","
+				+ VfkUtil.formatValue(cisloDomovni) + ","
+				+ VfkUtil.formatValue(nazevUlice) + ","
+				+ VfkUtil.formatValue(cisloOrientacni) + ","
+				+ VfkUtil.formatValue(psc) + ","
+				+ VfkUtil.formatValue(stat) + "," 
+				+ VfkUtil.formatValue(telefon) + ","
+				+ VfkUtil.formatValue(fax) + ","
+				+ VfkUtil.formatValue(mestskaCast) + ","
+				+ VfkUtil.formatValue(cpCe) + ","
+				+ VfkUtil.formatValue(kodAdrm)
+				+ VfkUtil.getTerminator();
 	}
 
 }

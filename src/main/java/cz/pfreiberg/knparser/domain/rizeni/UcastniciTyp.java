@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rizeni;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Vazba Účastnící – Typy účastníků řízení".
@@ -26,6 +28,13 @@ public class UcastniciTyp {
 
 	public void setTypucaKod(String typucaKod) {
 		this.typucaKod = typucaKod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(ucastId) + ","
+				+ VfkUtil.formatValue(typucaKod)
+				+ VfkUtil.getTerminator();
 	}
 
 }

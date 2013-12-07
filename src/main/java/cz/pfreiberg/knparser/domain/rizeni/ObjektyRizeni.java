@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Objekty řízení (parcely, budovy,..)".
@@ -91,6 +93,20 @@ public class ObjektyRizeni {
 
 	public void setDatumHistDo(Date datumHistDo) {
 		this.datumHistDo = datumHistDo;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(rizeniId) + ","
+				+ VfkUtil.formatValue(parId) + "," 
+				+ VfkUtil.formatValue(budId) + "," 
+				+ VfkUtil.formatValue(jedId) + ","
+				+ VfkUtil.formatValue(datumPlomby) + ","
+				+ VfkUtil.formatValue(datumOdstraneniPlomby) + ","
+				+ VfkUtil.formatValue(datumHistOd) + ","
+				+ VfkUtil.formatValue(datumHistDo) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

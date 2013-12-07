@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Další údaje listin".
@@ -46,6 +48,15 @@ public class DalsiUdajeListiny {
 
 	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + "," 
+				+ VfkUtil.formatValue(nazev) + "," 
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

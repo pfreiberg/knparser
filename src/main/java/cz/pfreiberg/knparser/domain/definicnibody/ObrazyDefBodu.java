@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.definicnibody;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Obrazy definičních bodů".
@@ -109,6 +111,22 @@ public class ObrazyDefBodu {
 
 	public void setSouradniceX(Double souradniceX) {
 		this.souradniceX = souradniceX;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(parId) + "," 
+				+ VfkUtil.formatValue(budId) + "," 
+				+ VfkUtil.formatValue(typbudKod) + ","
+				+ VfkUtil.formatValue(cisloDomovni) + ","
+				+ VfkUtil.formatValue(souradniceY) + ","
+				+ VfkUtil.formatValue(souradniceX) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Obrazy bodů BP".
@@ -154,6 +156,27 @@ public class ObrazyBoduBp {
 
 	public void setVztaznyBod(Integer vztaznyBod) {
 		this.vztaznyBod = vztaznyBod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + "," 
+				+ VfkUtil.formatValue(rizeniIdZaniku) + "," 
+				+ VfkUtil.formatValue(typppdKod) + ","
+				+ VfkUtil.formatValue(souradniceX) + ","
+				+ VfkUtil.formatValue(souradniceY) + ","
+				+ VfkUtil.formatValue(text) + ","
+				+ VfkUtil.formatValue(velikost) + ","
+				+ VfkUtil.formatValue(uhel) + "," 
+				+ VfkUtil.formatValue(bpId) + "," 
+				+ VfkUtil.formatValue(obbpType) + ","
+				+ VfkUtil.formatValue(vztaznyBod) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

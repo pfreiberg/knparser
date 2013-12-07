@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.jednotky;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Jednotky".
  * 
@@ -153,6 +155,26 @@ public class Jednotky {
 
 	public void setPopis(String popis) {
 		this.popis = popis;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(budId) + ","
+				+ VfkUtil.formatValue(typjedKod) + ","
+				+ VfkUtil.formatValue(ciselnikJednotky) + ","
+				+ VfkUtil.formatValue(cenaNemovitosti) + ","
+				+ VfkUtil.formatValue(zpvyjeKod) + ","
+				+ VfkUtil.formatValue(telId) + ","
+				+ VfkUtil.formatValue(podilCitatel) + ","
+				+ VfkUtil.formatValue(podilJmenovatel) + ","
+				+ VfkUtil.formatValue(popis) + VfkUtil.getTerminator();
 	}
 
 }

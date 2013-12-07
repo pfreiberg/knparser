@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Listiny".
@@ -163,6 +165,28 @@ public class Listiny {
 
 	public void setDatumHistDo(Date datumHistDo) {
 		this.datumHistDo = datumHistDo;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(typlistKod) + ","
+				+ VfkUtil.formatValue(popis) + "," 
+				+ VfkUtil.formatValue(obsah) + "," 
+				+ VfkUtil.formatValue(stran) + ","
+				+ VfkUtil.formatValue(datumVyhotoveni) + ","
+				+ VfkUtil.formatValue(zhotovitel) + ","
+				+ VfkUtil.formatValue(poradoveCisloZhotovitele) + ","
+				+ VfkUtil.formatValue(rokZhotovitele) + ","
+				+ VfkUtil.formatValue(doplneniZhotovitele) + ","
+				+ VfkUtil.formatValue(zkratka) + ","
+				+ VfkUtil.formatValue(rizeniId) + ","
+				+ VfkUtil.formatValue(zmenaPravVztahu) + ","
+				+ VfkUtil.formatValue(datumPravMoci) + ","
+				+ VfkUtil.formatValue(datumVykonatelnosti) + ","
+				+ VfkUtil.formatValue(datumHistOd) + ","
+				+ VfkUtil.formatValue(datumHistDo) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

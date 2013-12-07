@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.vlastnictvi;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Vlastnictví".
  * 
@@ -135,6 +137,25 @@ public class Vlastnictvi {
 
 	public void setRizeniIdVzniku2(Long rizeniIdVzniku2) {
 		this.rizeniIdVzniku2 = rizeniIdVzniku2;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(opsubId) + ","
+				+ VfkUtil.formatValue(typravKod) + ","
+				+ VfkUtil.formatValue(telId) + ","
+				+ VfkUtil.formatValue(podilCitatel) + ","
+				+ VfkUtil.formatValue(podilJmenovatel) + ","
+				+ VfkUtil.formatValue(datumVzniku2) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku2)
+				+ VfkUtil.getTerminator();
 	}
 
 }

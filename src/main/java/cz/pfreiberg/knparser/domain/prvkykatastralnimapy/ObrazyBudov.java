@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Obrazy budov (obvod budovy, značka druhu budovy)".
@@ -136,6 +138,25 @@ public class ObrazyBudov {
 
 	public void setObrbudType(String obrbudType) {
 		this.obrbudType = obrbudType;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + "," 
+				+ VfkUtil.formatValue(rizeniIdZaniku) + "," 
+				+ VfkUtil.formatValue(typppdKod) + ","
+				+ VfkUtil.formatValue(souradniceY) + ","
+				+ VfkUtil.formatValue(souradniceX) + ","
+				+ VfkUtil.formatValue(velikost) + ","
+				+ VfkUtil.formatValue(uhel) + "," 
+				+ VfkUtil.formatValue(budId) + "," 
+				+ VfkUtil.formatValue(obrbudType)
+				+ VfkUtil.getTerminator();
 	}
 
 }

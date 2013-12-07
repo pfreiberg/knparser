@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.geometrickyplan;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Vazební tabulka návrhy změn KM – ZPMZ".
@@ -35,6 +37,14 @@ public class NzZpmz {
 
 	public void setZpmzKatuzeKod(Integer zpmzKatuzeKod) {
 		this.zpmzKatuzeKod = zpmzKatuzeKod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(nzId) + ","
+				+ VfkUtil.formatValue(zpmzCisloZpmz) + ","
+				+ VfkUtil.formatValue(zpmzKatuzeKod) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

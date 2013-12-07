@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.adresnimista;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Adresy".
@@ -82,6 +84,19 @@ public class Adresa {
 
 	public void setUliceNazev(String uliceNazev) {
 		this.uliceNazev = uliceNazev;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + ","
+				+ VfkUtil.formatValue(objektKod) + ","
+				+ VfkUtil.formatValue(uliceKod) + ","
+				+ VfkUtil.formatValue(cisOrient) + ","
+				+ VfkUtil.formatValue(psc) + ","
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(uliceNazev)
+				+ VfkUtil.getTerminator();
 	}
 
 }

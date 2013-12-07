@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.adresnimista;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Odkazy objektů na adresy".
@@ -44,6 +46,15 @@ public class BudObj {
 
 	public void setIdUa(Integer idUa) {
 		this.idUa = idUa;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(cisdomHod) + ","
+				+ VfkUtil.formatValue(idKn) + "," 
+				+ VfkUtil.formatValue(cbKn) + "," 
+				+ VfkUtil.formatValue(idUa) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.vlastnictvi;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Oprávněné subjekty".
  * 
@@ -342,6 +344,48 @@ public class OpravSubjekty {
 
 	public void setIdNadrizenePo(Long idNadrizenePo) {
 		this.idNadrizenePo = idNadrizenePo;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(idJe1PartnerBsm) + ","
+				+ VfkUtil.formatValue(idJe2PartnerBsm) + ","
+				+ VfkUtil.formatValue(idZdroj) + ","
+				+ VfkUtil.formatValue(opsubType) + ","
+				+ VfkUtil.formatValue(charosKod) + ","
+				+ VfkUtil.formatValue(ico) + ","
+				+ VfkUtil.formatValue(doplnekIco) + ","
+				+ VfkUtil.formatValue(nazev) + ","
+				+ VfkUtil.formatValue(nazevU) + ","
+				+ VfkUtil.formatValue(rodneCislo) + ","
+				+ VfkUtil.formatValue(titulPredJmenem) + ","
+				+ VfkUtil.formatValue(jmeno) + ","
+				+ VfkUtil.formatValue(jmenoU) + ","
+				+ VfkUtil.formatValue(prijmeni) + ","
+				+ VfkUtil.formatValue(prijmeniU) + ","
+				+ VfkUtil.formatValue(titulZaJmenem) + ","
+				+ VfkUtil.formatValue(cisloDomovni) + ","
+				+ VfkUtil.formatValue(cisloOrientacni) + ","
+				+ VfkUtil.formatValue(nazevUlice) + ","
+				+ VfkUtil.formatValue(castObce) + ","
+				+ VfkUtil.formatValue(obec) + "," 
+				+ VfkUtil.formatValue(okres) + "," 
+				+ VfkUtil.formatValue(stat) + ","
+				+ VfkUtil.formatValue(psc) + ","
+				+ VfkUtil.formatValue(mestskaCast) + ","
+				+ VfkUtil.formatValue(cpCe) + ","
+				+ VfkUtil.formatValue(datumVzniku2) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku2) + ","
+				+ VfkUtil.formatValue(kodAdrm) + ","
+				+ VfkUtil.formatValue(idNadrizenePo)
+				+ VfkUtil.getTerminator();
 	}
 
 }

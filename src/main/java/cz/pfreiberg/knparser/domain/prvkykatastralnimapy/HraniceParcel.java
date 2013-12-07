@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Hranice parcel".
@@ -100,6 +102,21 @@ public class HraniceParcel {
 
 	public void setParId2(Long parId2) {
 		this.parId2 = parId2;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + "," 
+				+ VfkUtil.formatValue(rizeniIdZaniku) + "," 
+				+ VfkUtil.formatValue(typppdKod) + "," 
+				+ VfkUtil.formatValue(parId1) + "," 
+				+ VfkUtil.formatValue(parId2) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

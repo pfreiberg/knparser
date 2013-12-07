@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rizeni;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Účastníci řízení".
@@ -188,6 +190,31 @@ public class Ucastnici {
 
 	public void setOverenProtiOs(Integer overenProtiOs) {
 		this.overenProtiOs = overenProtiOs;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(rizeniId) + ","
+				+ VfkUtil.formatValue(druhUcastnika) + ","
+				+ VfkUtil.formatValue(jmeno) + ","
+				+ VfkUtil.formatValue(jmenoU) + ","
+				+ VfkUtil.formatValue(prijmeni) + ","
+				+ VfkUtil.formatValue(prijmeniU) + ","
+				+ VfkUtil.formatValue(titulPredJmenem) + ","
+				+ VfkUtil.formatValue(titulZaJmenem) + ","
+				+ VfkUtil.formatValue(rc) + ","
+				+ VfkUtil.formatValue(rodnePrijmeni) + ","
+				+ VfkUtil.formatValue(rodinnyStav) + ","
+				+ VfkUtil.formatValue(obchodniJmeno) + ","
+				+ VfkUtil.formatValue(obchodniJmenoU) + ","
+				+ VfkUtil.formatValue(dic) + "," 
+				+ VfkUtil.formatValue(ico) + "," 
+				+ VfkUtil.formatValue(doplnekIco) + ","
+				+ VfkUtil.formatValue(overenPodpis) + ","
+				+ VfkUtil.formatValue(overenProtiRs) + ","
+				+ VfkUtil.formatValue(overenProtiOs) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Zobrazení věcných břemen".
@@ -100,6 +102,21 @@ public class ZobrazeniVb {
 
 	public void setHjpvId(Long hjpvId) {
 		this.hjpvId = hjpvId;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(typppdKod) + ","
+				+ VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(hjpvId)
+				+ VfkUtil.getTerminator();
 	}
 
 }

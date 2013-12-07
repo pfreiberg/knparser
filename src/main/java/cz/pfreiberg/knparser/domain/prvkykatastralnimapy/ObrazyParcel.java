@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující
@@ -155,6 +157,27 @@ public class ObrazyParcel {
 
 	public void setVztaznyBod(Integer vztaznyBod) {
 		this.vztaznyBod = vztaznyBod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + "," 
+				+ VfkUtil.formatValue(rizeniIdZaniku) + "," 
+				+ VfkUtil.formatValue(typppdKod) + ","
+				+ VfkUtil.formatValue(souradniceY) + ","
+				+ VfkUtil.formatValue(souradniceX) + ","
+				+ VfkUtil.formatValue(text) + ","
+				+ VfkUtil.formatValue(velikost) + ","
+				+ VfkUtil.formatValue(uhel) + "," 
+				+ VfkUtil.formatValue(parId) + "," 
+				+ VfkUtil.formatValue(oparType) + "," 
+				+ VfkUtil.formatValue(vztaznyBod)
+				+ VfkUtil.getTerminator();
 	}
 
 }

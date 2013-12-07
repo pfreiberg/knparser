@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rezervovanacisla;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Rezervovaná čísla bodu PBPP".
@@ -44,6 +46,15 @@ public class RezCislaPbpp {
 
 	public void setRizeniId(Long rizeniId) {
 		this.rizeniId = rizeniId;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(cisloBodu) + ","
+				+ VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(rezzpmzCisloZpmz) + ","
+				+ VfkUtil.formatValue(rizeniId) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

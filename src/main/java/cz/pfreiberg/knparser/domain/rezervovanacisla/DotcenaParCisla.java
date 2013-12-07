@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rezervovanacisla;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Dotčená parcelní čísla".
@@ -44,6 +46,15 @@ public class DotcenaParCisla {
 
 	public void setDruhCislovaniPar(Integer druhCislovaniPar) {
 		this.druhCislovaniPar = druhCislovaniPar;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(kmenoveCisloPar) + ","
+				+ VfkUtil.formatValue(poddeleniCislaPar) + ","
+				+ VfkUtil.formatValue(druhCislovaniPar)
+				+ VfkUtil.getTerminator();
 	}
 
 }

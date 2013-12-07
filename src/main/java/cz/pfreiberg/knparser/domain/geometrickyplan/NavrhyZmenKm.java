@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.geometrickyplan;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Hlavičky geometrických plánů a ostatních změn KM.".
@@ -80,6 +82,19 @@ public class NavrhyZmenKm {
 
 	public void setOznaceniMapovehoListu(String oznaceniMapovehoListu) {
 		this.oznaceniMapovehoListu = oznaceniMapovehoListu;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + "," 
+				+ VfkUtil.formatValue(stavNz) + "," 
+				+ VfkUtil.formatValue(nzType) + ","
+				+ VfkUtil.formatValue(porizeniDatNz) + ","
+				+ VfkUtil.formatValue(rizeniId) + ","
+				+ VfkUtil.formatValue(cisloPlanku) + ","
+				+ VfkUtil.formatValue(vyhotovil) + ","
+				+ VfkUtil.formatValue(oznaceniMapovehoListu)
+				+ VfkUtil.getTerminator();
 	}
 
 }

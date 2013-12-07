@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.geometrickyplan;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Hlavičky ZPMZ".
@@ -80,6 +82,19 @@ public class Zpmz {
 
 	public void setTypsosKod(Integer typsosKod) {
 		this.typsosKod = typsosKod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(cisloZpmz) + ","
+				+ VfkUtil.formatValue(ppzId) + ","
+				+ VfkUtil.formatValue(stavZpmz) + ","
+				+ VfkUtil.formatValue(merickyNacrt) + ","
+				+ VfkUtil.formatValue(zapisnikPodrobMereni) + ","
+				+ VfkUtil.formatValue(vypocetProtokolVymer) + ","
+				+ VfkUtil.formatValue(typsosKod)
+				+ VfkUtil.getTerminator();
 	}
 
 }

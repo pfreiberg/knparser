@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.prvkykatastralnimapy;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Souřadnice obrazu bodů polohopisu v mapě".
@@ -98,6 +100,21 @@ public class SouradniceObrazu {
 
 	public void setKodchbKod(Integer kodchbKod) {
 		this.kodchbKod = kodchbKod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(cisloZpmz) + ","
+				+ VfkUtil.formatValue(cisloTl) + ","
+				+ VfkUtil.formatValue(cisloBodu) + ","
+				+ VfkUtil.formatValue(uplneCislo) + ","
+				+ VfkUtil.formatValue(souradniceY) + ","
+				+ VfkUtil.formatValue(souradniceX) + ","
+				+ VfkUtil.formatValue(kodchbKod)
+				+ VfkUtil.getTerminator();
 	}
 
 }

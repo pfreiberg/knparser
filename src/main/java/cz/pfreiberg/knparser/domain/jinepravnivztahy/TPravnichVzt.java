@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.jinepravnivztahy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Číselník typů právních vztahů".
  * 
@@ -125,6 +127,24 @@ public class TPravnichVzt {
 
 	public void setPodilVeritele(String podilVeritele) {
 		this.podilVeritele = podilVeritele;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(kod) + ","
+				+ VfkUtil.formatValue(tprKod) + ","
+				+ VfkUtil.formatValue(nazev) + ","
+				+ VfkUtil.formatValue(vlastnictvi) + ","
+				+ VfkUtil.formatValue(proOs) + ","
+				+ VfkUtil.formatValue(proNemovitost) + ","
+				+ VfkUtil.formatValue(kNemovitosti) + ","
+				+ VfkUtil.formatValue(platnostOd) + ","
+				+ VfkUtil.formatValue(sekce) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(vlvztah) + "," 
+				+ VfkUtil.formatValue(kOs) + "," 
+				+ VfkUtil.formatValue(podilVeritele)
+				+ VfkUtil.getTerminator();
 	}
 
 }

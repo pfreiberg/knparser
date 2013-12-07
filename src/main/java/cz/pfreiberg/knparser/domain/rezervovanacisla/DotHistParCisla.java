@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.domain.rezervovanacisla;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Dotčená historická parcelní čísla".
@@ -44,6 +46,15 @@ public class DotHistParCisla {
 
 	public void setParskup(Integer parskup) {
 		this.parskup = parskup;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(katuzeKod) + ","
+				+ VfkUtil.formatValue(parcis) + ","
+				+ VfkUtil.formatValue(parpod) + ","
+				+ VfkUtil.formatValue(parskup) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

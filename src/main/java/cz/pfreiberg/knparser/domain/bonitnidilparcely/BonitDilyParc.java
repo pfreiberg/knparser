@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.bonitnidilparcely;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * Třída reprezentující "Bonitní díly parcel".
  * 
@@ -90,6 +92,20 @@ public class BonitDilyParc {
 
 	public void setVymera(Integer vymera) {
 		this.vymera = vymera;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(parId) + ","
+				+ VfkUtil.formatValue(bpejKod) + ","
+				+ VfkUtil.formatValue(vymera) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

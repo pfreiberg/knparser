@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Hranice BPEJ".
@@ -109,6 +111,22 @@ public class HraniceBpej {
 
 	public void setKatuzeKod(Integer katuzeKod) {
 		this.katuzeKod = katuzeKod;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(id) + ","
+				+ VfkUtil.formatValue(stavDat) + ","
+				+ VfkUtil.formatValue(datumVzniku) + ","
+				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
+				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
+				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
+				+ VfkUtil.formatValue(typppdKod) + ","
+				+ VfkUtil.formatValue(bpejKodHranice1) + ","
+				+ VfkUtil.formatValue(bpejKodHranice2) + ","
+				+ VfkUtil.formatValue(katuzeKod) 
+				+ VfkUtil.getTerminator();
 	}
 
 }

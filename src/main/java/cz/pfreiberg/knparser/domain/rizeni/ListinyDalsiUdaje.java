@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser.domain.rizeni;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.util.VfkUtil;
+
 /**
  * 
  * Třída reprezentující "Vazba Listiny – Další údaje listin".
@@ -37,6 +39,14 @@ public class ListinyDalsiUdaje {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	@Override
+	public String toString() {
+		return "" + VfkUtil.formatValue(listinId) + ","
+				+ VfkUtil.formatValue(dulKod) + ","
+				+ VfkUtil.formatValue(createDate) 
+				+ VfkUtil.getTerminator();
 	}
 
 }
