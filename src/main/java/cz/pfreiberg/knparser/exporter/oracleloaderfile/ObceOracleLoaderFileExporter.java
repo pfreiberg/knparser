@@ -18,8 +18,8 @@ public class ObceOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final String output;
 	private final String name = "OBCE";
 
-	public ObceOracleLoaderFileExporter(List<Obce> obce,
-			String prefix, String characterSet, String output) {
+	public ObceOracleLoaderFileExporter(List<Obce> obce, String prefix,
+			String characterSet, String output) {
 		this.obce = obce;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
@@ -42,8 +42,9 @@ public class ObceOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.end(controlFile);
 
 		try {
-			FileUtils.writeStringToFile(new File(output + prefix + name + ".CFG"),
-					controlFile, VfkUtil.convertEncoding(characterSet));
+			FileUtils.writeStringToFile(new File(output + prefix + name
+					+ ".CFG"), controlFile,
+					VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

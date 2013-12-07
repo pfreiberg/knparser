@@ -9,9 +9,10 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	public String makeControlFile() {
 		final String termination = "'|" + Character.toString((char)21) + "\\n'";
 		return "LOAD DATA\n" + "CHARACTERSET characterset_value\n"
-				+ "INFILE \"infile_value.TXT\"\n" + "APPEND\n"
+				+ "INFILE \"infile_value.TXT\" \"STR" + termination + "\" \n" 
+				+ "APPEND\n"
 				+ "INTO TABLE into_table_value\n"
-				+ "FIELDS TERMINATED BY " + termination + "\n" + "(\n" + "columns_value\n"
+				+ "FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'"  + "\n(\n" + "columns_value\n"
 				+ ")";
 	}
 

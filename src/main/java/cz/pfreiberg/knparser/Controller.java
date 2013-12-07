@@ -26,13 +26,13 @@ public class Controller {
 	public void run() {
 		try {
 			Parser parser = new Parser(configuration);
-			parser.parse();
+			System.out.println(parser.parse() + " row/s was escaped.");
+			System.out.println("Is parsed. Starting the storage sequence.");
 			
 			Vfk vfk = parser.getVfk();
 			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
-					vfk.getZmeny(), vfk.getCodepage(),
+					vfk.getZmeny(), "UTF8",
 					configuration.getDestinationOfOutput());
-			
 			loaderExporterFactory.getParcelyExporter(vfk.getParcely());
 			loaderExporterFactory.getBudovyExporter(vfk.getBudovy());
 			loaderExporterFactory.getCastiBudovExporter(vfk.getCastiBudov());
@@ -51,7 +51,7 @@ public class Controller {
 			loaderExporterFactory.getNoveKrajeExporter(vfk.getNoveKraje());
 			loaderExporterFactory.getRZpochrExporter(vfk.getRZpochr());
 			loaderExporterFactory.getZpVyuzitiBudExporter(vfk.getZpVyuzitiBud());
-			
+			System.out.println("Parsing finished.");
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {

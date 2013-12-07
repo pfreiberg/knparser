@@ -45,6 +45,8 @@ public class VfkUtil {
 			return EncodingCzech.windows1250.getEncoding();
 		} else if (EncodingCzech.iso88592.equalsVfk(encoding)) {
 			return EncodingCzech.iso88592.getEncoding();
+		} else if (EncodingCzech.utf8.equalsVfk(encoding)) {
+			return EncodingCzech.utf8.getEncoding();
 		}
 		throw new ParserException("Unsupported encoding.");
 	}
@@ -117,6 +119,6 @@ public class VfkUtil {
 	
 	public static String getTerminator()
 	{
-		return "|" + Character.toString((char)21) + "\n";
+		return "|" + Character.toString((char)21);
 	}
 }
