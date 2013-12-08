@@ -6,23 +6,23 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import cz.pfreiberg.knparser.domain.jednotky.ZpVyuzitiJed;
+import cz.pfreiberg.knparser.domain.jinepravnivztahy.TPravnichVzt;
 import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ZpVyuzitiJedOracleLoaderFileExporter extends
+public class TPravnichVztOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private List<ZpVyuzitiJed> zpVyuzitiJed;
+	private List<TPravnichVzt> tPravnichVzt;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "ZP_VYUZITI_JED";
+	private final String name = "T_PRAVNICH_VZT";
 
-	public ZpVyuzitiJedOracleLoaderFileExporter(
-			List<ZpVyuzitiJed> zpVyuzitiJed, String prefix,
+	public TPravnichVztOracleLoaderFileExporter(
+			List<TPravnichVzt> tPravnichVzt, String prefix,
 			String characterSet, String output) {
-		this.zpVyuzitiJed = zpVyuzitiJed;
+		this.tPravnichVzt = tPravnichVzt;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -37,11 +37,18 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "KOD");
+		controlFile = super.insertColumn(controlFile, "TPR_KOD");
 		controlFile = super.insertColumn(controlFile, "NAZEV");
+		controlFile = super.insertColumn(controlFile, "VLASTNICTVI");
+		controlFile = super.insertColumn(controlFile, "PRO_OS");
+		controlFile = super.insertColumn(controlFile, "PRO_NEMOVITOST");
+		controlFile = super.insertColumn(controlFile, "K_NEMOVITOSTI");
 		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
+		controlFile = super.insertColumn(controlFile, "SEKCE");
 		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "ZKRATKA");
-		controlFile = super.insertColumn(controlFile, "DOPLKOD");
+		controlFile = super.insertColumn(controlFile, "VLVZTAH");
+		controlFile = super.insertColumn(controlFile, "K_OS");
+		controlFile = super.insertColumn(controlFile, "PODIL_VERITELE");
 		controlFile = super.end(controlFile);
 
 		try {
@@ -61,7 +68,7 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					zpVyuzitiJed);
+					tPravnichVzt);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

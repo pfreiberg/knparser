@@ -16,7 +16,7 @@ public class TJednotekOracleLoaderFileExporter extends OracleLoaderFileExporter 
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "BONIT_DILY_PARC";
+	private final String name = "T_JEDNOTEK";
 
 	public TJednotekOracleLoaderFileExporter(List<TJednotek> tJednotek,
 			String prefix, String characterSet, String output) {

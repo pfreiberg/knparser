@@ -6,23 +6,21 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import cz.pfreiberg.knparser.domain.jednotky.ZpVyuzitiJed;
+import cz.pfreiberg.knparser.domain.vlastnictvi.Telesa;
 import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ZpVyuzitiJedOracleLoaderFileExporter extends
-		OracleLoaderFileExporter {
+public class TelesaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<ZpVyuzitiJed> zpVyuzitiJed;
+	private List<Telesa> telesa;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "ZP_VYUZITI_JED";
+	private final String name = "TELESA";
 
-	public ZpVyuzitiJedOracleLoaderFileExporter(
-			List<ZpVyuzitiJed> zpVyuzitiJed, String prefix,
+	public TelesaOracleLoaderFileExporter(List<Telesa> telesa, String prefix,
 			String characterSet, String output) {
-		this.zpVyuzitiJed = zpVyuzitiJed;
+		this.telesa = telesa;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -36,12 +34,15 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 		String controlFile = super.makeControlFile();
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
-		controlFile = super.insertColumn(controlFile, "KOD");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "ZKRATKA");
-		controlFile = super.insertColumn(controlFile, "DOPLKOD");
+		controlFile = super.insertColumn(controlFile, "ID");
+		controlFile = super.insertColumn(controlFile, "STAV_DAT");
+		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
+		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
+		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
+		controlFile = super.insertColumn(controlFile, "KATUZE_KOD");
+		controlFile = super.insertColumn(controlFile, "CISLO_TEL");
 		controlFile = super.end(controlFile);
 
 		try {
@@ -61,7 +62,7 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					zpVyuzitiJed);
+					telesa);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

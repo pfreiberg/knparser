@@ -6,23 +6,21 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import cz.pfreiberg.knparser.domain.jednotky.ZpVyuzitiJed;
+import cz.pfreiberg.knparser.domain.vlastnictvi.CharOs;
 import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ZpVyuzitiJedOracleLoaderFileExporter extends
-		OracleLoaderFileExporter {
+public class CharOsOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<ZpVyuzitiJed> zpVyuzitiJed;
+	private List<CharOs> charOs;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "ZP_VYUZITI_JED";
+	private final String name = "CHAR_OS";
 
-	public ZpVyuzitiJedOracleLoaderFileExporter(
-			List<ZpVyuzitiJed> zpVyuzitiJed, String prefix,
+	public CharOsOracleLoaderFileExporter(List<CharOs> charOs, String prefix,
 			String characterSet, String output) {
-		this.zpVyuzitiJed = zpVyuzitiJed;
+		this.charOs = charOs;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -38,10 +36,10 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 
 		controlFile = super.insertColumn(controlFile, "KOD");
 		controlFile = super.insertColumn(controlFile, "NAZEV");
+		controlFile = super.insertColumn(controlFile, "OPSUB_TYPE");
 		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
 		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
 		controlFile = super.insertColumn(controlFile, "ZKRATKA");
-		controlFile = super.insertColumn(controlFile, "DOPLKOD");
 		controlFile = super.end(controlFile);
 
 		try {
@@ -61,7 +59,7 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					zpVyuzitiJed);
+					charOs);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
