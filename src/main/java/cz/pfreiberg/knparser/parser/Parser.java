@@ -66,7 +66,7 @@ public class Parser {
 		}
 
 		for (int i = 0; i < 3; i++)
-			System.out.println(vfk.getTelesa().get(i));
+			System.out.println(vfk.getObeslaniMf().get(i));
 
 		return escapedRows;
 	}
