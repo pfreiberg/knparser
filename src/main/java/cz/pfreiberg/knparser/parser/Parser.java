@@ -53,6 +53,9 @@ public class Parser {
 				} else if (tryParseNemovitosti(node, tokens)) {
 				} else if (tryParseJednotky(node, tokens)) {
 				} else if (tryParseBonitniDilParcely(node, tokens)) {
+				} else if (tryParseVlastnictvi(node, tokens)) {
+				} else if (tryParseJinePravniVztahy(node, tokens)) {
+				} else if (tryParseRizeni(node, tokens)) {
 				}
 
 			}
@@ -61,6 +64,9 @@ public class Parser {
 			escapedRows++;
 			parse();
 		}
+
+		for (int i = 0; i < 3; i++)
+			System.out.println(vfk.getTelesa().get(i));
 
 		return escapedRows;
 	}
@@ -248,7 +254,7 @@ public class Parser {
 		case "&DOKRESY":
 			vfk.getOkresy().add(OkresyParser.parse(tokens));
 			break;
-		case "&KRAJE":
+		case "&DKRAJE":
 			vfk.getKraje().add(KrajeParser.parse(tokens));
 			break;
 		case "&DNKRAJE":
@@ -287,6 +293,98 @@ public class Parser {
 		switch (node) {
 		case "&DBDP":
 			vfk.getBonitDilyParc().add(BonitDilyParcParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tryParseVlastnictvi(String node, String[] tokens) {
+		switch (node) {
+		case "&DOPSUB":
+			vfk.getOpravSubjekty().add(OpravSubjektyParser.parse(tokens));
+			break;
+		case "&DVLA":
+			vfk.getVlastnictvi().add(VlastnictviParser.parse(tokens));
+			break;
+		case "&DCHAROS":
+			vfk.getCharOs().add(CharOsParser.parse(tokens));
+			break;
+		case "&DTEL":
+			vfk.getTelesa().add(TelesaParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tryParseJinePravniVztahy(String node, String[] tokens) {
+		switch (node) {
+		case "&DJPV":
+			vfk.getJinePravVztahy().add(JinePravVztahyParser.parse(tokens));
+			break;
+		case "&DTYPRAV":
+			vfk.getTPravnichVzt().add(TPravnichVztParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tryParseRizeni(String node, String[] tokens) {
+		switch (node) {
+		case "&DRIZENI":
+			vfk.getRizeni().add(RizeniParser.parse(tokens));
+			break;
+		case "&DRIZKU":
+			vfk.getRizeniKu().add(RizeniKuParser.parse(tokens));
+			break;
+		case "&DOBJRIZ":
+			vfk.getObjektyRizeni().add(ObjektyRizeniParser.parse(tokens));
+			break;
+		case "&DPRERIZ":
+			vfk.getPredmetyRizeni().add(PredmetyRizeniParser.parse(tokens));
+			break;
+		case "&DUCAST":
+			vfk.getUcastnici().add(UcastniciParser.parse(tokens));
+			break;
+		case "&DADRUC":
+			vfk.getAdresy().add(AdresyParser.parse(tokens));
+			break;
+		case "&DLISTIN":
+			vfk.getListiny().add(ListinyParser.parse(tokens));
+			break;
+		case "&DDUL":
+			vfk.getDalsiUdajeListiny().add(
+					DalsiUdajeListinyParser.parse(tokens));
+			break;
+		case "&DLDU":
+			vfk.getListinyDalsiUdaje().add(
+					ListinyDalsiUdajeParser.parse(tokens));
+			break;
+		case "&DTYPLIS":
+			vfk.getTListin().add(TListinParser.parse(tokens));
+			break;
+		case "&DTYPPRE":
+			vfk.getTPredmetuR().add(TPredmetuRParser.parse(tokens));
+			break;
+		case "&DTYPRIZ":
+			vfk.getTypyRizeni().add(TypyRizeniParser.parse(tokens));
+			break;
+		case "&DTYPUCA":
+			vfk.getTypyUcastniku().add(TypyUcastnikuParser.parse(tokens));
+			break;
+		case "&DUCTYP":
+			vfk.getUcastniciTyp().add(UcastniciTypParser.parse(tokens));
+			break;
+		case "&DRL":
+			vfk.getRList().add(RListParser.parse(tokens));
+			break;
+		case "&DOBESMF":
+			vfk.getObeslaniMf().add(ObeslaniMfParser.parse(tokens));
 			break;
 		default:
 			return false;

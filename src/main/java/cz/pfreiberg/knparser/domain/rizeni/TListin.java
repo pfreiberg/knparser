@@ -17,7 +17,7 @@ public class TListin {
 	private String nazev;
 	private Date platnostOd;
 	private String popis;
-	private String platnostDo;
+	private Date platnostDo;
 	private Integer druhList;
 
 	public Integer getKod() {
@@ -52,11 +52,11 @@ public class TListin {
 		this.popis = popis;
 	}
 
-	public String getPlatnostDo() {
+	public Date getPlatnostDo() {
 		return platnostDo;
 	}
 
-	public void setPlatnostDo(String platnostDo) {
+	public void setPlatnostDo(Date platnostDo) {
 		this.platnostDo = platnostDo;
 	}
 

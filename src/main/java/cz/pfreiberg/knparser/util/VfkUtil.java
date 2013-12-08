@@ -119,6 +119,6 @@ public class VfkUtil {
 	
 	public static String getTerminator()
 	{
-		return "|" + Character.toString((char)21);
+		 return "|" + Character.toString((char)21) + "\n";
 	}
 }
