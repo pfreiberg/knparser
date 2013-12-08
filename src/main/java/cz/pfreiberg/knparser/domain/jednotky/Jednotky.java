@@ -22,7 +22,7 @@ public class Jednotky {
 	private Long budId;
 	private Integer typjedKod;
 	private Integer ciselnikJednotky;
-	private Float cenaNemovitosti;
+	private Double cenaNemovitosti;
 	private Integer zpvyjeKod;
 	private Long telId;
 	private Long podilCitatel;
@@ -109,11 +109,11 @@ public class Jednotky {
 		this.ciselnikJednotky = ciselnikJednotky;
 	}
 
-	public Float getCenaNemovitosti() {
+	public Double getCenaNemovitosti() {
 		return cenaNemovitosti;
 	}
 
-	public void setCenaNemovitosti(Float cenaNemovitosti) {
+	public void setCenaNemovitosti(Double cenaNemovitosti) {
 		this.cenaNemovitosti = cenaNemovitosti;
 	}
 

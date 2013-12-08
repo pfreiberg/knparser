@@ -49,8 +49,10 @@ public class Parser {
 				String node = values[0];
 				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
 
-				if (tryParseHlavicka(node, tokens)) {
+				if (tryParseHead(node, tokens)) {
 				} else if (tryParseNemovitosti(node, tokens)) {
+				} else if (tryParseJednotky(node, tokens)) {
+				} else if (tryParseBonitniDilParcely(node, tokens)) {
 				}
 
 			}
@@ -191,7 +193,7 @@ public class Parser {
 		return buffer != null;
 	}
 
-	private boolean tryParseHlavicka(String node, String[] tokens) {
+	private boolean tryParseHead(String node, String[] tokens) {
 		switch (node) {
 		case "&HZMENY":
 			vfk.setZmeny(Integer.parseInt(tokens[0]));
@@ -257,6 +259,34 @@ public class Parser {
 			break;
 		case "&DZPVYBU":
 			vfk.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tryParseJednotky(String node, String[] tokens) {
+		switch (node) {
+		case "&DJED":
+			vfk.getJednotky().add(JednotkyParser.parse(tokens));
+			break;
+		case "&DTYPJED":
+			vfk.getTJednotek().add(TJednotekParser.parse(tokens));
+			break;
+		case "&DZPVYJE":
+			vfk.getZpVyuzitiJed().add(ZpVyuzitiJedParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tryParseBonitniDilParcely(String node, String[] tokens) {
+		switch (node) {
+		case "&DBDP":
+			vfk.getBonitDilyParc().add(BonitDilyParcParser.parse(tokens));
 			break;
 		default:
 			return false;

@@ -78,7 +78,7 @@ import cz.pfreiberg.knparser.domain.vlastnictvi.Vlastnictvi;
 
 public class Vfk {
 
-	// Hlavička
+	// Head
 	private String verze;
 	private Date vytvoreno;
 	private String puvod;
@@ -110,7 +110,7 @@ public class Vfk {
 	private List<Zpmz> zpmz;
 	
 	// Jednotky
-	private List<Jednotky> jednoty;
+	private List<Jednotky> jednotky;
 	private List<TJednotek> tJednotek;
 	private List<ZpVyuzitiJed> zpVyuzitiJed;
 	
@@ -206,7 +206,7 @@ public class Vfk {
 		zpmz = new ArrayList<Zpmz>();
 		
 		// Jednotky
-		jednoty = new ArrayList<Jednotky>();
+		jednotky = new ArrayList<Jednotky>();
 		tJednotek = new ArrayList<TJednotek>();
 		zpVyuzitiJed = new ArrayList<ZpVyuzitiJed>();
 		
@@ -434,12 +434,12 @@ public class Vfk {
 		this.zpmz = zpmz;
 	}
 
-	public List<Jednotky> getJednoty() {
-		return jednoty;
+	public List<Jednotky> getJednotky() {
+		return jednotky;
 	}
 
-	public void setJednoty(List<Jednotky> jednoty) {
-		this.jednoty = jednoty;
+	public void setJednotky(List<Jednotky> jednotky) {
+		this.jednotky = jednotky;
 	}
 
 	public List<TJednotek> getTJednotek() {
