@@ -33,24 +33,12 @@ public class Controller {
 			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
 					vfk.getZmeny(), "UTF8",
 					configuration.getDestinationOfOutput());
-			loaderExporterFactory.getParcelyExporter(vfk.getParcely());
-			loaderExporterFactory.getBudovyExporter(vfk.getBudovy());
-			loaderExporterFactory.getCastiBudovExporter(vfk.getCastiBudov());
-			loaderExporterFactory.getZpOchranyNemExporter(vfk.getZpOchranyNem());
-			loaderExporterFactory.getDPozemkuExporter(vfk.getDPozemku());
-			loaderExporterFactory.getZpVyuzitiPozExporter(vfk.getZpVyuzitiPoz());
-			loaderExporterFactory.getZdrojeParcelZeExporter(vfk.getZdrojeParcelZe());
-			loaderExporterFactory.getZpUrceniVymeryExporter(vfk.getZpUrceniVymery());
-			loaderExporterFactory.getTBudovExporter(vfk.getTBudov());
-			loaderExporterFactory.getMapoveListyExporter(vfk.getMapoveListy());
-			loaderExporterFactory.getKatastrUzemiExporter(vfk.getKatastrUzemi());
-			loaderExporterFactory.getObceExporter(vfk.getObce());
-			loaderExporterFactory.getCastiObciExporter(vfk.getCastiObci());
-			loaderExporterFactory.getOkresyExporter(vfk.getOkresy());
-			loaderExporterFactory.getKrajeExporter(vfk.getKraje());
-			loaderExporterFactory.getNoveKrajeExporter(vfk.getNoveKraje());
-			loaderExporterFactory.getRZpochrExporter(vfk.getRZpochr());
-			loaderExporterFactory.getZpVyuzitiBudExporter(vfk.getZpVyuzitiBud());
+			exportBonitniDilParcely(vfk, loaderExporterFactory);
+			exportJednotky(vfk, loaderExporterFactory);
+			exporterJinePravniVztahy(vfk, loaderExporterFactory);
+			exportNemovitosti(vfk, loaderExporterFactory);
+			exportRizeni(vfk, loaderExporterFactory);
+			exporterVlastnictvi(vfk, loaderExporterFactory);
 			System.out.println("Parsing finished.");
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
@@ -59,6 +47,75 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void exportBonitniDilParcely(Vfk vfk,
+			OracleLoaderExporterFactory loaderExporterFactory) {
+		loaderExporterFactory.getBonitDilyParcExporter(vfk.getBonitDilyParc());
+	}
+	
+	private void exportJednotky(Vfk vfk,
+			OracleLoaderExporterFactory loaderExporterFactory) {
+		loaderExporterFactory.getJednotkyExporter(vfk.getJednotky());
+		loaderExporterFactory.getTJednotekExporter(vfk.getTJednotek());
+		loaderExporterFactory.getZpVyuzitiJedExporter(vfk.getZpVyuzitiJed());
+	}
+	
+	private void exporterJinePravniVztahy(Vfk vfk,
+			OracleLoaderExporterFactory loaderExporterFactory) {
+		loaderExporterFactory.getJinePravVztahyExporter(vfk.getJinePravVztahy());
+		loaderExporterFactory.getTPravnichVztExporter(vfk.getTPravnichVzt());
+	}
+
+
+	private void exportNemovitosti(Vfk vfk,
+			OracleLoaderExporterFactory loaderExporterFactory) {
+		loaderExporterFactory.getParcelyExporter(vfk.getParcely());
+		loaderExporterFactory.getBudovyExporter(vfk.getBudovy());
+		loaderExporterFactory.getCastiBudovExporter(vfk.getCastiBudov());
+		loaderExporterFactory.getZpOchranyNemExporter(vfk.getZpOchranyNem());
+		loaderExporterFactory.getDPozemkuExporter(vfk.getDPozemku());
+		loaderExporterFactory.getZpVyuzitiPozExporter(vfk.getZpVyuzitiPoz());
+		loaderExporterFactory.getZdrojeParcelZeExporter(vfk.getZdrojeParcelZe());
+		loaderExporterFactory.getZpUrceniVymeryExporter(vfk.getZpUrceniVymery());
+		loaderExporterFactory.getTBudovExporter(vfk.getTBudov());
+		loaderExporterFactory.getMapoveListyExporter(vfk.getMapoveListy());
+		loaderExporterFactory.getKatastrUzemiExporter(vfk.getKatastrUzemi());
+		loaderExporterFactory.getObceExporter(vfk.getObce());
+		loaderExporterFactory.getCastiObciExporter(vfk.getCastiObci());
+		loaderExporterFactory.getOkresyExporter(vfk.getOkresy());
+		loaderExporterFactory.getKrajeExporter(vfk.getKraje());
+		loaderExporterFactory.getNoveKrajeExporter(vfk.getNoveKraje());
+		loaderExporterFactory.getRZpochrExporter(vfk.getRZpochr());
+		loaderExporterFactory.getZpVyuzitiBudExporter(vfk.getZpVyuzitiBud());
+	}
+	
+	private void exportRizeni(Vfk vfk,
+			OracleLoaderExporterFactory loaderExporterFactory) {
+		loaderExporterFactory.getAdresyExporter(vfk.getAdresy());
+		loaderExporterFactory.getDalsiUdajeListinyExporter(vfk.getDalsiUdajeListiny());
+		loaderExporterFactory.getListinyExporter(vfk.getListiny());
+		loaderExporterFactory.getListinyDalsiUdajeExporter(vfk.getListinyDalsiUdaje());
+		loaderExporterFactory.getObeslaniMfExporter(vfk.getObeslaniMf());
+		loaderExporterFactory.getObjektyRizeniExporter(vfk.getObjektyRizeni());
+		loaderExporterFactory.getPredmetyRizeniExporter(vfk.getPredmetyRizeni());
+		loaderExporterFactory.getRizeniExporter(vfk.getRizeni());
+		loaderExporterFactory.getRizeniKuExporter(vfk.getRizeniKu());
+		loaderExporterFactory.getRListExporter(vfk.getRList());
+		loaderExporterFactory.getTListinExporter(vfk.getTListin());
+		loaderExporterFactory.getTPredmetuRExporter(vfk.getTPredmetuR());
+		loaderExporterFactory.getTypyRizeniExporter(vfk.getTypyRizeni());
+		loaderExporterFactory.getTypyUcastnikuExporter(vfk.getTypyUcastniku());
+		loaderExporterFactory.getUcastniciExporter(vfk.getUcastnici());
+		loaderExporterFactory.getUcastniciTypExporter(vfk.getUcastniciTyp());
+	}
+	
+	private void exporterVlastnictvi(Vfk vfk,
+			OracleLoaderExporterFactory loaderExporterFactory) {
+		loaderExporterFactory.getCharOsExporter(vfk.getCharOs());
+		loaderExporterFactory.getOpravSubjektyExporter(vfk.getOpravSubjekty());
+		loaderExporterFactory.getTelesaExporter(vfk.getTelesa());
+		loaderExporterFactory.getVlastnictviExporter(vfk.getVlastnictvi());
 	}
 
 }

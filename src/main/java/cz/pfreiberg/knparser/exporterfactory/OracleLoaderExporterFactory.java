@@ -2,6 +2,12 @@ package cz.pfreiberg.knparser.exporterfactory;
 
 import java.util.List;
 
+import cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc;
+import cz.pfreiberg.knparser.domain.jednotky.Jednotky;
+import cz.pfreiberg.knparser.domain.jednotky.TJednotek;
+import cz.pfreiberg.knparser.domain.jednotky.ZpVyuzitiJed;
+import cz.pfreiberg.knparser.domain.jinepravnivztahy.JinePravVztahy;
+import cz.pfreiberg.knparser.domain.jinepravnivztahy.TPravnichVzt;
 import cz.pfreiberg.knparser.domain.nemovitosti.Budovy;
 import cz.pfreiberg.knparser.domain.nemovitosti.CastiBudov;
 import cz.pfreiberg.knparser.domain.nemovitosti.CastiObci;
@@ -20,6 +26,26 @@ import cz.pfreiberg.knparser.domain.nemovitosti.ZpOchranyNem;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpUrceniVymery;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpVyuzitiBud;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpVyuzitiPoz;
+import cz.pfreiberg.knparser.domain.rizeni.Adresy;
+import cz.pfreiberg.knparser.domain.rizeni.DalsiUdajeListiny;
+import cz.pfreiberg.knparser.domain.rizeni.Listiny;
+import cz.pfreiberg.knparser.domain.rizeni.ListinyDalsiUdaje;
+import cz.pfreiberg.knparser.domain.rizeni.ObeslaniMf;
+import cz.pfreiberg.knparser.domain.rizeni.ObjektyRizeni;
+import cz.pfreiberg.knparser.domain.rizeni.PredmetyRizeni;
+import cz.pfreiberg.knparser.domain.rizeni.RList;
+import cz.pfreiberg.knparser.domain.rizeni.Rizeni;
+import cz.pfreiberg.knparser.domain.rizeni.RizeniKu;
+import cz.pfreiberg.knparser.domain.rizeni.TListin;
+import cz.pfreiberg.knparser.domain.rizeni.TPredmetuR;
+import cz.pfreiberg.knparser.domain.rizeni.TypyRizeni;
+import cz.pfreiberg.knparser.domain.rizeni.TypyUcastniku;
+import cz.pfreiberg.knparser.domain.rizeni.Ucastnici;
+import cz.pfreiberg.knparser.domain.rizeni.UcastniciTyp;
+import cz.pfreiberg.knparser.domain.vlastnictvi.CharOs;
+import cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty;
+import cz.pfreiberg.knparser.domain.vlastnictvi.Telesa;
+import cz.pfreiberg.knparser.domain.vlastnictvi.Vlastnictvi;
 import cz.pfreiberg.knparser.exporter.Exporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.BudovyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.CastiBudovOracleLoaderFileExporter;
@@ -61,8 +87,8 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getBudovyExporter(List<Budovy> budovy) {
-		return new BudovyOracleLoaderFileExporter(budovy, prefix,
-				characterSet, output);
+		return new BudovyOracleLoaderFileExporter(budovy, prefix, characterSet,
+				output);
 	}
 
 	@Override
@@ -92,21 +118,21 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getZdrojeParcelZeExporter(
 			List<ZdrojeParcelZe> zdrojeParcelZe) {
-		return new ZdrojeParcelZeOracleLoaderFileExporter(zdrojeParcelZe, prefix,
-				characterSet, output);
+		return new ZdrojeParcelZeOracleLoaderFileExporter(zdrojeParcelZe,
+				prefix, characterSet, output);
 	}
 
 	@Override
 	public Exporter getZpUrceniVymeryExporter(
 			List<ZpUrceniVymery> zpUrceniVymery) {
-		return new ZpUrceniVymeryOracleLoaderFileExporter(zpUrceniVymery, prefix,
-				characterSet, output);
+		return new ZpUrceniVymeryOracleLoaderFileExporter(zpUrceniVymery,
+				prefix, characterSet, output);
 	}
 
 	@Override
 	public Exporter getTBudovExporter(List<TBudov> tBudov) {
-		return new TBudovOracleLoaderFileExporter(tBudov, prefix,
-				characterSet, output);
+		return new TBudovOracleLoaderFileExporter(tBudov, prefix, characterSet,
+				output);
 	}
 
 	@Override
@@ -123,8 +149,8 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getObceExporter(List<Obce> obce) {
-		return new ObceOracleLoaderFileExporter(obce, prefix,
-				characterSet, output);
+		return new ObceOracleLoaderFileExporter(obce, prefix, characterSet,
+				output);
 	}
 
 	@Override
@@ -135,14 +161,14 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getOkresyExporter(List<Okresy> okresy) {
-		return new OkresyOracleLoaderFileExporter(okresy, prefix,
-				characterSet, output);
+		return new OkresyOracleLoaderFileExporter(okresy, prefix, characterSet,
+				output);
 	}
 
 	@Override
 	public Exporter getKrajeExporter(List<Kraje> kraje) {
-		return new KrajeOracleLoaderFileExporter(kraje, prefix,
-				characterSet, output);
+		return new KrajeOracleLoaderFileExporter(kraje, prefix, characterSet,
+				output);
 	}
 
 	@Override
@@ -162,5 +188,165 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 		return new ZpVyuzitiBudOracleLoaderFileExporter(zpVyuzitiBud, prefix,
 				characterSet, output);
 	}
-	
+
+	@Override
+	public Exporter getBonitDilyParcExporter(List<BonitDilyParc> bonitDilyParc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getJednotkyExporter(List<Jednotky> jednotky) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getTJednotekExporter(List<TJednotek> tJednotek) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getZpVyuzitiJedExporter(List<ZpVyuzitiJed> zpVyuzitiJed) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getJinePravVztahyExporter(
+			List<JinePravVztahy> jinePravVztahy) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getTPravnichVztExporter(List<TPravnichVzt> tPravnichVzt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getAdresyExporter(List<Adresy> adresy) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getDalsiUdajeListinyExporter(
+			List<DalsiUdajeListiny> dalsiUdajeListiny) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getListinyExporter(List<Listiny> listiny) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getListinyDalsiUdajeExporter(
+			List<ListinyDalsiUdaje> listinyDalsiUdaje) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getObeslaniMfExporter(List<ObeslaniMf> obeslaniMf) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getObjektyRizeniExporter(List<ObjektyRizeni> objektyRizeni) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getPredmetyRizeniExporter(
+			List<PredmetyRizeni> predmetyRizeni) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getRizeniExporter(List<Rizeni> rizeni) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getRizeniKuExporter(List<RizeniKu> rizeniKu) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getRListExporter(List<RList> rList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getTListinExporter(List<TListin> tListin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getTPredmetuRExporter(List<TPredmetuR> tPredmetuR) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getTypyRizeniExporter(List<TypyRizeni> typyRizeni) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getTypyUcastnikuExporter(List<TypyUcastniku> typyUcastniku) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getUcastniciExporter(List<Ucastnici> ucastnici) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getUcastniciTypExporter(List<UcastniciTyp> ucastniciTyp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getCharOsExporter(List<CharOs> charOs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getOpravSubjektyExporter(List<OpravSubjekty> opravSubjekty) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getTelesaExporter(List<Telesa> telesa) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Exporter getVlastnictviExporter(List<Vlastnictvi> vlastnictvi) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
