@@ -6,21 +6,21 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import cz.pfreiberg.knparser.domain.rizeni.Adresy;
+import cz.pfreiberg.knparser.domain.rezervovanacisla.RezCislaPbpp;
 import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class RezCislaPbppOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<Adresy> adresy;
+	private List<RezCislaPbpp> rezCislaPbpp;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "ADRESY";
+	private final String name = "REZ_CISLA_PBPP";
 
-	public RezCislaPbppOracleLoaderFileExporter(List<Adresy> adresy,
+	public RezCislaPbppOracleLoaderFileExporter(List<RezCislaPbpp> rezCislaPbpp,
 			String prefix, String characterSet, String output) {
-		this.adresy = adresy;
+		this.rezCislaPbpp = rezCislaPbpp;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -56,7 +56,7 @@ public class RezCislaPbppOracleLoaderFileExporter extends OracleLoaderFileExport
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					adresy);
+					rezCislaPbpp);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

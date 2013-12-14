@@ -16,7 +16,7 @@ public class ObrazyDefBoduOracleLoaderFileExporter extends OracleLoaderFileExpor
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "D_POZEMKU";
+	private final String name = "OBRAZY_DEF_BODU";
 
 	public ObrazyDefBoduOracleLoaderFileExporter(List<ObrazyDefBodu> obrazyDefBodu,
 			String prefix, String characterSet, String output) {

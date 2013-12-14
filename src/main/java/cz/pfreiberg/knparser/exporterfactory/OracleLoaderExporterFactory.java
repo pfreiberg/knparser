@@ -74,38 +74,63 @@ import cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Telesa;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Vlastnictvi;
 import cz.pfreiberg.knparser.exporter.Exporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.AdresaOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.AdresyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.BonitDilyParcOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.BudObjOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.BudovyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.CastiBudovOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.CastiObciOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.CharOsOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.DPozemkuOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.DalsiPrvkyMapyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.DalsiUdajeListinyOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.DotHistParCislaOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.DotcenaParCislaOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.HraniceBpejOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.HraniceParcelOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.JednotkyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.JinePravVztahyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.KatastrUzemiOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.KodyCharQBoduOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.KrajeOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ListinyDalsiUdajeOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ListinyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.MapoveListyOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.NavrhyZmenKmOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.NoveKrajeOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.NzZpmzOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ObceOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ObeslaniMfOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ObjektyRizeniOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.ObrazyBoduBpOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.ObrazyBudovOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.ObrazyDefBoduOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.ObrazyParcelOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.OkresyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.OpravSubjektyOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.OznaceniBpejOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ParcelyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.PredmetyRizeniOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.PrvkyOMapyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RListOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RZpochrOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.RezCislaPbppOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.RezParcelniCislaOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RizeniKuOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RizeniOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.SouradniceObrazuOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.SouradnicePolohyOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.SpojeniBMapyOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.SpojeniBPolohOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.SpojeniPoMapyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TBudovOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TJednotekOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TListinOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TPravnichVztOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TPredmetuROracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.TPrvkuPDatOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.TSouradSysOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TelesaOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TypyRizeniOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TypyUcastnikuOracleLoaderFileExporter;
@@ -113,11 +138,13 @@ import cz.pfreiberg.knparser.exporter.oracleloaderfile.UcastniciOracleLoaderFile
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.UcastniciTypOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.VlastnictviOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZdrojeParcelZeOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZobrazeniVbOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpOchranyNemOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpUrceniVymeryOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpVyuzitiBudOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpVyuzitiJedOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpVyuzitiPozOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpmzOracleLoaderFileExporter;
 
 public class OracleLoaderExporterFactory implements ExporterFactory {
 
@@ -405,168 +432,168 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getDalsiPrvkyMapyExporter(
 			List<DalsiPrvkyMapy> dalsiPrvkyMapy) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DalsiPrvkyMapyOracleLoaderFileExporter(dalsiPrvkyMapy,
+				prefix, characterSet, output);
 	}
 
 	@Override
 	public Exporter getHraniceParcelExporter(List<HraniceParcel> hraniceParcel) {
-		// TODO Auto-generated method stub
-		return null;
+		return new HraniceParcelOracleLoaderFileExporter(hraniceParcel, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getKodyCharQBoduExporter(List<KodyCharQBodu> kodyCharQBodu) {
-		// TODO Auto-generated method stub
-		return null;
+		return new KodyCharQBoduOracleLoaderFileExporter(kodyCharQBodu, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getObrazyBoduBpExporter(List<ObrazyBoduBp> obrazyBoduBp) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ObrazyBoduBpOracleLoaderFileExporter(obrazyBoduBp, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getObrazyBudovExporter(List<ObrazyBudov> obrazyBudov) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ObrazyBudovOracleLoaderFileExporter(obrazyBudov, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getObrazyParcelExporter(List<ObrazyParcel> obrazyParcel) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ObrazyParcelOracleLoaderFileExporter(obrazyParcel, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getPrvkyOMapyExporter(List<PrvkyOMapy> prvkyOMapy) {
-		// TODO Auto-generated method stub
-		return null;
+		return new PrvkyOMapyOracleLoaderFileExporter(prvkyOMapy, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getSouradniceObrazuExporter(
 			List<SouradniceObrazu> souradniceObrazu) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SouradniceObrazuOracleLoaderFileExporter(souradniceObrazu,
+				prefix, characterSet, output);
 	}
 
 	@Override
 	public Exporter getSouradnicePolohyExporter(
 			List<SouradnicePolohy> souradnicePolohy) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SouradnicePolohyOracleLoaderFileExporter(souradnicePolohy,
+				prefix, characterSet, output);
 	}
 
 	@Override
 	public Exporter getSpojeniBMapyExporter(List<SpojeniBMapy> spojeniBMapy) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SpojeniBMapyOracleLoaderFileExporter(spojeniBMapy, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getSpojeniBPolohExporter(List<SpojeniBPoloh> spojeniBPoloh) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SpojeniBPolohOracleLoaderFileExporter(spojeniBPoloh, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getSpojeniPoMapyExporter(List<SpojeniPoMapy> spojeniPoMapy) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SpojeniPoMapyOracleLoaderFileExporter(spojeniPoMapy, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getTPrvkuPDatExporter(List<TPrvkuPDat> tPrvkuPDat) {
-		// TODO Auto-generated method stub
-		return null;
+		return new TPrvkuPDatOracleLoaderFileExporter(tPrvkuPDat, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getTSouradSysExporter(List<TSouradSys> tSouradSys) {
-		// TODO Auto-generated method stub
-		return null;
+		return new TSouradSysOracleLoaderFileExporter(tSouradSys, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getZobrazeniVbExporter(List<ZobrazeniVb> zobrazeniVb) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ZobrazeniVbOracleLoaderFileExporter(zobrazeniVb, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getHraniceBpejExporter(List<HraniceBpej> hraniceBpej) {
-		// TODO Auto-generated method stub
-		return null;
+		return new HraniceBpejOracleLoaderFileExporter(hraniceBpej, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getOznaceniBpejExporter(List<OznaceniBpej> oznaceniBpej) {
-		// TODO Auto-generated method stub
-		return null;
+		return new OznaceniBpejOracleLoaderFileExporter(oznaceniBpej, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getNavrhyZmenKmExporter(List<NavrhyZmenKm> navrhyZmenKm) {
-		// TODO Auto-generated method stub
-		return null;
+		return new NavrhyZmenKmOracleLoaderFileExporter(navrhyZmenKm, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getNzZpmzExporter(List<NzZpmz> nzZpmz) {
-		// TODO Auto-generated method stub
-		return null;
+		return new NzZpmzOracleLoaderFileExporter(nzZpmz, prefix, characterSet,
+				output);
 	}
 
 	@Override
 	public Exporter getZpmzExporter(List<Zpmz> zpmz) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ZpmzOracleLoaderFileExporter(zpmz, prefix, characterSet,
+				output);
 	}
 
 	@Override
 	public Exporter getDotcenaParCislaExporter(
 			List<DotcenaParCisla> dotcenaParCisla) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DotcenaParCislaOracleLoaderFileExporter(dotcenaParCisla,
+				prefix, characterSet, output);
 	}
 
 	@Override
 	public Exporter getDotHistParCislaExporter(
 			List<DotHistParCisla> dotHistParCisla) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DotHistParCislaOracleLoaderFileExporter(dotHistParCisla,
+				prefix, characterSet, output);
 	}
 
 	@Override
 	public Exporter getRezCislaPbppExporter(List<RezCislaPbpp> rezCislaPbpp) {
-		// TODO Auto-generated method stub
-		return null;
+		return new RezCislaPbppOracleLoaderFileExporter(rezCislaPbpp, prefix,
+				characterSet, output);
 	}
 
 	@Override
 	public Exporter getRezParcelniCislaExporter(
 			List<RezParcelniCisla> rezParcelniCisla) {
-		// TODO Auto-generated method stub
-		return null;
+		return new RezParcelniCislaOracleLoaderFileExporter(rezParcelniCisla,
+				prefix, characterSet, output);
 	}
 
 	@Override
 	public Exporter getObrazyDefBoduExporter(List<ObrazyDefBodu> obrazyDefBodu) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ObrazyDefBoduOracleLoaderFileExporter(obrazyDefBodu, prefix,
+				characterSet, output);
 	}
 
 	@Override
-	public Exporter getAdresaExporter(List<Adresa> Adresa) {
-		// TODO Auto-generated method stub
-		return null;
+	public Exporter getAdresaExporter(List<Adresa> adresa) {
+		return new AdresaOracleLoaderFileExporter(adresa, prefix, characterSet,
+				output);
 	}
 
 	@Override
-	public Exporter getBudObjExporter(List<BudObj> BudObj) {
-		// TODO Auto-generated method stub
-		return null;
+	public Exporter getBudObjExporter(List<BudObj> budObj) {
+		return new BudObjOracleLoaderFileExporter(budObj, prefix, characterSet,
+				output);
 	}
 }
