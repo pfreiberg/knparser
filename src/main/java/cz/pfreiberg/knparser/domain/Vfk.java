@@ -714,11 +714,11 @@ public class Vfk {
 		this.spojeniPoMapy = spojeniPoMapy;
 	}
 
-	public List<TPrvkuPDat> getTPrvkuPdat() {
+	public List<TPrvkuPDat> getTPrvkuPDat() {
 		return tPrvkuPdat;
 	}
 
-	public void setTPrvkuPdat(List<TPrvkuPDat> tPrvkuPdat) {
+	public void setTPrvkuPDat(List<TPrvkuPDat> tPrvkuPdat) {
 		this.tPrvkuPdat = tPrvkuPdat;
 	}
 
@@ -730,11 +730,11 @@ public class Vfk {
 		this.tSouradSys = tSouradSys;
 	}
 
-	public List<ZobrazeniVb> geTZobrazeniVb() {
+	public List<ZobrazeniVb> getZobrazeniVb() {
 		return zobrazeniVb;
 	}
 
-	public void seTZobrazeniVb(List<ZobrazeniVb> zobrazeniVb) {
+	public void setZobrazeniVb(List<ZobrazeniVb> zobrazeniVb) {
 		this.zobrazeniVb = zobrazeniVb;
 	}
 

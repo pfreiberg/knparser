@@ -56,7 +56,12 @@ public class Parser {
 				} else if (tryParseVlastnictvi(node, tokens)) {
 				} else if (tryParseJinePravniVztahy(node, tokens)) {
 				} else if (tryParseRizeni(node, tokens)) {
-				}
+				} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
+				} else if (tryParseBonitovanePudneEkologickeJednotky(node, tokens)) {
+				} else if (tryParseGeometrickyPlan(node, tokens)) {
+				} else if (tryParseRezervovanaCisla(node, tokens)) {
+				} else if (tryParseDefinicniBody(node, tokens)) {
+				} else if (tryParseAdresniMista(node, tokens)) {}
 
 			}
 		} catch (ParserException e) {
@@ -65,15 +70,12 @@ public class Parser {
 			parse();
 		}
 
-		for (int i = 0; i < 3; i++)
-			System.out.println(vfk.getObeslaniMf().get(i));
-
 		return escapedRows;
 	}
 
 	private String[] processNextRow() throws IOException, ParserException {
 		actualRow++;
-		if (actualRow % 10000 == 0) {
+		if (actualRow % 1000 == 0) {
 			System.out.println("Actual row: " + actualRow);
 		}
 
@@ -385,6 +387,140 @@ public class Parser {
 			break;
 		case "&DOBESMF":
 			vfk.getObeslaniMf().add(ObeslaniMfParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tryParsePrvkyKatastralniMapy(String node, String[] tokens) {
+		switch (node) {
+		case "&DSOBR":
+			vfk.getSouradniceObrazu().add(SouradniceObrazuParser.parse(tokens));
+			break;
+		case "&DSBP":
+			vfk.getSpojeniBPoloh().add(SpojeniBPolohParser.parse(tokens));
+			break;
+		case "&DSBM":
+			vfk.getSpojeniBMapy().add(SpojeniBMapyParser.parse(tokens));
+			break;
+		case "&DKODCHB":
+			vfk.getKodyCharQBodu().add(KodyCharQBoduParser.parse(tokens));
+			break;
+		case "&DTYPSOS":
+			vfk.getTSouradSys().add(TSouradSysParser.parse(tokens));
+			break;
+		case "&DHP":
+			vfk.getHraniceParcel().add(HraniceParcelParser.parse(tokens));
+			break;
+		case "&DOP":
+			vfk.getObrazyParcel().add(ObrazyParcelParser.parse(tokens));
+			break;
+		case "&DOB":
+			vfk.getObrazyBudov().add(ObrazyBudovParser.parse(tokens));
+			break;
+		case "&DDPM":
+			vfk.getDalsiPrvkyMapy().add(DalsiPrvkyMapyParser.parse(tokens));
+			break;
+		case "&DOBBP":
+			vfk.getObrazyBoduBp().add(ObrazyBoduBpParser.parse(tokens));
+			break;
+		case "&DTYPPPD":
+			vfk.getTPrvkuPDat().add(TPrvkuPDatParser.parse(tokens));
+			break;
+		case "&DZVB":
+			vfk.getZobrazeniVb().add(ZobrazeniVbParser.parse(tokens));
+			break;
+		case "&DPOM":
+			vfk.getPrvkyOMapy().add(PrvkyOMapyParser.parse(tokens));
+			break;
+		case "&DSPOM":
+			vfk.getSpojeniPoMapy().add(SpojeniPoMapyParser.parse(tokens));
+			break;
+		case "&DSPOL":
+			vfk.getSouradnicePolohy().add(SouradnicePolohyParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tryParseBonitovanePudneEkologickeJednotky(String node,
+			String[] tokens) {
+		switch (node) {
+		case "&DHBPEJ":
+			vfk.getHraniceBpej().add(HraniceBpejParser.parse(tokens));
+			break;
+		case "&DOBPEJ":
+			vfk.getOznaceniBpej().add(OznaceniBpejParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean tryParseGeometrickyPlan(String node,
+			String[] tokens) {
+		switch (node) {
+		case "&DNZ":
+			vfk.getNavrhyZmenKm().add(NavrhyZmenKmParser.parse(tokens));
+			break;
+		case "&DZPMZ":
+			vfk.getZpmz().add(ZpmzParser.parse(tokens));
+			break;
+		case "&DNZZP":
+			vfk.getNzZpmz().add(NzZpmzParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean tryParseRezervovanaCisla(String node,
+			String[] tokens) {
+		switch (node) {
+		case "&DRECI":
+			vfk.getRezParcelniCisla().add(RezParcelniCislaParser.parse(tokens));
+			break;
+		case "&DDOCI":
+			vfk.getDotcenaParCisla().add(DotcenaParCislaParser.parse(tokens));
+			break;
+		case "&DDOHICI":
+			vfk.getDotHistParCisla().add(DotHistParCislaParser.parse(tokens));
+			break;
+		case "&DREZBP":
+			vfk.getRezCislaPbpp().add(RezCislaPbppParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean tryParseDefinicniBody(String node,
+			String[] tokens) {
+		switch (node) {
+		case "&DOBDEBO":
+			vfk.getObrazyDefBodu().add(ObrazyDefBoduParser.parse(tokens));
+			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean tryParseAdresniMista(String node,
+			String[] tokens) {
+		switch (node) {
+		case "&DBUDOBJ":
+			vfk.getBudObj().add(BudObjParser.parse(tokens));
+			break;
+		case "&DADROBJ":
+			vfk.getAdresa().add(AdresaParser.parse(tokens));
 			break;
 		default:
 			return false;

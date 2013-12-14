@@ -2,7 +2,15 @@ package cz.pfreiberg.knparser.exporterfactory;
 
 import java.util.List;
 
+import cz.pfreiberg.knparser.domain.adresnimista.Adresa;
+import cz.pfreiberg.knparser.domain.adresnimista.BudObj;
 import cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc;
+import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.HraniceBpej;
+import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.OznaceniBpej;
+import cz.pfreiberg.knparser.domain.definicnibody.ObrazyDefBodu;
+import cz.pfreiberg.knparser.domain.geometrickyplan.NavrhyZmenKm;
+import cz.pfreiberg.knparser.domain.geometrickyplan.NzZpmz;
+import cz.pfreiberg.knparser.domain.geometrickyplan.Zpmz;
 import cz.pfreiberg.knparser.domain.jednotky.Jednotky;
 import cz.pfreiberg.knparser.domain.jednotky.TJednotek;
 import cz.pfreiberg.knparser.domain.jednotky.ZpVyuzitiJed;
@@ -26,6 +34,25 @@ import cz.pfreiberg.knparser.domain.nemovitosti.ZpOchranyNem;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpUrceniVymery;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpVyuzitiBud;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpVyuzitiPoz;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.DalsiPrvkyMapy;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.HraniceParcel;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.KodyCharQBodu;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.ObrazyBoduBp;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.ObrazyBudov;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.ObrazyParcel;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.PrvkyOMapy;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SouradniceObrazu;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SouradnicePolohy;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SpojeniBMapy;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SpojeniBPoloh;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SpojeniPoMapy;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.TPrvkuPDat;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.TSouradSys;
+import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.ZobrazeniVb;
+import cz.pfreiberg.knparser.domain.rezervovanacisla.DotHistParCisla;
+import cz.pfreiberg.knparser.domain.rezervovanacisla.DotcenaParCisla;
+import cz.pfreiberg.knparser.domain.rezervovanacisla.RezCislaPbpp;
+import cz.pfreiberg.knparser.domain.rezervovanacisla.RezParcelniCisla;
 import cz.pfreiberg.knparser.domain.rizeni.Adresy;
 import cz.pfreiberg.knparser.domain.rizeni.DalsiUdajeListiny;
 import cz.pfreiberg.knparser.domain.rizeni.Listiny;
@@ -99,6 +126,39 @@ public interface ExporterFactory {
 	public Exporter getOpravSubjektyExporter(List<OpravSubjekty> opravSubjekty);
 	public Exporter getTelesaExporter(List<Telesa> telesa);
 	public Exporter getVlastnictviExporter(List<Vlastnictvi> vlastnictvi);
+	
+	public Exporter getDalsiPrvkyMapyExporter(List<DalsiPrvkyMapy> dalsiPrvkyMapy);
+	public Exporter getHraniceParcelExporter(List<HraniceParcel> hraniceParcel);
+	public Exporter getKodyCharQBoduExporter(List<KodyCharQBodu> kodyCharQBodu);
+	public Exporter getObrazyBoduBpExporter(List<ObrazyBoduBp> obrazyBoduBp);
+	public Exporter getObrazyBudovExporter(List<ObrazyBudov> obrazyBudov);
+	public Exporter getObrazyParcelExporter(List<ObrazyParcel> obrazyParcel);
+	public Exporter getPrvkyOMapyExporter(List<PrvkyOMapy> prvkyOMapy);
+	public Exporter getSouradniceObrazuExporter(List<SouradniceObrazu> souradniceObrazu);
+	public Exporter getSouradnicePolohyExporter(List<SouradnicePolohy> souradnicePolohy);
+	public Exporter getSpojeniBMapyExporter(List<SpojeniBMapy> spojeniBMapy);
+	public Exporter getSpojeniBPolohExporter(List<SpojeniBPoloh> spojeniBPoloh);
+	public Exporter getSpojeniPoMapyExporter(List<SpojeniPoMapy> spojeniPoMapy);
+	public Exporter getTPrvkuPDatExporter(List<TPrvkuPDat> tPrvkuPDat);
+	public Exporter getTSouradSysExporter(List<TSouradSys> tSouradSys);
+	public Exporter getZobrazeniVbExporter(List<ZobrazeniVb> zobrazeniVb);
+	
+	public Exporter getHraniceBpejExporter(List<HraniceBpej> hraniceBpej);
+	public Exporter getOznaceniBpejExporter(List<OznaceniBpej> oznaceniBpej);
+	
+	public Exporter getNavrhyZmenKmExporter(List<NavrhyZmenKm> navrhyZmenKm);
+	public Exporter getNzZpmzExporter(List<NzZpmz> nzZpmz);
+	public Exporter getZpmzExporter(List<Zpmz> zpmz);
+	
+	public Exporter getDotcenaParCislaExporter(List<DotcenaParCisla> dotcenaParCisla);
+	public Exporter getDotHistParCislaExporter(List<DotHistParCisla> dotHistParCisla);
+	public Exporter getRezCislaPbppExporter(List<RezCislaPbpp> rezCislaPbpp);
+	public Exporter getRezParcelniCislaExporter(List<RezParcelniCisla> rezParcelniCisla);
+	
+	public Exporter getObrazyDefBoduExporter(List<ObrazyDefBodu> obrazyDefBodu);
+	
+	public Exporter getAdresaExporter(List<Adresa> Adresa);
+	public Exporter getBudObjExporter(List<BudObj> BudObj);
 
 
 }

@@ -19,8 +19,8 @@ public class ObrazyParcel {
 	private Date datumVzniku;
 	private Date datumZaniku;
 	private Integer priznakKontextu;
-	private Double rizeniIdVzniku;
-	private Double rizeniIdZaniku;
+	private Long rizeniIdVzniku;
+	private Long rizeniIdZaniku;
 	private Integer typppdKod;
 	private Double souradniceY;
 	private Double souradniceX;
@@ -71,19 +71,19 @@ public class ObrazyParcel {
 		this.priznakKontextu = priznakKontextu;
 	}
 
-	public Double getRizeniIdVzniku() {
+	public Long getRizeniIdVzniku() {
 		return rizeniIdVzniku;
 	}
 
-	public void setRizeniIdVzniku(Double rizeniIdVzniku) {
+	public void setRizeniIdVzniku(Long rizeniIdVzniku) {
 		this.rizeniIdVzniku = rizeniIdVzniku;
 	}
 
-	public Double getRizeniIdZaniku() {
+	public Long getRizeniIdZaniku() {
 		return rizeniIdZaniku;
 	}
 
-	public void setRizeniIdZaniku(Double rizeniIdZaniku) {
+	public void setRizeniIdZaniku(Long rizeniIdZaniku) {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
