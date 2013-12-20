@@ -9,12 +9,12 @@ public class ZpVyuzitiPozParser {
 		int i = 0;
 
 		ZpVyuzitiPoz zpVyuzitiPoz = new ZpVyuzitiPoz();
-		zpVyuzitiPoz.setKod(VfkUtil.getInteger(tokens[i++]));
-		zpVyuzitiPoz.setNazev(VfkUtil.getString(tokens[i++]));
-		zpVyuzitiPoz.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		zpVyuzitiPoz.setTypppKod(VfkUtil.getInteger(tokens[i++]));
-		zpVyuzitiPoz.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
-		zpVyuzitiPoz.setZkratka(VfkUtil.getString(tokens[i++]));
+		zpVyuzitiPoz.setKod(VfkUtil.getInteger(tokens, i++));
+		zpVyuzitiPoz.setNazev(VfkUtil.getString(tokens, i++));
+		zpVyuzitiPoz.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		zpVyuzitiPoz.setTypppKod(VfkUtil.getInteger(tokens, i++));
+		zpVyuzitiPoz.setPlatnostDo(VfkUtil.getDate(tokens, i++));
+		zpVyuzitiPoz.setZkratka(VfkUtil.getString(tokens, i++));
 
 		return zpVyuzitiPoz;
 	}

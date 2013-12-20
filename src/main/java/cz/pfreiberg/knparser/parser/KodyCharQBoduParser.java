@@ -9,10 +9,10 @@ public class KodyCharQBoduParser {
 		int i = 0;
 
 		KodyCharQBodu kodyCharQBodu = new KodyCharQBodu();
-		kodyCharQBodu.setKod(VfkUtil.getInteger(tokens[i++]));
-		kodyCharQBodu.setNazev(VfkUtil.getString(tokens[i++]));
-		kodyCharQBodu.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		kodyCharQBodu.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
+		kodyCharQBodu.setKod(VfkUtil.getInteger(tokens, i++));
+		kodyCharQBodu.setNazev(VfkUtil.getString(tokens, i++));
+		kodyCharQBodu.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		kodyCharQBodu.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 
 		return kodyCharQBodu;
 	}

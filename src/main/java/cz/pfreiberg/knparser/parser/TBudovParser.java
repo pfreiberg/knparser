@@ -9,12 +9,12 @@ public class TBudovParser {
 		int i = 0;
 
 		TBudov tBudov = new TBudov();
-		tBudov.setKod(VfkUtil.getInteger(tokens[i++]));
-		tBudov.setNazev(VfkUtil.getString(tokens[i++]));
-		tBudov.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		tBudov.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
-		tBudov.setZadaniCd(VfkUtil.getString(tokens[i++]));
-		tBudov.setZkratka(VfkUtil.getString(tokens[i++]));
+		tBudov.setKod(VfkUtil.getInteger(tokens, i++));
+		tBudov.setNazev(VfkUtil.getString(tokens, i++));
+		tBudov.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		tBudov.setPlatnostDo(VfkUtil.getDate(tokens, i++));
+		tBudov.setZadaniCd(VfkUtil.getString(tokens, i++));
+		tBudov.setZkratka(VfkUtil.getString(tokens, i++));
 
 		return tBudov;
 	}

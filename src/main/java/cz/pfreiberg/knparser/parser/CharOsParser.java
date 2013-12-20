@@ -9,12 +9,12 @@ public class CharOsParser {
 		int i = 0;
 
 		CharOs charOs = new CharOs();
-		charOs.setKod(VfkUtil.getInteger(tokens[i++]));
-		charOs.setNazev(VfkUtil.getString(tokens[i++]));
-		charOs.setOpsubType(VfkUtil.getString(tokens[i++]));
-		charOs.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		charOs.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
-		charOs.setZkratka(VfkUtil.getString(tokens[i++]));
+		charOs.setKod(VfkUtil.getInteger(tokens, i++));
+		charOs.setNazev(VfkUtil.getString(tokens, i++));
+		charOs.setOpsubType(VfkUtil.getString(tokens, i++));
+		charOs.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		charOs.setPlatnostDo(VfkUtil.getDate(tokens, i++));
+		charOs.setZkratka(VfkUtil.getString(tokens, i++));
 
 		return charOs;
 	}

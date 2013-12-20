@@ -9,10 +9,10 @@ public class UcelParser {
 		int i = 0;
 
 		Ucel ucel = new Ucel();
-		ucel.setKod(VfkUtil.getInteger(tokens[i++]));
-		ucel.setNazev(VfkUtil.getString(tokens[i++]));
-		ucel.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		ucel.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
+		ucel.setKod(VfkUtil.getInteger(tokens, i++));
+		ucel.setNazev(VfkUtil.getString(tokens, i++));
+		ucel.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		ucel.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 
 		return ucel;
 	}

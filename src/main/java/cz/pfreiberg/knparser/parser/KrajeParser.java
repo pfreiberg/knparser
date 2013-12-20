@@ -9,10 +9,10 @@ public class KrajeParser {
 		int i = 0;
 
 		Kraje kraj = new Kraje();
-		kraj.setKod(VfkUtil.getInteger(tokens[i++]));
-		kraj.setNazev(VfkUtil.getString(tokens[i++]));
-		kraj.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		kraj.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
+		kraj.setKod(VfkUtil.getInteger(tokens, i++));
+		kraj.setNazev(VfkUtil.getString(tokens, i++));
+		kraj.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		kraj.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 
 		return kraj;
 	}

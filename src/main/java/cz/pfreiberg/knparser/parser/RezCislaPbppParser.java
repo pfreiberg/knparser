@@ -9,10 +9,10 @@ public class RezCislaPbppParser {
 		int i = 0;
 
 		RezCislaPbpp rezCislaPbpp = new RezCislaPbpp();
-		rezCislaPbpp.setCisloBodu(VfkUtil.getInteger(tokens[i++]));
-		rezCislaPbpp.setKatuzeKod(VfkUtil.getInteger(tokens[i++]));
-		rezCislaPbpp.setRezzpmzCisloZpmz(VfkUtil.getInteger(tokens[i++]));
-		rezCislaPbpp.setRizeniId(VfkUtil.getLong(tokens[i++]));
+		rezCislaPbpp.setCisloBodu(VfkUtil.getInteger(tokens, i++));
+		rezCislaPbpp.setKatuzeKod(VfkUtil.getInteger(tokens, i++));
+		rezCislaPbpp.setRezzpmzCisloZpmz(VfkUtil.getInteger(tokens, i++));
+		rezCislaPbpp.setRizeniId(VfkUtil.getLong(tokens, i++));
 
 		return rezCislaPbpp;
 	}

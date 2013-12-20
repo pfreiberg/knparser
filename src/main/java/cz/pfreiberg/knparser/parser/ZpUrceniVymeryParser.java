@@ -9,10 +9,10 @@ public class ZpUrceniVymeryParser {
 		int i = 0;
 
 		ZpUrceniVymery zpUrceniVymery = new ZpUrceniVymery();
-		zpUrceniVymery.setKod(VfkUtil.getInteger(tokens[i++]));
-		zpUrceniVymery.setNazev(VfkUtil.getString(tokens[i++]));
-		zpUrceniVymery.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		zpUrceniVymery.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
+		zpUrceniVymery.setKod(VfkUtil.getInteger(tokens, i++));
+		zpUrceniVymery.setNazev(VfkUtil.getString(tokens, i++));
+		zpUrceniVymery.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		zpUrceniVymery.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 
 		return zpUrceniVymery;
 	}

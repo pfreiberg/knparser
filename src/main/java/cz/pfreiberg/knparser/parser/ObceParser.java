@@ -9,11 +9,11 @@ public class ObceParser {
 		int i = 0;
 
 		Obce obec = new Obce();
-		obec.setKod(VfkUtil.getInteger(tokens[i++]));
-		obec.setOkresyKod(VfkUtil.getInteger(tokens[i++]));
-		obec.setNazev(VfkUtil.getString(tokens[i++]));
-		obec.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		obec.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
+		obec.setKod(VfkUtil.getInteger(tokens, i++));
+		obec.setOkresyKod(VfkUtil.getInteger(tokens, i++));
+		obec.setNazev(VfkUtil.getString(tokens, i++));
+		obec.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		obec.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 
 		return obec;
 	}

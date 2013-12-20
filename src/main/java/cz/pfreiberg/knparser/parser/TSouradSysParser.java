@@ -9,10 +9,10 @@ public class TSouradSysParser {
 		int i = 0;
 
 		TSouradSys tSouradSys = new TSouradSys();
-		tSouradSys.setKod(VfkUtil.getInteger(tokens[i++]));
-		tSouradSys.setNazev(VfkUtil.getString(tokens[i++]));
-		tSouradSys.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		tSouradSys.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
+		tSouradSys.setKod(VfkUtil.getInteger(tokens, i++));
+		tSouradSys.setNazev(VfkUtil.getString(tokens, i++));
+		tSouradSys.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		tSouradSys.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 
 		return tSouradSys;
 	}

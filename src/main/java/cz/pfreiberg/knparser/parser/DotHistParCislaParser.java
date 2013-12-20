@@ -9,10 +9,10 @@ public class DotHistParCislaParser {
 		int i = 0;
 
 		DotHistParCisla dotHistParCisla = new DotHistParCisla();
-		dotHistParCisla.setKatuzeKod(VfkUtil.getInteger(tokens[i++]));
-		dotHistParCisla.setParcis(VfkUtil.getInteger(tokens[i++]));
-		dotHistParCisla.setParpod(VfkUtil.getInteger(tokens[i++]));
-		dotHistParCisla.setParskup(VfkUtil.getInteger(tokens[i++]));
+		dotHistParCisla.setKatuzeKod(VfkUtil.getInteger(tokens, i++));
+		dotHistParCisla.setParcis(VfkUtil.getInteger(tokens, i++));
+		dotHistParCisla.setParpod(VfkUtil.getInteger(tokens, i++));
+		dotHistParCisla.setParskup(VfkUtil.getInteger(tokens, i++));
 
 		return dotHistParCisla;
 	}

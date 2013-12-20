@@ -9,14 +9,14 @@ public class DPozemkuParser {
 		int i = 0;
 
 		DPozemku dPozemku = new DPozemku();
-		dPozemku.setKod(VfkUtil.getInteger(tokens[i++]));
-		dPozemku.setNazev(VfkUtil.getString(tokens[i++]));
-		dPozemku.setZemedelskaKultura(VfkUtil.getString(tokens[i++]));
-		dPozemku.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		dPozemku.setTypppdKod(VfkUtil.getInteger(tokens[i++]));
-		dPozemku.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
-		dPozemku.setZkratka(VfkUtil.getString(tokens[i++]));
-		dPozemku.setStavebniParcela(VfkUtil.getString(tokens[i++]));
+		dPozemku.setKod(VfkUtil.getInteger(tokens, i++));
+		dPozemku.setNazev(VfkUtil.getString(tokens, i++));
+		dPozemku.setZemedelskaKultura(VfkUtil.getString(tokens, i++));
+		dPozemku.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		dPozemku.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		dPozemku.setPlatnostDo(VfkUtil.getDate(tokens, i++));
+		dPozemku.setZkratka(VfkUtil.getString(tokens, i++));
+		dPozemku.setStavebniParcela(VfkUtil.getString(tokens, i++));
 
 		return dPozemku;
 	}

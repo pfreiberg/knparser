@@ -9,11 +9,11 @@ public class TPredmetuRParser {
 		int i = 0;
 
 		TPredmetuR tPredmetuR = new TPredmetuR();
-		tPredmetuR.setKod(VfkUtil.getInteger(tokens[i++]));
-		tPredmetuR.setNazev(VfkUtil.getString(tokens[i++]));
-		tPredmetuR.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		tPredmetuR.setPopis(VfkUtil.getString(tokens[i++]));
-		tPredmetuR.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
+		tPredmetuR.setKod(VfkUtil.getInteger(tokens, i++));
+		tPredmetuR.setNazev(VfkUtil.getString(tokens, i++));
+		tPredmetuR.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		tPredmetuR.setPopis(VfkUtil.getString(tokens, i++));
+		tPredmetuR.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 
 		return tPredmetuR;
 	}

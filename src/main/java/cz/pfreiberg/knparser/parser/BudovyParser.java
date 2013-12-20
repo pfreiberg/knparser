@@ -9,22 +9,22 @@ public class BudovyParser {
 		int i = 0;
 
 		Budovy budova = new Budovy();
-		budova.setId(VfkUtil.getLong(tokens[i++]));
-		budova.setStavDat(VfkUtil.getInteger(tokens[i++]));
-		budova.setDatumVzniku(VfkUtil.getDate(tokens[i++]));
-		budova.setDatumZaniku(VfkUtil.getDate(tokens[i++]));
-		budova.setPriznakKontextu(VfkUtil.getInteger(tokens[i++]));
-		budova.setRizeniIdVzniku(VfkUtil.getLong(tokens[i++]));
-		budova.setRizeniIdZaniku(VfkUtil.getLong(tokens[i++]));
-		budova.setTypbudKod(VfkUtil.getInteger(tokens[i++]));
-		budova.setCaobceKod(VfkUtil.getInteger(tokens[i++]));
-		budova.setCisloDomovni(VfkUtil.getInteger(tokens[i++]));
-		budova.setCenaNemovitosti(VfkUtil.getInteger(tokens[i++]));
-		budova.setZpvybuKod(VfkUtil.getInteger(tokens[i++]));
-		budova.setTelId(VfkUtil.getLong(tokens[i++]));
-		budova.setJeSoucasti(VfkUtil.getString(tokens[i++]));
-		budova.setPsId(VfkUtil.getLong(tokens[i++]));
-		budova.setDocasnaStavba(VfkUtil.getString(tokens[i++]));
+		budova.setId(VfkUtil.getLong(tokens, i++));
+		budova.setStavDat(VfkUtil.getInteger(tokens, i++));
+		budova.setDatumVzniku(VfkUtil.getDate(tokens, i++));
+		budova.setDatumZaniku(VfkUtil.getDate(tokens, i++));
+		budova.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
+		budova.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
+		budova.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
+		budova.setTypbudKod(VfkUtil.getInteger(tokens, i++));
+		budova.setCaobceKod(VfkUtil.getInteger(tokens, i++));
+		budova.setCisloDomovni(VfkUtil.getInteger(tokens, i++));
+		budova.setCenaNemovitosti(VfkUtil.getInteger(tokens, i++));
+		budova.setZpvybuKod(VfkUtil.getInteger(tokens, i++));
+		budova.setTelId(VfkUtil.getLong(tokens, i++));
+		budova.setJeSoucasti(VfkUtil.getString(tokens, i++));
+		budova.setPsId(VfkUtil.getLong(tokens, i++));
+		budova.setDocasnaStavba(VfkUtil.getString(tokens, i++));
 		
 		return budova;
 	}

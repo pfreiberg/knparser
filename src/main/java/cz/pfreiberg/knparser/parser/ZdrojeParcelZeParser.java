@@ -9,11 +9,11 @@ public class ZdrojeParcelZeParser {
 		int i = 0;
 
 		ZdrojeParcelZe zdrojeParcelZe = new ZdrojeParcelZe();
-		zdrojeParcelZe.setKod(VfkUtil.getInteger(tokens[i++]));
-		zdrojeParcelZe.setNazev(VfkUtil.getString(tokens[i++]));
-		zdrojeParcelZe.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		zdrojeParcelZe.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
-		zdrojeParcelZe.setZkratka(VfkUtil.getString(tokens[i++]));
+		zdrojeParcelZe.setKod(VfkUtil.getInteger(tokens, i++));
+		zdrojeParcelZe.setNazev(VfkUtil.getString(tokens, i++));
+		zdrojeParcelZe.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		zdrojeParcelZe.setPlatnostDo(VfkUtil.getDate(tokens, i++));
+		zdrojeParcelZe.setZkratka(VfkUtil.getString(tokens, i++));
 
 		return zdrojeParcelZe;
 	}

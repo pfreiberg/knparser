@@ -9,8 +9,8 @@ public class PredmetyRizeniParser {
 		int i = 0;
 
 		PredmetyRizeni predmetyRizeni = new PredmetyRizeni();
-		predmetyRizeni.setRizeniId(VfkUtil.getLong(tokens[i++]));
-		predmetyRizeni.setTyppreKod(VfkUtil.getInteger(tokens[i++]));
+		predmetyRizeni.setRizeniId(VfkUtil.getLong(tokens, i++));
+		predmetyRizeni.setTyppreKod(VfkUtil.getInteger(tokens, i++));
 
 		return predmetyRizeni;
 	}

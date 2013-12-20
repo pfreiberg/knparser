@@ -9,16 +9,16 @@ public class HraniceParcelParser {
 		int i = 0;
 
 		HraniceParcel hraniceParcel = new HraniceParcel();
-		hraniceParcel.setId(VfkUtil.getLong(tokens[i++]));
-		hraniceParcel.setStavDat(VfkUtil.getInteger(tokens[i++]));
-		hraniceParcel.setDatumVzniku(VfkUtil.getDate(tokens[i++]));
-		hraniceParcel.setDatumZaniku(VfkUtil.getDate(tokens[i++]));
-		hraniceParcel.setPriznakKontextu(VfkUtil.getInteger(tokens[i++]));
-		hraniceParcel.setRizeniIdVzniku(VfkUtil.getLong(tokens[i++]));
-		hraniceParcel.setRizeniIdZaniku(VfkUtil.getLong(tokens[i++]));
-		hraniceParcel.setTypppdKod(VfkUtil.getInteger(tokens[i++]));
-		hraniceParcel.setParId1(VfkUtil.getLong(tokens[i++]));
-		hraniceParcel.setParId2(VfkUtil.getLong(tokens[i++]));
+		hraniceParcel.setId(VfkUtil.getLong(tokens, i++));
+		hraniceParcel.setStavDat(VfkUtil.getInteger(tokens, i++));
+		hraniceParcel.setDatumVzniku(VfkUtil.getDate(tokens, i++));
+		hraniceParcel.setDatumZaniku(VfkUtil.getDate(tokens, i++));
+		hraniceParcel.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
+		hraniceParcel.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
+		hraniceParcel.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
+		hraniceParcel.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		hraniceParcel.setParId1(VfkUtil.getLong(tokens, i++));
+		hraniceParcel.setParId2(VfkUtil.getLong(tokens, i++));
 
 		return hraniceParcel;
 	}

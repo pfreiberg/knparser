@@ -9,16 +9,16 @@ public class CastiBudovParser {
 		int i = 0;
 
 		CastiBudov castiBudovy = new CastiBudov();
-		castiBudovy.setStavDat(VfkUtil.getInteger(tokens[i++]));
-		castiBudovy.setDatumVzniku(VfkUtil.getDate(tokens[i++]));
-		castiBudovy.setDatumZaniku(VfkUtil.getDate(tokens[i++]));
-		castiBudovy.setPriznakKontextu(VfkUtil.getInteger(tokens[i++]));
-		castiBudovy.setRizeniIdVzniku(VfkUtil.getLong(tokens[i++]));
-		castiBudovy.setRizeniIdZaniku(VfkUtil.getLong(tokens[i++]));
-		castiBudovy.setBudId(VfkUtil.getLong(tokens[i++]));
-		castiBudovy.setTypbudKod(VfkUtil.getInteger(tokens[i++]));
-		castiBudovy.setCisloDomovni(VfkUtil.getInteger(tokens[i++]));
-		castiBudovy.setCenaNemovitosti(VfkUtil.getDouble(tokens[i++]));
+		castiBudovy.setStavDat(VfkUtil.getInteger(tokens, i++));
+		castiBudovy.setDatumVzniku(VfkUtil.getDate(tokens, i++));
+		castiBudovy.setDatumZaniku(VfkUtil.getDate(tokens, i++));
+		castiBudovy.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
+		castiBudovy.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
+		castiBudovy.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
+		castiBudovy.setBudId(VfkUtil.getLong(tokens, i++));
+		castiBudovy.setTypbudKod(VfkUtil.getInteger(tokens, i++));
+		castiBudovy.setCisloDomovni(VfkUtil.getInteger(tokens, i++));
+		castiBudovy.setCenaNemovitosti(VfkUtil.getDouble(tokens, i++));
 
 		return castiBudovy;
 	}

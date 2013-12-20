@@ -9,14 +9,14 @@ public class NavrhyZmenKmParser {
 		int i = 0;
 
 		NavrhyZmenKm navrhyZmenKm = new NavrhyZmenKm();
-		navrhyZmenKm.setId(VfkUtil.getLong(tokens[i++]));
-		navrhyZmenKm.setStavNz(VfkUtil.getInteger(tokens[i++]));
-		navrhyZmenKm.setNzType(VfkUtil.getString(tokens[i++]));
-		navrhyZmenKm.setPorizeniDatNz(VfkUtil.getString(tokens[i++]));
-		navrhyZmenKm.setRizeniId(VfkUtil.getLong(tokens[i++]));
-		navrhyZmenKm.setCisloPlanku(VfkUtil.getString(tokens[i++]));
-		navrhyZmenKm.setVyhotovil(VfkUtil.getString(tokens[i++]));
-		navrhyZmenKm.setOznaceniMapovehoListu(VfkUtil.getString(tokens[i++]));
+		navrhyZmenKm.setId(VfkUtil.getLong(tokens, i++));
+		navrhyZmenKm.setStavNz(VfkUtil.getInteger(tokens, i++));
+		navrhyZmenKm.setNzType(VfkUtil.getString(tokens, i++));
+		navrhyZmenKm.setPorizeniDatNz(VfkUtil.getString(tokens, i++));
+		navrhyZmenKm.setRizeniId(VfkUtil.getLong(tokens, i++));
+		navrhyZmenKm.setCisloPlanku(VfkUtil.getString(tokens, i++));
+		navrhyZmenKm.setVyhotovil(VfkUtil.getString(tokens, i++));
+		navrhyZmenKm.setOznaceniMapovehoListu(VfkUtil.getString(tokens, i++));
 
 		return navrhyZmenKm;
 	}

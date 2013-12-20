@@ -9,8 +9,8 @@ public class UcastniciTypParser {
 		int i = 0;
 
 		UcastniciTyp ucastniciTyp = new UcastniciTyp();
-		ucastniciTyp.setUcastId(VfkUtil.getLong(tokens[i++]));
-		ucastniciTyp.setTypucaKod(VfkUtil.getString(tokens[i++]));
+		ucastniciTyp.setUcastId(VfkUtil.getLong(tokens, i++));
+		ucastniciTyp.setTypucaKod(VfkUtil.getString(tokens, i++));
 
 		return ucastniciTyp;
 	}

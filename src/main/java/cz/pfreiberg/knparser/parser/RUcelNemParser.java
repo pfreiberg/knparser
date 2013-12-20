@@ -9,15 +9,15 @@ public class RUcelNemParser {
 		int i = 0;
 
 		RUcelNem rUcelNem = new RUcelNem();
-		rUcelNem.setId(VfkUtil.getLong(tokens[i++]));
-		rUcelNem.setStavDat(VfkUtil.getInteger(tokens[i++]));
-		rUcelNem.setDatumVzniku(VfkUtil.getDate(tokens[i++]));
-		rUcelNem.setDatumZaniku(VfkUtil.getDate(tokens[i++]));
-		rUcelNem.setPriznakKontextu(VfkUtil.getInteger(tokens[i++]));
-		rUcelNem.setRizeniIdVzniku(VfkUtil.getLong(tokens[i++]));
-		rUcelNem.setRizeniIdZaniku(VfkUtil.getLong(tokens[i++]));
-		rUcelNem.setPsId(VfkUtil.getLong(tokens[i++]));
-		rUcelNem.setUcelKod(VfkUtil.getInteger(tokens[i++]));
+		rUcelNem.setId(VfkUtil.getLong(tokens, i++));
+		rUcelNem.setStavDat(VfkUtil.getInteger(tokens, i++));
+		rUcelNem.setDatumVzniku(VfkUtil.getDate(tokens, i++));
+		rUcelNem.setDatumZaniku(VfkUtil.getDate(tokens, i++));
+		rUcelNem.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
+		rUcelNem.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
+		rUcelNem.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
+		rUcelNem.setPsId(VfkUtil.getLong(tokens, i++));
+		rUcelNem.setUcelKod(VfkUtil.getInteger(tokens, i++));
 
 		return rUcelNem;
 	}

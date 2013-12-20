@@ -9,10 +9,10 @@ public class DotcenaParCislaParser {
 		int i = 0;
 
 		DotcenaParCisla dotcenaParCisla = new DotcenaParCisla();
-		dotcenaParCisla.setKatuzeKod(VfkUtil.getInteger(tokens[i++]));
-		dotcenaParCisla.setKmenoveCisloPar(VfkUtil.getInteger(tokens[i++]));
-		dotcenaParCisla.setPoddeleniCislaPar(VfkUtil.getInteger(tokens[i++]));
-		dotcenaParCisla.setDruhCislovaniPar(VfkUtil.getInteger(tokens[i++]));
+		dotcenaParCisla.setKatuzeKod(VfkUtil.getInteger(tokens, i++));
+		dotcenaParCisla.setKmenoveCisloPar(VfkUtil.getInteger(tokens, i++));
+		dotcenaParCisla.setPoddeleniCislaPar(VfkUtil.getInteger(tokens, i++));
+		dotcenaParCisla.setDruhCislovaniPar(VfkUtil.getInteger(tokens, i++));
 
 		return dotcenaParCisla;
 	}

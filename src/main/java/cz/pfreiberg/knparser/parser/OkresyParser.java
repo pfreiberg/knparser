@@ -9,13 +9,13 @@ public class OkresyParser {
 		int i = 0;
 
 		Okresy okres = new Okresy();
-		okres.setKod(VfkUtil.getInteger(tokens[i++]));
-		okres.setKrajeKod(VfkUtil.getInteger(tokens[i++]));
-		okres.setNazev(VfkUtil.getString(tokens[i++]));
-		okres.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		okres.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
-		okres.setNuts4(VfkUtil.getString(tokens[i++]));
-		okres.setNkrajeKod(VfkUtil.getInteger(tokens[i++]));
+		okres.setKod(VfkUtil.getInteger(tokens, i++));
+		okres.setKrajeKod(VfkUtil.getInteger(tokens, i++));
+		okres.setNazev(VfkUtil.getString(tokens, i++));
+		okres.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		okres.setPlatnostDo(VfkUtil.getDate(tokens, i++));
+		okres.setNuts4(VfkUtil.getString(tokens, i++));
+		okres.setNkrajeKod(VfkUtil.getInteger(tokens, i++));
 
 		return okres;
 	}

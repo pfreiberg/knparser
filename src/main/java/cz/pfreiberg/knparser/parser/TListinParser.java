@@ -9,12 +9,12 @@ public class TListinParser {
 		int i = 0;
 
 		TListin tListin = new TListin();
-		tListin.setKod(VfkUtil.getInteger(tokens[i++]));
-		tListin.setNazev(VfkUtil.getString(tokens[i++]));
-		tListin.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		tListin.setPopis(VfkUtil.getString(tokens[i++]));
-		tListin.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		tListin.setDruhList(VfkUtil.getInteger(tokens[i++]));
+		tListin.setKod(VfkUtil.getInteger(tokens, i++));
+		tListin.setNazev(VfkUtil.getString(tokens, i++));
+		tListin.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		tListin.setPopis(VfkUtil.getString(tokens, i++));
+		tListin.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		tListin.setDruhList(VfkUtil.getInteger(tokens, i++));
 
 		return tListin;
 	}

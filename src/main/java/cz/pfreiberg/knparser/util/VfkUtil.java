@@ -51,52 +51,72 @@ public class VfkUtil {
 		throw new ParserException("Unsupported encoding.");
 	}
 
-	public static Integer getInteger(String value) {
+	public static Integer getInteger(String[] value, int i) {
+		
+		if (outOfIndex(value, i))
+			return null;
+		
 		Integer output = null;
 		try {
-			output = Integer.valueOf(value);
+			output = Integer.valueOf(value[i]);
 		} catch (NumberFormatException e) {
 			return null;
 		}
 		return output;
 	}
 
-	public static Long getLong(String value) {
+	public static Long getLong(String[] value, int i) {
+		
+		if (outOfIndex(value, i))
+			return null;
+		
 		Long output = null;
 		try {
-			output = Long.valueOf(value);
+			output = Long.valueOf(value[i]);
 		} catch (NumberFormatException e) {
 			return null;
 		}
 		return output;
 	}
 
-	public static Double getDouble(String value) {
+	public static Double getDouble(String[] value, int i) {
+		
+		if (outOfIndex(value, i))
+			return null;
+		
 		Double output = null;
 		try {
-			output = Double.valueOf(value);
+			output = Double.valueOf(value[i]);
 		} catch (NumberFormatException e) {
 			return null;
 		}
 		return output;
 	}
 
-	public static Date getDate(String value) {
+	public static Date getDate(String[] value, int i) {
+		
+		if (outOfIndex(value, i))
+			return null;
+		
 		Date output = null;
 		SimpleDateFormat format = new SimpleDateFormat(
 				"\"dd.MM.yyyy HH:mm:ss\"");
 		try {
-			output = format.parse(value);
+			output = format.parse(value[i]);
 		} catch (ParseException e) {
 			return null;
 		}
 		return output;
 	}
 
-	public static String getString(String value) {
-		if (value == null || value.equals("\"\""))
+	public static String getString(String[] value, int i) {
+		
+		if (outOfIndex(value, i))
 			return null;
-		return value;
+		
+		if (value[i] == null || value[i].equals("\"\""))
+			return null;
+		return value[i];
 	}
 
 	public static String formatValue(Object value) {
@@ -115,6 +135,11 @@ public class VfkUtil {
 				return "\"" + value + "\"";
 			}
 		}
+	}
+	
+	private static boolean outOfIndex(String[] value, int i)
+	{
+		return (value.length <= i);
 	}
 	
 	public static String getTerminator()

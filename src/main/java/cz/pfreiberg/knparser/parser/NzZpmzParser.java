@@ -9,9 +9,9 @@ public class NzZpmzParser {
 		int i = 0;
 
 		NzZpmz nzZpmz = new NzZpmz();
-		nzZpmz.setNzId(VfkUtil.getLong(tokens[i++]));
-		nzZpmz.setZpmzCisloZpmz(VfkUtil.getInteger(tokens[i++]));
-		nzZpmz.setZpmzKatuzeKod(VfkUtil.getInteger(tokens[i++]));
+		nzZpmz.setNzId(VfkUtil.getLong(tokens, i++));
+		nzZpmz.setZpmzCisloZpmz(VfkUtil.getInteger(tokens, i++));
+		nzZpmz.setZpmzKatuzeKod(VfkUtil.getInteger(tokens, i++));
 
 		return nzZpmz;
 	}

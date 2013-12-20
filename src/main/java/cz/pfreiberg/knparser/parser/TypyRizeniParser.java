@@ -9,10 +9,10 @@ public class TypyRizeniParser {
 		int i = 0;
 
 		TypyRizeni typyRizeni = new TypyRizeni();
-		typyRizeni.setKod(VfkUtil.getString(tokens[i++]));
-		typyRizeni.setNazev(VfkUtil.getString(tokens[i++]));
-		typyRizeni.setPopis(VfkUtil.getString(tokens[i++]));
-		typyRizeni.setZpoplatneni(VfkUtil.getString(tokens[i++]));
+		typyRizeni.setKod(VfkUtil.getString(tokens, i++));
+		typyRizeni.setNazev(VfkUtil.getString(tokens, i++));
+		typyRizeni.setPopis(VfkUtil.getString(tokens, i++));
+		typyRizeni.setZpoplatneni(VfkUtil.getString(tokens, i++));
 
 		return typyRizeni;
 	}

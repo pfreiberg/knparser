@@ -9,8 +9,8 @@ public class RizeniKuParser {
 		int i = 0;
 
 		RizeniKu rizeniKu = new RizeniKu();
-		rizeniKu.setKatuzeKod(VfkUtil.getInteger(tokens[i++]));
-		rizeniKu.setRizeniId(VfkUtil.getLong(tokens[i++]));
+		rizeniKu.setKatuzeKod(VfkUtil.getInteger(tokens, i++));
+		rizeniKu.setRizeniId(VfkUtil.getLong(tokens, i++));
 
 		return rizeniKu;
 	}

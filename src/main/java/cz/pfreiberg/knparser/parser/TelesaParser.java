@@ -9,15 +9,15 @@ public class TelesaParser {
 		int i = 0;
 
 		Telesa telesa = new Telesa();
-		telesa.setId(VfkUtil.getLong(tokens[i++]));
-		telesa.setStavDat(VfkUtil.getInteger(tokens[i++]));
-		telesa.setDatumVzniku(VfkUtil.getDate(tokens[i++]));
-		telesa.setDatumZaniku(VfkUtil.getDate(tokens[i++]));
-		telesa.setPriznakKontextu(VfkUtil.getInteger(tokens[i++]));
-		telesa.setRizeniIdVzniku(VfkUtil.getLong(tokens[i++]));
-		telesa.setRizeniIdZaniku(VfkUtil.getLong(tokens[i++]));
-		telesa.setKatuzeKod(VfkUtil.getInteger(tokens[i++]));
-		telesa.setCisloTel(VfkUtil.getInteger(tokens[i++]));
+		telesa.setId(VfkUtil.getLong(tokens, i++));
+		telesa.setStavDat(VfkUtil.getInteger(tokens, i++));
+		telesa.setDatumVzniku(VfkUtil.getDate(tokens, i++));
+		telesa.setDatumZaniku(VfkUtil.getDate(tokens, i++));
+		telesa.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
+		telesa.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
+		telesa.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
+		telesa.setKatuzeKod(VfkUtil.getInteger(tokens, i++));
+		telesa.setCisloTel(VfkUtil.getInteger(tokens, i++));
 
 		return telesa;
 	}

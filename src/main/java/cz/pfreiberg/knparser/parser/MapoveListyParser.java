@@ -9,11 +9,11 @@ public class MapoveListyParser {
 		int i = 0;
 
 		MapoveListy mapoveListy = new MapoveListy();
-		mapoveListy.setId(VfkUtil.getLong(tokens[i++]));
-		mapoveListy.setOznaceniMapovehoListu(VfkUtil.getString(tokens[i++]));
-		mapoveListy.setPlatnostOd(VfkUtil.getDate(tokens[i++]));
-		mapoveListy.setPlatnostDo(VfkUtil.getDate(tokens[i++]));
-		mapoveListy.setMapa(VfkUtil.getString(tokens[i++]));
+		mapoveListy.setId(VfkUtil.getLong(tokens, i++));
+		mapoveListy.setOznaceniMapovehoListu(VfkUtil.getString(tokens, i++));
+		mapoveListy.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		mapoveListy.setPlatnostDo(VfkUtil.getDate(tokens, i++));
+		mapoveListy.setMapa(VfkUtil.getString(tokens, i++));
 
 		return mapoveListy;
 	}

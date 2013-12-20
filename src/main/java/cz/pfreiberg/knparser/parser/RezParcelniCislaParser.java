@@ -9,11 +9,11 @@ public class RezParcelniCislaParser {
 		int i = 0;
 
 		RezParcelniCisla rezParcelniCisla = new RezParcelniCisla();
-		rezParcelniCisla.setKatuzeKod(VfkUtil.getInteger(tokens[i++]));
-		rezParcelniCisla.setKmenoveCisloPar(VfkUtil.getInteger(tokens[i++]));
-		rezParcelniCisla.setDruhCislovaniPar(VfkUtil.getInteger(tokens[i++]));
-		rezParcelniCisla.setPoddeleniCislaPar(VfkUtil.getInteger(tokens[i++]));
-		rezParcelniCisla.setRezzpmzCisloZpmz(VfkUtil.getInteger(tokens[i++]));
+		rezParcelniCisla.setKatuzeKod(VfkUtil.getInteger(tokens, i++));
+		rezParcelniCisla.setKmenoveCisloPar(VfkUtil.getInteger(tokens, i++));
+		rezParcelniCisla.setDruhCislovaniPar(VfkUtil.getInteger(tokens, i++));
+		rezParcelniCisla.setPoddeleniCislaPar(VfkUtil.getInteger(tokens, i++));
+		rezParcelniCisla.setRezzpmzCisloZpmz(VfkUtil.getInteger(tokens, i++));
 
 		return rezParcelniCisla;
 	}

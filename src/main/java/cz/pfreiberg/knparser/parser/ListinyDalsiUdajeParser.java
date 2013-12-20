@@ -9,9 +9,9 @@ public class ListinyDalsiUdajeParser {
 		int i = 0;
 
 		ListinyDalsiUdaje listinyDalsiUdaje = new ListinyDalsiUdaje();
-		listinyDalsiUdaje.setListinId(VfkUtil.getLong(tokens[i++]));
-		listinyDalsiUdaje.setDulKod(VfkUtil.getString(tokens[i++]));
-		listinyDalsiUdaje.setCreateDate(VfkUtil.getDate(tokens[i++]));
+		listinyDalsiUdaje.setListinId(VfkUtil.getLong(tokens, i++));
+		listinyDalsiUdaje.setDulKod(VfkUtil.getString(tokens, i++));
+		listinyDalsiUdaje.setCreateDate(VfkUtil.getDate(tokens, i++));
 
 		return listinyDalsiUdaje;
 	}
