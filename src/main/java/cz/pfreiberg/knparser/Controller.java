@@ -26,7 +26,7 @@ public class Controller {
 	public void run() {
 		try {
 			Parser parser = new Parser(configuration);
-			System.out.println(parser.parse() + " row/s was escaped.");
+			System.out.println(parser.parseFile() + " row/s was escaped.");
 			System.out.println("Is parsed. Starting the storage sequence.");
 
 			Vfk vfk = parser.getVfk();

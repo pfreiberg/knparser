@@ -46,14 +46,25 @@ public class Parser {
 		return vfk;
 	}
 
-	public int parse() throws IOException {
+	public int parseFile() throws IOException {
 		try {
-			for (String[] values = processNextRow(); values != null; values = processNextRow()) {
+			for (String[] values = processRow(); values != null; values = processRow()) {
 				String node = values[0];
 				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
 
-				if (!parseRow(node, tokens)) {
-					escapedRows++;
+				if (tryParseHead(node, tokens)) {
+				} else if (tryParseNemovitosti(node, tokens)) {
+				} else if (tryParseJednotky(node, tokens)) {
+				} else if (tryParseBonitniDilParcely(node, tokens)) {
+				} else if (tryParseVlastnictvi(node, tokens)) {
+				} else if (tryParseJinePravniVztahy(node, tokens)) {
+				} else if (tryParseRizeni(node, tokens)) {
+				} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
+				} else if (tryParseBonitovanePudneEkologickeJednotky(node, tokens)) {
+				} else if (tryParseGeometrickyPlan(node, tokens)) {
+				} else if (tryParseRezervovanaCisla(node, tokens)) {
+				} else if (tryParseDefinicniBody(node, tokens)) {
+				} else if (tryParseAdresniMista(node, tokens)) {
 				}
 
 				System.out.println((System.currentTimeMillis() - startTime)
@@ -62,44 +73,18 @@ public class Parser {
 		} catch (ParserException e) {
 			System.out.println(e);
 			escapedRows++;
-			parse();
+			parseFile();
 		}
 
 		return escapedRows;
 	}
 
-	public boolean parseRow(String node, String[] tokens) {
-
-		try {
-			
-			if (tryParseHead(node, tokens)) {
-			} else if (tryParseNemovitosti(node, tokens)) {
-			} else if (tryParseJednotky(node, tokens)) {
-			} else if (tryParseBonitniDilParcely(node, tokens)) {
-			} else if (tryParseVlastnictvi(node, tokens)) {
-			} else if (tryParseJinePravniVztahy(node, tokens)) {
-			} else if (tryParseRizeni(node, tokens)) {
-			} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
-			} else if (tryParseBonitovanePudneEkologickeJednotky(node, tokens)) {
-			} else if (tryParseGeometrickyPlan(node, tokens)) {
-			} else if (tryParseRezervovanaCisla(node, tokens)) {
-			} else if (tryParseDefinicniBody(node, tokens)) {
-			} else if (tryParseAdresniMista(node, tokens)) {
-			}
-
-		} catch (ArrayIndexOutOfBoundsException e) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private String[] processNextRow() throws IOException, ParserException {
+	private String[] processRow() throws IOException, ParserException {
 		actualRow++;
 
 		String[] row = null;
 		do {
-			String nextRow = getNextRow();
+			String nextRow = getRow();
 			if (nextRow == null)
 				return row;
 			String[] processedRow;
@@ -125,9 +110,9 @@ public class Parser {
 		return row;
 	}
 
-	private String getNextRow() throws IOException {
-		String nextRow = br.readLine();
-		return nextRow;
+	private String getRow() throws IOException {
+		String row = br.readLine();
+		return row;
 	}
 
 	private String[] parseRow(String row) throws ParserException {

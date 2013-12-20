@@ -40,7 +40,8 @@ public class VfkUtil {
 		throw new ParserException("HCODEPAGE was NOT found in the file.");
 	}
 
-	public static String convertEncoding(String encoding) throws ParserException {
+	public static String convertEncoding(String encoding)
+			throws ParserException {
 		if (EncodingCzech.windows1250.equalsVfk(encoding)) {
 			return EncodingCzech.windows1250.getEncoding();
 		} else if (EncodingCzech.iso88592.equalsVfk(encoding)) {
@@ -52,10 +53,10 @@ public class VfkUtil {
 	}
 
 	public static Integer getInteger(String[] value, int i) {
-		
+
 		if (outOfIndex(value, i))
 			return null;
-		
+
 		Integer output = null;
 		try {
 			output = Integer.valueOf(value[i]);
@@ -66,10 +67,10 @@ public class VfkUtil {
 	}
 
 	public static Long getLong(String[] value, int i) {
-		
+
 		if (outOfIndex(value, i))
 			return null;
-		
+
 		Long output = null;
 		try {
 			output = Long.valueOf(value[i]);
@@ -80,10 +81,10 @@ public class VfkUtil {
 	}
 
 	public static Double getDouble(String[] value, int i) {
-		
+
 		if (outOfIndex(value, i))
 			return null;
-		
+
 		Double output = null;
 		try {
 			output = Double.valueOf(value[i]);
@@ -94,10 +95,10 @@ public class VfkUtil {
 	}
 
 	public static Date getDate(String[] value, int i) {
-		
+
 		if (outOfIndex(value, i))
 			return null;
-		
+
 		Date output = null;
 		SimpleDateFormat format = new SimpleDateFormat(
 				"\"dd.MM.yyyy HH:mm:ss\"");
@@ -110,10 +111,10 @@ public class VfkUtil {
 	}
 
 	public static String getString(String[] value, int i) {
-		
+
 		if (outOfIndex(value, i))
 			return null;
-		
+
 		if (value[i] == null || value[i].equals("\"\""))
 			return null;
 		return value[i];
@@ -136,14 +137,13 @@ public class VfkUtil {
 			}
 		}
 	}
-	
-	private static boolean outOfIndex(String[] value, int i)
-	{
+
+	public static String getTerminator() {
+		return "|" + Character.toString((char) 21) + "\n";
+	}
+
+	private static boolean outOfIndex(String[] value, int i) {
 		return (value.length <= i);
 	}
-	
-	public static String getTerminator()
-	{
-		 return "|" + Character.toString((char)21) + "\n";
-	}
+
 }
