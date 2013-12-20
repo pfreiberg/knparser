@@ -17,6 +17,7 @@ import cz.pfreiberg.knparser.domain.jednotky.Jednotky;
 import cz.pfreiberg.knparser.domain.jednotky.TJednotek;
 import cz.pfreiberg.knparser.domain.jednotky.ZpVyuzitiJed;
 import cz.pfreiberg.knparser.domain.jinepravnivztahy.JinePravVztahy;
+import cz.pfreiberg.knparser.domain.jinepravnivztahy.RJpv;
 import cz.pfreiberg.knparser.domain.jinepravnivztahy.TPravnichVzt;
 import cz.pfreiberg.knparser.domain.nemovitosti.Budovy;
 import cz.pfreiberg.knparser.domain.nemovitosti.CastiBudov;
@@ -30,8 +31,10 @@ import cz.pfreiberg.knparser.domain.nemovitosti.Obce;
 import cz.pfreiberg.knparser.domain.nemovitosti.Okresy;
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
 import cz.pfreiberg.knparser.domain.nemovitosti.PravaStavby;
+import cz.pfreiberg.knparser.domain.nemovitosti.RUcelNem;
 import cz.pfreiberg.knparser.domain.nemovitosti.RZpochr;
 import cz.pfreiberg.knparser.domain.nemovitosti.TBudov;
+import cz.pfreiberg.knparser.domain.nemovitosti.Ucel;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZdrojeParcelZe;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpOchranyNem;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpUrceniVymery;
@@ -94,31 +97,32 @@ public class Vfk {
 	// Adresní místa
 	private List<Adresa> adresa;
 	private List<BudObj> budObj;
-	
+
 	// Bonitní díl parcely
 	private List<BonitDilyParc> bonitDilyParc;
-	
+
 	// Bonitované půdně ekologické jednotky
 	private List<HraniceBpej> hraniceBpej;
 	private List<OznaceniBpej> oznaceniBpej;
-	
+
 	// Definiční body
 	private List<ObrazyDefBodu> obrazyDefBodu;
-	
+
 	// Geometrický plán
 	private List<NavrhyZmenKm> navrhyZmenKm;
 	private List<NzZpmz> nzZpmz;
 	private List<Zpmz> zpmz;
-	
+
 	// Jednotky
 	private List<Jednotky> jednotky;
 	private List<TJednotek> tJednotek;
 	private List<ZpVyuzitiJed> zpVyuzitiJed;
-	
+
 	// Jiné právní vztahy
 	private List<JinePravVztahy> jinePravVztahy;
 	private List<TPravnichVzt> tPravnichVzt;
-	
+	private List<RJpv> rJpv;
+
 	// Nemovitosti
 	private List<Budovy> budovy;
 	private List<CastiBudov> castiBudov;
@@ -139,7 +143,9 @@ public class Vfk {
 	private List<ZpVyuzitiBud> zpVyuzitiBud;
 	private List<ZpVyuzitiPoz> zpVyuzitiPoz;
 	private List<PravaStavby> pravaStavby;
-	
+	private List<RUcelNem> rUcelNem;
+	private List<Ucel> ucel;
+
 	// Prvky katastrální mapy
 	private List<DalsiPrvkyMapy> dalsiPrvkyMapy;
 	private List<HraniceParcel> hraniceParcel;
@@ -156,13 +162,13 @@ public class Vfk {
 	private List<TPrvkuPDat> tPrvkuPdat;
 	private List<TSouradSys> tSouradSys;
 	private List<ZobrazeniVb> zobrazeniVb;
-	
+
 	// Rezervovaná čísla
 	private List<DotcenaParCisla> dotcenaParCisla;
 	private List<DotHistParCisla> dotHistParCisla;
 	private List<RezCislaPbpp> rezCislaPbpp;
 	private List<RezParcelniCisla> rezParcelniCisla;
-	
+
 	// Řízení
 	private List<Adresy> adresy;
 	private List<DalsiUdajeListiny> dalsiUdajeListiny;
@@ -180,7 +186,7 @@ public class Vfk {
 	private List<TypyUcastniku> typyUcastniku;
 	private List<Ucastnici> ucastnici;
 	private List<UcastniciTyp> ucastniciTyp;
-	
+
 	// Vlastnictví
 	private List<CharOs> charOs;
 	private List<OpravSubjekty> opravSubjekty;
@@ -191,31 +197,32 @@ public class Vfk {
 		// Adresní místa
 		adresa = new ArrayList<Adresa>();
 		budObj = new ArrayList<BudObj>();
-		
+
 		// Bonitní díl parcely
 		bonitDilyParc = new ArrayList<BonitDilyParc>();
-		
+
 		// Bonitované půdně ekologické jednotky
 		hraniceBpej = new ArrayList<HraniceBpej>();
 		oznaceniBpej = new ArrayList<OznaceniBpej>();
-		
+
 		// Definiční body
 		obrazyDefBodu = new ArrayList<ObrazyDefBodu>();
-		
+
 		// Geometrický plán
 		navrhyZmenKm = new ArrayList<NavrhyZmenKm>();
 		nzZpmz = new ArrayList<NzZpmz>();
 		zpmz = new ArrayList<Zpmz>();
-		
+
 		// Jednotky
 		jednotky = new ArrayList<Jednotky>();
 		tJednotek = new ArrayList<TJednotek>();
 		zpVyuzitiJed = new ArrayList<ZpVyuzitiJed>();
-		
+
 		// Jiné právní vztahy
 		jinePravVztahy = new ArrayList<JinePravVztahy>();
 		tPravnichVzt = new ArrayList<TPravnichVzt>();
-		
+		rJpv = new ArrayList<RJpv>();
+
 		// Nemovitosti
 		budovy = new ArrayList<Budovy>();
 		castiBudov = new ArrayList<CastiBudov>();
@@ -236,7 +243,9 @@ public class Vfk {
 		zpVyuzitiBud = new ArrayList<ZpVyuzitiBud>();
 		zpVyuzitiPoz = new ArrayList<ZpVyuzitiPoz>();
 		pravaStavby = new ArrayList<PravaStavby>();
-		
+		rUcelNem = new ArrayList<RUcelNem>();
+		ucel = new ArrayList<Ucel>();
+
 		// Prvky katastrální mapy
 		dalsiPrvkyMapy = new ArrayList<DalsiPrvkyMapy>();
 		hraniceParcel = new ArrayList<HraniceParcel>();
@@ -253,13 +262,13 @@ public class Vfk {
 		tPrvkuPdat = new ArrayList<TPrvkuPDat>();
 		tSouradSys = new ArrayList<TSouradSys>();
 		zobrazeniVb = new ArrayList<ZobrazeniVb>();
-		
+
 		// Rezervovaná čísla
 		dotcenaParCisla = new ArrayList<DotcenaParCisla>();
 		dotHistParCisla = new ArrayList<DotHistParCisla>();
 		rezCislaPbpp = new ArrayList<RezCislaPbpp>();
 		rezParcelniCisla = new ArrayList<RezParcelniCisla>();
-		
+
 		// Řízení
 		adresy = new ArrayList<Adresy>();
 		dalsiUdajeListiny = new ArrayList<DalsiUdajeListiny>();
@@ -277,7 +286,7 @@ public class Vfk {
 		typyUcastniku = new ArrayList<TypyUcastniku>();
 		ucastnici = new ArrayList<Ucastnici>();
 		ucastniciTyp = new ArrayList<UcastniciTyp>();
-		
+
 		// Vlastnictví
 		charOs = new ArrayList<CharOs>();
 		opravSubjekty = new ArrayList<OpravSubjekty>();
@@ -939,6 +948,30 @@ public class Vfk {
 
 	public void setPravaStavby(List<PravaStavby> pravaStavby) {
 		this.pravaStavby = pravaStavby;
+	}
+
+	public List<RUcelNem> getRUcelNem() {
+		return rUcelNem;
+	}
+
+	public void setRUcelNem(List<RUcelNem> rUcelNem) {
+		this.rUcelNem = rUcelNem;
+	}
+
+	public List<Ucel> getUcel() {
+		return ucel;
+	}
+
+	public void setUcel(List<Ucel> ucel) {
+		this.ucel = ucel;
+	}
+
+	public List<RJpv> getRJpv() {
+		return rJpv;
+	}
+
+	public void setRJpv(List<RJpv> rJpv) {
+		this.rJpv = rJpv;
 	}
 
 }

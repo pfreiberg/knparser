@@ -38,6 +38,8 @@ public class ParcelyParser {
 		parcela.setBudId(VfkUtil.getLong(tokens[i++]));
 		parcela.setIdentBud(VfkUtil.getString(tokens[i++]));
 		parcela.setSoucasti(VfkUtil.getString(tokens[i++]));
+		parcela.setPsId(VfkUtil.getLong(tokens[i++]));
+		parcela.setIdentPs(VfkUtil.getString(tokens[i++]));
 
 		return parcela;
 	}

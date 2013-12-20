@@ -6,23 +6,21 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import cz.pfreiberg.knparser.domain.rizeni.ObjektyRizeni;
+import cz.pfreiberg.knparser.domain.jinepravnivztahy.RJpv;
 import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ObjektyRizeniOracleLoaderFileExporter extends
-		OracleLoaderFileExporter {
+public class RJpvOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<ObjektyRizeni> objektyRizeni;
+	private List<RJpv> rJpv;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "OBJEKTY_RIZENI";
+	private final String name = "RJPV";
 
-	public ObjektyRizeniOracleLoaderFileExporter(
-			List<ObjektyRizeni> objektyRizeni, String prefix,
+	public RJpvOracleLoaderFileExporter(List<RJpv> rJpv, String prefix,
 			String characterSet, String output) {
-		this.objektyRizeni = objektyRizeni;
+		this.rJpv = rJpv;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -37,15 +35,16 @@ public class ObjektyRizeniOracleLoaderFileExporter extends
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "ID");
-		controlFile = super.insertColumn(controlFile, "RIZENI_ID");
-		controlFile = super.insertColumn(controlFile, "PAR_ID");
-		controlFile = super.insertColumn(controlFile, "BUD_ID");
-		controlFile = super.insertColumn(controlFile, "JED_ID");
-		controlFile = super.insertDate(controlFile, "DATUM_PLOMBY");
-		controlFile = super.insertDate(controlFile, "DATUM_ODSTRANENI_PLOMBY");
-		controlFile = super.insertDate(controlFile, "DATUM_HIST_OD");
-		controlFile = super.insertDate(controlFile, "DATUM_HIST_DO");
-		controlFile = super.insertColumn(controlFile, "PS_ID");
+		controlFile = super.insertColumn(controlFile, "VERZE");
+		controlFile = super.insertColumn(controlFile, "STAV_DAT");
+		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
+		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
+		controlFile = super.insertColumn(controlFile, "HJPV_ID_1");
+		controlFile = super.insertColumn(controlFile, "HJPV_ID_2");
+		controlFile = super.insertColumn(controlFile, "TYPVAZBY_JPV");
+
 		controlFile = super.end(controlFile);
 
 		try {
@@ -65,7 +64,7 @@ public class ObjektyRizeniOracleLoaderFileExporter extends
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					objektyRizeni);
+					rJpv);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

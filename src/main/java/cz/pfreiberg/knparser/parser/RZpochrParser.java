@@ -20,6 +20,7 @@ public class RZpochrParser {
 		rZpochr.setParId(VfkUtil.getLong(tokens[i++]));
 		rZpochr.setBudId(VfkUtil.getLong(tokens[i++]));
 		rZpochr.setJedId(VfkUtil.getLong(tokens[i++]));
+		rZpochr.setPsId(VfkUtil.getLong(tokens[i++]));
 
 		return rZpochr;
 	}

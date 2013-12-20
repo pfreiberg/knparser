@@ -73,6 +73,7 @@ public class Controller {
 		loaderExporterFactory
 				.getJinePravVztahyExporter(vfk.getJinePravVztahy());
 		loaderExporterFactory.getTPravnichVztExporter(vfk.getTPravnichVzt());
+		loaderExporterFactory.getRJpvExporter(vfk.getRJpv());
 	}
 
 	private void exportNemovitosti(Vfk vfk,
@@ -98,6 +99,8 @@ public class Controller {
 		loaderExporterFactory.getRZpochrExporter(vfk.getRZpochr());
 		loaderExporterFactory.getZpVyuzitiBudExporter(vfk.getZpVyuzitiBud());
 		loaderExporterFactory.getPravaStavbyExporter(vfk.getPravaStavby());
+		loaderExporterFactory.getRUcelNemExporter(vfk.getRUcelNem());
+		loaderExporterFactory.getUcelExporter(vfk.getUcel());
 	}
 
 	private void exportRizeni(Vfk vfk,
@@ -165,20 +168,23 @@ public class Controller {
 		loaderExporterFactory.getNzZpmzExporter(vfk.getNzZpmz());
 		loaderExporterFactory.getZpmzExporter(vfk.getZpmz());
 	}
-	
+
 	private void exporterRezervovanaCisla(Vfk vfk,
 			OracleLoaderExporterFactory loaderExporterFactory) {
-		loaderExporterFactory.getDotcenaParCislaExporter(vfk.getDotcenaParCisla());
-		loaderExporterFactory.getDotHistParCislaExporter(vfk.getDotHistParCisla());
+		loaderExporterFactory.getDotcenaParCislaExporter(vfk
+				.getDotcenaParCisla());
+		loaderExporterFactory.getDotHistParCislaExporter(vfk
+				.getDotHistParCisla());
 		loaderExporterFactory.getRezCislaPbppExporter(vfk.getRezCislaPbpp());
-		loaderExporterFactory.getRezParcelniCislaExporter(vfk.getRezParcelniCisla());
+		loaderExporterFactory.getRezParcelniCislaExporter(vfk
+				.getRezParcelniCisla());
 	}
-	
+
 	private void exporterDefinicniBody(Vfk vfk,
 			OracleLoaderExporterFactory loaderExporterFactory) {
 		loaderExporterFactory.getObrazyDefBoduExporter(vfk.getObrazyDefBodu());
 	}
-	
+
 	private void exporterAdresniMista(Vfk vfk,
 			OracleLoaderExporterFactory loaderExporterFactory) {
 		loaderExporterFactory.getAdresaExporter(vfk.getAdresa());

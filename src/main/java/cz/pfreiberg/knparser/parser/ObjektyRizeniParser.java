@@ -18,6 +18,7 @@ public class ObjektyRizeniParser {
 		objektyRizeni.setDatumOdstraneniPlomby(VfkUtil.getDate(tokens[i++]));
 		objektyRizeni.setDatumHistOd(VfkUtil.getDate(tokens[i++]));
 		objektyRizeni.setDatumHistDo(VfkUtil.getDate(tokens[i++]));
+		objektyRizeni.setPsId(VfkUtil.getLong(tokens[i++]));
 
 		return objektyRizeni;
 	}

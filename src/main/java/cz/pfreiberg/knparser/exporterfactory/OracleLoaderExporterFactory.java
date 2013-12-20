@@ -15,6 +15,7 @@ import cz.pfreiberg.knparser.domain.jednotky.Jednotky;
 import cz.pfreiberg.knparser.domain.jednotky.TJednotek;
 import cz.pfreiberg.knparser.domain.jednotky.ZpVyuzitiJed;
 import cz.pfreiberg.knparser.domain.jinepravnivztahy.JinePravVztahy;
+import cz.pfreiberg.knparser.domain.jinepravnivztahy.RJpv;
 import cz.pfreiberg.knparser.domain.jinepravnivztahy.TPravnichVzt;
 import cz.pfreiberg.knparser.domain.nemovitosti.Budovy;
 import cz.pfreiberg.knparser.domain.nemovitosti.CastiBudov;
@@ -28,8 +29,10 @@ import cz.pfreiberg.knparser.domain.nemovitosti.Obce;
 import cz.pfreiberg.knparser.domain.nemovitosti.Okresy;
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
 import cz.pfreiberg.knparser.domain.nemovitosti.PravaStavby;
+import cz.pfreiberg.knparser.domain.nemovitosti.RUcelNem;
 import cz.pfreiberg.knparser.domain.nemovitosti.RZpochr;
 import cz.pfreiberg.knparser.domain.nemovitosti.TBudov;
+import cz.pfreiberg.knparser.domain.nemovitosti.Ucel;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZdrojeParcelZe;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpOchranyNem;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpUrceniVymery;
@@ -115,7 +118,9 @@ import cz.pfreiberg.knparser.exporter.oracleloaderfile.ParcelyOracleLoaderFileEx
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.PravaStavbyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.PredmetyRizeniOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.PrvkyOMapyOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.RJpvOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RListOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.RUcelNemOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RZpochrOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RezCislaPbppOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RezParcelniCislaOracleLoaderFileExporter;
@@ -138,6 +143,7 @@ import cz.pfreiberg.knparser.exporter.oracleloaderfile.TypyRizeniOracleLoaderFil
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.TypyUcastnikuOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.UcastniciOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.UcastniciTypOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.UcelOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.VlastnictviOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZdrojeParcelZeOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZobrazeniVbOracleLoaderFileExporter;
@@ -601,7 +607,25 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getPravaStavbyExporter(List<PravaStavby> pravaStavby) {
-		return new PravaStavbyOracleLoaderFileExporter(pravaStavby, prefix, characterSet,
+		return new PravaStavbyOracleLoaderFileExporter(pravaStavby, prefix,
+				characterSet, output);
+	}
+
+	@Override
+	public Exporter getRUcelNemExporter(List<RUcelNem> rUcelNem) {
+		return new RUcelNemOracleLoaderFileExporter(rUcelNem, prefix,
+				characterSet, output);
+	}
+
+	@Override
+	public Exporter getUcelExporter(List<Ucel> ucel) {
+		return new UcelOracleLoaderFileExporter(ucel, prefix, characterSet,
+				output);
+	}
+
+	@Override
+	public Exporter getRJpvExporter(List<RJpv> rJpv) {
+		return new RJpvOracleLoaderFileExporter(rJpv, prefix, characterSet,
 				output);
 	}
 }

@@ -24,6 +24,7 @@ public class RListParser {
 		rList.setJpvId(VfkUtil.getLong(tokens[i++]));
 		rList.setDatumVzniku2(VfkUtil.getDate(tokens[i++]));
 		rList.setRizeniIdVzniku2(VfkUtil.getLong(tokens[i++]));
+		rList.setPsId(VfkUtil.getLong(tokens[i++]));
 
 		return rList;
 	}

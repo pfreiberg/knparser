@@ -45,6 +45,7 @@ public class RZpochrOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "PAR_ID");
 		controlFile = super.insertColumn(controlFile, "BUD_ID");
 		controlFile = super.insertColumn(controlFile, "JED_ID");
+		controlFile = super.insertColumn(controlFile, "PS_ID");
 		controlFile = super.end(controlFile);
 
 		try {

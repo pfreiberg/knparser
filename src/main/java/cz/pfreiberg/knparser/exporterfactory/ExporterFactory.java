@@ -15,6 +15,7 @@ import cz.pfreiberg.knparser.domain.jednotky.Jednotky;
 import cz.pfreiberg.knparser.domain.jednotky.TJednotek;
 import cz.pfreiberg.knparser.domain.jednotky.ZpVyuzitiJed;
 import cz.pfreiberg.knparser.domain.jinepravnivztahy.JinePravVztahy;
+import cz.pfreiberg.knparser.domain.jinepravnivztahy.RJpv;
 import cz.pfreiberg.knparser.domain.jinepravnivztahy.TPravnichVzt;
 import cz.pfreiberg.knparser.domain.nemovitosti.Budovy;
 import cz.pfreiberg.knparser.domain.nemovitosti.CastiBudov;
@@ -28,8 +29,10 @@ import cz.pfreiberg.knparser.domain.nemovitosti.Obce;
 import cz.pfreiberg.knparser.domain.nemovitosti.Okresy;
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
 import cz.pfreiberg.knparser.domain.nemovitosti.PravaStavby;
+import cz.pfreiberg.knparser.domain.nemovitosti.RUcelNem;
 import cz.pfreiberg.knparser.domain.nemovitosti.RZpochr;
 import cz.pfreiberg.knparser.domain.nemovitosti.TBudov;
+import cz.pfreiberg.knparser.domain.nemovitosti.Ucel;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZdrojeParcelZe;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpOchranyNem;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZpUrceniVymery;
@@ -86,6 +89,7 @@ public interface ExporterFactory {
 	
 	public Exporter getJinePravVztahyExporter(List<JinePravVztahy> jinePravVztahy);
 	public Exporter getTPravnichVztExporter(List<TPravnichVzt> tPravnichVzt);
+	public Exporter getRJpvExporter(List<RJpv> rJpv);
 
 	public Exporter getParcelyExporter(List<Parcely> parcely);
 	public Exporter getBudovyExporter(List<Budovy> budovy);
@@ -106,6 +110,8 @@ public interface ExporterFactory {
 	public Exporter getRZpochrExporter(List<RZpochr> rZpochr);
 	public Exporter getZpVyuzitiBudExporter(List<ZpVyuzitiBud> zpVyuzitiBud);
 	public Exporter getPravaStavbyExporter(List<PravaStavby> pravaStavby);
+	public Exporter getRUcelNemExporter(List<RUcelNem> rUcelNem);
+	public Exporter getUcelExporter(List<Ucel> ucel);
 	
 	public Exporter getAdresyExporter(List<Adresy> adresy);
 	public Exporter getDalsiUdajeListinyExporter(List<DalsiUdajeListiny> dalsiUdajeListiny);

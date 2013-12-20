@@ -5,13 +5,12 @@ import java.util.Date;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
- * Třída reprezentující
- * "Výběr způsobu ochrany k nemovitostem na základě exportovaných parcel".
+ * Třída reprezentující "Přiřazení účelu práva stavby".
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
  */
-public class RZpochr {
+public class RUcelNem {
 
 	private Long id;
 	private Integer stavDat;
@@ -20,11 +19,8 @@ public class RZpochr {
 	private Integer priznakKontextu;
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
-	private Integer zpochrKod;
-	private Long parId;
-	private Long budId;
-	private Long jedId;
 	private Long psId;
+	private Integer ucelKod;
 
 	public Long getId() {
 		return id;
@@ -82,44 +78,20 @@ public class RZpochr {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public Integer getZpochrKod() {
-		return zpochrKod;
-	}
-
-	public void setZpochrKod(Integer zpochrKod) {
-		this.zpochrKod = zpochrKod;
-	}
-
-	public Long getParId() {
-		return parId;
-	}
-
-	public void setParId(Long parId) {
-		this.parId = parId;
-	}
-
-	public Long getBudId() {
-		return budId;
-	}
-
-	public void setBudId(Long budId) {
-		this.budId = budId;
-	}
-
-	public Long getJedId() {
-		return jedId;
-	}
-
-	public void setJedId(Long jedId) {
-		this.jedId = jedId;
-	}
-
 	public Long getPsId() {
 		return psId;
 	}
 
 	public void setPsId(Long psId) {
 		this.psId = psId;
+	}
+
+	public Integer getUcelKod() {
+		return ucelKod;
+	}
+
+	public void setUcelKod(Integer ucelKod) {
+		this.ucelKod = ucelKod;
 	}
 
 	@Override
@@ -131,11 +103,8 @@ public class RZpochr {
 				+ VfkUtil.formatValue(priznakKontextu) + ","
 				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
 				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
-				+ VfkUtil.formatValue(zpochrKod) + ","
-				+ VfkUtil.formatValue(parId) + "," 
-				+ VfkUtil.formatValue(budId) + "," 
-				+ VfkUtil.formatValue(jedId) + ","
-				+ VfkUtil.formatValue(psId)
+				+ VfkUtil.formatValue(psId) + ","
+				+ VfkUtil.formatValue(ucelKod)
 				+ VfkUtil.getTerminator();
 	}
 

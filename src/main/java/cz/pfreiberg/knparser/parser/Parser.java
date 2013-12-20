@@ -276,6 +276,9 @@ public class Parser {
 		case "&DPS":
 			vfk.getPravaStavby().add(PravaStavbyParser.parse(tokens));
 			break;
+		case "&DRU":
+			vfk.getRUcelNem().add(RUcelNemParser.parse(tokens));
+			break;
 		default:
 			return false;
 		}
@@ -337,6 +340,9 @@ public class Parser {
 			break;
 		case "&DTYPRAV":
 			vfk.getTPravnichVzt().add(TPravnichVztParser.parse(tokens));
+			break;
+		case "&DRJPV":
+			vfk.getRJpv().add(RJpvParser.parse(tokens));
 			break;
 		default:
 			return false;

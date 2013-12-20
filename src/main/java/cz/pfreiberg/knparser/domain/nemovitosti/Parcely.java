@@ -41,6 +41,8 @@ public class Parcely {
 	private Long budId;
 	private String identBud;
 	private String soucasti;
+	private Long psId;
+	private String identPs;
 
 	public Long getId() {
 		return id;
@@ -265,7 +267,6 @@ public class Parcely {
 	public void setIdentBud(String identBud) {
 		this.identBud = identBud;
 	}
-	
 
 	public String getSoucasti() {
 		return soucasti;
@@ -273,6 +274,22 @@ public class Parcely {
 
 	public void setSoucasti(String soucasti) {
 		this.soucasti = soucasti;
+	}
+
+	public Long getPsId() {
+		return psId;
+	}
+
+	public void setPsId(Long psId) {
+		this.psId = psId;
+	}
+
+	public String getIdentPs() {
+		return identPs;
+	}
+
+	public void setIdentPs(String identPs) {
+		this.identPs = identPs;
 	}
 
 	@Override
@@ -302,10 +319,12 @@ public class Parcely {
 				+ VfkUtil.formatValue(cenaNemovitosti) + ","
 				+ VfkUtil.formatValue(definiciniBodPar) + ","
 				+ VfkUtil.formatValue(telId) + "," 
-				+ VfkUtil.formatValue(parId) + ","
+				+ VfkUtil.formatValue(parId) + "," 
 				+ VfkUtil.formatValue(budId) + ","
 				+ VfkUtil.formatValue(identBud) + ","
-				+ VfkUtil.formatValue(soucasti)
+				+ VfkUtil.formatValue(soucasti) + ","
+				+ VfkUtil.formatValue(psId) + ","
+				+ VfkUtil.formatValue(identPs)
 				+ VfkUtil.getTerminator();
 	}
 

@@ -26,6 +26,8 @@ public class Budovy {
 	private Integer zpvybuKod;
 	private Long telId;
 	private String jeSoucasti;
+	private Long psId;
+	private String docasnaStavba;
 
 	public Long getId() {
 		return id;
@@ -139,6 +141,22 @@ public class Budovy {
 		this.jeSoucasti = jeSoucasti;
 	}
 
+	public Long getPsId() {
+		return psId;
+	}
+
+	public void setPsId(Long psId) {
+		this.psId = psId;
+	}
+
+	public String getDocasnaStavba() {
+		return docasnaStavba;
+	}
+
+	public void setDocasnaStavba(String docasnaStavba) {
+		this.docasnaStavba = docasnaStavba;
+	}
+
 	@Override
 	public String toString() {
 		return "" + VfkUtil.formatValue(id) + ","
@@ -154,7 +172,9 @@ public class Budovy {
 				+ VfkUtil.formatValue(cenaNemovitosti) + ","
 				+ VfkUtil.formatValue(zpvybuKod) + ","
 				+ VfkUtil.formatValue(telId) + ","
-				+ VfkUtil.formatValue(jeSoucasti)
+				+ VfkUtil.formatValue(jeSoucasti) + ","
+				+ VfkUtil.formatValue(psId) + ","
+				+ VfkUtil.formatValue(docasnaStavba)
 				+ VfkUtil.getTerminator();
 	}
 

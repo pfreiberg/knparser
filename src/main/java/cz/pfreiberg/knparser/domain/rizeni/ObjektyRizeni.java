@@ -22,6 +22,7 @@ public class ObjektyRizeni {
 	private Date datumOdstraneniPlomby;
 	private Date datumHistOd;
 	private Date datumHistDo;
+	private Long psId;
 
 	public Long getId() {
 		return id;
@@ -95,6 +96,14 @@ public class ObjektyRizeni {
 		this.datumHistDo = datumHistDo;
 	}
 
+	public Long getPsId() {
+		return psId;
+	}
+
+	public void setPsId(Long psId) {
+		this.psId = psId;
+	}
+
 	@Override
 	public String toString() {
 		return "" + VfkUtil.formatValue(id) + ","
@@ -105,7 +114,8 @@ public class ObjektyRizeni {
 				+ VfkUtil.formatValue(datumPlomby) + ","
 				+ VfkUtil.formatValue(datumOdstraneniPlomby) + ","
 				+ VfkUtil.formatValue(datumHistOd) + ","
-				+ VfkUtil.formatValue(datumHistDo) 
+				+ VfkUtil.formatValue(datumHistDo) + ","
+				+ VfkUtil.formatValue(psId)
 				+ VfkUtil.getTerminator();
 	}
 

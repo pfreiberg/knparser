@@ -29,6 +29,7 @@ public class RList {
 	private Long jpvId;
 	private Date datumVzniku2;
 	private Long rizeniIdVzniku2;
+	private Long psId;
 
 	public Long getId() {
 		return id;
@@ -150,6 +151,14 @@ public class RList {
 		this.rizeniIdVzniku2 = rizeniIdVzniku2;
 	}
 
+	public Long getPsId() {
+		return psId;
+	}
+
+	public void setPsId(Long psId) {
+		this.psId = psId;
+	}
+
 	@Override
 	public String toString() {
 		return "" + VfkUtil.formatValue(id) + ","
@@ -166,7 +175,8 @@ public class RList {
 				+ VfkUtil.formatValue(opsubId) + ","
 				+ VfkUtil.formatValue(jpvId) + "," 
 				+ VfkUtil.formatValue(datumVzniku2) + ","
-				+ VfkUtil.formatValue(rizeniIdVzniku2)
+				+ VfkUtil.formatValue(rizeniIdVzniku2) + ","
+				+ VfkUtil.formatValue(psId)
 				+ VfkUtil.getTerminator();
 	}
 

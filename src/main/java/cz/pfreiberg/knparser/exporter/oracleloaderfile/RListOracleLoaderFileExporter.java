@@ -49,6 +49,7 @@ public class RListOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "JPV_ID");
 		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU2");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU2");
+		controlFile = super.insertColumn(controlFile, "PS_ID");
 		controlFile = super.end(controlFile);
 
 		try {
