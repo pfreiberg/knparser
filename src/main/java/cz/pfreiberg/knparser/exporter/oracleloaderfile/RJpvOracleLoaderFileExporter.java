@@ -16,7 +16,7 @@ public class RJpvOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "RJPV";
+	private final String name = "R_JPV";
 
 	public RJpvOracleLoaderFileExporter(List<RJpv> rJpv, String prefix,
 			String characterSet, String output) {
