@@ -26,7 +26,7 @@ public class Parser {
 	private String buffer;
 	private long actualRow;
 	private int escapedRows;
-	
+
 	long startTime;
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
@@ -52,21 +52,12 @@ public class Parser {
 				String node = values[0];
 				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
 
-				if (tryParseHead(node, tokens)) {
-				} else if (tryParseNemovitosti(node, tokens)) {
-				} else if (tryParseJednotky(node, tokens)) {
-				} else if (tryParseBonitniDilParcely(node, tokens)) {
-				} else if (tryParseVlastnictvi(node, tokens)) {
-				} else if (tryParseJinePravniVztahy(node, tokens)) {
-				} else if (tryParseRizeni(node, tokens)) {
-				} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
-				} else if (tryParseBonitovanePudneEkologickeJednotky(node, tokens)) {
-				} else if (tryParseGeometrickyPlan(node, tokens)) {
-				} else if (tryParseRezervovanaCisla(node, tokens)) {
-				} else if (tryParseDefinicniBody(node, tokens)) {
-				} else if (tryParseAdresniMista(node, tokens)) {}
-				
-				System.out.println((System.currentTimeMillis() - startTime) / 1000 + " seconds...");
+				if (!parseRow(node, tokens)) {
+					escapedRows++;
+				}
+
+				System.out.println((System.currentTimeMillis() - startTime)
+						/ 1000 + " seconds...");
 			}
 		} catch (ParserException e) {
 			System.out.println(e);
@@ -75,6 +66,32 @@ public class Parser {
 		}
 
 		return escapedRows;
+	}
+
+	public boolean parseRow(String node, String[] tokens) {
+
+		try {
+			
+			if (tryParseHead(node, tokens)) {
+			} else if (tryParseNemovitosti(node, tokens)) {
+			} else if (tryParseJednotky(node, tokens)) {
+			} else if (tryParseBonitniDilParcely(node, tokens)) {
+			} else if (tryParseVlastnictvi(node, tokens)) {
+			} else if (tryParseJinePravniVztahy(node, tokens)) {
+			} else if (tryParseRizeni(node, tokens)) {
+			} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
+			} else if (tryParseBonitovanePudneEkologickeJednotky(node, tokens)) {
+			} else if (tryParseGeometrickyPlan(node, tokens)) {
+			} else if (tryParseRezervovanaCisla(node, tokens)) {
+			} else if (tryParseDefinicniBody(node, tokens)) {
+			} else if (tryParseAdresniMista(node, tokens)) {
+			}
+
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private String[] processNextRow() throws IOException, ParserException {
@@ -87,10 +104,10 @@ public class Parser {
 				return row;
 			String[] processedRow;
 			processedRow = parseRow(nextRow);
-			
+
 			System.out.println("Actual row: " + actualRow);
 			System.out.println(Arrays.asList(nextRow));
-			
+
 			if (processedRow.length > 0) {
 				if (row == null) {
 					row = processedRow;
@@ -475,9 +492,8 @@ public class Parser {
 		}
 		return true;
 	}
-	
-	private boolean tryParseGeometrickyPlan(String node,
-			String[] tokens) {
+
+	private boolean tryParseGeometrickyPlan(String node, String[] tokens) {
 		switch (node) {
 		case "&DNZ":
 			vfk.getNavrhyZmenKm().add(NavrhyZmenKmParser.parse(tokens));
@@ -493,9 +509,8 @@ public class Parser {
 		}
 		return true;
 	}
-	
-	private boolean tryParseRezervovanaCisla(String node,
-			String[] tokens) {
+
+	private boolean tryParseRezervovanaCisla(String node, String[] tokens) {
 		switch (node) {
 		case "&DRECI":
 			vfk.getRezParcelniCisla().add(RezParcelniCislaParser.parse(tokens));
@@ -514,9 +529,8 @@ public class Parser {
 		}
 		return true;
 	}
-	
-	private boolean tryParseDefinicniBody(String node,
-			String[] tokens) {
+
+	private boolean tryParseDefinicniBody(String node, String[] tokens) {
 		switch (node) {
 		case "&DOBDEBO":
 			vfk.getObrazyDefBodu().add(ObrazyDefBoduParser.parse(tokens));
@@ -526,9 +540,8 @@ public class Parser {
 		}
 		return true;
 	}
-	
-	private boolean tryParseAdresniMista(String node,
-			String[] tokens) {
+
+	private boolean tryParseAdresniMista(String node, String[] tokens) {
 		switch (node) {
 		case "&DBUDOBJ":
 			vfk.getBudObj().add(BudObjParser.parse(tokens));
