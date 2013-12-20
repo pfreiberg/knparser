@@ -97,6 +97,7 @@ public class Controller {
 		loaderExporterFactory.getNoveKrajeExporter(vfk.getNoveKraje());
 		loaderExporterFactory.getRZpochrExporter(vfk.getRZpochr());
 		loaderExporterFactory.getZpVyuzitiBudExporter(vfk.getZpVyuzitiBud());
+		loaderExporterFactory.getPravaStavbyExporter(vfk.getPravaStavby());
 	}
 
 	private void exportRizeni(Vfk vfk,

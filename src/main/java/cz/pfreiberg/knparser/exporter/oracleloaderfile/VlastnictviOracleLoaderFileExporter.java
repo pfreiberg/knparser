@@ -49,6 +49,10 @@ public class VlastnictviOracleLoaderFileExporter extends
 		controlFile = super.insertColumn(controlFile, "PODIL_JMENOVATEL");
 		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU2");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU2");
+		controlFile = super.insertColumn(controlFile, "PAR_ID");
+		controlFile = super.insertColumn(controlFile, "BUD_ID");
+		controlFile = super.insertColumn(controlFile, "JED_ID");
+		controlFile = super.insertColumn(controlFile, "PS_ID");
 		controlFile = super.end(controlFile);
 
 		try {

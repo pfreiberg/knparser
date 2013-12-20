@@ -40,6 +40,7 @@ public class Parcely {
 	private Long parId;
 	private Long budId;
 	private String identBud;
+	private String soucasti;
 
 	public Long getId() {
 		return id;
@@ -264,6 +265,15 @@ public class Parcely {
 	public void setIdentBud(String identBud) {
 		this.identBud = identBud;
 	}
+	
+
+	public String getSoucasti() {
+		return soucasti;
+	}
+
+	public void setSoucasti(String soucasti) {
+		this.soucasti = soucasti;
+	}
 
 	@Override
 	public String toString() {
@@ -294,7 +304,8 @@ public class Parcely {
 				+ VfkUtil.formatValue(telId) + "," 
 				+ VfkUtil.formatValue(parId) + ","
 				+ VfkUtil.formatValue(budId) + ","
-				+ VfkUtil.formatValue(identBud) 
+				+ VfkUtil.formatValue(identBud) + ","
+				+ VfkUtil.formatValue(soucasti)
 				+ VfkUtil.getTerminator();
 	}
 

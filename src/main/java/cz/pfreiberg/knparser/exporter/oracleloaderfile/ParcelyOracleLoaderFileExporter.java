@@ -62,6 +62,7 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "PAR_ID");
 		controlFile = super.insertColumn(controlFile, "BUD_ID");
 		controlFile = super.insertColumn(controlFile, "IDENT_BUD");
+		controlFile = super.insertColumn(controlFile, "SOUCASTI");
 		controlFile = super.end(controlFile);
 
 		try {

@@ -35,6 +35,9 @@ public class JinePravVztahy {
 	private Date datumVzniku2;
 	private Long rizeniIdVzniku2;
 	private Long opsubId2Pro;
+	private String popis2;
+	private Date poradiCas;
+	private String poradiText;
 
 	public Long getId() {
 		return id;
@@ -219,6 +222,32 @@ public class JinePravVztahy {
 	public void setOpsubId2Pro(Long opsubId2Pro) {
 		this.opsubId2Pro = opsubId2Pro;
 	}
+	
+	
+
+	public String getPopis2() {
+		return popis2;
+	}
+
+	public void setPopis2(String popis2) {
+		this.popis2 = popis2;
+	}
+
+	public Date getPoradiCas() {
+		return poradiCas;
+	}
+
+	public void setPoradiCas(Date poradiCas) {
+		this.poradiCas = poradiCas;
+	}
+
+	public String getPoradiText() {
+		return poradiText;
+	}
+
+	public void setPoradiText(String poradiText) {
+		this.poradiText = poradiText;
+	}
 
 	@Override
 	public String toString() {
@@ -244,7 +273,10 @@ public class JinePravVztahy {
 				+ VfkUtil.formatValue(hjpvId) + ","
 				+ VfkUtil.formatValue(datumVzniku2) + ","
 				+ VfkUtil.formatValue(rizeniIdVzniku2) + ","
-				+ VfkUtil.formatValue(opsubId2Pro) 
+				+ VfkUtil.formatValue(opsubId2Pro)  + ","
+				+ VfkUtil.formatValue(popis2)  + ","
+				+ VfkUtil.formatValue(poradiCas)  + ","
+				+ VfkUtil.formatValue(poradiText)
 				+ VfkUtil.getTerminator();
 	}
 

@@ -5,12 +5,12 @@ import java.util.Date;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
- * Třída reprezentující "Budovy".
+ * Třída reprezentující "Práva stavby".
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
  */
-public class Budovy {
+public class PravaStavby {
 
 	private Long id;
 	private Integer stavDat;
@@ -19,13 +19,9 @@ public class Budovy {
 	private Integer priznakKontextu;
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
-	private Integer typbudKod;
-	private Integer caobceKod;
-	private Integer cisloDomovni;
-	private Integer cenaNemovitosti;
-	private Integer zpvybuKod;
+	private Date datumPrijeti;
 	private Long telId;
-	private String jeSoucasti;
+	private Date datumUkonceni;
 
 	public Long getId() {
 		return id;
@@ -83,44 +79,12 @@ public class Budovy {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public Integer getTypbudKod() {
-		return typbudKod;
+	public Date getDatumPrijeti() {
+		return datumPrijeti;
 	}
 
-	public void setTypbudKod(Integer typbudKod) {
-		this.typbudKod = typbudKod;
-	}
-
-	public Integer getCaobceKod() {
-		return caobceKod;
-	}
-
-	public void setCaobceKod(Integer caobceKod) {
-		this.caobceKod = caobceKod;
-	}
-
-	public Integer getCisloDomovni() {
-		return cisloDomovni;
-	}
-
-	public void setCisloDomovni(Integer cisloDomovni) {
-		this.cisloDomovni = cisloDomovni;
-	}
-
-	public Integer getCenaNemovitosti() {
-		return cenaNemovitosti;
-	}
-
-	public void setCenaNemovitosti(Integer cenaNemovitosti) {
-		this.cenaNemovitosti = cenaNemovitosti;
-	}
-
-	public Integer getZpvybuKod() {
-		return zpvybuKod;
-	}
-
-	public void setZpvybuKod(Integer zpvybuKod) {
-		this.zpvybuKod = zpvybuKod;
+	public void setDatumPrijeti(Date datumPrijeti) {
+		this.datumPrijeti = datumPrijeti;
 	}
 
 	public Long getTelId() {
@@ -131,12 +95,12 @@ public class Budovy {
 		this.telId = telId;
 	}
 
-	public String getJeSoucasti() {
-		return jeSoucasti;
+	public Date getDatumUkonceni() {
+		return datumUkonceni;
 	}
 
-	public void setJeSoucasti(String jeSoucasti) {
-		this.jeSoucasti = jeSoucasti;
+	public void setDatumUkonceni(Date datumUkonceni) {
+		this.datumUkonceni = datumUkonceni;
 	}
 
 	@Override
@@ -148,14 +112,9 @@ public class Budovy {
 				+ VfkUtil.formatValue(priznakKontextu) + ","
 				+ VfkUtil.formatValue(rizeniIdVzniku) + ","
 				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
-				+ VfkUtil.formatValue(typbudKod) + ","
-				+ VfkUtil.formatValue(caobceKod) + ","
-				+ VfkUtil.formatValue(cisloDomovni) + ","
-				+ VfkUtil.formatValue(cenaNemovitosti) + ","
-				+ VfkUtil.formatValue(zpvybuKod) + ","
+				+ VfkUtil.formatValue(datumPrijeti) + ","
 				+ VfkUtil.formatValue(telId) + ","
-				+ VfkUtil.formatValue(jeSoucasti)
-				+ VfkUtil.getTerminator();
+				+ VfkUtil.formatValue(datumUkonceni) + VfkUtil.getTerminator();
 	}
 
 }

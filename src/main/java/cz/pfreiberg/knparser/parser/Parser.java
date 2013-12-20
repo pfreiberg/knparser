@@ -26,6 +26,8 @@ public class Parser {
 	private String buffer;
 	private long actualRow;
 	private int escapedRows;
+	
+	long startTime;
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
@@ -37,6 +39,7 @@ public class Parser {
 						.getCodepage())));
 		actualRow = 0;
 		escapedRows = 0;
+		startTime = System.currentTimeMillis();
 	}
 
 	public Vfk getVfk() {
@@ -62,7 +65,8 @@ public class Parser {
 				} else if (tryParseRezervovanaCisla(node, tokens)) {
 				} else if (tryParseDefinicniBody(node, tokens)) {
 				} else if (tryParseAdresniMista(node, tokens)) {}
-
+				
+				System.out.println((System.currentTimeMillis() - startTime) / 1000 + " seconds...");
 			}
 		} catch (ParserException e) {
 			System.out.println(e);
@@ -75,9 +79,6 @@ public class Parser {
 
 	private String[] processNextRow() throws IOException, ParserException {
 		actualRow++;
-		if (actualRow % 1000 == 0) {
-			System.out.println("Actual row: " + actualRow);
-		}
 
 		String[] row = null;
 		do {
@@ -86,6 +87,10 @@ public class Parser {
 				return row;
 			String[] processedRow;
 			processedRow = parseRow(nextRow);
+			
+			System.out.println("Actual row: " + actualRow);
+			System.out.println(Arrays.asList(nextRow));
+			
 			if (processedRow.length > 0) {
 				if (row == null) {
 					row = processedRow;
@@ -267,6 +272,9 @@ public class Parser {
 			break;
 		case "&DZPVYBU":
 			vfk.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
+			break;
+		case "&DPS":
+			vfk.getPravaStavby().add(PravaStavbyParser.parse(tokens));
 			break;
 		default:
 			return false;

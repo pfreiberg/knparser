@@ -27,6 +27,7 @@ import cz.pfreiberg.knparser.domain.nemovitosti.NoveKraje;
 import cz.pfreiberg.knparser.domain.nemovitosti.Obce;
 import cz.pfreiberg.knparser.domain.nemovitosti.Okresy;
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
+import cz.pfreiberg.knparser.domain.nemovitosti.PravaStavby;
 import cz.pfreiberg.knparser.domain.nemovitosti.RZpochr;
 import cz.pfreiberg.knparser.domain.nemovitosti.TBudov;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZdrojeParcelZe;
@@ -111,6 +112,7 @@ import cz.pfreiberg.knparser.exporter.oracleloaderfile.OkresyOracleLoaderFileExp
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.OpravSubjektyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.OznaceniBpejOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ParcelyOracleLoaderFileExporter;
+import cz.pfreiberg.knparser.exporter.oracleloaderfile.PravaStavbyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.PredmetyRizeniOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.PrvkyOMapyOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.RListOracleLoaderFileExporter;
@@ -594,6 +596,12 @@ public class OracleLoaderExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getBudObjExporter(List<BudObj> budObj) {
 		return new BudObjOracleLoaderFileExporter(budObj, prefix, characterSet,
+				output);
+	}
+
+	@Override
+	public Exporter getPravaStavbyExporter(List<PravaStavby> pravaStavby) {
+		return new PravaStavbyOracleLoaderFileExporter(pravaStavby, prefix, characterSet,
 				output);
 	}
 }

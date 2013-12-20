@@ -26,6 +26,10 @@ public class Vlastnictvi {
 	private Long podilJmenovatel;
 	private Date datumVzniku2;
 	private Long rizeniIdVzniku2;
+	private Long parId;
+	private Long budId;
+	private Long jedId;
+	private Long psId;
 
 	public Long getId() {
 		return id;
@@ -138,6 +142,40 @@ public class Vlastnictvi {
 	public void setRizeniIdVzniku2(Long rizeniIdVzniku2) {
 		this.rizeniIdVzniku2 = rizeniIdVzniku2;
 	}
+	
+	
+
+	public Long getParId() {
+		return parId;
+	}
+
+	public void setParId(Long parId) {
+		this.parId = parId;
+	}
+
+	public Long getBudId() {
+		return budId;
+	}
+
+	public void setBudId(Long budId) {
+		this.budId = budId;
+	}
+
+	public Long getJedId() {
+		return jedId;
+	}
+
+	public void setJedId(Long jedId) {
+		this.jedId = jedId;
+	}
+
+	public Long getPsId() {
+		return psId;
+	}
+
+	public void setPsId(Long psId) {
+		this.psId = psId;
+	}
 
 	@Override
 	public String toString() {
@@ -154,7 +192,11 @@ public class Vlastnictvi {
 				+ VfkUtil.formatValue(podilCitatel) + ","
 				+ VfkUtil.formatValue(podilJmenovatel) + ","
 				+ VfkUtil.formatValue(datumVzniku2) + ","
-				+ VfkUtil.formatValue(rizeniIdVzniku2)
+				+ VfkUtil.formatValue(rizeniIdVzniku2) + ","
+				+ VfkUtil.formatValue(parId) + ","
+				+ VfkUtil.formatValue(budId) + ","
+				+ VfkUtil.formatValue(jedId) + ","
+				+ VfkUtil.formatValue(psId)
 				+ VfkUtil.getTerminator();
 	}
 

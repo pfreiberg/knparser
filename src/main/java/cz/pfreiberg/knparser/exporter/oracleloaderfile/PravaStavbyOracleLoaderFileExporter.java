@@ -6,21 +6,22 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import cz.pfreiberg.knparser.domain.nemovitosti.Budovy;
+import cz.pfreiberg.knparser.domain.nemovitosti.PravaStavby;
 import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
+public class PravaStavbyOracleLoaderFileExporter extends
+		OracleLoaderFileExporter {
 
-	private List<Budovy> budovy;
+	private List<PravaStavby> pravaStavby;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
-	private final String name = "BUDOVY";
+	private final String name = "PRAVA_STAVBY";
 
-	public BudovyOracleLoaderFileExporter(List<Budovy> budovy,
+	public PravaStavbyOracleLoaderFileExporter(List<PravaStavby> pravaStavby,
 			String prefix, String characterSet, String output) {
-		this.budovy = budovy;
+		this.pravaStavby = pravaStavby;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -41,18 +42,15 @@ public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
-		controlFile = super.insertColumn(controlFile, "TYPBUD_KOD");
-		controlFile = super.insertColumn(controlFile, "CAOBCE_KOD");
-		controlFile = super.insertColumn(controlFile, "CISLO_DOMOVNI");
-		controlFile = super.insertColumn(controlFile, "CENA_NEMOVITOSTI");
-		controlFile = super.insertColumn(controlFile, "ZPVYBU_KOD");
+		controlFile = super.insertColumn(controlFile, "DATUM_PRIJETI");
 		controlFile = super.insertColumn(controlFile, "TEL_ID");
-		controlFile = super.insertColumn(controlFile, "JE_SOUCASTI");
+		controlFile = super.insertColumn(controlFile, "DATUM_UKONCENI");
 		controlFile = super.end(controlFile);
 
 		try {
-			FileUtils.writeStringToFile(new File(output + prefix + name + ".CFG"),
-					controlFile, VfkUtil.convertEncoding(characterSet));
+			FileUtils.writeStringToFile(new File(output + prefix + name
+					+ ".CFG"), controlFile,
+					VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,7 +64,7 @@ public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					budovy);
+					pravaStavby);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

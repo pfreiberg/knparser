@@ -49,6 +49,7 @@ public class TPravnichVztOracleLoaderFileExporter extends
 		controlFile = super.insertColumn(controlFile, "VLVZTAH");
 		controlFile = super.insertColumn(controlFile, "K_OS");
 		controlFile = super.insertColumn(controlFile, "PODIL_VERITELE");
+		controlFile = super.insertColumn(controlFile, "PORADI");
 		controlFile = super.end(controlFile);
 
 		try {

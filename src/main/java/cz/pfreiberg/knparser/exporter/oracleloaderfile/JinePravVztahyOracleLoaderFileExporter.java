@@ -59,6 +59,9 @@ public class JinePravVztahyOracleLoaderFileExporter extends
 		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU2");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU2");
 		controlFile = super.insertColumn(controlFile, "OPSUB_ID_2_PRO");
+		controlFile = super.insertColumn(controlFile, "POPIS2");
+		controlFile = super.insertDate(controlFile, "PORADI_CAS");
+		controlFile = super.insertColumn(controlFile, "PORADI_TEXT");
 		controlFile = super.end(controlFile);
 
 		try {

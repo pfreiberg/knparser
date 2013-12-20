@@ -29,6 +29,7 @@ import cz.pfreiberg.knparser.domain.nemovitosti.NoveKraje;
 import cz.pfreiberg.knparser.domain.nemovitosti.Obce;
 import cz.pfreiberg.knparser.domain.nemovitosti.Okresy;
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
+import cz.pfreiberg.knparser.domain.nemovitosti.PravaStavby;
 import cz.pfreiberg.knparser.domain.nemovitosti.RZpochr;
 import cz.pfreiberg.knparser.domain.nemovitosti.TBudov;
 import cz.pfreiberg.knparser.domain.nemovitosti.ZdrojeParcelZe;
@@ -137,6 +138,7 @@ public class Vfk {
 	private List<ZpUrceniVymery> zpUrceniVymery;
 	private List<ZpVyuzitiBud> zpVyuzitiBud;
 	private List<ZpVyuzitiPoz> zpVyuzitiPoz;
+	private List<PravaStavby> pravaStavby;
 	
 	// Prvky katastrální mapy
 	private List<DalsiPrvkyMapy> dalsiPrvkyMapy;
@@ -233,6 +235,7 @@ public class Vfk {
 		zpUrceniVymery = new ArrayList<ZpUrceniVymery>();
 		zpVyuzitiBud = new ArrayList<ZpVyuzitiBud>();
 		zpVyuzitiPoz = new ArrayList<ZpVyuzitiPoz>();
+		pravaStavby = new ArrayList<PravaStavby>();
 		
 		// Prvky katastrální mapy
 		dalsiPrvkyMapy = new ArrayList<DalsiPrvkyMapy>();
@@ -928,6 +931,14 @@ public class Vfk {
 
 	public void setVlastnictvi(List<Vlastnictvi> vlastnictvi) {
 		this.vlastnictvi = vlastnictvi;
+	}
+
+	public List<PravaStavby> getPravaStavby() {
+		return pravaStavby;
+	}
+
+	public void setPravaStavby(List<PravaStavby> pravaStavby) {
+		this.pravaStavby = pravaStavby;
 	}
 
 }

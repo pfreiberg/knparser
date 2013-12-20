@@ -22,6 +22,7 @@ public class TPravnichVztParser {
 		tPravnichVzt.setVlvztah(VfkUtil.getInteger(tokens[i++]));
 		tPravnichVzt.setkOs(VfkUtil.getString(tokens[i++]));
 		tPravnichVzt.setPodilVeritele(VfkUtil.getString(tokens[i++]));
+		tPravnichVzt.setPoradi(VfkUtil.getString(tokens[i++]));
 
 		return tPravnichVzt;
 	}

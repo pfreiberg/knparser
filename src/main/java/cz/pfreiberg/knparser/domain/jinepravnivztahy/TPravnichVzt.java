@@ -24,6 +24,7 @@ public class TPravnichVzt {
 	private Integer vlvztah;
 	private String kOs;
 	private String podilVeritele;
+	private String poradi;
 
 	public String getKod() {
 		return kod;
@@ -129,6 +130,14 @@ public class TPravnichVzt {
 		this.podilVeritele = podilVeritele;
 	}
 
+	public String getPoradi() {
+		return poradi;
+	}
+
+	public void setPoradi(String poradi) {
+		this.poradi = poradi;
+	}
+
 	@Override
 	public String toString() {
 		return "" + VfkUtil.formatValue(kod) + ","
@@ -143,7 +152,8 @@ public class TPravnichVzt {
 				+ VfkUtil.formatValue(platnostDo) + ","
 				+ VfkUtil.formatValue(vlvztah) + "," 
 				+ VfkUtil.formatValue(kOs) + "," 
-				+ VfkUtil.formatValue(podilVeritele)
+				+ VfkUtil.formatValue(podilVeritele) + ","
+				+ VfkUtil.formatValue(poradi)
 				+ VfkUtil.getTerminator();
 	}
 

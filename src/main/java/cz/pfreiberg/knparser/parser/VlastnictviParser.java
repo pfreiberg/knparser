@@ -23,6 +23,10 @@ public class VlastnictviParser {
 		vlastnictvi.setPodilJmenovatel(VfkUtil.getLong(tokens[i++]));
 		vlastnictvi.setDatumVzniku2(VfkUtil.getDate(tokens[i++]));
 		vlastnictvi.setRizeniIdVzniku2(VfkUtil.getLong(tokens[i++]));
+		vlastnictvi.setParId(VfkUtil.getLong(tokens[i++]));
+		vlastnictvi.setBudId(VfkUtil.getLong(tokens[i++]));
+		vlastnictvi.setJedId(VfkUtil.getLong(tokens[i++]));
+		vlastnictvi.setPsId(VfkUtil.getLong(tokens[i++]));
 
 		return vlastnictvi;
 	}
