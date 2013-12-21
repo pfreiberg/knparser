@@ -1,6 +1,9 @@
 package cz.pfreiberg.knparser;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -21,12 +24,33 @@ public class KnParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Configuration configuration = new Configuration();
-		configuration.setPathToFile(properties.getProperty("file"));
-		configuration.setDestinationOfOutput(properties.getProperty("output"));
+		
+		String input = properties.getProperty("input");
+		String output = properties.getProperty("output");
+		
+		List<String> files = getAllNames(properties.getProperty("input"));
+		
+		for (int i = 0; i < files.size(); i++)
+		{
+			Configuration configuration = new Configuration(input + files.get(i), output + files.get(i) + "/");
+			Controller controller = new Controller(configuration);
+			controller.run();
+		}
+	}
 
-		Controller controller = new Controller(configuration);
-		controller.run();
+	private static List<String> getAllNames(String path) {
+
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+		List<String> output = new ArrayList<String>();
+
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].isFile()) {
+				output.add(listOfFiles[i].getName());
+			}
+		}
+
+		return output;
 	}
 
 }

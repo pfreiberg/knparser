@@ -10,6 +10,12 @@ public class Configuration {
 
 	private String pathToFile;
 	private String destinationOfOutput;
+	
+	public Configuration(String input, String output)
+	{
+		pathToFile = input;
+		destinationOfOutput = output;
+	}
 
 	public String getPathToFile() {
 		return pathToFile;
