@@ -31,7 +31,7 @@ public class Controller {
 
 			Vfk vfk = parser.getVfk();
 			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
-					vfk.getZmeny(), "UTF8",
+					vfk.getZmeny(), "EE8MSWIN1250",
 					configuration.getOutput());
 			exportBonitniDilParcely(vfk, loaderExporterFactory);
 			exportJednotky(vfk, loaderExporterFactory);

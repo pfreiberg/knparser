@@ -46,8 +46,6 @@ public class VfkUtil {
 			return EncodingCzech.windows1250.getEncoding();
 		} else if (EncodingCzech.iso88592.equalsVfk(encoding)) {
 			return EncodingCzech.iso88592.getEncoding();
-		} else if (EncodingCzech.utf8.equalsVfk(encoding)) {
-			return EncodingCzech.utf8.getEncoding();
 		}
 		throw new ParserException("Unsupported encoding.");
 	}
