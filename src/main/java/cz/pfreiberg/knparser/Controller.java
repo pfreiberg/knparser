@@ -32,7 +32,7 @@ public class Controller {
 			Vfk vfk = parser.getVfk();
 			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
 					vfk.getZmeny(), "UTF8",
-					configuration.getDestinationOfOutput());
+					configuration.getOutput());
 			exportBonitniDilParcely(vfk, loaderExporterFactory);
 			exportJednotky(vfk, loaderExporterFactory);
 			exporterJinePravniVztahy(vfk, loaderExporterFactory);

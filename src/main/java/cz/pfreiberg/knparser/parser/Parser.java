@@ -27,11 +27,13 @@ public class Parser {
 	private long actualRow;
 	private int escapedRows;
 
+	private int reallyRow = 0;
+	
 	long startTime;
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
-		file = new File(configuration.getPathToFile());
+		file = new File(configuration.getInput());
 		vfk = new Vfk();
 		vfk.setCodepage(VfkUtil.getEncoding(file));
 		br = new BufferedReader(new InputStreamReader(
@@ -60,18 +62,17 @@ public class Parser {
 				} else if (tryParseJinePravniVztahy(node, tokens)) {
 				} else if (tryParseRizeni(node, tokens)) {
 				} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
-				} else if (tryParseBonitovanePudneEkologickeJednotky(node, tokens)) {
+				} else if (tryParseBonitovanePudneEkologickeJednotky(node,
+						tokens)) {
 				} else if (tryParseGeometrickyPlan(node, tokens)) {
 				} else if (tryParseRezervovanaCisla(node, tokens)) {
 				} else if (tryParseDefinicniBody(node, tokens)) {
 				} else if (tryParseAdresniMista(node, tokens)) {
 				}
-
-				System.out.println((System.currentTimeMillis() - startTime)
-						/ 1000 + " seconds...");
 			}
 		} catch (ParserException e) {
 			System.out.println(e);
+			System.out.println(reallyRow);
 			escapedRows++;
 			parseFile();
 		}
@@ -89,10 +90,16 @@ public class Parser {
 				return row;
 			String[] processedRow;
 			processedRow = parseRow(nextRow);
-
-			System.out.println("Actual row: " + actualRow);
-			System.out.println(Arrays.asList(nextRow));
-
+/*
+			if ((actualRow % 10000) == 0) {
+				System.out.println("Actual row: " + actualRow);
+				System.out.println(Arrays.asList(nextRow));
+				
+				System.out.println((System.currentTimeMillis() - startTime)
+						/ 1000 + " seconds...");
+			}
+*/
+			reallyRow++;
 			if (processedRow.length > 0) {
 				if (row == null) {
 					row = processedRow;

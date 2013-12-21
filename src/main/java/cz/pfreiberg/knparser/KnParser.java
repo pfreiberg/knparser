@@ -24,21 +24,21 @@ public class KnParser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		String input = properties.getProperty("input");
 		String output = properties.getProperty("output");
-		
-		List<String> files = getAllNames(properties.getProperty("input"));
-		
-		for (int i = 0; i < files.size(); i++)
-		{
-			Configuration configuration = new Configuration(input + files.get(i), output + files.get(i) + "/");
+
+		List<String> files = getFilenames(properties.getProperty("input"));
+
+		for (int i = 0; i < files.size(); i++) {
+			Configuration configuration = new Configuration(input
+					+ files.get(i), output + files.get(i) + "/");
 			Controller controller = new Controller(configuration);
 			controller.run();
 		}
 	}
 
-	private static List<String> getAllNames(String path) {
+	private static List<String> getFilenames(String path) {
 
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();

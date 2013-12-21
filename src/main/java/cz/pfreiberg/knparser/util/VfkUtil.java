@@ -54,7 +54,7 @@ public class VfkUtil {
 
 	public static Integer getInteger(String[] value, int i) {
 
-		if (outOfIndex(value, i))
+		if (isOutOfIndex(value, i))
 			return null;
 
 		Integer output = null;
@@ -68,7 +68,7 @@ public class VfkUtil {
 
 	public static Long getLong(String[] value, int i) {
 
-		if (outOfIndex(value, i))
+		if (isOutOfIndex(value, i))
 			return null;
 
 		Long output = null;
@@ -82,7 +82,7 @@ public class VfkUtil {
 
 	public static Double getDouble(String[] value, int i) {
 
-		if (outOfIndex(value, i))
+		if (isOutOfIndex(value, i))
 			return null;
 
 		Double output = null;
@@ -96,7 +96,7 @@ public class VfkUtil {
 
 	public static Date getDate(String[] value, int i) {
 
-		if (outOfIndex(value, i))
+		if (isOutOfIndex(value, i))
 			return null;
 
 		Date output = null;
@@ -112,7 +112,7 @@ public class VfkUtil {
 
 	public static String getString(String[] value, int i) {
 
-		if (outOfIndex(value, i))
+		if (isOutOfIndex(value, i))
 			return null;
 
 		if (value[i] == null || value[i].equals("\"\""))
@@ -142,7 +142,7 @@ public class VfkUtil {
 		return "|" + Character.toString((char) 21) + "\n";
 	}
 
-	private static boolean outOfIndex(String[] value, int i) {
+	private static boolean isOutOfIndex(String[] value, int i) {
 		return (value.length <= i);
 	}
 
