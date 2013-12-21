@@ -26,8 +26,6 @@ public class Parser {
 	private String buffer;
 	private long actualRow;
 	private int escapedRows;
-
-	private int reallyRow = 0;
 	
 	long startTime;
 
@@ -72,7 +70,6 @@ public class Parser {
 			}
 		} catch (ParserException e) {
 			System.out.println(e);
-			System.out.println(reallyRow);
 			escapedRows++;
 			parseFile();
 		}
@@ -90,7 +87,7 @@ public class Parser {
 				return row;
 			String[] processedRow;
 			processedRow = parseRow(nextRow);
-/*
+
 			if ((actualRow % 10000) == 0) {
 				System.out.println("Actual row: " + actualRow);
 				System.out.println(Arrays.asList(nextRow));
@@ -98,8 +95,7 @@ public class Parser {
 				System.out.println((System.currentTimeMillis() - startTime)
 						/ 1000 + " seconds...");
 			}
-*/
-			reallyRow++;
+
 			if (processedRow.length > 0) {
 				if (row == null) {
 					row = processedRow;
@@ -135,8 +131,8 @@ public class Parser {
 		}
 
 		for (int i = 0; i < row.length(); i++) {
+			
 			char actualCharacter = getActualCharacter(row, i);
-
 			switch (actualCharacter) {
 			case escapeCharacter:
 				if (isNextCharacterEscapable(row, inQuotes, i)) {

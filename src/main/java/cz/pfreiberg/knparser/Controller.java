@@ -47,6 +47,7 @@ public class Controller {
 			exporterDefinicniBody(vfk, loaderExporterFactory);
 			exporterAdresniMista(vfk, loaderExporterFactory);
 			System.out.println("Parsing finished.");
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {
