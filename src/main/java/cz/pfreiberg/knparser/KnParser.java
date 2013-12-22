@@ -1,10 +1,8 @@
 package cz.pfreiberg.knparser;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Vstupní bod programu. Zpracuje parametry, se kterými byl program spuštěn,
@@ -17,22 +15,48 @@ import java.util.Properties;
 public class KnParser {
 
 	public static void main(String[] args) {
-		Properties properties = new Properties();
-		try {
-			properties.load(KnParser.class
-					.getResourceAsStream("KnParser.properties"));
-		} catch (IOException e) {
-			e.printStackTrace();
+
+		boolean parseWholeFolder = false;
+		Configuration configuration = new Configuration("", "");
+
+		for (int i = 0; i < args.length; i++) {
+			switch (args[i]) {
+			case "--all":
+				parseWholeFolder = true;
+				break;
+			case "--input":
+				i++;
+				configuration.setInput(args[i]);
+				break;
+			case "--output":
+				i++;
+				configuration.setOutput(args[i]);
+				break;
+			default:
+				System.out.println("Invalid command line switch.");
+				return;
+			}
 		}
 
-		String input = properties.getProperty("input");
-		String output = properties.getProperty("output");
+		if (parseWholeFolder) {
+			parseWholeFolder(configuration);
+		} else {
+			Controller controller = new Controller(configuration);
+			controller.run();
+		}
 
-		List<String> files = getFilenames(properties.getProperty("input"));
+	}
+
+	private static void parseWholeFolder(Configuration configuration) {
+
+		String input = configuration.getInput();
+		String output = configuration.getOutput();
+
+		List<String> files = getFilenames(input);
 
 		for (int i = 0; i < files.size(); i++) {
-			Configuration configuration = new Configuration(input
-					+ files.get(i), output + files.get(i) + "/");
+			configuration = new Configuration(input + files.get(i), output
+					+ files.get(i) + "/");
 			Controller controller = new Controller(configuration);
 			controller.run();
 		}
