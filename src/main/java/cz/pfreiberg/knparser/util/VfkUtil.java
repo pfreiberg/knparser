@@ -119,21 +119,21 @@ public class VfkUtil {
 	}
 
 	public static String formatValue(Object value) {
-		if (value == null)
+		
+		if (value == null) {
 			return "\"NULL\"";
+		}
 
-		try {
+		if (value instanceof String) {
+			return (String) value;
+		} else if (value instanceof Date) {
 			Date date = (Date) value;
 			DateFormat df = new SimpleDateFormat("\"dd.MM.yyyy HH:mm:ss\"");
 			return df.format(date);
-		} catch (Exception e) {
-			try {
-				String string = (String) value;
-				return string;
-			} catch (Exception ee) {
-				return "\"" + value + "\"";
-			}
+		} else {
+			return "\"" + value + "\"";
 		}
+
 	}
 
 	public static String getTerminator() {

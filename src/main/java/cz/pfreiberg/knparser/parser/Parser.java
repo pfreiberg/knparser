@@ -37,8 +37,6 @@ public class Parser {
 		br = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), VfkUtil.convertEncoding(vfk
 						.getCodepage())));
-		actualRow = 0;
-		escapedRows = 0;
 		startTime = System.currentTimeMillis();
 	}
 

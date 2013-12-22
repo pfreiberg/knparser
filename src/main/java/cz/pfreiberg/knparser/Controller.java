@@ -31,8 +31,7 @@ public class Controller {
 
 			Vfk vfk = parser.getVfk();
 			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
-					vfk.getZmeny(), "EE8MSWIN1250",
-					configuration.getOutput());
+					vfk.getZmeny(), "EE8MSWIN1250", configuration.getOutput());
 			exportBonitniDilParcely(vfk, loaderExporterFactory);
 			exportJednotky(vfk, loaderExporterFactory);
 			exporterJinePravniVztahy(vfk, loaderExporterFactory);
@@ -47,7 +46,7 @@ public class Controller {
 			exporterDefinicniBody(vfk, loaderExporterFactory);
 			exporterAdresniMista(vfk, loaderExporterFactory);
 			System.out.println("Parsing finished.");
-			
+
 		} catch (FileNotFoundException e) {
 			System.out.println("Input file was NOT found.");
 		} catch (ParserException e) {

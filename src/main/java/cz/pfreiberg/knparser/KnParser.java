@@ -30,7 +30,7 @@ public class KnParser {
 				break;
 			case "--output":
 				i++;
-				configuration.setOutput(args[i]);
+				configuration.setOutput(args[i] + "\\");
 				break;
 			default:
 				System.out.println("Invalid command line switch.");
@@ -39,7 +39,7 @@ public class KnParser {
 		}
 
 		if (parseWholeFolder) {
-			parseWholeFolder(configuration);
+			parseFolder(configuration);
 		} else {
 			Controller controller = new Controller(configuration);
 			controller.run();
@@ -47,7 +47,7 @@ public class KnParser {
 
 	}
 
-	private static void parseWholeFolder(Configuration configuration) {
+	private static void parseFolder(Configuration configuration) {
 
 		String input = configuration.getInput();
 		String output = configuration.getOutput();
@@ -55,8 +55,8 @@ public class KnParser {
 		List<String> files = getFilenames(input);
 
 		for (int i = 0; i < files.size(); i++) {
-			configuration = new Configuration(input + files.get(i), output
-					+ files.get(i) + "/");
+			configuration = new Configuration(input + "\\" + files.get(i), output
+					+ files.get(i) + "\\");
 			Controller controller = new Controller(configuration);
 			controller.run();
 		}
