@@ -25,26 +25,10 @@ public class Controller {
 
 	public void run() {
 		try {
-			Parser parser = new Parser(configuration);
-			System.out.println(parser.parseFile() + " row/s was escaped.");
-			System.out.println("Is parsed. Starting the storage sequence.");
 
-			Vfk vfk = parser.getVfk();
-			OracleLoaderExporterFactory loaderExporterFactory = new OracleLoaderExporterFactory(
-					vfk.getZmeny(), "EE8MSWIN1250", configuration.getOutput());
-			exportBonitniDilParcely(vfk, loaderExporterFactory);
-			exportJednotky(vfk, loaderExporterFactory);
-			exporterJinePravniVztahy(vfk, loaderExporterFactory);
-			exportNemovitosti(vfk, loaderExporterFactory);
-			exportRizeni(vfk, loaderExporterFactory);
-			exporterVlastnictvi(vfk, loaderExporterFactory);
-			exporterPrvkyKatastralniMapy(vfk, loaderExporterFactory);
-			exporterBonitovanePudneEkologickeJednotky(vfk,
-					loaderExporterFactory);
-			exporterGeometrickyPlan(vfk, loaderExporterFactory);
-			exporterRezervovanaCisla(vfk, loaderExporterFactory);
-			exporterDefinicniBody(vfk, loaderExporterFactory);
-			exporterAdresniMista(vfk, loaderExporterFactory);
+			Vfk vfk = parseFile();
+			System.out.println("Is parsed. Starting the storage sequence.");
+			storeParsedData(vfk);
 			System.out.println("Parsing finished.");
 
 		} catch (FileNotFoundException e) {
@@ -54,6 +38,31 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private Vfk parseFile() throws FileNotFoundException, ParserException,
+			IOException {
+		Parser parser = new Parser(configuration);
+		System.out.println(parser.parseFile() + " row/s was escaped.");
+		return parser.getVfk();
+	}
+
+	private void storeParsedData(Vfk vfk) {
+		OracleLoaderExporterFactory exporterFactory = new OracleLoaderExporterFactory(
+				vfk.getZmeny(), "EE8MSWIN1250", configuration.getOutput());
+
+		exportBonitniDilParcely(vfk, exporterFactory);
+		exportJednotky(vfk, exporterFactory);
+		exporterJinePravniVztahy(vfk, exporterFactory);
+		exportNemovitosti(vfk, exporterFactory);
+		exportRizeni(vfk, exporterFactory);
+		exporterVlastnictvi(vfk, exporterFactory);
+		exporterPrvkyKatastralniMapy(vfk, exporterFactory);
+		exporterBonitovanePudneEkologickeJednotky(vfk, exporterFactory);
+		exporterGeometrickyPlan(vfk, exporterFactory);
+		exporterRezervovanaCisla(vfk, exporterFactory);
+		exporterDefinicniBody(vfk, exporterFactory);
+		exporterAdresniMista(vfk, exporterFactory);
 	}
 
 	private void exportBonitniDilParcely(Vfk vfk,
