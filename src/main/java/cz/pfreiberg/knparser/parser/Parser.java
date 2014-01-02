@@ -179,7 +179,7 @@ public class Parser {
 
 	private boolean isLastCharacterValid(String buffer) {
 		char lastCharacter = buffer.charAt(buffer.length() - 1);
-		return (lastCharacter == '¤');
+		 return (lastCharacter == '\u00A4');
 	}
 
 	private boolean isNextCharacterEscapable(String row, boolean inQuotes,

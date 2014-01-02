@@ -55,8 +55,8 @@ public class KnParser {
 		List<String> files = getFilenames(input);
 
 		for (int i = 0; i < files.size(); i++) {
-			configuration = new Configuration(input + "\\" + files.get(i), output
-					+ files.get(i) + "\\");
+			configuration = new Configuration(input + "\\" + files.get(i),
+					output + files.get(i) + "\\");
 			Controller controller = new Controller(configuration);
 			controller.run();
 		}

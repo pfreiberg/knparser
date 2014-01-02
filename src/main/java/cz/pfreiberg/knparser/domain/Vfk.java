@@ -80,9 +80,15 @@ import cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Telesa;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Vlastnictvi;
 
+/**
+ * Zapouzdřuje data, které parser získal ze souboru.
+ * 
+ * @author Petr Freiberg (freibergp@gmail.com)
+ * 
+ */
 public class Vfk {
 
-	// Head
+	// Hlavička
 	private String verze;
 	private Date vytvoreno;
 	private String puvod;
