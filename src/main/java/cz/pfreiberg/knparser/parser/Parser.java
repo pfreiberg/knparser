@@ -143,7 +143,7 @@ public class Parser {
 					sb.append(actualCharacter);
 					i++;
 				
-				} else if (isEndOfText(row, inQuotes, i))  // je v uvozovkách
+				} else if (isEndOfText(row, inQuotes, i))  // je v uvozovkách a další znak není "
 				{
 					sb.append("\"");
 					inQuotes = !inQuotes;
