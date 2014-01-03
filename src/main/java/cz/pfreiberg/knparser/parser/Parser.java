@@ -26,7 +26,7 @@ public class Parser {
 	private String buffer;
 	private long actualRow;
 	private int escapedRows;
-	
+
 	long startTime;
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
@@ -89,7 +89,7 @@ public class Parser {
 			if ((actualRow % 10000) == 0) {
 				System.out.println("Actual row: " + actualRow);
 				System.out.println(Arrays.asList(nextRow));
-				
+
 				System.out.println((System.currentTimeMillis() - startTime)
 						/ 1000 + " seconds...");
 			}
@@ -132,15 +132,26 @@ public class Parser {
 			
 			char actualCharacter = getActualCharacter(row, i);
 			switch (actualCharacter) {
-			case escapeCharacter:
-				if (isNextCharacterEscapable(row, inQuotes, i)) {
-					sb.append(getNextCharacter(row, i));
+			case quoteCharacter:
+				 if (isStartOfText(row, inQuotes, i)) // není v uvozovkách a další znak není "
+				{
+					sb.append("\"");
+					inQuotes = !inQuotes;
+				}
+				 else if (isNextCharacterEscapable(row, inQuotes, i)) // je v uvozovkách a další znak je "
+				{
+					sb.append(actualCharacter);
+					i++;
+				
+				} else if (isEndOfText(row, inQuotes, i))  // je v uvozovkách
+				{
+					sb.append("\"");
+					inQuotes = !inQuotes;
+				} else // prázdný text
+				{
+					sb.append("\"\"");
 					i++;
 				}
-				break;
-			case quoteCharacter:
-				sb.append(actualCharacter);
-				inQuotes = !inQuotes;
 				break;
 			case separator:
 				if (!inQuotes) {
@@ -179,16 +190,28 @@ public class Parser {
 
 	private boolean isLastCharacterValid(String buffer) {
 		char lastCharacter = buffer.charAt(buffer.length() - 1);
-		 return (lastCharacter == '\u00A4');
+		return (lastCharacter == '\u00A4');
+	}
+
+	private boolean isStartOfText(String row, boolean inQuotes, int position) {
+		if (hasNextCharacter(row, position)) {
+			char nextCharacter = getNextCharacter(row, position);
+			return (!inQuotes && nextCharacter != '"');
+		}
+		return false;
 	}
 
 	private boolean isNextCharacterEscapable(String row, boolean inQuotes,
 			int position) {
 		if (hasNextCharacter(row, position)) {
 			char nextCharacter = getNextCharacter(row, position);
-			return (inQuotes && (nextCharacter == quoteCharacter) || (nextCharacter == escapeCharacter));
+			return (inQuotes && (nextCharacter == quoteCharacter));
 		}
 		return false;
+	}
+
+	private boolean isEndOfText(String row, boolean inQuotes, int position) {
+		return inQuotes;
 	}
 
 	private char getActualCharacter(String row, int position) {
