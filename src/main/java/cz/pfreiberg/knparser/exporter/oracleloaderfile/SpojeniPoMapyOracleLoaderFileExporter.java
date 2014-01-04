@@ -25,7 +25,9 @@ public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExpor
 		this.characterSet = characterSet;
 		this.output = output;
 
-		makeControlFile();
+		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
+			makeControlFile();
+		}
 		appendLoadFile();
 	}
 
@@ -62,7 +64,7 @@ public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExpor
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					spojeniPoMapy);
+					spojeniPoMapy, true);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

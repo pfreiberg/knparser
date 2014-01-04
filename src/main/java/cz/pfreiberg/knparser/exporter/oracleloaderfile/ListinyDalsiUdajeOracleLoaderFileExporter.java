@@ -25,7 +25,9 @@ public class ListinyDalsiUdajeOracleLoaderFileExporter extends OracleLoaderFileE
 		this.characterSet = characterSet;
 		this.output = output;
 
-		makeControlFile();
+		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
+			makeControlFile();
+		}
 		appendLoadFile();
 	}
 
@@ -55,7 +57,7 @@ public class ListinyDalsiUdajeOracleLoaderFileExporter extends OracleLoaderFileE
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					listinyDalsiUdaje);
+					listinyDalsiUdaje, true);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -25,7 +25,9 @@ public class KodyCharQBoduOracleLoaderFileExporter extends OracleLoaderFileExpor
 		this.characterSet = characterSet;
 		this.output = output;
 
-		makeControlFile();
+		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
+			makeControlFile();
+		}
 		appendLoadFile();
 	}
 
@@ -57,7 +59,7 @@ public class KodyCharQBoduOracleLoaderFileExporter extends OracleLoaderFileExpor
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					kodyCharQBodu);
+					kodyCharQBodu, true);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

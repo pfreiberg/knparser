@@ -51,7 +51,6 @@ public class Controller {
 
 	private Vfk parseFile() throws FileNotFoundException, ParserException,
 			IOException {
-		
 		System.out.println("\n" + parser.parseFile() + " row/s was escaped.");
 		return parser.getVfk();
 	}

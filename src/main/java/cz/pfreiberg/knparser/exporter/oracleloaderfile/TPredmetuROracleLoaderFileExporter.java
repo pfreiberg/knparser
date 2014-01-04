@@ -26,7 +26,9 @@ public class TPredmetuROracleLoaderFileExporter extends
 		this.characterSet = characterSet;
 		this.output = output;
 
-		makeControlFile();
+		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
+			makeControlFile();
+		}
 		appendLoadFile();
 	}
 
@@ -59,7 +61,7 @@ public class TPredmetuROracleLoaderFileExporter extends
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					tPredmetuR);
+					tPredmetuR, true);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

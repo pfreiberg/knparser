@@ -25,7 +25,9 @@ public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		this.characterSet = characterSet;
 		this.output = output;
 
-		makeControlFile();
+		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
+			makeControlFile();
+		}
 		appendLoadFile();
 	}
 
@@ -68,7 +70,7 @@ public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					budovy);
+					budovy, true);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

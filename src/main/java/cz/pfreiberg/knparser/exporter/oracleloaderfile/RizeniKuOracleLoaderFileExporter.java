@@ -25,7 +25,9 @@ public class RizeniKuOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		this.characterSet = characterSet;
 		this.output = output;
 
-		makeControlFile();
+		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
+			makeControlFile();
+		}
 		appendLoadFile();
 	}
 
@@ -54,7 +56,7 @@ public class RizeniKuOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					rizeniKu);
+					rizeniKu, true);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
