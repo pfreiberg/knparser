@@ -199,6 +199,8 @@ public class Vfk {
 	private List<Telesa> telesa;
 	private List<Vlastnictvi> vlastnictvi;
 
+	private boolean isParsing = true;
+
 	public Vfk() {
 		// Adresní místa
 		adresa = new ArrayList<Adresa>();
@@ -978,6 +980,14 @@ public class Vfk {
 
 	public void setRJpv(List<RJpv> rJpv) {
 		this.rJpv = rJpv;
+	}
+
+	public boolean isParsing() {
+		return isParsing;
+	}
+
+	public void setParsing(boolean isParsing) {
+		this.isParsing = isParsing;
 	}
 
 }

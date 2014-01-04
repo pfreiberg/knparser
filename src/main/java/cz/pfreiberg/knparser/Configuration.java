@@ -10,10 +10,15 @@ public class Configuration {
 
 	private String input;
 	private String output;
+	private String numberOfRows;
 
-	public Configuration(String input, String output) {
+	public Configuration() {
+	}
+
+	public Configuration(String input, String output, String numberOfRows) {
 		this.input = input;
 		this.output = output;
+		this.numberOfRows = numberOfRows;
 	}
 
 	public String getInput() {
@@ -30,6 +35,14 @@ public class Configuration {
 
 	public void setOutput(String output) {
 		this.output = output;
+	}
+
+	public String getNumberOfRows() {
+		return numberOfRows;
+	}
+
+	public void setNumberOfRows(String numberOfRows) {
+		this.numberOfRows = numberOfRows;
 	}
 
 }

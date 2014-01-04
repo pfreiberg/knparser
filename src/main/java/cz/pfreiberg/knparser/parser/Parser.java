@@ -20,11 +20,13 @@ public class Parser {
 	private Vfk vfk;
 	private BufferedReader br;
 
-	private final char escapeCharacter = '\\';
+	String encoding;
+
 	private final char quoteCharacter = '"';
 	private final char separator = ';';
 	private String buffer;
 	private long actualRow;
+	private long numberOfRows;
 	private int escapedRows;
 
 	long startTime;
@@ -32,11 +34,10 @@ public class Parser {
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
 		file = new File(configuration.getInput());
-		vfk = new Vfk();
-		vfk.setCodepage(VfkUtil.getEncoding(file));
+		numberOfRows = Integer.parseInt(configuration.getNumberOfRows());
+		encoding = VfkUtil.getEncoding(file);
 		br = new BufferedReader(new InputStreamReader(
-				new FileInputStream(file), VfkUtil.convertEncoding(vfk
-						.getCodepage())));
+				new FileInputStream(file), VfkUtil.convertEncoding(encoding)));
 		startTime = System.currentTimeMillis();
 	}
 
@@ -45,8 +46,17 @@ public class Parser {
 	}
 
 	public int parseFile() throws IOException {
+		vfk = new Vfk();
 		try {
 			for (String[] values = processRow(); values != null; values = processRow()) {
+
+				actualRow++;
+				if ((actualRow % 10000) == 0) {
+					System.out.println("Actual row: " + actualRow);
+					System.out.println((System.currentTimeMillis() - startTime)
+							/ 1000 + " seconds...");
+				}
+
 				String node = values[0];
 				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
 
@@ -65,34 +75,29 @@ public class Parser {
 				} else if (tryParseDefinicniBody(node, tokens)) {
 				} else if (tryParseAdresniMista(node, tokens)) {
 				}
+
+				if ((actualRow % numberOfRows) == 0) {
+					return escapedRows;
+				}
 			}
 		} catch (ParserException e) {
 			System.out.println(e);
 			escapedRows++;
 			parseFile();
 		}
-
+		vfk.setParsing(false);
 		return escapedRows;
 	}
 
 	private String[] processRow() throws IOException, ParserException {
-		actualRow++;
-
 		String[] row = null;
+
 		do {
 			String nextRow = getRow();
 			if (nextRow == null)
 				return row;
 			String[] processedRow;
 			processedRow = parseRow(nextRow);
-
-			if ((actualRow % 10000) == 0) {
-				System.out.println("Actual row: " + actualRow);
-				System.out.println(Arrays.asList(nextRow));
-
-				System.out.println((System.currentTimeMillis() - startTime)
-						/ 1000 + " seconds...");
-			}
 
 			if (processedRow.length > 0) {
 				if (row == null) {
@@ -129,26 +134,25 @@ public class Parser {
 		}
 
 		for (int i = 0; i < row.length(); i++) {
-			
+
 			char actualCharacter = getActualCharacter(row, i);
 			switch (actualCharacter) {
 			case quoteCharacter:
-				 if (isStartOfText(row, inQuotes, i)) // není v uvozovkách a další znak není "
-				{
+				// není v uvozovkách a další znak není "
+				if (isStartOfText(row, inQuotes, i)) {
 					sb.append("\"");
 					inQuotes = !inQuotes;
 				}
-				 else if (isNextCharacterEscapable(row, inQuotes, i)) // je v uvozovkách a další znak je "
-				{
+				// je v uvozovkách a další znak je "
+				else if (isNextCharacterEscapable(row, inQuotes, i)) {
 					sb.append(actualCharacter);
 					i++;
-				
-				} else if (isEndOfText(row, inQuotes, i))  // je v uvozovkách a další znak není "
-				{
+					// je v uvozovkách a další znak není "
+				} else if (isEndOfText(row, inQuotes, i)) {
 					sb.append("\"");
 					inQuotes = !inQuotes;
-				} else // prázdný text
-				{
+					// prázdný text
+				} else {
 					sb.append("\"\"");
 					i++;
 				}
@@ -196,7 +200,7 @@ public class Parser {
 	private boolean isStartOfText(String row, boolean inQuotes, int position) {
 		if (hasNextCharacter(row, position)) {
 			char nextCharacter = getNextCharacter(row, position);
-			return (!inQuotes && nextCharacter != '"');
+			return (!inQuotes && (nextCharacter != quoteCharacter));
 		}
 		return false;
 	}

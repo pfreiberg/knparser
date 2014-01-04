@@ -18,17 +18,26 @@ import cz.pfreiberg.knparser.parser.ParserException;
 public class Controller {
 
 	Configuration configuration;
+	Parser parser;
 
 	public Controller(Configuration configuration) {
 		this.configuration = configuration;
+		try {
+			parser = new Parser(configuration);
+		} catch (ParserException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void run() {
 		try {
+			Vfk vfk;
+			do {
+				vfk = parseFile();
+				System.out.println("Is parsed. Starting the storage sequence.\n");
+				storeParsedData(vfk);
+			} while (vfk.isParsing());
 
-			Vfk vfk = parseFile();
-			System.out.println("Is parsed. Starting the storage sequence.");
-			storeParsedData(vfk);
 			System.out.println("Parsing finished.");
 
 		} catch (FileNotFoundException e) {
@@ -42,8 +51,8 @@ public class Controller {
 
 	private Vfk parseFile() throws FileNotFoundException, ParserException,
 			IOException {
-		Parser parser = new Parser(configuration);
-		System.out.println(parser.parseFile() + " row/s was escaped.");
+		
+		System.out.println("\n" + parser.parseFile() + " row/s was escaped.");
 		return parser.getVfk();
 	}
 

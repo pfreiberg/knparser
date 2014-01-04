@@ -119,7 +119,7 @@ public class VfkUtil {
 	}
 
 	public static String formatValue(Object value) {
-		
+
 		if (value == null) {
 			return "\"NULL\"";
 		}
@@ -138,6 +138,11 @@ public class VfkUtil {
 
 	public static String getTerminator() {
 		return "|" + Character.toString((char) 21) + "\n";
+	}
+
+	public static boolean isControlFileCreated(String path) {
+		File controlFile = new File(path);
+		return controlFile.exists();
 	}
 
 	private static boolean isOutOfIndex(String[] value, int i) {

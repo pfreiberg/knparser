@@ -25,7 +25,9 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		this.characterSet = characterSet;
 		this.output = output;
 
-		makeControlFile();
+		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
+			makeControlFile();
+		}
 		appendLoadFile();
 	}
 
@@ -68,8 +70,9 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.end(controlFile);
 
 		try {
-			FileUtils.writeStringToFile(new File(output + prefix + name + ".CFG"),
-					controlFile, VfkUtil.convertEncoding(characterSet));
+			FileUtils.writeStringToFile(new File(output + prefix + name
+					+ ".CFG"), controlFile,
+					VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,7 +86,7 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		try {
 			File file = new File(output + prefix + name + ".TXT");
 			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					parcely);
+					parcely, true);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
