@@ -2,6 +2,9 @@ package cz.pfreiberg.knparser;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import cz.pfreiberg.knparser.domain.Vfk;
 import cz.pfreiberg.knparser.exporterfactory.OracleLoaderExporterFactory;
@@ -17,8 +20,10 @@ import cz.pfreiberg.knparser.parser.ParserException;
  */
 public class Controller {
 
-	Configuration configuration;
-	Parser parser;
+	private Configuration configuration;
+	private Parser parser;
+	private long escapedRows;
+	private long seconds;
 
 	public Controller(Configuration configuration) {
 		this.configuration = configuration;
@@ -30,6 +35,9 @@ public class Controller {
 	}
 
 	public void run() {
+		
+		ScheduledExecutorService executor = getTimer();
+		
 		try {
 			Vfk vfk;
 			do {
@@ -38,6 +46,7 @@ public class Controller {
 				storeParsedData(vfk);
 			} while (vfk.isParsing());
 
+			System.out.println(escapedRows + " row/s was escaped.");
 			System.out.println("Parsing finished.");
 
 		} catch (FileNotFoundException e) {
@@ -47,11 +56,27 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		executor.shutdown();
+	}
+
+	private ScheduledExecutorService getTimer() {
+		
+		Runnable runnableTime = new Runnable() {
+		    public void run() {
+		        System.out.println("\n" + seconds + " seconds..." + "\n");
+		        seconds++;
+		    }
+		};
+
+		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+		executor.scheduleAtFixedRate(runnableTime, 0, 3, TimeUnit.SECONDS);
+		return executor;
 	}
 
 	private Vfk parseFile() throws FileNotFoundException, ParserException,
 			IOException {
-		System.out.println("\n" + parser.parseFile() + " row/s was escaped.");
+		escapedRows += parser.parseFile();
 		return parser.getVfk();
 	}
 

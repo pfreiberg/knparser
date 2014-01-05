@@ -9,27 +9,35 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import cz.pfreiberg.knparser.Configuration;
 import cz.pfreiberg.knparser.domain.Vfk;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
+/**
+ * Parser výměnného formátu. Z konfiguračního souboru je zjištěno, kolik řádků
+ * se má najednou maximálně zpracovat a ze souboru se získá jeho kódování. Po
+ * načtení a rozparsování jednoho řádku je určeno, do jaké doménové třídy má
+ * být uložen. Po zpracování daného počtu řádku (nebo dosažení konce souboru)
+ * jsou pak již instance doménových tříd vráceny Controlleru.
+ * 
+ * @author Petr Freiberg (freibergp@gmail.com)
+ * 
+ */
 public class Parser {
 
 	private File file;
 	private Vfk vfk;
 	private BufferedReader br;
 
-	String encoding;
-
-	private final char quoteCharacter = '"';
-	private final char separator = ';';
+	private String encoding;
 	private String buffer;
+
 	private long actualRow;
-	private long numberOfRows;
 	private int escapedRows;
 
-	long startTime;
+	private final long numberOfRows;
+	private final char quoteCharacter = '"';
+	private final char separator = ';';
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
@@ -38,7 +46,6 @@ public class Parser {
 		encoding = VfkUtil.getEncoding(file);
 		br = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), VfkUtil.convertEncoding(encoding)));
-		startTime = System.currentTimeMillis();
 	}
 
 	public Vfk getVfk() {
@@ -51,11 +58,6 @@ public class Parser {
 			for (String[] values = processRow(); values != null; values = processRow()) {
 
 				actualRow++;
-				if ((actualRow % 10000) == 0) {
-					System.out.println("Actual row: " + actualRow);
-					System.out.println((System.currentTimeMillis() - startTime)
-							/ 1000 + " seconds...");
-				}
 
 				String node = values[0];
 				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
@@ -77,6 +79,7 @@ public class Parser {
 				}
 
 				if ((actualRow % numberOfRows) == 0) {
+					System.out.println("Actual row: " + actualRow);
 					return escapedRows;
 				}
 			}
@@ -85,6 +88,7 @@ public class Parser {
 			escapedRows++;
 			parseFile();
 		}
+		System.out.println("Last row: " + actualRow);
 		vfk.setParsing(false);
 		return escapedRows;
 	}
@@ -233,7 +237,7 @@ public class Parser {
 	}
 
 	private boolean isRowProcessing() {
-		return buffer != null;
+		return (buffer != null);
 	}
 
 	private boolean tryParseHead(String node, String[] tokens) {
