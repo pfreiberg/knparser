@@ -40,6 +40,7 @@ public class SpojeniBPolohOracleLoaderFileExporter extends OracleLoaderFileExpor
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
 		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
 		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "BP_ID");

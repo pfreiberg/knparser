@@ -13,7 +13,7 @@ public class TListinParser {
 		tListin.setNazev(VfkUtil.getString(tokens, i++));
 		tListin.setPlatnostOd(VfkUtil.getDate(tokens, i++));
 		tListin.setPopis(VfkUtil.getString(tokens, i++));
-		tListin.setPlatnostOd(VfkUtil.getDate(tokens, i++));
+		tListin.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 		tListin.setDruhList(VfkUtil.getInteger(tokens, i++));
 
 		return tListin;
