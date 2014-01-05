@@ -41,7 +41,7 @@ public class ObrazyDefBoduOracleLoaderFileExporter extends OracleLoaderFileExpor
 		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
 		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
-		controlFile = super.insertColumn(controlFile, "PAR_IR");
+		controlFile = super.insertColumn(controlFile, "PAR_ID");
 		controlFile = super.insertColumn(controlFile, "BUD_ID");
 		controlFile = super.insertColumn(controlFile, "TYPBUD_KOD");
 		controlFile = super.insertColumn(controlFile, "CISLO_DOMOVNI");

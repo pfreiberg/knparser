@@ -18,7 +18,7 @@ public class JednotkyParser {
 		jednotky.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
 		jednotky.setBudId(VfkUtil.getLong(tokens, i++));
 		jednotky.setTypjedKod(VfkUtil.getInteger(tokens, i++));
-		jednotky.setCiselnikJednotky(VfkUtil.getInteger(tokens, i++));
+		jednotky.setCisloJednotky(VfkUtil.getInteger(tokens, i++));
 		jednotky.setCenaNemovitosti(VfkUtil.getDouble(tokens, i++));
 		jednotky.setZpvyjeKod(VfkUtil.getInteger(tokens, i++));
 		jednotky.setTelId(VfkUtil.getLong(tokens, i++));

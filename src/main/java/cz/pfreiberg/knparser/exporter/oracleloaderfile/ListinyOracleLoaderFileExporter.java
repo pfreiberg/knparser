@@ -48,7 +48,7 @@ public class ListinyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "DOPLNENI_ZHOTOVITELE");
 		controlFile = super.insertColumn(controlFile, "ZKRATKA");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID");
-		controlFile = super.insertColumn(controlFile, "ZMEN_PRAV_VZTAHU");
+		controlFile = super.insertColumn(controlFile, "ZMENA_PRAV_VZTAHU");
 		controlFile = super.insertDate(controlFile, "DATUM_PRAV_MOCI");
 		controlFile = super.insertDate(controlFile, "DATUM_VYKONATELNOSTI");
 		controlFile = super.insertDate(controlFile, "DATUM_HIST_OD");

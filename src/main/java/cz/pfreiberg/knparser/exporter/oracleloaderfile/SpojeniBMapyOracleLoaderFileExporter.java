@@ -28,6 +28,7 @@ public class SpojeniBMapyOracleLoaderFileExporter extends OracleLoaderFileExport
 		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
 			makeControlFile();
 		}
+		appendLoadFile();
 	}
 
 	@Override

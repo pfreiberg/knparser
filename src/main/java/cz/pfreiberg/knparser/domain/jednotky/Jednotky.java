@@ -21,7 +21,7 @@ public class Jednotky {
 	private Long rizeniIdZaniku;
 	private Long budId;
 	private Integer typjedKod;
-	private Integer ciselnikJednotky;
+	private Integer cisloJednotky;
 	private Double cenaNemovitosti;
 	private Integer zpvyjeKod;
 	private Long telId;
@@ -101,12 +101,12 @@ public class Jednotky {
 		this.typjedKod = typjedKod;
 	}
 
-	public Integer getCiselnikJednotky() {
-		return ciselnikJednotky;
+	public Integer getCisloJednotky() {
+		return cisloJednotky;
 	}
 
-	public void setCiselnikJednotky(Integer ciselnikJednotky) {
-		this.ciselnikJednotky = ciselnikJednotky;
+	public void setCisloJednotky(Integer cisloJednotky) {
+		this.cisloJednotky = cisloJednotky;
 	}
 
 	public Double getCenaNemovitosti() {
@@ -168,7 +168,7 @@ public class Jednotky {
 				+ VfkUtil.formatValue(rizeniIdZaniku) + ","
 				+ VfkUtil.formatValue(budId) + ","
 				+ VfkUtil.formatValue(typjedKod) + ","
-				+ VfkUtil.formatValue(ciselnikJednotky) + ","
+				+ VfkUtil.formatValue(cisloJednotky) + ","
 				+ VfkUtil.formatValue(cenaNemovitosti) + ","
 				+ VfkUtil.formatValue(zpvyjeKod) + ","
 				+ VfkUtil.formatValue(telId) + ","
