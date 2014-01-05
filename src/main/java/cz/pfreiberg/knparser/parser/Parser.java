@@ -38,6 +38,7 @@ public class Parser {
 	private final long numberOfRows;
 	private final char quoteCharacter = '"';
 	private final char separator = ';';
+	private int zmeny;
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
@@ -117,6 +118,7 @@ public class Parser {
 
 		} while (isRowProcessing());
 
+		vfk.setZmeny(zmeny);
 		return row;
 	}
 
@@ -243,7 +245,7 @@ public class Parser {
 	private boolean tryParseHead(String node, String[] tokens) {
 		switch (node) {
 		case "&HZMENY":
-			vfk.setZmeny(Integer.parseInt(tokens[0]));
+			zmeny = Integer.parseInt(tokens[0]);
 			break;
 		default:
 			return false;
