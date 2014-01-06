@@ -52,7 +52,7 @@ public class JinePravVztahyOracleLoaderFileExporter extends
 		controlFile = super.insertColumn(controlFile, "BUD_ID_K");
 		controlFile = super.insertColumn(controlFile, "JED_ID_K");
 		controlFile = super.insertColumn(controlFile, "TYPRAV_KOD");
-		controlFile = super.insertColumn(controlFile, "POPIS_PRAVNIHO_VZTAHU");
+		controlFile = super.insertBigColumn(controlFile, "POPIS_PRAVNIHO_VZTAHU");
 		controlFile = super.insertColumn(controlFile, "TEL_ID");
 		controlFile = super.insertColumn(controlFile, "OPSUB_ID_PRO");
 		controlFile = super.insertColumn(controlFile, "OPSUB_ID_K");

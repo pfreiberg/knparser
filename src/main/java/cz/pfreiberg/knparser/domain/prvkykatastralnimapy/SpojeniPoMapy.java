@@ -106,7 +106,8 @@ public class SpojeniPoMapy {
 				+ VfkUtil.formatValue(souradniceY) + ","
 				+ VfkUtil.formatValue(souradniceX) + ","
 				+ VfkUtil.formatValue(pomId) + ","
-				+ VfkUtil.formatValue(parametrySpojeni);
+				+ VfkUtil.formatValue(parametrySpojeni)
+				+ VfkUtil.getTerminator();
 	}
 
 }

@@ -151,7 +151,7 @@ public class Parser {
 				}
 				// je v uvozovkách a další znak je "
 				else if (isNextCharacterEscapable(row, inQuotes, i)) {
-					sb.append(actualCharacter);
+					sb.append("\"\"");
 					i++;
 					// je v uvozovkách a další znak není "
 				} else if (isEndOfText(row, inQuotes, i)) {

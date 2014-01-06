@@ -53,6 +53,7 @@ public class ListinyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertDate(controlFile, "DATUM_VYKONATELNOSTI");
 		controlFile = super.insertDate(controlFile, "DATUM_HIST_OD");
 		controlFile = super.insertDate(controlFile, "DATUM_HIST_DO");
+		controlFile = super.end(controlFile);
 
 		try {
 			FileUtils.writeStringToFile(new File(output + prefix + name + ".CFG"),

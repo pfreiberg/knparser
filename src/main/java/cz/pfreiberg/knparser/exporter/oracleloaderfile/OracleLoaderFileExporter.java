@@ -29,6 +29,12 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 				+ " NULLIF ( " + name + " = \"NULL\" ),\ncolumns_value");
 		return output;
 	}
+	
+	protected String insertBigColumn(String loadFile, String name) {
+		String output = loadFile.replace("columns_value", "\t" + name
+				+ " CHAR(4000) NULLIF ( " + name + " = \"NULL\" ),\ncolumns_value");
+		return output;
+	}
 
 	protected String insertDate(String loadFile, String name) {
 		String output = loadFile.replace("columns_value", "\t" + name
