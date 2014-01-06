@@ -44,7 +44,7 @@ public class PrvkyOMapyOracleLoaderFileExporter extends OracleLoaderFileExporter
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "TYPPPD_KOD");
-		controlFile = super.insertColumn(controlFile, "TEXT");
+		controlFile = super.insertBigColumn(controlFile, "TEXT", "255");
 		controlFile = super.insertColumn(controlFile, "VELIKOST");
 		controlFile = super.insertColumn(controlFile, "UHEL");
 		controlFile = super.insertColumn(controlFile, "VZTAZNY_BOD");

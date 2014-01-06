@@ -52,8 +52,8 @@ public class OpravSubjektyOracleLoaderFileExporter extends
 		controlFile = super.insertColumn(controlFile, "CHAROS_KOD");
 		controlFile = super.insertColumn(controlFile, "ICO");
 		controlFile = super.insertColumn(controlFile, "DOPLNEK_ICO");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertColumn(controlFile, "NAZEV_U");
+		controlFile = super.insertBigColumn(controlFile, "NAZEV", "255");
+		controlFile = super.insertBigColumn(controlFile, "NAZEV_U", "255");
 		controlFile = super.insertColumn(controlFile, "RODNE_CISLO");
 		controlFile = super.insertColumn(controlFile, "TITUL_PRED_JMENEM");
 		controlFile = super.insertColumn(controlFile, "JMENO");

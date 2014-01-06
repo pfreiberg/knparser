@@ -48,8 +48,8 @@ public class UcastniciOracleLoaderFileExporter extends OracleLoaderFileExporter 
 		controlFile = super.insertColumn(controlFile, "RC");
 		controlFile = super.insertColumn(controlFile, "RODNE_PRIJMENI");
 		controlFile = super.insertColumn(controlFile, "RODINNY_STAV");
-		controlFile = super.insertColumn(controlFile, "OBCHODNI_JMENO");
-		controlFile = super.insertColumn(controlFile, "OBCHODNI_JMENO_U");
+		controlFile = super.insertBigColumn(controlFile, "OBCHODNI_JMENO", "255");
+		controlFile = super.insertBigColumn(controlFile, "OBCHODNI_JMENO_U", "255");
 		controlFile = super.insertColumn(controlFile, "DIC");
 		controlFile = super.insertColumn(controlFile, "ICO");
 		controlFile = super.insertColumn(controlFile, "DOPLNEK_ICO");

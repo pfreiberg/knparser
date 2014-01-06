@@ -38,7 +38,7 @@ public class ListinyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "TYPLIST_KOD");
-		controlFile = super.insertColumn(controlFile, "POPIS");
+		controlFile = super.insertBigColumn(controlFile, "POPIS", "2000");
 		controlFile = super.insertColumn(controlFile, "OBSAH");
 		controlFile = super.insertColumn(controlFile, "STRAN");
 		controlFile = super.insertDate(controlFile, "DATUM_VYHOTOVENI");

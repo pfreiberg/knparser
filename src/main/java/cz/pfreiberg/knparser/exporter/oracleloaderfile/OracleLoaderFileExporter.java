@@ -30,9 +30,9 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 		return output;
 	}
 	
-	protected String insertBigColumn(String loadFile, String name) {
+	protected String insertBigColumn(String loadFile, String name, String value) {
 		String output = loadFile.replace("columns_value", "\t" + name
-				+ " CHAR(4000) NULLIF ( " + name + " = \"NULL\" ),\ncolumns_value");
+				+ " CHAR("+ value +") NULLIF ( " + name + " = \"NULL\" ),\ncolumns_value");
 		return output;
 	}
 
