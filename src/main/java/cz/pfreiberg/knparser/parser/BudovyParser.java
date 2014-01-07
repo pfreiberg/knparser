@@ -22,9 +22,9 @@ public class BudovyParser {
 		budova.setCenaNemovitosti(VfkUtil.getInteger(tokens, i++));
 		budova.setZpvybuKod(VfkUtil.getInteger(tokens, i++));
 		budova.setTelId(VfkUtil.getLong(tokens, i++));
+		budova.setDocasnaStavba(VfkUtil.getString(tokens, i++));
 		budova.setJeSoucasti(VfkUtil.getString(tokens, i++));
 		budova.setPsId(VfkUtil.getLong(tokens, i++));
-		budova.setDocasnaStavba(VfkUtil.getString(tokens, i++));
 		
 		return budova;
 	}
