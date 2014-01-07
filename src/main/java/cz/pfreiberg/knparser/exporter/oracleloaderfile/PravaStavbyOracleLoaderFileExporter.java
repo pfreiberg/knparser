@@ -44,7 +44,7 @@ public class PravaStavbyOracleLoaderFileExporter extends
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
-		controlFile = super.insertColumn(controlFile, "DATUM_PRIJETI");
+		controlFile = super.insertDate(controlFile, "DATUM_PRIJETI");
 		controlFile = super.insertColumn(controlFile, "TEL_ID");
 		controlFile = super.insertDate(controlFile, "DATUM_UKONCENI");
 		controlFile = super.end(controlFile);
