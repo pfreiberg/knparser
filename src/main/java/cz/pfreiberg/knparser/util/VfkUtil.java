@@ -137,7 +137,7 @@ public class VfkUtil {
 	}
 
 	public static String getTerminator() {
-		return "|" + Character.toString((char) 21) + "\n";
+		return "|" + Character.toString((char) 21);
 	}
 
 	public static boolean isControlFileCreated(String path) {
