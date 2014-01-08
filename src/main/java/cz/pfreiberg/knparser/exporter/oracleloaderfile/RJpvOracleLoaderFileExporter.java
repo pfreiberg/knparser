@@ -38,7 +38,7 @@ public class RJpvOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "VERZE");
-		controlFile = super.insertColumn(controlFile, "STAV_DAT");
+		controlFile = super.insertZeroColumn(controlFile, "STAV_DAT");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
