@@ -38,13 +38,13 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
-		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PKN_ID");
-		controlFile = super.insertColumn(controlFile, "PAR_TYPE");
+		controlFile = super.insertVarcharColumn(controlFile, "PAR_TYPE", "10");
 		controlFile = super.insertColumn(controlFile, "KATUZE_KOD");
 		controlFile = super.insertColumn(controlFile, "KATUZE_KOD_PUV");
 		controlFile = super.insertColumn(controlFile, "DRUH_CISLOVANI_PAR");
@@ -59,14 +59,14 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "TYP_PARCELY");
 		controlFile = super.insertColumn(controlFile, "VYMERA_PARCELY");
 		controlFile = super.insertColumn(controlFile, "CENA_NEMOVITOSTI");
-		controlFile = super.insertColumn(controlFile, "DEFINICNI_BOD_PAR");
+		controlFile = super.insertVarcharColumn(controlFile, "DEFINICNI_BOD_PAR", "100");
 		controlFile = super.insertColumn(controlFile, "TEL_ID");
 		controlFile = super.insertColumn(controlFile, "PAR_ID");
 		controlFile = super.insertColumn(controlFile, "BUD_ID");
-		controlFile = super.insertColumn(controlFile, "IDENT_BUD");
-		controlFile = super.insertColumn(controlFile, "SOUCASTI");
+		controlFile = super.insertVarcharColumn(controlFile, "IDENT_BUD", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "SOUCASTI", "1");
 		controlFile = super.insertColumn(controlFile, "PS_ID");
-		controlFile = super.insertColumn(controlFile, "IDENT_PS");
+		controlFile = super.insertVarcharColumn(controlFile, "IDENT_PS", "1");
 		controlFile = super.end(controlFile);
 
 		try {

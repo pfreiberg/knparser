@@ -37,13 +37,13 @@ public class DPozemkuOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "KOD");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertColumn(controlFile, "ZEMEDELSKA_KULTURA");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
+		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
+		controlFile = super.insertVarcharColumn(controlFile, "ZEMEDELSKA_KULTURA", "1");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
 		controlFile = super.insertColumn(controlFile, "TYPPPD_KOD");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "ZKRATKA");
-		controlFile = super.insertColumn(controlFile, "STAVEBNI_PARCELA");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "9");
+		controlFile = super.insertVarcharColumn(controlFile, "STAVEBNI_PARCELA", "1");
 		controlFile = super.end(controlFile);
 
 		try {

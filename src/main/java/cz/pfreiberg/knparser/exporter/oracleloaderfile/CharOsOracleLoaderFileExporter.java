@@ -37,11 +37,11 @@ public class CharOsOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "KOD");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertColumn(controlFile, "OPSUB_TYPE");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "ZKRATKA");
+		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
+		controlFile = super.insertVarcharColumn(controlFile, "OPSUB_TYPE", "10");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "3");
 		controlFile = super.end(controlFile);
 
 		try {

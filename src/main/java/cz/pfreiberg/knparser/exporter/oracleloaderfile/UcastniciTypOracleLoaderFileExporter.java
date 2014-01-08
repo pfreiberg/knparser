@@ -39,7 +39,7 @@ public class UcastniciTypOracleLoaderFileExporter extends
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "UCAST_ID");
-		controlFile = super.insertColumn(controlFile, "TYPUCA_KOD");
+		controlFile = super.insertVarcharColumn(controlFile, "TYPUCA_KOD", "2");
 		controlFile = super.end(controlFile);
 
 		try {

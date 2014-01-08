@@ -38,8 +38,8 @@ public class RListOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
-		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
@@ -49,7 +49,7 @@ public class RListOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "JED_ID");
 		controlFile = super.insertColumn(controlFile, "OPSUB_ID");
 		controlFile = super.insertColumn(controlFile, "JPV_ID");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU2");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU2");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU2");
 		controlFile = super.insertColumn(controlFile, "PS_ID");
 		controlFile = super.end(controlFile);

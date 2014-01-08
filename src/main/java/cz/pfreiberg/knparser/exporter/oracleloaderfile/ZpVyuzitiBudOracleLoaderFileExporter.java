@@ -37,10 +37,10 @@ public class ZpVyuzitiBudOracleLoaderFileExporter extends OracleLoaderFileExport
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "KOD");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "ZKRATKA");
+		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "8");
 		controlFile = super.end(controlFile);
 
 		try {

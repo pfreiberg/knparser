@@ -38,20 +38,20 @@ public class TPravnichVztOracleLoaderFileExporter extends
 		String controlFile = super.makeControlFile();
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
-		controlFile = super.insertColumn(controlFile, "KOD");
+		controlFile = super.insertVarcharColumn(controlFile, "KOD", "4");
 		controlFile = super.insertColumn(controlFile, "TPR_KOD");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertColumn(controlFile, "VLASTNICTVI");
-		controlFile = super.insertColumn(controlFile, "PRO_OS");
-		controlFile = super.insertColumn(controlFile, "PRO_NEMOVITOST");
-		controlFile = super.insertColumn(controlFile, "K_NEMOVITOSTI");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertColumn(controlFile, "SEKCE");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
+		controlFile = super.insertVarcharColumn(controlFile, "VLASTNICTVI", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "PRO_OS", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "PRO_NEMOVITOST", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "K_NEMOVITOSTI", "1");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
+		controlFile = super.insertVarcharColumn(controlFile, "SEKCE", "1");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
 		controlFile = super.insertColumn(controlFile, "VLVZTAH");
-		controlFile = super.insertColumn(controlFile, "K_OS");
-		controlFile = super.insertColumn(controlFile, "PODIL_VERITELE");
-		controlFile = super.insertColumn(controlFile, "PORADI");
+		controlFile = super.insertVarcharColumn(controlFile, "K_OS", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "PODIL_VERITELE", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "PORADI", "1");
 		controlFile = super.end(controlFile);
 
 		try {

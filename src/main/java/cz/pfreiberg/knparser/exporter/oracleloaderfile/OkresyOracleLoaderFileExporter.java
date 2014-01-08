@@ -38,10 +38,10 @@ public class OkresyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		controlFile = super.insertColumn(controlFile, "KOD");
 		controlFile = super.insertColumn(controlFile, "KRAJE_KOD");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "NUTS4");
+		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "32");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "NUTS4", "6");
 		controlFile = super.insertColumn(controlFile, "NKRAJE_KOD");
 		controlFile = super.end(controlFile);
 

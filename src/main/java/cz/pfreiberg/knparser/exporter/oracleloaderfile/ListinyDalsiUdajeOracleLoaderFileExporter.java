@@ -37,8 +37,8 @@ public class ListinyDalsiUdajeOracleLoaderFileExporter extends OracleLoaderFileE
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "LISTIN_ID");
-		controlFile = super.insertColumn(controlFile, "DUL_KOD");
-		controlFile = super.insertDate(controlFile, "CREATE_DATE");
+		controlFile = super.insertVarcharColumn(controlFile, "DUL_KOD", "3");
+		controlFile = super.insertDateColumn(controlFile, "CREATE_DATE");
 		controlFile = super.end(controlFile);
 
 		try {

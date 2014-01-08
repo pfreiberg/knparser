@@ -39,11 +39,11 @@ public class AdresaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "KOD");
 		controlFile = super.insertColumn(controlFile, "OBJEKT_KOD");
 		controlFile = super.insertColumn(controlFile, "ULICE_KOD");
-		controlFile = super.insertColumn(controlFile, "CIS_ORIENT");
+		controlFile = super.insertVarcharColumn(controlFile, "CIS_ORIENT", "4");
 		controlFile = super.insertColumn(controlFile, "PSC");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "ULICE_NAZEV");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "ULICE_NAZEV", "48");
 		controlFile = super.end(controlFile);
 
 		try {

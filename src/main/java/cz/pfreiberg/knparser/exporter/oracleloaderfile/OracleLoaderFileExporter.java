@@ -30,13 +30,13 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 		return output;
 	}
 	
-	protected String insertBigColumn(String loadFile, String name, String value) {
+	protected String insertVarcharColumn(String loadFile, String name, String value) {
 		String output = loadFile.replace("columns_value", "\t" + name
 				+ " CHAR("+ value +") NULLIF ( " + name + " = \"NULL\" ),\ncolumns_value");
 		return output;
 	}
 
-	protected String insertDate(String loadFile, String name) {
+	protected String insertDateColumn(String loadFile, String name) {
 		String output = loadFile.replace("columns_value", "\t" + name
 				+ " DATE \"DD.MM.YYYY HH24:MI:SS\" NULLIF ( " + name
 				+ " = \"NULL\" ),\ncolumns_value");

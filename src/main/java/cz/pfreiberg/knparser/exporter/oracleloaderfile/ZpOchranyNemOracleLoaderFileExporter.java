@@ -37,12 +37,12 @@ public class ZpOchranyNemOracleLoaderFileExporter extends OracleLoaderFileExport
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "KOD");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "POZEMEK");
-		controlFile = super.insertColumn(controlFile, "BUDOVA");
-		controlFile = super.insertColumn(controlFile, "JEDNOTKA");
+		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "POZEMEK", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "BUDOVA", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "JEDNOTKA", "1");
 		controlFile = super.insertColumn(controlFile, "NEMOCHR");
 		controlFile = super.end(controlFile);
 

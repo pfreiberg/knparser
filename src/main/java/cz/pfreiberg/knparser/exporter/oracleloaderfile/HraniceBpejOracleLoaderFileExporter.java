@@ -38,14 +38,14 @@ public class HraniceBpejOracleLoaderFileExporter extends OracleLoaderFileExporte
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
-		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "TYPPPD_KOD");
-		controlFile = super.insertColumn(controlFile, "BPEJ_KOD_HRANICE_1");
-		controlFile = super.insertColumn(controlFile, "BPEJ_KOD_HRANICE_2");
+		controlFile = super.insertVarcharColumn(controlFile, "BPEJ_KOD_HRANICE_1", "5");
+		controlFile = super.insertVarcharColumn(controlFile, "BPEJ_KOD_HRANICE_2", "5");
 		controlFile = super.insertColumn(controlFile, "KATUZE_KOD");
 		controlFile = super.end(controlFile);
 

@@ -43,10 +43,10 @@ public class ObjektyRizeniOracleLoaderFileExporter extends
 		controlFile = super.insertColumn(controlFile, "PAR_ID");
 		controlFile = super.insertColumn(controlFile, "BUD_ID");
 		controlFile = super.insertColumn(controlFile, "JED_ID");
-		controlFile = super.insertDate(controlFile, "DATUM_PLOMBY");
-		controlFile = super.insertDate(controlFile, "DATUM_ODSTRANENI_PLOMBY");
-		controlFile = super.insertDate(controlFile, "DATUM_HIST_OD");
-		controlFile = super.insertDate(controlFile, "DATUM_HIST_DO");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_PLOMBY");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ODSTRANENI_PLOMBY");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_HIST_OD");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_HIST_DO");
 		controlFile = super.insertColumn(controlFile, "PS_ID");
 		controlFile = super.end(controlFile);
 

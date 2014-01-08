@@ -41,7 +41,7 @@ public class ObeslaniMfOracleLoaderFileExporter extends OracleLoaderFileExporter
 		controlFile = super.insertColumn(controlFile, "TYPOPE_KOD");
 		controlFile = super.insertColumn(controlFile, "UCAST_ID");
 		controlFile = super.insertColumn(controlFile, "STAV_OBESLANI");
-		controlFile = super.insertDate(controlFile, "DATUM_PRIJETI_DORUCENKY");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_PRIJETI_DORUCENKY");
 		controlFile = super.insertColumn(controlFile, "OPSUB_ID");
 		controlFile = super.end(controlFile);
 

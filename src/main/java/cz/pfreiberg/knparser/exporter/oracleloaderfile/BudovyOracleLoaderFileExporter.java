@@ -38,8 +38,8 @@ public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
-		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
@@ -49,8 +49,8 @@ public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "CENA_NEMOVITOSTI");
 		controlFile = super.insertColumn(controlFile, "ZPVYBU_KOD");
 		controlFile = super.insertColumn(controlFile, "TEL_ID");
-		controlFile = super.insertColumn(controlFile, "DOCASNA_STAVBA");
-		controlFile = super.insertColumn(controlFile, "JE_SOUCASTI");
+		controlFile = super.insertVarcharColumn(controlFile, "DOCASNA_STAVBA", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "JE_SOUCASTI", "1");
 		controlFile = super.insertColumn(controlFile, "PS_ID");
 		controlFile = super.end(controlFile);
 

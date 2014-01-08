@@ -38,8 +38,8 @@ public class ObrazyBudovOracleLoaderFileExporter extends OracleLoaderFileExporte
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
-		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
@@ -49,7 +49,7 @@ public class ObrazyBudovOracleLoaderFileExporter extends OracleLoaderFileExporte
 		controlFile = super.insertColumn(controlFile, "VELIKOST");
 		controlFile = super.insertColumn(controlFile, "UHEL");
 		controlFile = super.insertColumn(controlFile, "BUD_ID");
-		controlFile = super.insertColumn(controlFile, "OBRBUD_TYPE");
+		controlFile = super.insertVarcharColumn(controlFile, "OBRBUD_TYPE", "10");
 		controlFile = super.end(controlFile);
 
 		try {

@@ -38,21 +38,21 @@ public class ListinyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "TYPLIST_KOD");
-		controlFile = super.insertBigColumn(controlFile, "POPIS", "2000");
-		controlFile = super.insertColumn(controlFile, "OBSAH");
+		controlFile = super.insertVarcharColumn(controlFile, "POPIS", "2000");
+		controlFile = super.insertVarcharColumn(controlFile, "OBSAH", "1");
 		controlFile = super.insertColumn(controlFile, "STRAN");
-		controlFile = super.insertDate(controlFile, "DATUM_VYHOTOVENI");
-		controlFile = super.insertColumn(controlFile, "ZHOTOVITEL");
-		controlFile = super.insertColumn(controlFile, "PORADOVE_CISLO_ZHOTOVITELE");
-		controlFile = super.insertDate(controlFile, "ROK_ZHOTOVITELE");
-		controlFile = super.insertColumn(controlFile, "DOPLNENI_ZHOTOVITELE");
-		controlFile = super.insertColumn(controlFile, "ZKRATKA");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VYHOTOVENI");
+		controlFile = super.insertVarcharColumn(controlFile, "ZHOTOVITEL", "60");
+		controlFile = super.insertVarcharColumn(controlFile, "PORADOVE_CISLO_ZHOTOVITELE", "8");
+		controlFile = super.insertDateColumn(controlFile, "ROK_ZHOTOVITELE");
+		controlFile = super.insertVarcharColumn(controlFile, "DOPLNENI_ZHOTOVITELE", "60");
+		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "10");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID");
-		controlFile = super.insertColumn(controlFile, "ZMENA_PRAV_VZTAHU");
-		controlFile = super.insertDate(controlFile, "DATUM_PRAV_MOCI");
-		controlFile = super.insertDate(controlFile, "DATUM_VYKONATELNOSTI");
-		controlFile = super.insertDate(controlFile, "DATUM_HIST_OD");
-		controlFile = super.insertDate(controlFile, "DATUM_HIST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "ZMENA_PRAV_VZTAHU", "1");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_PRAV_MOCI");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VYKONATELNOSTI");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_HIST_OD");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_HIST_DO");
 		controlFile = super.end(controlFile);
 
 		try {

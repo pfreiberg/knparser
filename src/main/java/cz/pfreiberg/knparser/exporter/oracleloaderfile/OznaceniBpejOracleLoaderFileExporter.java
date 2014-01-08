@@ -38,18 +38,18 @@ public class OznaceniBpejOracleLoaderFileExporter extends OracleLoaderFileExport
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
-		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "TYPPPD_KOD");
 		controlFile = super.insertColumn(controlFile, "SOURADNICE_Y");
 		controlFile = super.insertColumn(controlFile, "SOURADNICE_X");
-		controlFile = super.insertBigColumn(controlFile, "TEXT", "255");
+		controlFile = super.insertVarcharColumn(controlFile, "TEXT", "255");
 		controlFile = super.insertColumn(controlFile, "VELIKOST");
 		controlFile = super.insertColumn(controlFile, "UHEL");
-		controlFile = super.insertColumn(controlFile, "BPEJ_KOD");
+		controlFile = super.insertVarcharColumn(controlFile, "BPEJ_KOD", "5");
 		controlFile = super.insertColumn(controlFile, "KATUZE_KOD");
 		controlFile = super.insertColumn(controlFile, "VZTAZNY_BOD");
 		controlFile = super.end(controlFile);

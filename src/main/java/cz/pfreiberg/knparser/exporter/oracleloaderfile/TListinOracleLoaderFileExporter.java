@@ -37,10 +37,10 @@ public class TListinOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "KOD");
-		controlFile = super.insertColumn(controlFile, "NAZEV");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertColumn(controlFile, "POPIS");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
+		controlFile = super.insertVarcharColumn(controlFile, "POPIS", "240");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
 		controlFile = super.insertColumn(controlFile, "DRUHLIST");
 		controlFile = super.end(controlFile);
 

@@ -40,8 +40,8 @@ public class JinePravVztahyOracleLoaderFileExporter extends
 
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
-		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_ZANIKU");
@@ -51,19 +51,19 @@ public class JinePravVztahyOracleLoaderFileExporter extends
 		controlFile = super.insertColumn(controlFile, "PAR_ID_K");
 		controlFile = super.insertColumn(controlFile, "BUD_ID_K");
 		controlFile = super.insertColumn(controlFile, "JED_ID_K");
-		controlFile = super.insertColumn(controlFile, "TYPRAV_KOD");
-		controlFile = super.insertBigColumn(controlFile, "POPIS_PRAVNIHO_VZTAHU", "4000");
+		controlFile = super.insertVarcharColumn(controlFile, "TYPRAV_KOD", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "POPIS_PRAVNIHO_VZTAHU", "4000");
 		controlFile = super.insertColumn(controlFile, "TEL_ID");
 		controlFile = super.insertColumn(controlFile, "OPSUB_ID_PRO");
 		controlFile = super.insertColumn(controlFile, "OPSUB_ID_K");
-		controlFile = super.insertColumn(controlFile, "PODIL_POHLEDAVKA");
+		controlFile = super.insertVarcharColumn(controlFile, "PODIL_POHLEDAVKA", "60");
 		controlFile = super.insertColumn(controlFile, "HJPV_ID");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU2");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU2");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID_VZNIKU2");
 		controlFile = super.insertColumn(controlFile, "OPSUB_ID_2_PRO");
-		controlFile = super.insertColumn(controlFile, "POPIS2");
-		controlFile = super.insertDate(controlFile, "PORADI_CAS");
-		controlFile = super.insertColumn(controlFile, "PORADI_TEXT");
+		controlFile = super.insertVarcharColumn(controlFile, "POPIS2", "250");
+		controlFile = super.insertDateColumn(controlFile, "PORADI_CAS");
+		controlFile = super.insertVarcharColumn(controlFile, "PORADI_TEXT", "250");
 		controlFile = super.insertColumn(controlFile, "PS_ID_PRO");
 		controlFile = super.insertColumn(controlFile, "DATUM_UKONCENI");
 		controlFile = super.end(controlFile);

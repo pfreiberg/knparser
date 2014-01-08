@@ -37,10 +37,10 @@ public class MapoveListyOracleLoaderFileExporter extends OracleLoaderFileExporte
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "ID");
-		controlFile = super.insertColumn(controlFile, "OZNACENI_MAPOVEHO_LISTU");
-		controlFile = super.insertDate(controlFile, "PLATNOST_OD");
-		controlFile = super.insertDate(controlFile, "PLATNOST_DO");
-		controlFile = super.insertColumn(controlFile, "MAPA");
+		controlFile = super.insertVarcharColumn(controlFile, "OZNACENI_MAPOVEHO_LISTU", "100");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
+		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
+		controlFile = super.insertVarcharColumn(controlFile, "MAPA", "5");
 		controlFile = super.end(controlFile);
 
 		try {

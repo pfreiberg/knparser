@@ -37,14 +37,14 @@ public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExpor
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "STAV_DAT");
-		controlFile = super.insertDate(controlFile, "DATUM_VZNIKU");
-		controlFile = super.insertDate(controlFile, "DATUM_ZANIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
+		controlFile = super.insertDateColumn(controlFile, "DATUM_ZANIKU");
 		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.insertColumn(controlFile, "PORADOVE_CISLO_BODU");
 		controlFile = super.insertColumn(controlFile, "SOURADNICE_Y");
 		controlFile = super.insertColumn(controlFile, "SOURADNICE_X");
 		controlFile = super.insertColumn(controlFile, "POM_ID");
-		controlFile = super.insertColumn(controlFile, "PARAMETRY_SPOJENI");
+		controlFile = super.insertVarcharColumn(controlFile, "PARAMETRY_SPOJENI", "100");
 		
 		controlFile = super.end(controlFile);
 
