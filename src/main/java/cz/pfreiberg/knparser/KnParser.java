@@ -12,6 +12,7 @@ import java.util.Properties;
  * během.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
+ * @version 1.0 (8.1.2014)
  * 
  */
 public class KnParser {
