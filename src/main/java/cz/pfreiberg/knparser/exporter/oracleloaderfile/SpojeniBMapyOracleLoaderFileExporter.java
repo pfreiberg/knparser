@@ -45,7 +45,7 @@ public class SpojeniBMapyOracleLoaderFileExporter extends OracleLoaderFileExport
 		controlFile = super.insertColumn(controlFile, "DPM_ID");
 		controlFile = super.insertColumn(controlFile, "HBPEJ_ID");
 		controlFile = super.insertVarcharColumn(controlFile, "PARAMETRY_SPOJENI", "100");
-		controlFile = super.insertColumn(controlFile, "PRIZNAK_KONTEXTU");
+		controlFile = super.insertZeroColumn(controlFile, "PRIZNAK_KONTEXTU");
 		controlFile = super.end(controlFile);
 
 		try {

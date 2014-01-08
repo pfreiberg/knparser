@@ -37,7 +37,7 @@ public class SouradniceObrazuOracleLoaderFileExporter extends OracleLoaderFileEx
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "ID");
-		controlFile = super.insertColumn(controlFile, "STAV_DAT");
+		controlFile = super.insertZeroColumn(controlFile, "STAV_DAT");
 		controlFile = super.insertColumn(controlFile, "KATUZE_KOD");
 		controlFile = super.insertColumn(controlFile, "CISLO_ZPMZ");
 		controlFile = super.insertColumn(controlFile, "CISLO_TL");

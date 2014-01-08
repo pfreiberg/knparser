@@ -42,6 +42,12 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 				+ " = \"NULL\" ),\ncolumns_value");
 		return output;
 	}
+	
+	protected String insertZeroColumn(String loadFile, String name) {
+		String output = loadFile.replace("columns_value", "\t" + name
+				+ " \"0\",\ncolumns_value");
+		return output;
+	}
 
 	protected String end(String loadFile) {
 		String output = loadFile.replace(",\ncolumns_value", "");
