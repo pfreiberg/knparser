@@ -16,9 +16,9 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 /**
  * Parser výměnného formátu. Z konfiguračního souboru je zjištěno, kolik řádků
  * se má najednou maximálně zpracovat a ze souboru se získá jeho kódování. Po
- * načtení a rozparsování jednoho řádku je určeno, do jaké doménové třídy má
- * být uložen. Po zpracování daného počtu řádku (nebo dosažení konce souboru)
- * jsou pak již instance doménových tříd vráceny Controlleru.
+ * načtení a rozparsování jednoho řádku je určeno, do jaké doménové třídy má být
+ * uložen. Po zpracování daného počtu řádku (nebo dosažení konce souboru) jsou
+ * pak již instance doménových tříd vráceny Controlleru.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
@@ -40,6 +40,8 @@ public class Parser {
 	private final char separator = ';';
 	private int zmeny;
 
+	private static boolean isParsing = true;
+
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
 		file = new File(configuration.getInput());
@@ -51,6 +53,10 @@ public class Parser {
 
 	public Vfk getVfk() {
 		return vfk;
+	}
+
+	public static boolean isParsing() {
+		return isParsing;
 	}
 
 	public int parseFile() throws IOException {
@@ -90,7 +96,7 @@ public class Parser {
 			parseFile();
 		}
 		System.out.println("Last row: " + actualRow);
-		vfk.setParsing(false);
+		isParsing = false;
 		return escapedRows;
 	}
 

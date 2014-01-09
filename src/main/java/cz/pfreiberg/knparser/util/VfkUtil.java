@@ -19,6 +19,9 @@ import cz.pfreiberg.knparser.parser.ParserException;
  */
 public class VfkUtil {
 
+	private final static SimpleDateFormat format = new SimpleDateFormat(
+			"\"dd.MM.yyyy HH:mm:ss\"");
+
 	public static String getEncoding(File file) throws ParserException,
 			IOException {
 
@@ -55,13 +58,11 @@ public class VfkUtil {
 		if (isOutOfIndex(value, i))
 			return null;
 
-		Integer output = null;
 		try {
-			output = Integer.valueOf(value[i]);
+			return Integer.valueOf(value[i]);
 		} catch (NumberFormatException e) {
 			return null;
 		}
-		return output;
 	}
 
 	public static Long getLong(String[] value, int i) {
@@ -69,13 +70,11 @@ public class VfkUtil {
 		if (isOutOfIndex(value, i))
 			return null;
 
-		Long output = null;
 		try {
-			output = Long.valueOf(value[i]);
+			return Long.valueOf(value[i]);
 		} catch (NumberFormatException e) {
 			return null;
 		}
-		return output;
 	}
 
 	public static Double getDouble(String[] value, int i) {
@@ -83,13 +82,11 @@ public class VfkUtil {
 		if (isOutOfIndex(value, i))
 			return null;
 
-		Double output = null;
 		try {
-			output = Double.valueOf(value[i]);
+			return Double.valueOf(value[i]);
 		} catch (NumberFormatException e) {
 			return null;
 		}
-		return output;
 	}
 
 	public static Date getDate(String[] value, int i) {
@@ -97,15 +94,11 @@ public class VfkUtil {
 		if (isOutOfIndex(value, i))
 			return null;
 
-		Date output = null;
-		SimpleDateFormat format = new SimpleDateFormat(
-				"\"dd.MM.yyyy HH:mm:ss\"");
 		try {
-			output = format.parse(value[i]);
+			return format.parse(value[i]);
 		} catch (ParseException e) {
 			return null;
 		}
-		return output;
 	}
 
 	public static String getString(String[] value, int i) {

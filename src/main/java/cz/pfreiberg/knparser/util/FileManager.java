@@ -25,9 +25,11 @@ public class FileManager {
 			Collection<?> lines) throws IOException {
 		OutputStream output = null;
 		try {
+
+			boolean isNotFirst = file.exists();
 			output = FileUtils.openOutputStream(file, true);
 			BufferedOutputStream buffer = new BufferedOutputStream(output);
-			writeData(lines, buffer, Charset.forName(encoding));
+			writeData(lines, buffer, Charset.forName(encoding), isNotFirst);
 			buffer.flush();
 			output.close();
 		} finally {
@@ -48,10 +50,14 @@ public class FileManager {
 	}
 
 	private static void writeData(Collection<?> data, OutputStream output,
-			Charset encoding) throws IOException {
+			Charset encoding, boolean isNotFirst) throws IOException {
 
-		if (data == null) {
+		if (data.size() == 0) {
 			return;
+		}
+
+		if (isNotFirst) {
+			output.write(END_OF_LINE.getBytes(encoding));
 		}
 
 		Iterator<?> itr = data.iterator();
