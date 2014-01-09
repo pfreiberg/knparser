@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
 import cz.pfreiberg.knparser.domain.rizeni.UcastniciTyp;
 import cz.pfreiberg.knparser.parser.ParserException;
+import cz.pfreiberg.knparser.util.FileManager;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class UcastniciTypOracleLoaderFileExporter extends
@@ -43,7 +42,7 @@ public class UcastniciTypOracleLoaderFileExporter extends
 		controlFile = super.end(controlFile);
 
 		try {
-			FileUtils.writeStringToFile(new File(output + prefix + name
+			FileManager.writeToConfigFile(new File(output + prefix + name
 					+ ".CFG"), controlFile,
 					VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
@@ -58,8 +57,8 @@ public class UcastniciTypOracleLoaderFileExporter extends
 	public void appendLoadFile() {
 		try {
 			File file = new File(output + prefix + name + ".TXT");
-			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					ucastniciTyp, true);
+			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
+					ucastniciTyp);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

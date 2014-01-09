@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
 import cz.pfreiberg.knparser.domain.rizeni.ListinyDalsiUdaje;
 import cz.pfreiberg.knparser.parser.ParserException;
+import cz.pfreiberg.knparser.util.FileManager;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ListinyDalsiUdajeOracleLoaderFileExporter extends OracleLoaderFileExporter {
@@ -42,7 +41,7 @@ public class ListinyDalsiUdajeOracleLoaderFileExporter extends OracleLoaderFileE
 		controlFile = super.end(controlFile);
 
 		try {
-			FileUtils.writeStringToFile(new File(output + prefix + name + ".CFG"),
+			FileManager.writeToConfigFile(new File(output + prefix + name + ".CFG"),
 					controlFile, VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
@@ -56,8 +55,8 @@ public class ListinyDalsiUdajeOracleLoaderFileExporter extends OracleLoaderFileE
 	public void appendLoadFile() {
 		try {
 			File file = new File(output + prefix + name + ".TXT");
-			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					listinyDalsiUdaje, true);
+			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
+					listinyDalsiUdaje);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

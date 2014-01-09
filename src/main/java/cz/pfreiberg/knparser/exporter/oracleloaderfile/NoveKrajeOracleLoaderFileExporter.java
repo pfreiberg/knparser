@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
 import cz.pfreiberg.knparser.domain.nemovitosti.NoveKraje;
 import cz.pfreiberg.knparser.parser.ParserException;
+import cz.pfreiberg.knparser.util.FileManager;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class NoveKrajeOracleLoaderFileExporter extends OracleLoaderFileExporter {
@@ -44,7 +43,7 @@ public class NoveKrajeOracleLoaderFileExporter extends OracleLoaderFileExporter 
 		controlFile = super.end(controlFile);
 
 		try {
-			FileUtils.writeStringToFile(new File(output + prefix + name + ".CFG"),
+			FileManager.writeToConfigFile(new File(output + prefix + name + ".CFG"),
 					controlFile, VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
@@ -58,8 +57,8 @@ public class NoveKrajeOracleLoaderFileExporter extends OracleLoaderFileExporter 
 	public void appendLoadFile() {
 		try {
 			File file = new File(output + prefix + name + ".TXT");
-			FileUtils.writeLines(file, VfkUtil.convertEncoding(characterSet),
-					noveKraje, true);
+			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
+					noveKraje);
 		} catch (IOException | ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
