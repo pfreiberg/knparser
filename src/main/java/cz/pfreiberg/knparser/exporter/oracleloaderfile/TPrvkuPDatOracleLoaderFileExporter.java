@@ -36,11 +36,11 @@ public class TPrvkuPDatOracleLoaderFileExporter extends OracleLoaderFileExporter
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
 		controlFile = super.insertColumn(controlFile, "KOD");
-		controlFile = super.insertVarcharColumn(controlFile, "POLOHOPIS", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "EDITOVATELNY", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "POLOHOPIS", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "EDITOVATELNY", "4");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
 		controlFile = super.insertVarcharColumn(controlFile, "VYZNAM", "240");
-		controlFile = super.insertVarcharColumn(controlFile, "KRIVKA", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "KRIVKA", "4");
 		controlFile = super.insertColumn(controlFile, "TYP_PRVKU");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
 		controlFile = super.end(controlFile);

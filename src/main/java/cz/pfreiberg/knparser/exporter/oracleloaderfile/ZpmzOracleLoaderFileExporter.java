@@ -39,9 +39,9 @@ public class ZpmzOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "CISLO_ZPMZ");
 		controlFile = super.insertColumn(controlFile, "PPZ_ID");
 		controlFile = super.insertColumn(controlFile, "STAV_ZPMZ");
-		controlFile = super.insertVarcharColumn(controlFile, "MERICKY_NACRT", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "ZAPISNIK_PODROB_MERENI", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "VYPOCET_PROTOKOL_VYMER", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "MERICKY_NACRT", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "ZAPISNIK_PODROB_MERENI", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "VYPOCET_PROTOKOL_VYMER", "4");
 		controlFile = super.insertColumn(controlFile, "TYPSOS_KOD");
 		controlFile = super.end(controlFile);
 

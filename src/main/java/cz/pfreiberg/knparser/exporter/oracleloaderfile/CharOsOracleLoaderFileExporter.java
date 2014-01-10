@@ -40,7 +40,7 @@ public class CharOsOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertVarcharColumn(controlFile, "OPSUB_TYPE", "10");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
-		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "3");
+		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "4");
 		controlFile = super.end(controlFile);
 
 		try {

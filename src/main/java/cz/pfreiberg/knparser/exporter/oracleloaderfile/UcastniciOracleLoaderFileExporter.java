@@ -52,7 +52,7 @@ public class UcastniciOracleLoaderFileExporter extends OracleLoaderFileExporter 
 		controlFile = super.insertVarcharColumn(controlFile, "DIC", "16");
 		controlFile = super.insertColumn(controlFile, "ICO");
 		controlFile = super.insertColumn(controlFile, "DOPLNEK_ICO");
-		controlFile = super.insertVarcharColumn(controlFile, "OVEREN_PODPIS", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "OVEREN_PODPIS", "4");
 		controlFile = super.insertColumn(controlFile, "OVEREN_PROTI_RS");
 		controlFile = super.insertColumn(controlFile, "OVEREN_PROTI_OS");
 		controlFile = super.end(controlFile);

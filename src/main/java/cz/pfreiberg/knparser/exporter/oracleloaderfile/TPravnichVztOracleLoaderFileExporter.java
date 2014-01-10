@@ -40,17 +40,17 @@ public class TPravnichVztOracleLoaderFileExporter extends
 		controlFile = super.insertVarcharColumn(controlFile, "KOD", "4");
 		controlFile = super.insertColumn(controlFile, "TPR_KOD");
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
-		controlFile = super.insertVarcharColumn(controlFile, "VLASTNICTVI", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "PRO_OS", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "PRO_NEMOVITOST", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "K_NEMOVITOSTI", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "VLASTNICTVI", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "PRO_OS", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "PRO_NEMOVITOST", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "K_NEMOVITOSTI", "4");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
-		controlFile = super.insertVarcharColumn(controlFile, "SEKCE", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "SEKCE", "4");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
 		controlFile = super.insertColumn(controlFile, "VLVZTAH");
-		controlFile = super.insertVarcharColumn(controlFile, "K_OS", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "PODIL_VERITELE", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "PORADI", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "K_OS", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "PODIL_VERITELE", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "PORADI", "4");
 		controlFile = super.end(controlFile);
 
 		try {

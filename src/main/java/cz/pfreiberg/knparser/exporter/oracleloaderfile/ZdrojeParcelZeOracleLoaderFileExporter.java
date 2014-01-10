@@ -39,7 +39,7 @@ public class ZdrojeParcelZeOracleLoaderFileExporter extends OracleLoaderFileExpo
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
-		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "2");
+		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "4");
 		controlFile = super.end(controlFile);
 
 		try {

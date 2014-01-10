@@ -44,6 +44,7 @@ public class Controller {
 				vfk = parseFile();
 				System.out.println("Is parsed. Starting the storage sequence.\n");
 				storeParsedData(vfk);
+				Parser.setFirstBatchToFalse();
 			} while (Parser.isParsing());
 
 			System.out.println(escapedRows + " row/s was escaped.");

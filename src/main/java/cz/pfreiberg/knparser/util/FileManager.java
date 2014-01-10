@@ -23,18 +23,22 @@ public class FileManager {
 
 	public static void writeToDataFile(File file, String encoding,
 			Collection<?> lines) throws IOException {
+
 		OutputStream output = null;
 		try {
-
-			boolean isNotFirst = file.exists();
+			boolean filledFile = isFileFilled(file);
 			output = FileUtils.openOutputStream(file, true);
 			BufferedOutputStream buffer = new BufferedOutputStream(output);
-			writeData(lines, buffer, Charset.forName(encoding), isNotFirst);
+			writeData(lines, buffer, Charset.forName(encoding), filledFile);
 			buffer.flush();
 			output.close();
 		} finally {
 			output.close();
 		}
+	}
+
+	private static boolean isFileFilled(File file) {
+		return (file.exists() && file.length() > 0);
 	}
 
 	public static void writeToConfigFile(File file, String data, String encoding)
@@ -50,13 +54,13 @@ public class FileManager {
 	}
 
 	private static void writeData(Collection<?> data, OutputStream output,
-			Charset encoding, boolean isNotFirst) throws IOException {
+			Charset encoding, boolean filledFile) throws IOException {
 
-		if (data.size() == 0) {
+		if (data == null || data.size() == 0) {
 			return;
 		}
 
-		if (isNotFirst) {
+		if (filledFile) {
 			output.write(END_OF_LINE.getBytes(encoding));
 		}
 

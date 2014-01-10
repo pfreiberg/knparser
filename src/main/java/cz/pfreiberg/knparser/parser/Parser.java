@@ -24,6 +24,9 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  * 
  */
 public class Parser {
+	
+	private static boolean isParsing = true;
+	private static boolean firstBatch = true;
 
 	private File file;
 	private Vfk vfk;
@@ -36,11 +39,9 @@ public class Parser {
 	private int escapedRows;
 
 	private final long numberOfRows;
-	private final char quoteCharacter = '"';
-	private final char separator = ';';
+	private final char QUOTE_CHARACTER = '"';
+	private final char SEPARATOR = ';';
 	private int zmeny;
-
-	private static boolean isParsing = true;
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
@@ -57,6 +58,16 @@ public class Parser {
 
 	public static boolean isParsing() {
 		return isParsing;
+	}
+
+	public static boolean isFirstBatch() {
+		return firstBatch;
+	}
+
+	public static void setFirstBatchToFalse() {
+		if (firstBatch) {
+			firstBatch = false;
+		}
 	}
 
 	public int parseFile() throws IOException {
@@ -87,6 +98,7 @@ public class Parser {
 
 				if ((actualRow % numberOfRows) == 0) {
 					System.out.println("Actual row: " + actualRow);
+
 					return escapedRows;
 				}
 			}
@@ -149,7 +161,7 @@ public class Parser {
 
 			char actualCharacter = getActualCharacter(row, i);
 			switch (actualCharacter) {
-			case quoteCharacter:
+			case QUOTE_CHARACTER:
 				// není v uvozovkách a další znak není "
 				if (isStartOfText(row, inQuotes, i)) {
 					sb.append("\"");
@@ -169,7 +181,7 @@ public class Parser {
 					i++;
 				}
 				break;
-			case separator:
+			case SEPARATOR:
 				if (!inQuotes) {
 					tokensOnRow.add(sb.toString());
 					sb.setLength(0);
@@ -212,7 +224,7 @@ public class Parser {
 	private boolean isStartOfText(String row, boolean inQuotes, int position) {
 		if (hasNextCharacter(row, position)) {
 			char nextCharacter = getNextCharacter(row, position);
-			return (!inQuotes && (nextCharacter != quoteCharacter));
+			return (!inQuotes && (nextCharacter != QUOTE_CHARACTER));
 		}
 		return false;
 	}
@@ -221,7 +233,7 @@ public class Parser {
 			int position) {
 		if (hasNextCharacter(row, position)) {
 			char nextCharacter = getNextCharacter(row, position);
-			return (inQuotes && (nextCharacter == quoteCharacter));
+			return (inQuotes && (nextCharacter == QUOTE_CHARACTER));
 		}
 		return false;
 	}

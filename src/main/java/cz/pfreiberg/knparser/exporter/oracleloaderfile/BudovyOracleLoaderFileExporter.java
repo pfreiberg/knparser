@@ -48,8 +48,8 @@ public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "CENA_NEMOVITOSTI");
 		controlFile = super.insertColumn(controlFile, "ZPVYBU_KOD");
 		controlFile = super.insertColumn(controlFile, "TEL_ID");
-		controlFile = super.insertVarcharColumn(controlFile, "DOCASNA_STAVBA", "1");
-		controlFile = super.insertVarcharColumn(controlFile, "JE_SOUCASTI", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "DOCASNA_STAVBA", "4");
+		controlFile = super.insertVarcharColumn(controlFile, "JE_SOUCASTI", "4");
 		controlFile = super.insertColumn(controlFile, "PS_ID");
 		controlFile = super.end(controlFile);
 

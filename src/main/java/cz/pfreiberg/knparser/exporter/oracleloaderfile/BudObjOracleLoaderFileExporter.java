@@ -37,7 +37,7 @@ public class BudObjOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		controlFile = super.insertColumn(controlFile, "CISDOM_HOD");
 		controlFile = super.insertColumn(controlFile, "ID_KN");
-		controlFile = super.insertVarcharColumn(controlFile, "CB_KN", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "CB_KN", "4");
 		controlFile = super.insertColumn(controlFile, "ID_UA");
 		controlFile = super.end(controlFile);
 

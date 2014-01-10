@@ -36,7 +36,7 @@ public class TypyUcastnikuOracleLoaderFileExporter extends
 		String controlFile = super.makeControlFile();
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
-		controlFile = super.insertVarcharColumn(controlFile, "KOD", "2");
+		controlFile = super.insertVarcharColumn(controlFile, "KOD", "4");
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "20");
 		controlFile = super.insertVarcharColumn(controlFile, "POPIS", "240");
 		controlFile = super.end(controlFile);

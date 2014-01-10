@@ -39,7 +39,7 @@ public class TBudovOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
-		controlFile = super.insertVarcharColumn(controlFile, "ZADANI_CD", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "ZADANI_CD", "4");
 		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "9");
 		controlFile = super.end(controlFile);
 

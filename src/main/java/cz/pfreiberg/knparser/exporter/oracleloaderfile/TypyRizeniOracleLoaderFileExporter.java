@@ -36,10 +36,10 @@ public class TypyRizeniOracleLoaderFileExporter extends
 		String controlFile = super.makeControlFile();
 		controlFile = super.fillHeader(controlFile, characterSet, name);
 
-		controlFile = super.insertVarcharColumn(controlFile, "KOD", "3");
+		controlFile = super.insertVarcharColumn(controlFile, "KOD", "4");
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "20");
 		controlFile = super.insertVarcharColumn(controlFile, "POPIS", "240");
-		controlFile = super.insertVarcharColumn(controlFile, "ZPOPLATNENI", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "ZPOPLATNENI", "4");
 		controlFile = super.end(controlFile);
 
 		try {

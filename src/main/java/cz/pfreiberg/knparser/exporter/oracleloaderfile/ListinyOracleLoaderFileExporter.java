@@ -38,7 +38,7 @@ public class ListinyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "TYPLIST_KOD");
 		controlFile = super.insertVarcharColumn(controlFile, "POPIS", "2000");
-		controlFile = super.insertVarcharColumn(controlFile, "OBSAH", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "OBSAH", "4");
 		controlFile = super.insertColumn(controlFile, "STRAN");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_VYHOTOVENI");
 		controlFile = super.insertVarcharColumn(controlFile, "ZHOTOVITEL", "60");
@@ -47,7 +47,7 @@ public class ListinyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertVarcharColumn(controlFile, "DOPLNENI_ZHOTOVITELE", "60");
 		controlFile = super.insertVarcharColumn(controlFile, "ZKRATKA", "10");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID");
-		controlFile = super.insertVarcharColumn(controlFile, "ZMENA_PRAV_VZTAHU", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "ZMENA_PRAV_VZTAHU", "4");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_PRAV_MOCI");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_VYKONATELNOSTI");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_HIST_OD");

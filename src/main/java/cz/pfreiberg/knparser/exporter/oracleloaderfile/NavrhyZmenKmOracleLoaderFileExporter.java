@@ -38,7 +38,7 @@ public class NavrhyZmenKmOracleLoaderFileExporter extends OracleLoaderFileExport
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "STAV_NZ");
 		controlFile = super.insertVarcharColumn(controlFile, "NZ_TYPE", "10");
-		controlFile = super.insertVarcharColumn(controlFile, "PORIZENI_DAT_NZ", "1");
+		controlFile = super.insertVarcharColumn(controlFile, "PORIZENI_DAT_NZ", "4");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID");
 		controlFile = super.insertVarcharColumn(controlFile, "CISLO_PLANKU", "60");
 		controlFile = super.insertVarcharColumn(controlFile, "VYHOTOVIL", "60");
