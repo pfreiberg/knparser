@@ -24,7 +24,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  * 
  */
 public class Parser {
-	
+
 	private static boolean isParsing = true;
 	private static boolean firstBatch = true;
 
@@ -33,6 +33,8 @@ public class Parser {
 	private BufferedReader br;
 
 	private String encoding;
+	private int zmeny;
+
 	private String buffer;
 
 	private long actualRow;
@@ -41,7 +43,6 @@ public class Parser {
 	private final long numberOfRows;
 	private final char QUOTE_CHARACTER = '"';
 	private final char SEPARATOR = ';';
-	private int zmeny;
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
@@ -72,47 +73,46 @@ public class Parser {
 
 	public int parseFile() throws IOException {
 		vfk = new Vfk();
-		try {
-			for (String[] values = processRow(); values != null; values = processRow()) {
 
-				actualRow++;
+		for (String[] values = processRow(); values != null; values = processRow()) {
 
-				String node = values[0];
-				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
+			actualRow++;
 
-				if (tryParseHead(node, tokens)) {
-				} else if (tryParseNemovitosti(node, tokens)) {
-				} else if (tryParseJednotky(node, tokens)) {
-				} else if (tryParseBonitniDilParcely(node, tokens)) {
-				} else if (tryParseVlastnictvi(node, tokens)) {
-				} else if (tryParseJinePravniVztahy(node, tokens)) {
-				} else if (tryParseRizeni(node, tokens)) {
-				} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
-				} else if (tryParseBonitovanePudneEkologickeJednotky(node,
-						tokens)) {
-				} else if (tryParseGeometrickyPlan(node, tokens)) {
-				} else if (tryParseRezervovanaCisla(node, tokens)) {
-				} else if (tryParseDefinicniBody(node, tokens)) {
-				} else if (tryParseAdresniMista(node, tokens)) {
-				}
-
-				if ((actualRow % numberOfRows) == 0) {
-					System.out.println("Actual row: " + actualRow);
-
-					return escapedRows;
-				}
+			if ((actualRow % numberOfRows) == 0) {
+				System.out.println("Actual row: " + actualRow);
+				return escapedRows;
 			}
-		} catch (ParserException e) {
-			System.out.println(e);
-			escapedRows++;
-			parseFile();
+
+			if (values.equals(null)) {
+				continue;
+			}
+
+			String node = values[0];
+			String[] tokens = Arrays.copyOfRange(values, 1, values.length);
+
+			if (tryParseHead(node, tokens)) {
+			} else if (tryParseNemovitosti(node, tokens)) {
+			} else if (tryParseJednotky(node, tokens)) {
+			} else if (tryParseBonitniDilParcely(node, tokens)) {
+			} else if (tryParseVlastnictvi(node, tokens)) {
+			} else if (tryParseJinePravniVztahy(node, tokens)) {
+			} else if (tryParseRizeni(node, tokens)) {
+			} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
+			} else if (tryParseBonitovanePudneEkologickeJednotky(node, tokens)) {
+			} else if (tryParseGeometrickyPlan(node, tokens)) {
+			} else if (tryParseRezervovanaCisla(node, tokens)) {
+			} else if (tryParseDefinicniBody(node, tokens)) {
+			} else if (tryParseAdresniMista(node, tokens)) {
+			}
+
 		}
+
 		System.out.println("Last row: " + actualRow);
 		isParsing = false;
 		return escapedRows;
 	}
 
-	private String[] processRow() throws IOException, ParserException {
+	private String[] processRow() throws IOException {
 		String[] row = null;
 
 		do {
@@ -120,7 +120,13 @@ public class Parser {
 			if (nextRow == null)
 				return row;
 			String[] processedRow;
-			processedRow = parseRow(nextRow);
+			try {
+				processedRow = parseRow(nextRow);
+			} catch (ParserException e) {
+				System.out.println(e);
+				escapedRows++;
+				return null;
+			}
 
 			if (processedRow.length > 0) {
 				if (row == null) {
@@ -141,8 +147,7 @@ public class Parser {
 	}
 
 	private String getRow() throws IOException {
-		String row = br.readLine();
-		return row;
+		return br.readLine();
 	}
 
 	private String[] parseRow(String row) throws ParserException {
@@ -216,11 +221,6 @@ public class Parser {
 		return tokensOnRow.toArray(new String[tokensOnRow.size()]);
 	}
 
-	private boolean isLastCharacterValid(String buffer) {
-		char lastCharacter = buffer.charAt(buffer.length() - 1);
-		return (lastCharacter == '\u00A4');
-	}
-
 	private boolean isStartOfText(String row, boolean inQuotes, int position) {
 		if (hasNextCharacter(row, position)) {
 			char nextCharacter = getNextCharacter(row, position);
@@ -254,6 +254,11 @@ public class Parser {
 	private char getNextCharacter(String row, int position) {
 		position++;
 		return row.charAt(position);
+	}
+
+	private boolean isLastCharacterValid(String buffer) {
+		char lastCharacter = buffer.charAt(buffer.length() - 1);
+		return (lastCharacter == '\u00A4');
 	}
 
 	private boolean isRowProcessing() {
