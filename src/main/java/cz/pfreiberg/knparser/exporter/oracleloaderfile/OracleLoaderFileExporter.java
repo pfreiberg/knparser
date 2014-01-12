@@ -7,7 +7,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 
 	@Override
 	public String makeControlFile() {
-		final String termination = "'|" + Character.toString((char)21) + "\\n'";
+		final String termination = "'|" + Character.toString((char)21) + "'";
 		return "LOAD DATA\n" + "CHARACTERSET characterset_value\n"
 				+ "INFILE \"infile_value.TXT\" \"STR" + termination + "\" \n" 
 				+ "APPEND\n"
