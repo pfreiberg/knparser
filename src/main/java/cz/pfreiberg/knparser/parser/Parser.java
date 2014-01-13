@@ -28,33 +28,36 @@ public class Parser {
 	private static boolean isParsing = true;
 	private static boolean firstBatch = true;
 
+	private Vfk batch;
+	private int escapedRows;
+
 	private File file;
-	private Vfk vfk;
 	private BufferedReader br;
+	private String buffer;
+	private long actualRow;
 
 	private String encoding;
 	private int zmeny;
 
-	private String buffer;
-
-	private long actualRow;
-	private int escapedRows;
-
-	private final long numberOfRows;
+	private final long ROWS_PER_BATCH;
 	private final char QUOTE_CHARACTER = '"';
 	private final char SEPARATOR = ';';
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
 		file = new File(configuration.getInput());
-		numberOfRows = Integer.parseInt(configuration.getNumberOfRows());
+		ROWS_PER_BATCH = Integer.parseInt(configuration.getNumberOfRows());
 		encoding = VfkUtil.getEncoding(file);
 		br = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), VfkUtil.convertEncoding(encoding)));
 	}
 
-	public Vfk getVfk() {
-		return vfk;
+	public Vfk getBatch() {
+		return batch;
+	}
+
+	public long getEscapedRows() {
+		return escapedRows;
 	}
 
 	public static boolean isParsing() {
@@ -71,62 +74,60 @@ public class Parser {
 		}
 	}
 
-	public int parseFile() throws IOException {
-		vfk = new Vfk();
-
-		for (String[] values = processRow(); values != null; values = processRow()) {
-
-			actualRow++;
-
-			if ((actualRow % numberOfRows) == 0) {
-				System.out.println("Actual row: " + actualRow);
-				return escapedRows;
-			}
-
-			if (values.equals(null)) {
+	public void parseFile() throws IOException {
+		batch = new Vfk();
+		do {
+			String[] values;
+			try {
+				values = processRow();
+			} catch (ParserException e) {
+				System.out.println(e);
+				escapedRows++;
 				continue;
 			}
 
-			String node = values[0];
-			String[] tokens = Arrays.copyOfRange(values, 1, values.length);
+			if (values != null) {
+				actualRow++;
+				if ((actualRow % ROWS_PER_BATCH) == 0) {
+					System.out.println("Actual row: " + actualRow);
+					batch.setZmeny(zmeny);
+					return;
+				}
 
-			if (tryParseHead(node, tokens)) {
-			} else if (tryParseNemovitosti(node, tokens)) {
-			} else if (tryParseJednotky(node, tokens)) {
-			} else if (tryParseBonitniDilParcely(node, tokens)) {
-			} else if (tryParseVlastnictvi(node, tokens)) {
-			} else if (tryParseJinePravniVztahy(node, tokens)) {
-			} else if (tryParseRizeni(node, tokens)) {
-			} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
-			} else if (tryParseBonitovanePudneEkologickeJednotky(node, tokens)) {
-			} else if (tryParseGeometrickyPlan(node, tokens)) {
-			} else if (tryParseRezervovanaCisla(node, tokens)) {
-			} else if (tryParseDefinicniBody(node, tokens)) {
-			} else if (tryParseAdresniMista(node, tokens)) {
-			}
+				String node = values[0];
+				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
 
-		}
+				if (tryParseNemovitosti(node, tokens)) {
+				} else if (tryParseJednotky(node, tokens)) {
+				} else if (tryParseBonitniDilParcely(node, tokens)) {
+				} else if (tryParseVlastnictvi(node, tokens)) {
+				} else if (tryParseJinePravniVztahy(node, tokens)) {
+				} else if (tryParseRizeni(node, tokens)) {
+				} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
+				} else if (tryParseBonitovanePudneEkologickeJednotky(node,
+						tokens)) {
+				} else if (tryParseGeometrickyPlan(node, tokens)) {
+				} else if (tryParseRezervovanaCisla(node, tokens)) {
+				} else if (tryParseDefinicniBody(node, tokens)) {
+				} else if (tryParseAdresniMista(node, tokens)) {
+				} else if (tryParseHead(node, tokens)) {
+				}
+			} else
+				break;
+		} while (true);
 
 		System.out.println("Last row: " + actualRow);
 		isParsing = false;
-		return escapedRows;
+		batch.setZmeny(zmeny);
 	}
 
-	private String[] processRow() throws IOException {
+	private String[] processRow() throws IOException, ParserException {
 		String[] row = null;
-
 		do {
 			String nextRow = getRow();
 			if (nextRow == null)
 				return row;
-			String[] processedRow;
-			try {
-				processedRow = parseRow(nextRow);
-			} catch (ParserException e) {
-				System.out.println(e);
-				escapedRows++;
-				return null;
-			}
+			String[] processedRow = parseRow(nextRow);
 
 			if (processedRow.length > 0) {
 				if (row == null) {
@@ -141,8 +142,6 @@ public class Parser {
 			}
 
 		} while (isRowProcessing());
-
-		vfk.setZmeny(zmeny);
 		return row;
 	}
 
@@ -153,7 +152,7 @@ public class Parser {
 	private String[] parseRow(String row) throws ParserException {
 
 		List<String> tokensOnRow = new ArrayList<String>();
-		StringBuilder sb = new StringBuilder(64);
+		StringBuilder sb = new StringBuilder(312);
 		boolean inQuotes = false;
 
 		if (buffer != null) {
@@ -279,64 +278,64 @@ public class Parser {
 	private boolean tryParseNemovitosti(String node, String[] tokens) {
 		switch (node) {
 		case "&DPAR":
-			vfk.getParcely().add(ParcelyParser.parse(tokens));
+			batch.getParcely().add(ParcelyParser.parse(tokens));
 			break;
 		case "&DBUD":
-			vfk.getBudovy().add(BudovyParser.parse(tokens));
+			batch.getBudovy().add(BudovyParser.parse(tokens));
 			break;
 		case "&DCABU":
-			vfk.getCastiBudov().add(CastiBudovParser.parse(tokens));
+			batch.getCastiBudov().add(CastiBudovParser.parse(tokens));
 			break;
 		case "&DZPOCHN":
-			vfk.getZpOchranyNem().add(ZpOchranyNemParser.parse(tokens));
+			batch.getZpOchranyNem().add(ZpOchranyNemParser.parse(tokens));
 			break;
 		case "&DDRUPOZ":
-			vfk.getDPozemku().add(DPozemkuParser.parse(tokens));
+			batch.getDPozemku().add(DPozemkuParser.parse(tokens));
 			break;
 		case "&DZPVYPO":
-			vfk.getZpVyuzitiPoz().add(ZpVyuzitiPozParser.parse(tokens));
+			batch.getZpVyuzitiPoz().add(ZpVyuzitiPozParser.parse(tokens));
 			break;
 		case "&DZDPAZE":
-			vfk.getZdrojeParcelZe().add(ZdrojeParcelZeParser.parse(tokens));
+			batch.getZdrojeParcelZe().add(ZdrojeParcelZeParser.parse(tokens));
 			break;
 		case "&DZPURVY":
-			vfk.getZpUrceniVymery().add(ZpUrceniVymeryParser.parse(tokens));
+			batch.getZpUrceniVymery().add(ZpUrceniVymeryParser.parse(tokens));
 			break;
 		case "&DTYPBUD":
-			vfk.getTBudov().add(TBudovParser.parse(tokens));
+			batch.getTBudov().add(TBudovParser.parse(tokens));
 			break;
 		case "&DMAPLIS":
-			vfk.getMapoveListy().add(MapoveListyParser.parse(tokens));
+			batch.getMapoveListy().add(MapoveListyParser.parse(tokens));
 			break;
 		case "&DKATUZE":
-			vfk.getKatastrUzemi().add(KatastrUzemiParser.parse(tokens));
+			batch.getKatastrUzemi().add(KatastrUzemiParser.parse(tokens));
 			break;
 		case "&DOBCE":
-			vfk.getObce().add(ObceParser.parse(tokens));
+			batch.getObce().add(ObceParser.parse(tokens));
 			break;
 		case "&DCASOBC":
-			vfk.getCastiObci().add(CastiObciParser.parse(tokens));
+			batch.getCastiObci().add(CastiObciParser.parse(tokens));
 			break;
 		case "&DOKRESY":
-			vfk.getOkresy().add(OkresyParser.parse(tokens));
+			batch.getOkresy().add(OkresyParser.parse(tokens));
 			break;
 		case "&DKRAJE":
-			vfk.getKraje().add(KrajeParser.parse(tokens));
+			batch.getKraje().add(KrajeParser.parse(tokens));
 			break;
 		case "&DNKRAJE":
-			vfk.getNoveKraje().add(NoveKrajeParser.parse(tokens));
+			batch.getNoveKraje().add(NoveKrajeParser.parse(tokens));
 			break;
 		case "&DRZO":
-			vfk.getRZpochr().add(RZpochrParser.parse(tokens));
+			batch.getRZpochr().add(RZpochrParser.parse(tokens));
 			break;
 		case "&DZPVYBU":
-			vfk.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
+			batch.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
 			break;
 		case "&DPS":
-			vfk.getPravaStavby().add(PravaStavbyParser.parse(tokens));
+			batch.getPravaStavby().add(PravaStavbyParser.parse(tokens));
 			break;
 		case "&DRU":
-			vfk.getRUcelNem().add(RUcelNemParser.parse(tokens));
+			batch.getRUcelNem().add(RUcelNemParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -347,13 +346,13 @@ public class Parser {
 	private boolean tryParseJednotky(String node, String[] tokens) {
 		switch (node) {
 		case "&DJED":
-			vfk.getJednotky().add(JednotkyParser.parse(tokens));
+			batch.getJednotky().add(JednotkyParser.parse(tokens));
 			break;
 		case "&DTYPJED":
-			vfk.getTJednotek().add(TJednotekParser.parse(tokens));
+			batch.getTJednotek().add(TJednotekParser.parse(tokens));
 			break;
 		case "&DZPVYJE":
-			vfk.getZpVyuzitiJed().add(ZpVyuzitiJedParser.parse(tokens));
+			batch.getZpVyuzitiJed().add(ZpVyuzitiJedParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -364,7 +363,7 @@ public class Parser {
 	private boolean tryParseBonitniDilParcely(String node, String[] tokens) {
 		switch (node) {
 		case "&DBDP":
-			vfk.getBonitDilyParc().add(BonitDilyParcParser.parse(tokens));
+			batch.getBonitDilyParc().add(BonitDilyParcParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -375,16 +374,16 @@ public class Parser {
 	private boolean tryParseVlastnictvi(String node, String[] tokens) {
 		switch (node) {
 		case "&DOPSUB":
-			vfk.getOpravSubjekty().add(OpravSubjektyParser.parse(tokens));
+			batch.getOpravSubjekty().add(OpravSubjektyParser.parse(tokens));
 			break;
 		case "&DVLA":
-			vfk.getVlastnictvi().add(VlastnictviParser.parse(tokens));
+			batch.getVlastnictvi().add(VlastnictviParser.parse(tokens));
 			break;
 		case "&DCHAROS":
-			vfk.getCharOs().add(CharOsParser.parse(tokens));
+			batch.getCharOs().add(CharOsParser.parse(tokens));
 			break;
 		case "&DTEL":
-			vfk.getTelesa().add(TelesaParser.parse(tokens));
+			batch.getTelesa().add(TelesaParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -395,13 +394,13 @@ public class Parser {
 	private boolean tryParseJinePravniVztahy(String node, String[] tokens) {
 		switch (node) {
 		case "&DJPV":
-			vfk.getJinePravVztahy().add(JinePravVztahyParser.parse(tokens));
+			batch.getJinePravVztahy().add(JinePravVztahyParser.parse(tokens));
 			break;
 		case "&DTYPRAV":
-			vfk.getTPravnichVzt().add(TPravnichVztParser.parse(tokens));
+			batch.getTPravnichVzt().add(TPravnichVztParser.parse(tokens));
 			break;
 		case "&DRJPV":
-			vfk.getRJpv().add(RJpvParser.parse(tokens));
+			batch.getRJpv().add(RJpvParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -412,54 +411,54 @@ public class Parser {
 	private boolean tryParseRizeni(String node, String[] tokens) {
 		switch (node) {
 		case "&DRIZENI":
-			vfk.getRizeni().add(RizeniParser.parse(tokens));
+			batch.getRizeni().add(RizeniParser.parse(tokens));
 			break;
 		case "&DRIZKU":
-			vfk.getRizeniKu().add(RizeniKuParser.parse(tokens));
+			batch.getRizeniKu().add(RizeniKuParser.parse(tokens));
 			break;
 		case "&DOBJRIZ":
-			vfk.getObjektyRizeni().add(ObjektyRizeniParser.parse(tokens));
+			batch.getObjektyRizeni().add(ObjektyRizeniParser.parse(tokens));
 			break;
 		case "&DPRERIZ":
-			vfk.getPredmetyRizeni().add(PredmetyRizeniParser.parse(tokens));
+			batch.getPredmetyRizeni().add(PredmetyRizeniParser.parse(tokens));
 			break;
 		case "&DUCAST":
-			vfk.getUcastnici().add(UcastniciParser.parse(tokens));
+			batch.getUcastnici().add(UcastniciParser.parse(tokens));
 			break;
 		case "&DADRUC":
-			vfk.getAdresy().add(AdresyParser.parse(tokens));
+			batch.getAdresy().add(AdresyParser.parse(tokens));
 			break;
 		case "&DLISTIN":
-			vfk.getListiny().add(ListinyParser.parse(tokens));
+			batch.getListiny().add(ListinyParser.parse(tokens));
 			break;
 		case "&DDUL":
-			vfk.getDalsiUdajeListiny().add(
+			batch.getDalsiUdajeListiny().add(
 					DalsiUdajeListinyParser.parse(tokens));
 			break;
 		case "&DLDU":
-			vfk.getListinyDalsiUdaje().add(
+			batch.getListinyDalsiUdaje().add(
 					ListinyDalsiUdajeParser.parse(tokens));
 			break;
 		case "&DTYPLIS":
-			vfk.getTListin().add(TListinParser.parse(tokens));
+			batch.getTListin().add(TListinParser.parse(tokens));
 			break;
 		case "&DTYPPRE":
-			vfk.getTPredmetuR().add(TPredmetuRParser.parse(tokens));
+			batch.getTPredmetuR().add(TPredmetuRParser.parse(tokens));
 			break;
 		case "&DTYPRIZ":
-			vfk.getTypyRizeni().add(TypyRizeniParser.parse(tokens));
+			batch.getTypyRizeni().add(TypyRizeniParser.parse(tokens));
 			break;
 		case "&DTYPUCA":
-			vfk.getTypyUcastniku().add(TypyUcastnikuParser.parse(tokens));
+			batch.getTypyUcastniku().add(TypyUcastnikuParser.parse(tokens));
 			break;
 		case "&DUCTYP":
-			vfk.getUcastniciTyp().add(UcastniciTypParser.parse(tokens));
+			batch.getUcastniciTyp().add(UcastniciTypParser.parse(tokens));
 			break;
 		case "&DRL":
-			vfk.getRList().add(RListParser.parse(tokens));
+			batch.getRList().add(RListParser.parse(tokens));
 			break;
 		case "&DOBESMF":
-			vfk.getObeslaniMf().add(ObeslaniMfParser.parse(tokens));
+			batch.getObeslaniMf().add(ObeslaniMfParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -470,49 +469,51 @@ public class Parser {
 	private boolean tryParsePrvkyKatastralniMapy(String node, String[] tokens) {
 		switch (node) {
 		case "&DSOBR":
-			vfk.getSouradniceObrazu().add(SouradniceObrazuParser.parse(tokens));
+			batch.getSouradniceObrazu().add(
+					SouradniceObrazuParser.parse(tokens));
 			break;
 		case "&DSBP":
-			vfk.getSpojeniBPoloh().add(SpojeniBPolohParser.parse(tokens));
+			batch.getSpojeniBPoloh().add(SpojeniBPolohParser.parse(tokens));
 			break;
 		case "&DSBM":
-			vfk.getSpojeniBMapy().add(SpojeniBMapyParser.parse(tokens));
+			batch.getSpojeniBMapy().add(SpojeniBMapyParser.parse(tokens));
 			break;
 		case "&DKODCHB":
-			vfk.getKodyCharQBodu().add(KodyCharQBoduParser.parse(tokens));
+			batch.getKodyCharQBodu().add(KodyCharQBoduParser.parse(tokens));
 			break;
 		case "&DTYPSOS":
-			vfk.getTSouradSys().add(TSouradSysParser.parse(tokens));
+			batch.getTSouradSys().add(TSouradSysParser.parse(tokens));
 			break;
 		case "&DHP":
-			vfk.getHraniceParcel().add(HraniceParcelParser.parse(tokens));
+			batch.getHraniceParcel().add(HraniceParcelParser.parse(tokens));
 			break;
 		case "&DOP":
-			vfk.getObrazyParcel().add(ObrazyParcelParser.parse(tokens));
+			batch.getObrazyParcel().add(ObrazyParcelParser.parse(tokens));
 			break;
 		case "&DOB":
-			vfk.getObrazyBudov().add(ObrazyBudovParser.parse(tokens));
+			batch.getObrazyBudov().add(ObrazyBudovParser.parse(tokens));
 			break;
 		case "&DDPM":
-			vfk.getDalsiPrvkyMapy().add(DalsiPrvkyMapyParser.parse(tokens));
+			batch.getDalsiPrvkyMapy().add(DalsiPrvkyMapyParser.parse(tokens));
 			break;
 		case "&DOBBP":
-			vfk.getObrazyBoduBp().add(ObrazyBoduBpParser.parse(tokens));
+			batch.getObrazyBoduBp().add(ObrazyBoduBpParser.parse(tokens));
 			break;
 		case "&DTYPPPD":
-			vfk.getTPrvkuPDat().add(TPrvkuPDatParser.parse(tokens));
+			batch.getTPrvkuPDat().add(TPrvkuPDatParser.parse(tokens));
 			break;
 		case "&DZVB":
-			vfk.getZobrazeniVb().add(ZobrazeniVbParser.parse(tokens));
+			batch.getZobrazeniVb().add(ZobrazeniVbParser.parse(tokens));
 			break;
 		case "&DPOM":
-			vfk.getPrvkyOMapy().add(PrvkyOMapyParser.parse(tokens));
+			batch.getPrvkyOMapy().add(PrvkyOMapyParser.parse(tokens));
 			break;
 		case "&DSPOM":
-			vfk.getSpojeniPoMapy().add(SpojeniPoMapyParser.parse(tokens));
+			batch.getSpojeniPoMapy().add(SpojeniPoMapyParser.parse(tokens));
 			break;
 		case "&DSPOL":
-			vfk.getSouradnicePolohy().add(SouradnicePolohyParser.parse(tokens));
+			batch.getSouradnicePolohy().add(
+					SouradnicePolohyParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -524,10 +525,10 @@ public class Parser {
 			String[] tokens) {
 		switch (node) {
 		case "&DHBPEJ":
-			vfk.getHraniceBpej().add(HraniceBpejParser.parse(tokens));
+			batch.getHraniceBpej().add(HraniceBpejParser.parse(tokens));
 			break;
 		case "&DOBPEJ":
-			vfk.getOznaceniBpej().add(OznaceniBpejParser.parse(tokens));
+			batch.getOznaceniBpej().add(OznaceniBpejParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -538,13 +539,13 @@ public class Parser {
 	private boolean tryParseGeometrickyPlan(String node, String[] tokens) {
 		switch (node) {
 		case "&DNZ":
-			vfk.getNavrhyZmenKm().add(NavrhyZmenKmParser.parse(tokens));
+			batch.getNavrhyZmenKm().add(NavrhyZmenKmParser.parse(tokens));
 			break;
 		case "&DZPMZ":
-			vfk.getZpmz().add(ZpmzParser.parse(tokens));
+			batch.getZpmz().add(ZpmzParser.parse(tokens));
 			break;
 		case "&DNZZP":
-			vfk.getNzZpmz().add(NzZpmzParser.parse(tokens));
+			batch.getNzZpmz().add(NzZpmzParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -555,16 +556,17 @@ public class Parser {
 	private boolean tryParseRezervovanaCisla(String node, String[] tokens) {
 		switch (node) {
 		case "&DRECI":
-			vfk.getRezParcelniCisla().add(RezParcelniCislaParser.parse(tokens));
+			batch.getRezParcelniCisla().add(
+					RezParcelniCislaParser.parse(tokens));
 			break;
 		case "&DDOCI":
-			vfk.getDotcenaParCisla().add(DotcenaParCislaParser.parse(tokens));
+			batch.getDotcenaParCisla().add(DotcenaParCislaParser.parse(tokens));
 			break;
 		case "&DDOHICI":
-			vfk.getDotHistParCisla().add(DotHistParCislaParser.parse(tokens));
+			batch.getDotHistParCisla().add(DotHistParCislaParser.parse(tokens));
 			break;
 		case "&DREZBP":
-			vfk.getRezCislaPbpp().add(RezCislaPbppParser.parse(tokens));
+			batch.getRezCislaPbpp().add(RezCislaPbppParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -575,7 +577,7 @@ public class Parser {
 	private boolean tryParseDefinicniBody(String node, String[] tokens) {
 		switch (node) {
 		case "&DOBDEBO":
-			vfk.getObrazyDefBodu().add(ObrazyDefBoduParser.parse(tokens));
+			batch.getObrazyDefBodu().add(ObrazyDefBoduParser.parse(tokens));
 			break;
 		default:
 			return false;
@@ -586,10 +588,10 @@ public class Parser {
 	private boolean tryParseAdresniMista(String node, String[] tokens) {
 		switch (node) {
 		case "&DBUDOBJ":
-			vfk.getBudObj().add(BudObjParser.parse(tokens));
+			batch.getBudObj().add(BudObjParser.parse(tokens));
 			break;
 		case "&DADROBJ":
-			vfk.getAdresa().add(AdresaParser.parse(tokens));
+			batch.getAdresa().add(AdresaParser.parse(tokens));
 			break;
 		default:
 			return false;

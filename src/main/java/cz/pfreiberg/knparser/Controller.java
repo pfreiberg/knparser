@@ -22,7 +22,6 @@ public class Controller {
 
 	private Configuration configuration;
 	private Parser parser;
-	private long escapedRows;
 	private long seconds;
 
 	public Controller(Configuration configuration) {
@@ -41,13 +40,13 @@ public class Controller {
 		try {
 			Vfk vfk;
 			do {
-				vfk = parseFile();
-				System.out.println("Is parsed. Starting the storage sequence.\n");
+				vfk = parseBatch();
+				System.out.println("Batch is parsed. Starting the storage sequence.\n");
 				storeParsedData(vfk);
 				Parser.setFirstBatchToFalse();
 			} while (Parser.isParsing());
 
-			System.out.println(escapedRows + " row/s was escaped.");
+			System.out.println(parser.getEscapedRows() + " row/s was escaped.");
 			System.out.println("Parsing finished.");
 
 		} catch (FileNotFoundException e) {
@@ -75,10 +74,10 @@ public class Controller {
 		return executor;
 	}
 
-	private Vfk parseFile() throws FileNotFoundException, ParserException,
+	private Vfk parseBatch() throws FileNotFoundException, ParserException,
 			IOException {
-		escapedRows += parser.parseFile();
-		return parser.getVfk();
+		parser.parseFile();
+		return parser.getBatch();
 	}
 
 	private void storeParsedData(Vfk vfk) {
