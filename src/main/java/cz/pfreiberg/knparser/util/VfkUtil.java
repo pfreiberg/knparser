@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -106,8 +105,9 @@ public class VfkUtil {
 		if (isOutOfIndex(value, i))
 			return null;
 
-		if (value[i] == null || value[i].equals("\"\""))
+		if (value[i].equals("\"\""))
 			return null;
+
 		return value[i];
 	}
 
@@ -121,8 +121,7 @@ public class VfkUtil {
 			return (String) value;
 		} else if (value instanceof Date) {
 			Date date = (Date) value;
-			DateFormat df = new SimpleDateFormat("\"dd.MM.yyyy HH:mm:ss\"");
-			return df.format(date);
+			return format.format(date);
 		} else {
 			return "\"" + value + "\"";
 		}
