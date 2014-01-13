@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.DalsiPrvkyMapy;
+import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.FileManager;
 import cz.pfreiberg.knparser.util.VfkUtil;
@@ -24,7 +25,7 @@ public class DalsiPrvkyMapyOracleLoaderFileExporter extends OracleLoaderFileExpo
 		this.characterSet = characterSet;
 		this.output = output;
 
-		if (!VfkUtil.isControlFileCreated(output + prefix + name + ".CFG")) {
+		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
 		appendLoadFile();

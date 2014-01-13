@@ -129,11 +129,6 @@ public class VfkUtil {
 		return "|" + Character.toString((char) 21);
 	}
 
-	public static boolean isControlFileCreated(String path) {
-		File controlFile = new File(path);
-		return controlFile.exists();
-	}
-
 	private static boolean isOutOfIndex(String[] value, int i) {
 		return (value.length <= i);
 	}
