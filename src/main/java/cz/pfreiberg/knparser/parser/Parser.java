@@ -89,7 +89,7 @@ public class Parser {
 			if (values != null) {
 				actualRow++;
 				if ((actualRow % ROWS_PER_BATCH) == 0) {
-					System.out.println("Actual row: " + actualRow);
+					System.out.println("Currently parsed row: " + actualRow);
 					batch.setZmeny(zmeny);
 					return;
 				}
