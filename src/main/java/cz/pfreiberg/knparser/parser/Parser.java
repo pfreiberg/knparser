@@ -90,11 +90,6 @@ public class Parser {
 
 			if (values != null) {
 				actualRow++;
-				if ((actualRow % ROWS_PER_BATCH) == 0) {
-					System.out.println("Currently parsed row: " + actualRow);
-					batch.setZmeny(zmeny);
-					return;
-				}
 
 				String node = values[0];
 				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
@@ -113,6 +108,12 @@ public class Parser {
 				} else if (tryParseDefinicniBody(node, tokens)) {
 				} else if (tryParseAdresniMista(node, tokens)) {
 				} else if (tryParseHead(node, tokens)) {
+				}
+
+				if ((actualRow % ROWS_PER_BATCH) == 0) {
+					System.out.println("Currently parsed row: " + actualRow);
+					batch.setZmeny(zmeny);
+					return;
 				}
 			} else
 				break;
