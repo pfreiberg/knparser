@@ -76,7 +76,9 @@ public class Parser {
 
 	public void parseFile() throws IOException {
 		batch = new Vfk();
+
 		do {
+
 			String[] values;
 			try {
 				values = processRow();
@@ -114,6 +116,7 @@ public class Parser {
 				}
 			} else
 				break;
+
 		} while (true);
 
 		System.out.println("Last row: " + actualRow);
