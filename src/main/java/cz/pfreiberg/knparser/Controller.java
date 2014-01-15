@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import cz.pfreiberg.knparser.domain.Vfk;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ParcelyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporterfactory.OracleLoaderExporterFactory;
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
@@ -37,6 +38,7 @@ public class Controller {
 		
 		ScheduledExecutorService executor = getTimer();
 		
+		//ParcelyOracleDatabaseJdbcExporter parcely = new ParcelyOracleDatabaseJdbcExporter();
 		try {
 			Vfk vfk;
 			do {

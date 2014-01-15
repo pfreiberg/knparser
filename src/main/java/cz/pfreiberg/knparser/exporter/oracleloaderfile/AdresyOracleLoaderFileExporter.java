@@ -34,7 +34,7 @@ public class AdresyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	@Override
 	public String makeControlFile() {
 		String controlFile = super.makeControlFile();
-		controlFile = super.fillHeader(controlFile, characterSet, name);
+		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 
 		controlFile = super.insertColumn(controlFile, "UCAST_ID");
 		controlFile = super.insertColumn(controlFile, "TYP_ADRESY");

@@ -34,7 +34,7 @@ public class ObeslaniMfOracleLoaderFileExporter extends OracleLoaderFileExporter
 	@Override
 	public String makeControlFile() {
 		String controlFile = super.makeControlFile();
-		controlFile = super.fillHeader(controlFile, characterSet, name);
+		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 
 		controlFile = super.insertColumn(controlFile, "OBESLANI_ID");
 		controlFile = super.insertColumn(controlFile, "ZPUSOB_OBESLANI");

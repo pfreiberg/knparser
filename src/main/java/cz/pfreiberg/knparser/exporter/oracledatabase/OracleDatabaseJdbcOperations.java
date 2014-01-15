@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-public interface JdbcOperations {
+public interface OracleDatabaseJdbcOperations {
 	
 	public void getConnection();
 	

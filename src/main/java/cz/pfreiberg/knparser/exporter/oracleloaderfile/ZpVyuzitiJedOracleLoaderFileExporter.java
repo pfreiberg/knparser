@@ -36,7 +36,7 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 	@Override
 	public String makeControlFile() {
 		String controlFile = super.makeControlFile();
-		controlFile = super.fillHeader(controlFile, characterSet, name);
+		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 
 		controlFile = super.insertColumn(controlFile, "KOD");
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");

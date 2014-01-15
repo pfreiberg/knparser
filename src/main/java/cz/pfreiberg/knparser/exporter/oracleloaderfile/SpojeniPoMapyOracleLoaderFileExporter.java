@@ -34,7 +34,7 @@ public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExpor
 	@Override
 	public String makeControlFile() {
 		String controlFile = super.makeControlFile();
-		controlFile = super.fillHeader(controlFile, characterSet, name);
+		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 
 		controlFile = super.insertZeroColumn(controlFile, "STAV_DAT");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");

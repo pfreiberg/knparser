@@ -34,7 +34,7 @@ public class RezCislaPbppOracleLoaderFileExporter extends OracleLoaderFileExport
 	@Override
 	public String makeControlFile() {
 		String controlFile = super.makeControlFile();
-		controlFile = super.fillHeader(controlFile, characterSet, name);
+		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 
 		controlFile = super.insertColumn(controlFile, "CISLO_BODU");
 		controlFile = super.insertColumn(controlFile, "KATUZE_KOD");

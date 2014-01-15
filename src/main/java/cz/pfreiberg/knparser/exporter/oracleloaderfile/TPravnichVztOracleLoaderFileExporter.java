@@ -36,7 +36,7 @@ public class TPravnichVztOracleLoaderFileExporter extends
 	@Override
 	public String makeControlFile() {
 		String controlFile = super.makeControlFile();
-		controlFile = super.fillHeader(controlFile, characterSet, name);
+		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 
 		controlFile = super.insertVarcharColumn(controlFile, "KOD", "4");
 		controlFile = super.insertColumn(controlFile, "TPR_KOD");
