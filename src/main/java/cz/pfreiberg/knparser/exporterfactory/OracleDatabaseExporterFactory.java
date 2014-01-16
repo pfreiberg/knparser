@@ -79,6 +79,7 @@ import cz.pfreiberg.knparser.domain.vlastnictvi.Telesa;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Vlastnictvi;
 import cz.pfreiberg.knparser.exporter.Exporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ParcelyOracleDatabaseJdbcExporter;
 
 public class OracleDatabaseExporterFactory implements ExporterFactory {
 
@@ -133,8 +134,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getParcelyExporter(List<Parcely> parcely) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ParcelyOracleDatabaseJdbcExporter(parcely, connection);
 	}
 
 	@Override

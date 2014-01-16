@@ -10,24 +10,25 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
 
 	@Override
-	public void getConnection() {
-		Connection connection = null;
-/*
+	public void getConnection(ConnectionParameters connection) {
+		Connection database = null;
+
 		try {
-			connection = DriverManager.getConnection(
-					"jdbc:oracle:thin:@" + url, username, password);
+			database = DriverManager.getConnection("jdbc:oracle:thin:@"
+					+ connection.getUrl(), connection.getUser(),
+					connection.getPassword());
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
 			return;
 
 		}
-		
-		if (connection != null) {
+
+		if (database != null) {
 			System.out.println("You made it, take control your database now!");
 		} else {
 			System.out.println("Failed to make connection!");
-		}*/
+		}
 	}
 
 	@Override

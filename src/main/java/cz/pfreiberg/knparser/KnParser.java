@@ -75,8 +75,8 @@ public class KnParser {
 			Properties properties) {
 		ConnectionParameters connection = new ConnectionParameters();
 		connection.setUrl(properties.getProperty("url"));
-		connection.setUser("username");
-		connection.setPassword("password");
+		connection.setUser(properties.getProperty("username"));
+		connection.setPassword(properties.getProperty("password"));
 		return connection;
 	}
 
