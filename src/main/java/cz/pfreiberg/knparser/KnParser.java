@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
+
 /**
  * Vstupní bod programu. Zpracuje parametry, se kterými byl program spuštěn,
  * vytvoří Controller, který zodpovídá za zpracování VFK a předá mu kontrolu nad
@@ -20,12 +22,16 @@ public class KnParser {
 	public static void main(String[] args) {
 
 		boolean parseWholeFolder = false;
+		boolean toDatabase = false;
 		Configuration configuration = new Configuration();
 
 		for (int i = 0; i < args.length; i++) {
 			switch (args[i]) {
 			case "--all":
 				parseWholeFolder = true;
+				break;
+			case "--database":
+				toDatabase = true;
 				break;
 			case "--input":
 				i++;
@@ -40,18 +46,24 @@ public class KnParser {
 				return;
 			}
 		}
-		
+
 		Properties properties = new Properties();
-        try {
-                properties.load(KnParser.class
-                                .getResourceAsStream("KnParser.properties"));
-        } catch (IOException e) {
-                e.printStackTrace();
-        }
-        configuration.setNumberOfRows(properties.getProperty("numberOfRows"));
+		try {
+			properties.load(KnParser.class
+					.getResourceAsStream("KnParser.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		configuration.setNumberOfRows(properties.getProperty("numberOfRows"));
+
+		ConnectionParameters connection = null;
+		if (toDatabase) {
+			connection = getConnectionParameters(properties);
+		}
+		configuration.setConnection(connection);
 
 		if (parseWholeFolder) {
-			parseFolder(configuration);
+			parseFolder(configuration, connection);
 		} else {
 			Controller controller = new Controller(configuration);
 			controller.run();
@@ -59,7 +71,17 @@ public class KnParser {
 
 	}
 
-	private static void parseFolder(Configuration configuration) {
+	private static ConnectionParameters getConnectionParameters(
+			Properties properties) {
+		ConnectionParameters connection = new ConnectionParameters();
+		connection.setUrl(properties.getProperty("url"));
+		connection.setUser("username");
+		connection.setPassword("password");
+		return connection;
+	}
+
+	private static void parseFolder(Configuration configuration,
+			ConnectionParameters connection) {
 
 		String input = configuration.getInput();
 		String output = configuration.getOutput();
@@ -69,7 +91,7 @@ public class KnParser {
 
 		for (int i = 0; i < files.size(); i++) {
 			configuration = new Configuration(input + "\\" + files.get(i),
-					output + files.get(i) + "\\", numberOfRows);
+					output + files.get(i) + "\\", numberOfRows, connection);
 			Controller controller = new Controller(configuration);
 			controller.run();
 		}

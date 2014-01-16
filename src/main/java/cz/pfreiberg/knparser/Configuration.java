@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser;
 
+import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
+
 /**
  * Zapouzdržuje parametry, se kterými byl program spuštěn.
  * 
@@ -11,14 +13,17 @@ public class Configuration {
 	private String input;
 	private String output;
 	private String numberOfRows;
+	private ConnectionParameters connection;
 
 	public Configuration() {
 	}
 
-	public Configuration(String input, String output, String numberOfRows) {
+	public Configuration(String input, String output, String numberOfRows,
+			ConnectionParameters connection) {
 		this.input = input;
 		this.output = output;
 		this.numberOfRows = numberOfRows;
+		this.connection = connection;
 	}
 
 	public String getInput() {
@@ -43,6 +48,14 @@ public class Configuration {
 
 	public void setNumberOfRows(String numberOfRows) {
 		this.numberOfRows = numberOfRows;
+	}
+
+	public ConnectionParameters getConnection() {
+		return connection;
+	}
+
+	public void setConnection(ConnectionParameters connection) {
+		this.connection = connection;
 	}
 
 }

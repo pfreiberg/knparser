@@ -156,9 +156,9 @@ import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpmzOracleLoaderFileExpor
 
 public class OracleLoaderExporterFactory implements ExporterFactory {
 
-	String prefix;
-	String characterSet;
-	String output;
+	private final String prefix;
+	private final String characterSet;
+	private final String output;
 
 	public OracleLoaderExporterFactory(int zmeny, String characterSet,
 			String output) {
