@@ -20,6 +20,9 @@ public class VfkUtil {
 
 	private final static SimpleDateFormat format = new SimpleDateFormat(
 			"\"dd.MM.yyyy HH:mm:ss\"");
+	
+	private final static SimpleDateFormat formatDatabase = new SimpleDateFormat(
+			"dd.MM.yyyy HH:mm:ss");
 
 	public static String getEncoding(File file) throws ParserException,
 			IOException {
@@ -119,6 +122,23 @@ public class VfkUtil {
 		} else if (value instanceof Date) {
 			Date date = (Date) value;
 			return format.format(date);
+		} else {
+			return "\"" + value + "\"";
+		}
+
+	}
+	
+	public static String formatValueDatabase(Object value) {
+
+		if (value == null) {
+			return "NULL";
+		}
+
+		if (value instanceof String) {
+			return (String) value;
+		} else if (value instanceof Date) {
+			Date date = (Date) value;
+			return "to_date('" + formatDatabase.format(date) + "','dd.mm.yyyy hh24:mi:ss')";
 		} else {
 			return "\"" + value + "\"";
 		}

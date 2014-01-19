@@ -55,8 +55,8 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 	
 	@Override
-	public void find() {
-		// TODO Auto-generated method stub
+	public boolean find(String table, String first, String firstValue, String second, String secondValue) {
+		return false;
 
 	}
 

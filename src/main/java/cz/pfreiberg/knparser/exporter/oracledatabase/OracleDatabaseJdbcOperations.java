@@ -1,8 +1,10 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
+import java.sql.Connection;
+
 public interface OracleDatabaseJdbcOperations {
 	
-	public void getConnection(ConnectionParameters connection);
+	public Connection getConnection(ConnectionParameters connection);
 	
 	public void prepareStatement();
 	

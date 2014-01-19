@@ -10,7 +10,7 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
 
 	@Override
-	public void getConnection(ConnectionParameters connection) {
+	public Connection getConnection(ConnectionParameters connection) {
 		Connection database = null;
 
 		try {
@@ -18,17 +18,17 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 					+ connection.getUrl(), connection.getUser(),
 					connection.getPassword());
 		} catch (SQLException e) {
-			System.out.println("Connection Failed! Check output console");
-			e.printStackTrace();
-			return;
-
+			System.out.println("Connection failed!");
+			return database;
 		}
 
 		if (database != null) {
-			System.out.println("You made it, take control your database now!");
+			return database;
 		} else {
 			System.out.println("Failed to make connection!");
 		}
+		
+		return database;
 	}
 
 	@Override
@@ -50,8 +50,8 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public void find() {
-		// TODO Auto-generated method stub
+	public boolean find(String table, String first, String firstValue, String second, String secondValue) {
+		return false;
 
 	}
 
