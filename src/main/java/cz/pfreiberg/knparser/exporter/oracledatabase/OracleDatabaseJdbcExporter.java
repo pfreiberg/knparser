@@ -51,12 +51,12 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 
 	@Override
 	public boolean find(String table, String first, String firstValue, String second, String secondValue) {
-		return false;
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
-	public void insert() {
+	public void insert(String table, Object rawRecord) {
 		// TODO Auto-generated method stub
 
 	}

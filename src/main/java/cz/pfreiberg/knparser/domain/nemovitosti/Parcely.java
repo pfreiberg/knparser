@@ -324,7 +324,7 @@ public class Parcely {
 				+ VfkUtil.formatValue(identBud) + ","
 				+ VfkUtil.formatValue(soucasti) + ","
 				+ VfkUtil.formatValue(psId) + ","
-				+ VfkUtil.formatValue(identPs)
+				+ VfkUtil.formatValue(identPs) 
 				+ VfkUtil.getTerminator();
 	}
 

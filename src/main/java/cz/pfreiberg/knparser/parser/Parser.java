@@ -172,7 +172,6 @@ public class Parser {
 			case QUOTE_CHARACTER:
 				// není v uvozovkách a další znak není "
 				if (isStartOfText(row, inQuotes, i)) {
-					sb.append("\"");
 					inQuotes = !inQuotes;
 				}
 				// je v uvozovkách a další znak je "
@@ -181,7 +180,6 @@ public class Parser {
 					i++;
 					// je v uvozovkách a další znak není "
 				} else if (isEndOfText(row, inQuotes, i)) {
-					sb.append("\"");
 					inQuotes = !inQuotes;
 					// prázdný text
 				} else {

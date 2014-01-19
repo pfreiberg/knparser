@@ -20,7 +20,7 @@ public class VfkUtil {
 
 	private final static SimpleDateFormat format = new SimpleDateFormat(
 			"\"dd.MM.yyyy HH:mm:ss\"");
-	
+
 	private final static SimpleDateFormat formatDatabase = new SimpleDateFormat(
 			"dd.MM.yyyy HH:mm:ss");
 
@@ -103,6 +103,13 @@ public class VfkUtil {
 		}
 	}
 
+	public static java.sql.Date getDatabaseDate(Date date) {
+		if (date == null)
+			return null;
+
+		return new java.sql.Date(date.getTime());
+	}
+
 	public static String getString(String[] value, int i) {
 
 		if (isOutOfIndex(value, i) || isEmptyString(value, i))
@@ -127,7 +134,7 @@ public class VfkUtil {
 		}
 
 	}
-	
+
 	public static String formatValueDatabase(Object value) {
 
 		if (value == null) {
@@ -138,7 +145,8 @@ public class VfkUtil {
 			return (String) value;
 		} else if (value instanceof Date) {
 			Date date = (Date) value;
-			return "to_date('" + formatDatabase.format(date) + "','dd.mm.yyyy hh24:mi:ss')";
+			return "to_date('" + formatDatabase.format(date)
+					+ "','dd.mm.yyyy hh24:mi:ss')";
 		} else {
 			return "\"" + value + "\"";
 		}
