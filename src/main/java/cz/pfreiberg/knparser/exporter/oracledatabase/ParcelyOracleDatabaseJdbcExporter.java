@@ -30,30 +30,46 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 
 	@Override
 	public void prepareStatement() {
-		System.out.println(parcely.size());
-		// int i = 0;
+
 		for (Parcely record : parcely) {
-			// System.out.println(i++);
+
 			if (record.getDatumZaniku() == null) {
-				// platný záznam
-				if (!find("PARCELY", "PKN_ID",
-						VfkUtil.formatValueDatabase(record.getPknId()),
-						"DATUM_VZNIKU",
-						VfkUtil.formatValueDatabase(record.getDatumVzniku()))) {
-					insert("PARCELY", record);
-					System.out.println("platny insert");
-				} else
-					System.out.println("neplatny insert (jis existuje)");
+				processRecord(record);
 			} else {
-				if (!find("PARCELY_MIN", "PKN_ID",
-						VfkUtil.formatValueDatabase(record.getPknId()),
-						"DATUM_ZANIKU",
-						VfkUtil.formatValueDatabase(record.getDatumZaniku()))) {
-					System.out.println("platny hist. insert");
-				}
+				processHistoricalRecord(record);
 			}
+
 		}
 
+	}
+
+	private void processRecord(Parcely record) {
+		String pknId = VfkUtil.formatValueDatabase(record.getPknId());
+		String datumVzniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
+
+		if (!find("PARCELY", "PKN_ID", pknId, "DATUM_VZNIKU", datumVzniku)) {
+			insert("PARCELY", record);
+			System.out.println("Insert record.");
+		} else
+			System.out.println("Record is already in database.");
+		
+	}
+
+	private void processHistoricalRecord(Parcely record) {
+		String pknId = VfkUtil.formatValueDatabase(record.getPknId());
+		String datumZaniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
+		
+		if (!find("PARCELY_MIN", "PKN_ID", pknId, "DATUM_ZANIKU", datumZaniku)) {
+			insert("PARCELY_MIN", record);
+			System.out.println("Insert historical record.");
+			
+			String datumVzniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
+			if (!find("PARCELY", "PKN_ID", pknId, "DATUM_VZNIKU", datumVzniku)) {
+				delete("PARCELY", "PKN_ID", pknId, "DATUM_VZNIKU", datumVzniku);
+				System.out.println("Delete historical record.");
+			}
+		}
+		
 	}
 
 	@Override
@@ -74,18 +90,20 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 
 	@Override
 	public void insert(String table, Object rawRecord) {
-		String insert = "INSERT INTO " + table + " VALUES"
+		String insert = "INSERT INTO "
+				+ table
+				+ " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
-			
+
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(insert);
-	
-			Parcely record = (Parcely) rawRecord;	
+
+			Parcely record = (Parcely) rawRecord;
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, record.getStavDat());
-			preparedStatement.setObject(3, VfkUtil.getDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4, VfkUtil.getDatabaseDate(record.getDatumZaniku()));
+			preparedStatement.setObject(3, VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(4, VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
 			preparedStatement.setObject(5, record.getPriznakKontextu());
 			preparedStatement.setObject(6, record.getRizeniIdVzniku());
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
@@ -113,7 +131,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(29, record.getSoucasti());
 			preparedStatement.setObject(30, record.getPsId());
 			preparedStatement.setObject(31, record.getIdentPs());
-			
+
 			preparedStatement.executeUpdate();
 		}
 
@@ -122,5 +140,18 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			e.printStackTrace();
 		}
 
+	}
+	
+	@Override
+	public void delete(String table, String first, String firstValue, String second, String secondValue) {
+		String delete = "DELETE FROM " + table +
+				" WHERE " + first + " = " + firstValue + " AND "
+				+ second + " = " + secondValue;
+		try {
+			connection.prepareStatement(delete).execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

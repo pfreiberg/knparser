@@ -18,7 +18,7 @@ import cz.pfreiberg.knparser.parser.ParserException;
  */
 public class VfkUtil {
 
-	private final static SimpleDateFormat format = new SimpleDateFormat(
+	private final static SimpleDateFormat formatLoaderFile = new SimpleDateFormat(
 			"\"dd.MM.yyyy HH:mm:ss\"");
 
 	private final static SimpleDateFormat formatDatabase = new SimpleDateFormat(
@@ -97,13 +97,13 @@ public class VfkUtil {
 			return null;
 
 		try {
-			return format.parse(value[i]);
+			return formatLoaderFile.parse(value[i]);
 		} catch (ParseException e) {
 			return null;
 		}
 	}
 
-	public static java.sql.Date getDatabaseDate(Date date) {
+	public static java.sql.Date convertToDatabaseDate(Date date) {
 		if (date == null)
 			return null;
 
@@ -126,7 +126,7 @@ public class VfkUtil {
 
 		if (value instanceof Date) {
 			Date date = (Date) value;
-			return format.format(date);
+			return formatLoaderFile.format(date);
 		} else {
 			return "\"" + value + "\"";
 		}

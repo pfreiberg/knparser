@@ -67,7 +67,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 
 	@Override
-	public void update() {
+	public void delete(String table, String first, String firstValue, String second, String secondValue) {
 		// TODO Auto-generated method stub
 
 	}
