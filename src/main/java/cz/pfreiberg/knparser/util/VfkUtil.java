@@ -124,9 +124,7 @@ public class VfkUtil {
 			return "\"NULL\"";
 		}
 
-		if (value instanceof String) {
-			return (String) value;
-		} else if (value instanceof Date) {
+		if (value instanceof Date) {
 			Date date = (Date) value;
 			return format.format(date);
 		} else {
