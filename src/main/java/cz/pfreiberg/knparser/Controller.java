@@ -62,9 +62,11 @@ public class Controller {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally
+		{
+			executor.shutdown();
 		}
-
-		executor.shutdown();
+		
 	}
 
 	private ScheduledExecutorService getTimer() {
