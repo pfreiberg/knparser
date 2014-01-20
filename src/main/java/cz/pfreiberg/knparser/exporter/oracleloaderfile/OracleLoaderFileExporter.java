@@ -55,7 +55,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 	
 	@Override
-	public boolean find(Object record) {
+	public boolean find(String date, String dateValue) {
 		return false;
 
 	}
@@ -67,7 +67,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 
 	@Override
-	public void delete(String table, String first, String firstValue, String second, String secondValue) {
+	public void delete(String date, String dateValue) {
 		// TODO Auto-generated method stub
 
 	}

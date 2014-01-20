@@ -139,13 +139,13 @@ public class VfkUtil {
 		}
 
 		if (value instanceof String) {
-			return (String) value;
+			return "'" + (String) value + "'";
 		} else if (value instanceof Date) {
 			Date date = (Date) value;
 			return "to_date('" + format.format(date)
 					+ "','dd.mm.yyyy hh24:mi:ss')";
 		} else {
-			return "\"" + value + "\"";
+			return String.valueOf(value);
 		}
 
 	}

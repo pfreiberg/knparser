@@ -53,25 +53,23 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 		}
 		return output;
 	}
-	
+
 	@Override
-	public boolean find(Object record) {
+	public boolean find(String date, String dateValue) {
 		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
 	public void insert(String table, Object rawRecord) {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
-	public void delete(String table, String first, String firstValue,
-			String second, String secondValue) {
-		// TODO Auto-generated method stub
+	public void delete(String date, String dateValue) {
+		throw new UnsupportedOperationException();
 
 	}
-
 
 }

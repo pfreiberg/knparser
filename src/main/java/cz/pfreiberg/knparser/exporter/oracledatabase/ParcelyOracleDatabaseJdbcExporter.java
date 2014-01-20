@@ -19,6 +19,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	private Connection connection;
 	private List<String> primaryKeys;
 	private List<String> methodsName;
+	List<Object> primaryKeysValues;
 	private ResultSet rs;
 
 	private final String name = "PARCELY";
@@ -35,6 +36,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		System.out.println(parcely.size());
 		for (Parcely record : parcely) {
+			primaryKeysValues = getPrimaryKeysValues(record);
 			if (record.getDatumZaniku() == null) {
 				processRecord(record);
 			} else {
@@ -44,35 +46,27 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(Parcely record) {
-
-		String datumVzniku = VfkUtil.formatValueDatabase(record
-				.getDatumVzniku());
-		List<Object> primaryKeysValues = getPrimaryKeysValues(record);
-		if (!find(record)) {
+		String datumVzniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
+		if (!find("DATUM_VZNIKU", datumVzniku)) {
 			insert(name, record);
 			System.out.println("Insert record.");
 		} else
+		{
 			System.out.println("Record is already in database.");
-
+		}
 	}
 
 	private void processHistoricalRecord(Parcely record) {
-
-		String datumZaniku = VfkUtil.formatValueDatabase(record
-				.getDatumVzniku());
-
-		if (!find(record)) {
+		String datumZaniku = VfkUtil.formatValueDatabase(record.getDatumZaniku());
+		if (!find("DATUM_ZANIKU", datumZaniku)) {
 			insert(name + "_MIN", record);
 			System.out.println("Insert historical record.");
-
-			String datumVzniku = VfkUtil.formatValueDatabase(record
-					.getDatumVzniku());
-			if (!find(record)) {
-
+			String datumVzniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
+			if (!find("DATUM_VZNIKU", datumVzniku)) {
+				delete("DATUM_VZNIKU", datumVzniku);
 				System.out.println("Delete historical record.");
 			}
 		}
-
 	}
 
 	private List<Object> getPrimaryKeysValues(Object record) {
@@ -94,7 +88,20 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
-	public boolean find(Object record) {
+	public boolean find(String date, String dateValue) {
+		String select = "SELECT * FROM " + name + " WHERE " + date + " = " + dateValue + " AND " + " *pk*";
+		for (int i = 0; i < primaryKeys.size(); i++)
+		{
+			select = select.replace("*pk*", primaryKeys.get(i) + " = " + VfkUtil.formatValueDatabase(primaryKeysValues.get(i)) + " AND *pk*");
+		}
+		select = select.replace(" AND *pk*", "");
+		try {
+			rs = connection.prepareStatement(select).executeQuery();
+			 return rs.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -112,10 +119,8 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			Parcely record = (Parcely) rawRecord;
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, record.getStavDat());
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+			preparedStatement.setObject(3, VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(4, VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
 			preparedStatement.setObject(5, record.getPriznakKontextu());
 			preparedStatement.setObject(6, record.getRizeniIdVzniku());
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
@@ -154,13 +159,17 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 
 	}
 
+	
 	@Override
-	public void delete(String table, String first, String firstValue,
-			String second, String secondValue) {
-		String delete = "DELETE FROM " + table + " WHERE " + first + " = "
-				+ firstValue + " AND " + second + " = " + secondValue;
+	public void delete(String date, String dateValue) {
+		String delete = "DELETE FROM " + name + " WHERE " + date + " = " + dateValue + " AND " + " *pk*";
+		for (int i = 0; i < primaryKeys.size(); i++)
+		{
+			delete = delete.replace("*pk*", primaryKeys.get(i) + " = " + VfkUtil.formatValueDatabase(primaryKeysValues.get(i)) + " AND *pk*");
+		}
+		delete = delete.replace(" AND *pk*", "");
 		try {
-			connection.prepareStatement(delete).execute();
+			rs = connection.prepareStatement(delete).executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
