@@ -58,11 +58,11 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 
 	private void processHistoricalRecord(Parcely record) {
 		String datumZaniku = VfkUtil.formatValueDatabase(record.getDatumZaniku());
-		if (!find("DATUM_ZANIKU", datumZaniku)) {
+		if (!find("DATUM_VZNIKU", datumZaniku)) {
 			insert(name + "_MIN", record);
 			System.out.println("Insert historical record.");
 			String datumVzniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
-			if (!find("DATUM_VZNIKU", datumVzniku)) {
+			if (find("DATUM_VZNIKU", datumVzniku)) {
 				delete("DATUM_VZNIKU", datumVzniku);
 				System.out.println("Delete historical record.");
 			}
@@ -107,6 +107,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 
 	@Override
 	public void insert(String table, Object rawRecord) {
+
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
