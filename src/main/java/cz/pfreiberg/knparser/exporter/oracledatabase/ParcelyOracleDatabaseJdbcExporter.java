@@ -1,9 +1,12 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
@@ -15,73 +18,83 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	private List<Parcely> parcely;
 	private Connection connection;
 	private List<String> primaryKeys;
+	private List<String> methodsName;
 	private ResultSet rs;
+
+	private final String name = "PARCELY";
 
 	public ParcelyOracleDatabaseJdbcExporter(List<Parcely> parcely,
 			ConnectionParameters connectionParameters) {
 		this.parcely = parcely;
 		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, "PARCELY");
+		primaryKeys = super.getPrimaryKeys(connection, name);
+		methodsName = VfkUtil.getMethods(primaryKeys);
 		prepareStatement();
 	}
 
-	@Override
-	public void prepareStatement() {
+	private void prepareStatement() {
 		System.out.println(parcely.size());
 		for (Parcely record : parcely) {
-
 			if (record.getDatumZaniku() == null) {
 				processRecord(record);
 			} else {
 				processHistoricalRecord(record);
 			}
-
 		}
-
 	}
 
 	private void processRecord(Parcely record) {
-		String pknId = VfkUtil.formatValueDatabase(record.getPknId());
-		String datumVzniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
 
-		if (!find("PARCELY", "PKN_ID", pknId, "DATUM_VZNIKU", datumVzniku)) {
-			insert("PARCELY", record);
+		String datumVzniku = VfkUtil.formatValueDatabase(record
+				.getDatumVzniku());
+		List<Object> primaryKeysValues = getPrimaryKeysValues(record);
+		if (!find(record)) {
+			insert(name, record);
 			System.out.println("Insert record.");
 		} else
 			System.out.println("Record is already in database.");
-		
+
 	}
 
 	private void processHistoricalRecord(Parcely record) {
-		String pknId = VfkUtil.formatValueDatabase(record.getPknId());
-		String datumZaniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
-		
-		if (!find("PARCELY_MIN", "PKN_ID", pknId, "DATUM_ZANIKU", datumZaniku)) {
-			insert("PARCELY_MIN", record);
+
+		String datumZaniku = VfkUtil.formatValueDatabase(record
+				.getDatumVzniku());
+
+		if (!find(record)) {
+			insert(name + "_MIN", record);
 			System.out.println("Insert historical record.");
-			
-			String datumVzniku = VfkUtil.formatValueDatabase(record.getDatumVzniku());
-			if (!find("PARCELY", "PKN_ID", pknId, "DATUM_VZNIKU", datumVzniku)) {
-				delete("PARCELY", "PKN_ID", pknId, "DATUM_VZNIKU", datumVzniku);
+
+			String datumVzniku = VfkUtil.formatValueDatabase(record
+					.getDatumVzniku());
+			if (!find(record)) {
+
 				System.out.println("Delete historical record.");
 			}
 		}
-		
+
 	}
 
-	@Override
-	public boolean find(String table, String first, String firstValue,
-			String second, String secondValue) {
+	private List<Object> getPrimaryKeysValues(Object record) {
+		List<Object> primaryKeyValues = new ArrayList<>();
 		try {
-			String select = "SELECT " + first + ", " + second + " FROM "
-					+ table + " WHERE " + first + " = " + firstValue + " AND "
-					+ second + " = " + secondValue;
-			rs = connection.prepareStatement(select).executeQuery();
-			return rs.next();
-		} catch (SQLException e) {
+			for (int i = 0; i < methodsName.size(); i++) {
+				Class<?> c = Class
+						.forName("cz.pfreiberg.knparser.domain.nemovitosti.Parcely");
+				Method method = c.getDeclaredMethod(methodsName.get(i));
+				primaryKeyValues.add(method.invoke((Parcely) record));
+			}
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException
+				| SecurityException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return primaryKeyValues;
+	}
+
+	@Override
+	public boolean find(Object record) {
 		return false;
 	}
 
@@ -99,8 +112,10 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			Parcely record = (Parcely) rawRecord;
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, record.getStavDat());
-			preparedStatement.setObject(3, VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4, VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+			preparedStatement.setObject(3,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(4,
+					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
 			preparedStatement.setObject(5, record.getPriznakKontextu());
 			preparedStatement.setObject(6, record.getRizeniIdVzniku());
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
@@ -138,17 +153,17 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 
 	}
-	
+
 	@Override
-	public void delete(String table, String first, String firstValue, String second, String secondValue) {
-		String delete = "DELETE FROM " + table +
-				" WHERE " + first + " = " + firstValue + " AND "
-				+ second + " = " + secondValue;
+	public void delete(String table, String first, String firstValue,
+			String second, String secondValue) {
+		String delete = "DELETE FROM " + table + " WHERE " + first + " = "
+				+ firstValue + " AND " + second + " = " + secondValue;
 		try {
 			connection.prepareStatement(delete).execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 	}
 }

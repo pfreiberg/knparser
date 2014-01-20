@@ -55,7 +55,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 	
 	@Override
-	public boolean find(String table, String first, String firstValue, String second, String secondValue) {
+	public boolean find(Object record) {
 		return false;
 
 	}

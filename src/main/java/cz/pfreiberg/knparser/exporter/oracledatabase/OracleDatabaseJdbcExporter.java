@@ -38,7 +38,8 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 	public List<String> getPrimaryKeys(Connection connection, String table) {
 		List<String> output = new ArrayList<>();
 		try {
-			String select = "SELECT TABLE_NAME, TYP, POC_PK, PK1, PK2, PK3, PK4, PORADI FROM TABLE_INFO WHERE typ like 'HIS%' AND TABLE_NAME = '" + table + "'";
+			String select = "SELECT TABLE_NAME, TYP, POC_PK, PK1, PK2, PK3, PK4, PORADI FROM TABLE_INFO WHERE typ like 'HIS%' AND TABLE_NAME = '"
+					+ table + "'";
 			ResultSet rs = connection.prepareStatement(select).executeQuery();
 			if (rs.next()) {
 				int numberOfPrimaryKeys = rs.getInt("POC_PK");
@@ -52,28 +53,9 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 		}
 		return output;
 	}
-
+	
 	@Override
-	public void prepareStatement() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void clearStatement() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean find(String table, String first, String firstValue,
-			String second, String secondValue) {
+	public boolean find(Object record) {
 		throw new UnsupportedOperationException();
 
 	}
@@ -90,5 +72,6 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

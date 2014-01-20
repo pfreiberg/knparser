@@ -1,8 +1,9 @@
 package cz.pfreiberg.knparser.exporter;
 
+
 public interface Exporter {
 
-	public boolean find(String table, String first, String firstValue, String second, String secondValue);
+	public boolean find(Object record);
 
 	public void insert(String table, Object rawRecord);
 
