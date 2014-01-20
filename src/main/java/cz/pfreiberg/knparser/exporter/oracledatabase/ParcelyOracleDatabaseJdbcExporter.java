@@ -14,23 +14,20 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 
 	private List<Parcely> parcely;
 	private Connection connection;
+	private List<String> primaryKeys;
 	private ResultSet rs;
 
 	public ParcelyOracleDatabaseJdbcExporter(List<Parcely> parcely,
 			ConnectionParameters connectionParameters) {
 		this.parcely = parcely;
-		connection = getConnection(connectionParameters);
+		connection = super.getConnection(connectionParameters);
+		primaryKeys = super.getPrimaryKeys(connection, "PARCELY");
 		prepareStatement();
 	}
 
 	@Override
-	public Connection getConnection(ConnectionParameters connection) {
-		return super.getConnection(connection);
-	}
-
-	@Override
 	public void prepareStatement() {
-
+		System.out.println(parcely.size());
 		for (Parcely record : parcely) {
 
 			if (record.getDatumZaniku() == null) {
@@ -152,6 +149,6 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 	}
 }
