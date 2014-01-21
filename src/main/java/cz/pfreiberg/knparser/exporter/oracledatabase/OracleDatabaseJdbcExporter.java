@@ -55,7 +55,7 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public boolean find(String date, String dateValue) {
+	public boolean find(String table, String date, String dateValue, String operation) {
 		throw new UnsupportedOperationException();
 
 	}
@@ -67,7 +67,7 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public void delete(String date, String dateValue) {
+	public void delete(String table, String date, String dateValue, String operation) {
 		throw new UnsupportedOperationException();
 
 	}
