@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,9 +106,9 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		select = select.replace(" AND *pk*", "");
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(select);
-			ResultSet resultSet = preparedStatement.executeQuery();
+			boolean isFound = preparedStatement.executeQuery().next();
 			preparedStatement.close();
-			return resultSet.next();
+			return isFound;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
