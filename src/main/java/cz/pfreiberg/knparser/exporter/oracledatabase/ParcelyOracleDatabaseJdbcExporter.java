@@ -106,7 +106,10 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 		select = select.replace(" AND *pk*", "");
 		try {
-			return connection.prepareStatement(select).executeQuery().next();
+			PreparedStatement preparedStatement = connection.prepareStatement(select);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			preparedStatement.close();
+			return resultSet.next();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -259,7 +262,9 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 		delete = delete.replace(" AND *pk*", "");
 		try {
-			connection.prepareStatement(delete).executeQuery();
+			PreparedStatement preparedStatement = connection.prepareStatement(delete);
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
