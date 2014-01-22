@@ -6,9 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import cz.pfreiberg.knparser.parser.ParserException;
 
@@ -150,14 +148,6 @@ public class VfkUtil {
 
 	}
 
-	public static List<String> getMethods(List<String> primaryKeys) {
-		List<String> methods = new ArrayList<>();
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			methods.add(VfkUtil.toCamelCase(primaryKeys.get(i)));
-		}
-		return methods;
-	}
-
 	public static String getTerminator() {
 		return "|" + Character.toString((char) 21);
 	}
@@ -174,17 +164,6 @@ public class VfkUtil {
 		return (value[i].length() == 2);
 	}
 
-	private static String toCamelCase(String s) {
-		String[] parts = s.split("_");
-		String camelCaseString = "";
-		for (String part : parts) {
-			camelCaseString = camelCaseString + toProperCase(part);
-		}
-		return ("get" + camelCaseString);
-	}
-
-	private static String toProperCase(String s) {
-		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
-	}
+	
 
 }

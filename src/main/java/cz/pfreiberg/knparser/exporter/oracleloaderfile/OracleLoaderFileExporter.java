@@ -61,7 +61,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord) {
+	public void insert(String table, Object rawRecord, boolean isRecord) {
 		// TODO Auto-generated method stub
 
 	}

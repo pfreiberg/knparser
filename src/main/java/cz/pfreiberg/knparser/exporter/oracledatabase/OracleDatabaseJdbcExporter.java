@@ -13,6 +13,26 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
 
 	@Override
+	public boolean find(String table, String date, String dateValue,
+			String operation) {
+		throw new UnsupportedOperationException();
+
+	}
+
+	@Override
+	public void insert(String table, Object rawRecord, boolean isRecord) {
+		throw new UnsupportedOperationException();
+
+	}
+
+	@Override
+	public void delete(String table, String date, String dateValue,
+			String operation) {
+		throw new UnsupportedOperationException();
+
+	}
+
+	@Override
 	public Connection getConnection(ConnectionParameters connection) {
 		Connection database = null;
 
@@ -54,22 +74,25 @@ public class OracleDatabaseJdbcExporter implements Exporter,
 		return output;
 	}
 
-	@Override
-	public boolean find(String table, String date, String dateValue, String operation) {
-		throw new UnsupportedOperationException();
-
+	protected static List<String> getMethods(List<String> primaryKeys) {
+		List<String> methods = new ArrayList<>();
+		for (int i = 0; i < primaryKeys.size(); i++) {
+			methods.add(toCamelCase(primaryKeys.get(i)));
+		}
+		return methods;
 	}
 
-	@Override
-	public void insert(String table, Object rawRecord) {
-		throw new UnsupportedOperationException();
-
+	private static String toCamelCase(String s) {
+		String[] parts = s.split("_");
+		String camelCaseString = "";
+		for (String part : parts) {
+			camelCaseString = camelCaseString + toProperCase(part);
+		}
+		return ("get" + camelCaseString);
 	}
 
-	@Override
-	public void delete(String table, String date, String dateValue, String operation) {
-		throw new UnsupportedOperationException();
-
+	private static String toProperCase(String s) {
+		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
 	}
-
+	
 }

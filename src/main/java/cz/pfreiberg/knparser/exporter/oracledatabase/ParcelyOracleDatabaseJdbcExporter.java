@@ -27,7 +27,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		this.parcely = parcely;
 		connection = super.getConnection(connectionParameters);
 		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = VfkUtil.getMethods(primaryKeys);
+		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 
@@ -35,9 +35,9 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		System.out.println(parcely.size());
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 		for (Parcely record : parcely) {
 			primaryKeysValues = getPrimaryKeysValues(record);
@@ -53,38 +53,6 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void processRecord(Parcely record) {
-		String datumVzniku = VfkUtil.formatValueDatabase(record
-				.getDatumVzniku());
-		System.out.println(record.toString());
-		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
-			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
-			insert(name, record);
-			System.out.println("Deleted and inserted record.");
-		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">=")) {
-			System.out.println("Record not inserted (older).");
-			return;
-		} else {
-			insert(name, record);
-			System.out.println("Record inserted.");
-		}
-	}
-
-	private void processHistoricalRecord(Parcely record) {
-		String datumVzniku = VfkUtil.formatValueDatabase(record
-				.getDatumVzniku());
-		System.out.println(record.toString());
-		System.out.println(record.getDatumVzniku());
-		if (!find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
-			insertHis(name + "_MIN", record);
-			System.out.println("Inserted historical record.");
-			if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
-				delete(name, "DATUM_VZNIKU", datumVzniku, "=");
-				System.out.println("Deleted historical record.");
-			} System.out.println("Record not deleted.");
-		} else System.out.println("Historical record exist.");
 	}
 
 	private List<Object> getPrimaryKeysValues(Object record) {
@@ -105,8 +73,42 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		return primaryKeyValues;
 	}
 
+	private void processRecord(Parcely record) {
+		String datumVzniku = VfkUtil.formatValueDatabase(record
+				.getDatumVzniku());
+		System.out.println(record.toString());
+		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
+			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
+			insert(name, record, true);
+			System.out.println("Deleted and inserted record.");
+		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">=")) {
+			System.out.println("Record not inserted (older).");
+			return;
+		} else {
+			insert(name, record, true);
+			System.out.println("Record inserted.");
+		}
+	}
+
+	private void processHistoricalRecord(Parcely record) {
+		String datumVzniku = VfkUtil.formatValueDatabase(record
+				.getDatumVzniku());
+		System.out.println(record.getDatumVzniku());
+		if (!find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
+			insert(name + "_MIN", record, false);
+			System.out.println("Inserted historical record.");
+			if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
+				delete(name, "DATUM_VZNIKU", datumVzniku, "=");
+				System.out.println("Deleted historical record.");
+			}
+			System.out.println("Record not deleted.");
+		} else
+			System.out.println("Historical record exist.");
+	}
+
 	@Override
-	public boolean find(String table, String date, String dateValue, String operation) {
+	public boolean find(String table, String date, String dateValue,
+			String operation) {
 		String select = "SELECT * FROM " + table + " WHERE *pk* AND " + date
 				+ operation + dateValue;
 
@@ -117,7 +119,8 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 		select = select.replace(" AND *pk*", "");
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(select);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(select);
 			boolean isFound = preparedStatement.executeQuery().next();
 			preparedStatement.close();
 			return isFound;
@@ -130,8 +133,14 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord) {
+	public void insert(String table, Object rawRecord, boolean isRecord) {
+		if (isRecord) {
+			insertRecord(table, rawRecord);
+		} else
+			insertHistoricalRecord(table, rawRecord);
+	}
 
+	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -139,8 +148,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		PreparedStatement preparedStatement = null;
 		try {
 
-			preparedStatement = connection
-					.prepareStatement(insert);
+			preparedStatement = connection.prepareStatement(insert);
 
 			Parcely record = (Parcely) rawRecord;
 			preparedStatement.setObject(1, record.getId());
@@ -184,9 +192,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally
-		{
+		} finally {
 			try {
 				preparedStatement.close();
 			} catch (SQLException e) {
@@ -194,10 +200,9 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 				e.printStackTrace();
 			}
 		}
-
 	}
-	
-	public void insertHis(String table, Object rawRecord) {
+
+	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO "
 				+ table
@@ -206,8 +211,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		PreparedStatement preparedStatement = null;
 		try {
 
-			preparedStatement = connection
-					.prepareStatement(insert);
+			preparedStatement = connection.prepareStatement(insert);
 
 			Parcely record = (Parcely) rawRecord;
 			preparedStatement.setObject(1, record.getId());
@@ -248,9 +252,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally
-		{
+		} finally {
 			try {
 				preparedStatement.close();
 			} catch (SQLException e) {
@@ -262,9 +264,10 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
-	public void delete(String table, String date, String dateValue, String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk* AND " + date + operation
-				+ dateValue;
+	public void delete(String table, String date, String dateValue,
+			String operation) {
+		String delete = "DELETE FROM " + table + " WHERE *pk* AND " + date
+				+ operation + dateValue;
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
 					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
@@ -272,7 +275,8 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 		delete = delete.replace(" AND *pk*", "");
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(delete);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(delete);
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		} catch (SQLException e) {
