@@ -41,8 +41,6 @@ public class Controller {
 
 		ScheduledExecutorService executor = getTimer();
 
-		// ParcelyOracleDatabaseJdbcExporter parcely = new
-		// ParcelyOracleDatabaseJdbcExporter();
 		try {
 			Vfk vfk;
 			do {
