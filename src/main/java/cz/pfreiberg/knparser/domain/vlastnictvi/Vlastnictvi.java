@@ -1,5 +1,6 @@
 package cz.pfreiberg.knparser.domain.vlastnictvi;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import cz.pfreiberg.knparser.util.VfkUtil;
@@ -22,8 +23,8 @@ public class Vlastnictvi {
 	private Long opsubId;
 	private String typravKod;
 	private Long telId;
-	private Long podilCitatel;
-	private Long podilJmenovatel;
+	private BigInteger podilCitatel;
+	private BigInteger podilJmenovatel;
 	private Date datumVzniku2;
 	private Long rizeniIdVzniku2;
 	private Long parId;
@@ -111,19 +112,19 @@ public class Vlastnictvi {
 		this.telId = telId;
 	}
 
-	public Long getPodilCitatel() {
+	public BigInteger getPodilCitatel() {
 		return podilCitatel;
 	}
 
-	public void setPodilCitatel(Long podilCitatel) {
+	public void setPodilCitatel(BigInteger podilCitatel) {
 		this.podilCitatel = podilCitatel;
 	}
 
-	public Long getPodilJmenovatel() {
+	public BigInteger getPodilJmenovatel() {
 		return podilJmenovatel;
 	}
 
-	public void setPodilJmenovatel(Long podilJmenovatel) {
+	public void setPodilJmenovatel(BigInteger podilJmenovatel) {
 		this.podilJmenovatel = podilJmenovatel;
 	}
 

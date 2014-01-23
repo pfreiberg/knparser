@@ -78,6 +78,7 @@ import cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Telesa;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Vlastnictvi;
 import cz.pfreiberg.knparser.exporter.Exporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.BonitDilyParcOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ParcelyOracleDatabaseJdbcExporter;
 
@@ -91,8 +92,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getBonitDilyParcExporter(List<BonitDilyParc> bonitDilyParc) {
-		// TODO Auto-generated method stub
-		return null;
+		return new BonitDilyParcOracleDatabaseJdbcExporter(bonitDilyParc, connection);
 	}
 
 	@Override

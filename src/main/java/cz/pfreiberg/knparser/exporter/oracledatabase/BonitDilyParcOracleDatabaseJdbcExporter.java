@@ -8,23 +8,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
+import cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ParcelyOracleDatabaseJdbcExporter extends
+public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
-	private List<Parcely> parcely;
+	private List<BonitDilyParc> bonitDilyParc;
 	private Connection connection;
 	private List<String> primaryKeys;
 	private List<String> methodsName;
 	private List<Object> primaryKeysValues;
 
-	private final String name = "PARCELY";
+	private final String name = "BONIT_DILY_PARC";
 
-	public ParcelyOracleDatabaseJdbcExporter(List<Parcely> parcely,
+	public BonitDilyParcOracleDatabaseJdbcExporter(
+			List<BonitDilyParc> bonitDilyParc,
 			ConnectionParameters connectionParameters) {
-		this.parcely = parcely;
+		this.bonitDilyParc = bonitDilyParc;
 		connection = super.getConnection(connectionParameters);
 		primaryKeys = super.getPrimaryKeys(connection, name);
 		methodsName = super.getMethods(primaryKeys);
@@ -32,14 +33,13 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	private void prepareStatement() {
-		System.out.println(parcely.size());
 		try {
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Parcely record : parcely) {
+		for (BonitDilyParc record : bonitDilyParc) {
 			primaryKeysValues = getPrimaryKeysValues(record);
 			if (record.getDatumZaniku() == null) {
 				processRecord(record);
@@ -60,9 +60,9 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		try {
 			for (int i = 0; i < methodsName.size(); i++) {
 				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.nemovitosti.Parcely");
+						.forName("cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc");
 				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((Parcely) record));
+				primaryKeyValues.add(method.invoke((BonitDilyParc) record));
 			}
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException
@@ -73,37 +73,28 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		return primaryKeyValues;
 	}
 
-	private void processRecord(Parcely record) {
+	private void processRecord(BonitDilyParc record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		System.out.println(record.toString());
 		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
 			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
 			insert(name, record, true);
-			System.out.println("Deleted and inserted record.");
 		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">=")) {
-			System.out.println("Record not inserted (older).");
 			return;
 		} else {
 			insert(name, record, true);
-			System.out.println("Record inserted.");
 		}
 	}
 
-	private void processHistoricalRecord(Parcely record) {
+	private void processHistoricalRecord(BonitDilyParc record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		System.out.println(record.getDatumVzniku());
 		if (!find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
 			insert(name + "_MIN", record, false);
-			System.out.println("Inserted historical record.");
 			if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
 				delete(name, "DATUM_VZNIKU", datumVzniku, "=");
-				System.out.println("Deleted historical record.");
 			}
-			System.out.println("Record not deleted.");
-		} else
-			System.out.println("Historical record exist.");
+		}
 	}
 
 	@Override
@@ -141,49 +132,25 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertRecord(String table, Object rawRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String insert = "INSERT INTO " + table + " VALUES"
+				+ "(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
 			preparedStatement = connection.prepareStatement(insert);
 
-			Parcely record = (Parcely) rawRecord;
-			preparedStatement.setObject(1, record.getId());
-			preparedStatement.setObject(2, 0);
-			preparedStatement.setObject(3,
+			BonitDilyParc record = (BonitDilyParc) rawRecord;
+			preparedStatement.setObject(1, 0);
+			preparedStatement.setObject(2,
 					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4,
+			preparedStatement.setObject(3,
 					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(5, 0);
-			preparedStatement.setObject(6, record.getRizeniIdVzniku());
-			preparedStatement.setObject(7, record.getRizeniIdZaniku());
-			preparedStatement.setObject(8, record.getPknId());
-			preparedStatement.setObject(9, record.getParType());
-			preparedStatement.setObject(10, record.getKatuzeKod());
-			preparedStatement.setObject(11, record.getKatuzeKodPuv());
-			preparedStatement.setObject(12, record.getDruhCislovaniPar());
-			preparedStatement.setObject(13, record.getKmenoveCisloPar());
-			preparedStatement.setObject(14, record.getZdpazeKod());
-			preparedStatement.setObject(15, record.getPoddeleniCislaPar());
-			preparedStatement.setObject(16, record.getDilParcely());
-			preparedStatement.setObject(17, record.getMaplisKod());
-			preparedStatement.setObject(18, record.getZpurvyKod());
-			preparedStatement.setObject(19, record.getDrupozKod());
-			preparedStatement.setObject(20, record.getZpvypaKod());
-			preparedStatement.setObject(21, record.getTypParcely());
-			preparedStatement.setObject(22, record.getVymeraParcely());
-			preparedStatement.setObject(23, record.getCenaNemovitosti());
-			preparedStatement.setObject(24, record.getDefiniciniBodPar());
-			preparedStatement.setObject(25, record.getTelId());
-			preparedStatement.setObject(26, record.getParId());
-			preparedStatement.setObject(27, record.getBudId());
-			preparedStatement.setObject(28, record.getIdentBud());
-			preparedStatement.setObject(29, record.getSoucasti());
-			preparedStatement.setObject(30, record.getPsId());
-			preparedStatement.setObject(31, record.getIdentPs());
+			preparedStatement.setObject(4, 0);
+			preparedStatement.setObject(5, record.getRizeniIdVzniku());
+			preparedStatement.setObject(6, record.getRizeniIdZaniku());
+			preparedStatement.setObject(7, record.getParId());
+			preparedStatement.setObject(8, record.getBpejKod());
+			preparedStatement.setObject(9, record.getVymera());
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
@@ -204,46 +171,25 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
-				+ "(SEQ_PARCELY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String insert = "INSERT INTO " + table + " VALUES"
+				+ "(SEQ_BONIT_DILY_PARC_MIN.nextval,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
 			preparedStatement = connection.prepareStatement(insert);
 
-			Parcely record = (Parcely) rawRecord;
-			preparedStatement.setObject(1, record.getId());
-			preparedStatement.setObject(2, 0);
-			preparedStatement.setObject(3,
+			BonitDilyParc record = (BonitDilyParc) rawRecord;
+			preparedStatement.setObject(1, 0);
+			preparedStatement.setObject(2,
 					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4,
+			preparedStatement.setObject(3,
 					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(5, 0);
-			preparedStatement.setObject(6, record.getRizeniIdVzniku());
-			preparedStatement.setObject(7, record.getRizeniIdZaniku());
-			preparedStatement.setObject(8, record.getPknId());
-			preparedStatement.setObject(9, record.getParType());
-			preparedStatement.setObject(10, record.getKatuzeKod());
-			preparedStatement.setObject(11, record.getKatuzeKodPuv());
-			preparedStatement.setObject(12, record.getDruhCislovaniPar());
-			preparedStatement.setObject(13, record.getKmenoveCisloPar());
-			preparedStatement.setObject(14, record.getZdpazeKod());
-			preparedStatement.setObject(15, record.getPoddeleniCislaPar());
-			preparedStatement.setObject(16, record.getDilParcely());
-			preparedStatement.setObject(17, record.getMaplisKod());
-			preparedStatement.setObject(18, record.getZpurvyKod());
-			preparedStatement.setObject(19, record.getDrupozKod());
-			preparedStatement.setObject(20, record.getZpvypaKod());
-			preparedStatement.setObject(21, record.getTypParcely());
-			preparedStatement.setObject(22, record.getVymeraParcely());
-			preparedStatement.setObject(23, record.getCenaNemovitosti());
-			preparedStatement.setObject(24, record.getDefiniciniBodPar());
-			preparedStatement.setObject(25, record.getTelId());
-			preparedStatement.setObject(26, record.getParId());
-			preparedStatement.setObject(27, record.getBudId());
-			preparedStatement.setObject(28, record.getIdentBud());
+			preparedStatement.setObject(4, 0);
+			preparedStatement.setObject(5, record.getRizeniIdVzniku());
+			preparedStatement.setObject(6, record.getRizeniIdZaniku());
+			preparedStatement.setObject(7, record.getParId());
+			preparedStatement.setObject(8, record.getBpejKod());
+			preparedStatement.setObject(9, record.getVymera());
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();

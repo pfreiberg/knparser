@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,6 +72,18 @@ public class VfkUtil {
 
 		try {
 			return Long.valueOf(value[i]);
+		} catch (NumberFormatException e) {
+			return null;
+		} 
+	}
+	
+	public static BigInteger getBigInteger(String[] value, int i)
+	{
+		if (isOutOfIndex(value, i) || isEmptyNumber(value, i))
+			return null;
+
+		try {
+			return new BigInteger(value[i]);
 		} catch (NumberFormatException e) {
 			return null;
 		}

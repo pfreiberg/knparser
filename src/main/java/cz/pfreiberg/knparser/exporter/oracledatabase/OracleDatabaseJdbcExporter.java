@@ -9,28 +9,8 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.exporter.Exporter;
 
-public class OracleDatabaseJdbcExporter implements Exporter,
+public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
-
-	@Override
-	public boolean find(String table, String date, String dateValue,
-			String operation) {
-		throw new UnsupportedOperationException();
-
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		throw new UnsupportedOperationException();
-
-	}
-
-	@Override
-	public void delete(String table, String date, String dateValue,
-			String operation) {
-		throw new UnsupportedOperationException();
-
-	}
 
 	@Override
 	public Connection getConnection(ConnectionParameters connection) {

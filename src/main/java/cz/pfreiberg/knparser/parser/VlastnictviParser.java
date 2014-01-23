@@ -19,8 +19,8 @@ public class VlastnictviParser {
 		vlastnictvi.setOpsubId(VfkUtil.getLong(tokens, i++));
 		vlastnictvi.setTypravKod(VfkUtil.getString(tokens, i++));
 		vlastnictvi.setTelId(VfkUtil.getLong(tokens, i++));
-		vlastnictvi.setPodilCitatel(VfkUtil.getLong(tokens, i++));
-		vlastnictvi.setPodilJmenovatel(VfkUtil.getLong(tokens, i++));
+		vlastnictvi.setPodilCitatel(VfkUtil.getBigInteger(tokens, i++));
+		vlastnictvi.setPodilJmenovatel(VfkUtil.getBigInteger(tokens, i++));
 		vlastnictvi.setDatumVzniku2(VfkUtil.getDate(tokens, i++));
 		vlastnictvi.setRizeniIdVzniku2(VfkUtil.getLong(tokens, i++));
 		vlastnictvi.setParId(VfkUtil.getLong(tokens, i++));
