@@ -140,6 +140,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 			preparedStatement = connection.prepareStatement(insert);
 
 			JinePravVztahy record = (JinePravVztahy) rawRecord;
+			System.out.println(record.toString());
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, 0);
 			preparedStatement.setObject(3,

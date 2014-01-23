@@ -79,7 +79,16 @@ import cz.pfreiberg.knparser.domain.vlastnictvi.Telesa;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Vlastnictvi;
 import cz.pfreiberg.knparser.exporter.Exporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.BonitDilyParcOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.BudovyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.CastiBudovOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
+import cz.pfreiberg.knparser.exporter.oracledatabase.DalsiPrvkyMapyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.HraniceBpejOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.JednotkyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.JinePravVztahyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyBoduBpOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyBudovOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyDefBoduOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ParcelyOracleDatabaseJdbcExporter;
 
 public class OracleDatabaseExporterFactory implements ExporterFactory {
@@ -97,8 +106,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getJednotkyExporter(List<Jednotky> jednotky) {
-		// TODO Auto-generated method stub
-		return null;
+		return new JednotkyOracleDatabaseJdbcExporter(jednotky, connection);
 	}
 
 	@Override
@@ -116,8 +124,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getJinePravVztahyExporter(
 			List<JinePravVztahy> jinePravVztahy) {
-		// TODO Auto-generated method stub
-		return null;
+		return new JinePravVztahyOracleDatabaseJdbcExporter(jinePravVztahy, connection);
 	}
 
 	@Override
@@ -139,14 +146,12 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getBudovyExporter(List<Budovy> budovy) {
-		// TODO Auto-generated method stub
-		return null;
+		return new BudovyOracleDatabaseJdbcExporter(budovy, connection);
 	}
 
 	@Override
 	public Exporter getCastiBudovExporter(List<CastiBudov> castiBudov) {
-		// TODO Auto-generated method stub
-		return null;
+		return new CastiBudovOracleDatabaseJdbcExporter(castiBudov, connection);
 	}
 
 	@Override
@@ -161,6 +166,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 		return null;
 	}
 
+	
 	@Override
 	public Exporter getZpVyuzitiPozExporter(List<ZpVyuzitiPoz> zpVyuzitiPoz) {
 		// TODO Auto-generated method stub
@@ -385,8 +391,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getDalsiPrvkyMapyExporter(
 			List<DalsiPrvkyMapy> dalsiPrvkyMapy) {
-		// TODO Auto-generated method stub
-		return null;
+		return new DalsiPrvkyMapyOracleDatabaseJdbcExporter(dalsiPrvkyMapy, connection);
 	}
 
 	@Override
@@ -403,14 +408,12 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getObrazyBoduBpExporter(List<ObrazyBoduBp> obrazyBoduBp) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ObrazyBoduBpOracleDatabaseJdbcExporter(obrazyBoduBp, connection);
 	}
 
 	@Override
 	public Exporter getObrazyBudovExporter(List<ObrazyBudov> obrazyBudov) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ObrazyBudovOracleDatabaseJdbcExporter(obrazyBudov, connection);
 	}
 
 	@Override
@@ -477,8 +480,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getHraniceBpejExporter(List<HraniceBpej> hraniceBpej) {
-		// TODO Auto-generated method stub
-		return null;
+		return new HraniceBpejOracleDatabaseJdbcExporter(hraniceBpej, connection);
 	}
 
 	@Override
@@ -534,8 +536,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getObrazyDefBoduExporter(List<ObrazyDefBodu> obrazyDefBodu) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ObrazyDefBoduOracleDatabaseJdbcExporter(obrazyDefBodu, connection);
 	}
 
 	@Override

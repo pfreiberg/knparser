@@ -55,7 +55,7 @@ public class VfkUtil {
 
 	public static Integer getInteger(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyNumber(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
 			return null;
 
 		try {
@@ -67,7 +67,7 @@ public class VfkUtil {
 
 	public static Long getLong(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyNumber(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
 			return null;
 
 		try {
@@ -79,7 +79,7 @@ public class VfkUtil {
 	
 	public static BigInteger getBigInteger(String[] value, int i)
 	{
-		if (isOutOfIndex(value, i) || isEmptyNumber(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
 			return null;
 
 		try {
@@ -91,7 +91,7 @@ public class VfkUtil {
 
 	public static Double getDouble(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyNumber(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
 			return null;
 
 		try {
@@ -103,7 +103,7 @@ public class VfkUtil {
 
 	public static Date getDate(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyString(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
 			return null;
 
 		try {
@@ -122,7 +122,7 @@ public class VfkUtil {
 
 	public static String getString(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyString(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
 			return null;
 
 		return value[i];
@@ -169,14 +169,8 @@ public class VfkUtil {
 		return (value.length <= i);
 	}
 
-	private static boolean isEmptyNumber(String[] value, int i) {
+	private static boolean isEmptyValue(String[] value, int i) {
 		return (value[i].length() == 0);
 	}
-
-	private static boolean isEmptyString(String[] value, int i) {
-		return (value[i].length() == 2);
-	}
-
 	
-
 }

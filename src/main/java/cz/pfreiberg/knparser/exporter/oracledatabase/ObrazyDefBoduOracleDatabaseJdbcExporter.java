@@ -8,24 +8,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc;
+import cz.pfreiberg.knparser.domain.definicnibody.ObrazyDefBodu;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class BonitDilyParcOracleDatabaseJdbcExporter extends
+public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
-	private List<BonitDilyParc> bonitDilyParc;
+	private List<ObrazyDefBodu> obrazyDefBodu;
 	private Connection connection;
 	private List<String> primaryKeys;
 	private List<String> methodsName;
 	private List<Object> primaryKeysValues;
 
-	private final String name = "BONIT_DILY_PARC";
+	private final String name = "OBRAZY_DEF_BODU";
 
-	public BonitDilyParcOracleDatabaseJdbcExporter(
-			List<BonitDilyParc> bonitDilyParc,
+	public ObrazyDefBoduOracleDatabaseJdbcExporter(
+			List<ObrazyDefBodu> obrazyDefBodu,
 			ConnectionParameters connectionParameters) {
-		this.bonitDilyParc = bonitDilyParc;
+		this.obrazyDefBodu = obrazyDefBodu;
 		connection = super.getConnection(connectionParameters);
 		primaryKeys = super.getPrimaryKeys(connection, name);
 		methodsName = super.getMethods(primaryKeys);
@@ -39,7 +39,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (BonitDilyParc record : bonitDilyParc) {
+		for (ObrazyDefBodu record : obrazyDefBodu) {
 			primaryKeysValues = getPrimaryKeysValues(record);
 			if (record.getDatumZaniku() == null) {
 				processRecord(record);
@@ -60,9 +60,9 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		try {
 			for (int i = 0; i < methodsName.size(); i++) {
 				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc");
+						.forName("cz.pfreiberg.knparser.domain.definicnibody.ObrazyDefBodu");
 				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((BonitDilyParc) record));
+				primaryKeyValues.add(method.invoke((ObrazyDefBodu) record));
 			}
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException
@@ -73,7 +73,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		return primaryKeyValues;
 	}
 
-	private void processRecord(BonitDilyParc record) {
+	private void processRecord(ObrazyDefBodu record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
 		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
@@ -86,7 +86,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	private void processHistoricalRecord(BonitDilyParc record) {
+	private void processHistoricalRecord(ObrazyDefBodu record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
 		if (!find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
@@ -133,24 +133,26 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 
 	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?)";
+				+ "(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
 			preparedStatement = connection.prepareStatement(insert);
 
-			BonitDilyParc record = (BonitDilyParc) rawRecord;
-			preparedStatement.setObject(1, 0);
-			preparedStatement.setObject(2,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			ObrazyDefBodu record = (ObrazyDefBodu) rawRecord;
+			preparedStatement.setObject(1, record.getId());
+			preparedStatement.setObject(2, 0);
 			preparedStatement.setObject(3,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(4,
 					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(4, 0);
-			preparedStatement.setObject(5, record.getRizeniIdVzniku());
-			preparedStatement.setObject(6, record.getRizeniIdZaniku());
-			preparedStatement.setObject(7, record.getParId());
-			preparedStatement.setObject(8, record.getBpejKod());
-			preparedStatement.setObject(9, record.getVymera());
+			preparedStatement.setObject(5, 0);
+			preparedStatement.setObject(6, record.getParId());
+			preparedStatement.setObject(7, record.getBudId());
+			preparedStatement.setObject(8, record.getTypbudKod());
+			preparedStatement.setObject(9, record.getCisloDomovni());
+			preparedStatement.setObject(10, record.getSouradniceY());
+			preparedStatement.setObject(11, record.getSouradniceY());
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
@@ -172,25 +174,28 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_BONIT_DILY_PARC_MIN.nextval,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_OBRAZY_DEF_BODU_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
 			preparedStatement = connection.prepareStatement(insert);
 
-			BonitDilyParc record = (BonitDilyParc) rawRecord;
-			preparedStatement.setObject(1, 0);
-			preparedStatement.setObject(2,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			ObrazyDefBodu record = (ObrazyDefBodu) rawRecord;
+			preparedStatement.setObject(1, record.getId());
+			preparedStatement.setObject(2, 0);
 			preparedStatement.setObject(3,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(4,
 					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(4, 0);
-			preparedStatement.setObject(5, record.getRizeniIdVzniku());
-			preparedStatement.setObject(6, record.getRizeniIdZaniku());
-			preparedStatement.setObject(7, record.getParId());
-			preparedStatement.setObject(8, record.getBpejKod());
-			preparedStatement.setObject(9, record.getVymera());
-
+			preparedStatement.setObject(5, 0);
+			preparedStatement.setObject(6, record.getParId());
+			preparedStatement.setObject(7, record.getBudId());
+			preparedStatement.setObject(8, record.getTypbudKod());
+			preparedStatement.setObject(9, record.getCisloDomovni());
+			preparedStatement.setObject(10, record.getSouradniceY());
+			preparedStatement.setObject(11, record.getSouradniceY());
+			//TODO GEOMETRY
+		
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}

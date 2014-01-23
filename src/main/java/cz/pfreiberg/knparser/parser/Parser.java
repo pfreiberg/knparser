@@ -178,12 +178,11 @@ public class Parser {
 				else if (isNextCharacterEscapable(row, inQuotes, i)) {
 					sb.append("\"\"");
 					i++;
-					// je v uvozovkách a další znak není "
+				// je v uvozovkách a další znak není "
 				} else if (isEndOfText(row, inQuotes, i)) {
 					inQuotes = !inQuotes;
-					// prázdný text
+				// prázdný text
 				} else {
-					sb.append("\"\"");
 					i++;
 				}
 				break;
