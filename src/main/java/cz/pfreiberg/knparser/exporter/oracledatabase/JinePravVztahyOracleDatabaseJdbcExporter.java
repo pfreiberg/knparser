@@ -170,10 +170,10 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(21, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(22, record.getRizeniIdVzniku2());
 			preparedStatement.setObject(23, record.getOpsubId2Pro());
+			preparedStatement.setObject(27, record.getPsIdPro());
 			preparedStatement.setObject(24, record.getPopis2());
 			preparedStatement.setObject(25, record.getPoradiCas());
 			preparedStatement.setObject(26, record.getPoradiText());
-			preparedStatement.setObject(27, record.getPsIdPro());
 			preparedStatement.setObject(28, VfkUtil.convertToDatabaseDate(record.getDatumUkonceni()));
 
 			preparedStatement.executeUpdate();

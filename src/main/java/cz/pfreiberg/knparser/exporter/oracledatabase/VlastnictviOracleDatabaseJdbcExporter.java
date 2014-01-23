@@ -153,7 +153,7 @@ public class VlastnictviOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, record.getTelId());
 			preparedStatement.setObject(11, record.getPodilCitatel());
 			preparedStatement.setObject(12, record.getPodilJmenovatel());
-			preparedStatement.setObject(13, record.getDatumVzniku2());
+			preparedStatement.setObject(13, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(14, record.getRizeniIdVzniku2());
 			preparedStatement.setObject(15, record.getParId());
 			preparedStatement.setObject(16, record.getBudId());
@@ -201,7 +201,7 @@ public class VlastnictviOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, record.getTelId());
 			preparedStatement.setObject(11, record.getPodilCitatel());
 			preparedStatement.setObject(12, record.getPodilJmenovatel());
-			preparedStatement.setObject(13, record.getDatumVzniku2());
+			preparedStatement.setObject(13, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(14, record.getRizeniIdVzniku2());
 
 			preparedStatement.executeUpdate();

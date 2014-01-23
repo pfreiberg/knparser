@@ -153,7 +153,7 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 			preparedStatement.setObject(11, record.getJedId());
 			preparedStatement.setObject(12, record.getOpsubId());
 			preparedStatement.setObject(13, record.getJpvId());
-			preparedStatement.setObject(14, record.getDatumVzniku2());
+			preparedStatement.setObject(14, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(15, record.getRizeniIdVzniku2());
 			preparedStatement.setObject(16, record.getPsId());
 
@@ -199,7 +199,7 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 			preparedStatement.setObject(11, record.getJedId());
 			preparedStatement.setObject(12, record.getOpsubId());
 			preparedStatement.setObject(13, record.getJpvId());
-			preparedStatement.setObject(14, record.getDatumVzniku2());
+			preparedStatement.setObject(14, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(15, record.getRizeniIdVzniku2());
 
 			preparedStatement.executeUpdate();

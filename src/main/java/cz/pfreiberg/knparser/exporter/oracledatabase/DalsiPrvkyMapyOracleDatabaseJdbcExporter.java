@@ -159,7 +159,8 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(15, record.getDpmType());
 			preparedStatement.setObject(16, record.getVztaznyBod());
 			preparedStatement.setObject(17, record.getKatuzeKod());
-
+			// TODO GEOMETRY
+			
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}
@@ -206,7 +207,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(15, record.getDpmType());
 			preparedStatement.setObject(16, record.getVztaznyBod());
 			preparedStatement.setObject(17, record.getKatuzeKod());
-			// SDO_GEOMETRY
+			// TODO GEOMETRY
 		
 			preparedStatement.executeUpdate();
 			preparedStatement.close();

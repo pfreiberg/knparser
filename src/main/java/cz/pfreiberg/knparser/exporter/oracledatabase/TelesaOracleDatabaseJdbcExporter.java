@@ -133,7 +133,7 @@ public class TelesaOracleDatabaseJdbcExporter extends
 
 	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?)";
+				+ "(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -151,7 +151,9 @@ public class TelesaOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
 			preparedStatement.setObject(8, record.getKatuzeKod());
 			preparedStatement.setObject(9, record.getCisloTel());
-			
+			preparedStatement.setObject(10, null);
+			preparedStatement.setObject(11, null);
+			// TODO OKRES_KOD, OBEC_KOD
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}
@@ -172,7 +174,7 @@ public class TelesaOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_TELESA_MIN.nextval,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_TELESA_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -190,6 +192,8 @@ public class TelesaOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
 			preparedStatement.setObject(8, record.getKatuzeKod());
 			preparedStatement.setObject(9, record.getCisloTel());
+			preparedStatement.setObject(10, null);
+			preparedStatement.setObject(11, null);
 			// TODO OKRES_KOD, OBEC_KOD
 		
 			preparedStatement.executeUpdate();

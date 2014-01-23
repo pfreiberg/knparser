@@ -60,7 +60,7 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 		try {
 			for (int i = 0; i < methodsName.size(); i++) {
 				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.prvkykatastralnimapy");
+						.forName("cz.pfreiberg.knparser.domain.prvkykatastralnimapy.PrvkyOMapy");
 				Method method = c.getDeclaredMethod(methodsName.get(i));
 				primaryKeyValues.add(method.invoke((PrvkyOMapy) record));
 			}
@@ -155,6 +155,7 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(11, record.getUhel());
 			preparedStatement.setObject(12, record.getVztaznyBod());
 			preparedStatement.setObject(13, record.getKatuzeKod());
+			// TODO GEOMETRY
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();

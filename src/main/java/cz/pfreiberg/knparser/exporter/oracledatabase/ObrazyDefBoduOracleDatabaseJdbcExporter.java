@@ -152,7 +152,8 @@ public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(8, record.getTypbudKod());
 			preparedStatement.setObject(9, record.getCisloDomovni());
 			preparedStatement.setObject(10, record.getSouradniceY());
-			preparedStatement.setObject(11, record.getSouradniceY());
+			preparedStatement.setObject(11, record.getSouradniceX());
+			// TODO GEOMETRY
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
@@ -193,7 +194,7 @@ public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(8, record.getTypbudKod());
 			preparedStatement.setObject(9, record.getCisloDomovni());
 			preparedStatement.setObject(10, record.getSouradniceY());
-			preparedStatement.setObject(11, record.getSouradniceY());
+			preparedStatement.setObject(11, record.getSouradniceX());
 			//TODO GEOMETRY
 		
 			preparedStatement.executeUpdate();

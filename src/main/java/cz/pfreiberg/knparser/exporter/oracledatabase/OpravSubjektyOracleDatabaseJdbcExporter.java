@@ -200,7 +200,7 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_OPRAV_SUBJEKTY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_OPRAV_SUBJEKTY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -243,8 +243,8 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(32, record.getCpCe());
 			preparedStatement.setObject(33, record.getMestskaCast());
 			preparedStatement.setObject(34, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
-			preparedStatement.setObject(35, null); // TODO hodnota zatím neexistuje
-			preparedStatement.setObject(36, record.getRizeniIdVzniku2());
+			preparedStatement.setObject(35, record.getRizeniIdVzniku2());
+			preparedStatement.setObject(36, null); // TODO hodnota zatím neexistuje
 			preparedStatement.setObject(37, record.getKodAdrm());
 			preparedStatement.setObject(38, record.getIdNadrizenePo());
 
