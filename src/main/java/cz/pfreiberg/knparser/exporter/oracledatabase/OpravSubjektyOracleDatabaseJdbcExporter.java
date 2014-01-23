@@ -8,24 +8,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.pfreiberg.knparser.domain.jinepravnivztahy.JinePravVztahy;
+import cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class JinePravVztahyOracleDatabaseJdbcExporter extends
+public class OpravSubjektyOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
-	private List<JinePravVztahy> jinePravVztahy;
+	private List<OpravSubjekty> opravSubjekty;
 	private Connection connection;
 	private List<String> primaryKeys;
 	private List<String> methodsName;
 	private List<Object> primaryKeysValues;
 
-	private final String name = "JINE_PRAV_VZTAHY";
+	private final String name = "OPRAV_SUBJEKTY";
 
-	public JinePravVztahyOracleDatabaseJdbcExporter(
-			List<JinePravVztahy> jinePravVztahy,
+	public OpravSubjektyOracleDatabaseJdbcExporter(
+			List<OpravSubjekty> opravSubjekty,
 			ConnectionParameters connectionParameters) {
-		this.jinePravVztahy = jinePravVztahy;
+		this.opravSubjekty = opravSubjekty;
 		connection = super.getConnection(connectionParameters);
 		primaryKeys = super.getPrimaryKeys(connection, name);
 		methodsName = super.getMethods(primaryKeys);
@@ -39,12 +39,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int i = 0;
-		for (JinePravVztahy record : jinePravVztahy) {
-			i++;
-			if (i % 100 == 0)
-				System.out.println("JPV: " + i);
-			
+		for (OpravSubjekty record : opravSubjekty) {
 			primaryKeysValues = getPrimaryKeysValues(record);
 			if (record.getDatumZaniku() == null) {
 				processRecord(record);
@@ -65,9 +60,9 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 		try {
 			for (int i = 0; i < methodsName.size(); i++) {
 				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.jinepravnivztahy.JinePravVztahy");
+						.forName("cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty");
 				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((JinePravVztahy) record));
+				primaryKeyValues.add(method.invoke((OpravSubjekty) record));
 			}
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException
@@ -78,7 +73,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 		return primaryKeyValues;
 	}
 
-	private void processRecord(JinePravVztahy record) {
+	private void processRecord(OpravSubjekty record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
 		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
@@ -91,7 +86,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	private void processHistoricalRecord(JinePravVztahy record) {
+	private void processHistoricalRecord(OpravSubjekty record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
 		if (!find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
@@ -138,13 +133,13 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 
 	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
 			preparedStatement = connection.prepareStatement(insert);
 
-			JinePravVztahy record = (JinePravVztahy) rawRecord;
+			OpravSubjekty record = (OpravSubjekty) rawRecord;
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, 0);
 			preparedStatement.setObject(3,
@@ -154,27 +149,36 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(5, 0);
 			preparedStatement.setObject(6, record.getRizeniIdVzniku());
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
-			preparedStatement.setObject(8, record.getParIdPro());
-			preparedStatement.setObject(9, record.getBudIdPro());
-			preparedStatement.setObject(10, record.getJedIdPro());
-			preparedStatement.setObject(11, record.getParIdK());
-			preparedStatement.setObject(12, record.getBudIdK());
-			preparedStatement.setObject(13, record.getJedIdK());
-			preparedStatement.setObject(14, record.getTypravKod());
-			preparedStatement.setObject(15, record.getPopisPravnihoVztahu());
-			preparedStatement.setObject(16, record.getTelId());
-			preparedStatement.setObject(17, record.getOpsubIdPro());
-			preparedStatement.setObject(18, record.getOpsubIdK());
-			preparedStatement.setObject(19, record.getPodilPohledavka());
-			preparedStatement.setObject(20, record.getHjpvId());
-			preparedStatement.setObject(21, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
-			preparedStatement.setObject(22, record.getRizeniIdVzniku2());
-			preparedStatement.setObject(23, record.getOpsubId2Pro());
-			preparedStatement.setObject(24, record.getPopis2());
-			preparedStatement.setObject(25, record.getPoradiCas());
-			preparedStatement.setObject(26, record.getPoradiText());
-			preparedStatement.setObject(27, record.getPsIdPro());
-			preparedStatement.setObject(28, VfkUtil.convertToDatabaseDate(record.getDatumUkonceni()));
+			preparedStatement.setObject(8, record.getIdJe1PartnerBsm());
+			preparedStatement.setObject(9, record.getIdJe2PartnerBsm());
+			preparedStatement.setObject(10, record.getIdZdroj());
+			preparedStatement.setObject(11, record.getOpsubType());
+			preparedStatement.setObject(12, record.getCharosKod());
+			preparedStatement.setObject(13, record.getIco());
+			preparedStatement.setObject(14, record.getDoplnekIco());
+			preparedStatement.setObject(15, record.getNazev());
+			preparedStatement.setObject(16, record.getNazevU());
+			preparedStatement.setObject(17, record.getRodneCislo());
+			preparedStatement.setObject(18, record.getTitulPredJmenem());
+			preparedStatement.setObject(19, record.getJmeno());
+			preparedStatement.setObject(20, record.getJmenoU());
+			preparedStatement.setObject(21, record.getPrijmeni());
+			preparedStatement.setObject(22, record.getPrijmeniU());
+			preparedStatement.setObject(23, record.getTitulZaJmenem());
+			preparedStatement.setObject(24, record.getCisloDomovni());
+			preparedStatement.setObject(25, record.getCisloOrientacni());
+			preparedStatement.setObject(26, record.getNazevUlice());
+			preparedStatement.setObject(27, record.getCastObce());
+			preparedStatement.setObject(28, record.getObec());
+			preparedStatement.setObject(29, record.getOkres());
+			preparedStatement.setObject(30, record.getStat());
+			preparedStatement.setObject(31, record.getPsc());
+			preparedStatement.setObject(32, record.getCpCe());
+			preparedStatement.setObject(33, record.getMestskaCast());
+			preparedStatement.setObject(34, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
+			preparedStatement.setObject(35, record.getRizeniIdVzniku2());
+			preparedStatement.setObject(36, record.getKodAdrm());
+			preparedStatement.setObject(37, record.getIdNadrizenePo());
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
@@ -196,13 +200,13 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_JINE_PRAV_VZTAHY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_OPRAV_SUBJEKTY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
 			preparedStatement = connection.prepareStatement(insert);
 
-			JinePravVztahy record = (JinePravVztahy) rawRecord;
+			OpravSubjekty record = (OpravSubjekty) rawRecord;
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, 0);
 			preparedStatement.setObject(3,
@@ -212,23 +216,38 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(5, 0);
 			preparedStatement.setObject(6, record.getRizeniIdVzniku());
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
-			preparedStatement.setObject(8, record.getParIdPro());
-			preparedStatement.setObject(9, record.getBudIdPro());
-			preparedStatement.setObject(10, record.getJedIdPro());
-			preparedStatement.setObject(11, record.getParIdK());
-			preparedStatement.setObject(12, record.getBudIdK());
-			preparedStatement.setObject(13, record.getJedIdK());
-			preparedStatement.setObject(14, record.getTypravKod());
-			preparedStatement.setObject(15, record.getPopisPravnihoVztahu());
-			preparedStatement.setObject(16, record.getTelId());
-			preparedStatement.setObject(17, record.getOpsubIdPro());
-			preparedStatement.setObject(18, record.getOpsubIdK());
-			preparedStatement.setObject(19, record.getPodilPohledavka());
-			preparedStatement.setObject(20, record.getHjpvId());
-			preparedStatement.setObject(21, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
-			preparedStatement.setObject(22, record.getRizeniIdVzniku2());
-			preparedStatement.setObject(23, record.getOpsubId2Pro());
-		
+			preparedStatement.setObject(8, record.getIdJe1PartnerBsm());
+			preparedStatement.setObject(9, record.getIdJe2PartnerBsm());
+			preparedStatement.setObject(10, record.getIdZdroj());
+			preparedStatement.setObject(11, record.getOpsubType());
+			preparedStatement.setObject(12, record.getCharosKod());
+			preparedStatement.setObject(13, record.getIco());
+			preparedStatement.setObject(14, record.getDoplnekIco());
+			preparedStatement.setObject(15, record.getNazev());
+			preparedStatement.setObject(16, record.getNazevU());
+			preparedStatement.setObject(17, record.getRodneCislo());
+			preparedStatement.setObject(18, record.getTitulPredJmenem());
+			preparedStatement.setObject(19, record.getJmeno());
+			preparedStatement.setObject(20, record.getJmenoU());
+			preparedStatement.setObject(21, record.getPrijmeni());
+			preparedStatement.setObject(22, record.getPrijmeniU());
+			preparedStatement.setObject(23, record.getTitulZaJmenem());
+			preparedStatement.setObject(24, record.getCisloDomovni());
+			preparedStatement.setObject(25, record.getCisloOrientacni());
+			preparedStatement.setObject(26, record.getNazevUlice());
+			preparedStatement.setObject(27, record.getCastObce());
+			preparedStatement.setObject(28, record.getObec());
+			preparedStatement.setObject(29, record.getOkres());
+			preparedStatement.setObject(30, record.getStat());
+			preparedStatement.setObject(31, record.getPsc());
+			preparedStatement.setObject(32, record.getCpCe());
+			preparedStatement.setObject(33, record.getMestskaCast());
+			preparedStatement.setObject(34, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
+			preparedStatement.setObject(35, null); // TODO hodnota zatím neexistuje
+			preparedStatement.setObject(36, record.getRizeniIdVzniku2());
+			preparedStatement.setObject(37, record.getKodAdrm());
+			preparedStatement.setObject(38, record.getIdNadrizenePo());
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}

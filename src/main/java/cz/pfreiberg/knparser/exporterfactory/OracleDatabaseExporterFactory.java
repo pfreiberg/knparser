@@ -101,11 +101,13 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getBonitDilyParcExporter(List<BonitDilyParc> bonitDilyParc) {
+		System.out.println("Saving BonitDilyParc to database. Total: " + bonitDilyParc.size());
 		return new BonitDilyParcOracleDatabaseJdbcExporter(bonitDilyParc, connection);
 	}
 
 	@Override
 	public Exporter getJednotkyExporter(List<Jednotky> jednotky) {
+		System.out.println("Saving Jednotky to database. Total: " + jednotky.size());
 		return new JednotkyOracleDatabaseJdbcExporter(jednotky, connection);
 	}
 
@@ -124,6 +126,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getJinePravVztahyExporter(
 			List<JinePravVztahy> jinePravVztahy) {
+		System.out.println("Saving JinePravVztahy to database. Total: " + jinePravVztahy.size());
 		return new JinePravVztahyOracleDatabaseJdbcExporter(jinePravVztahy, connection);
 	}
 
@@ -141,16 +144,19 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getParcelyExporter(List<Parcely> parcely) {
+		System.out.println("Saving Parcely to database. Total: " + parcely.size());
 		return new ParcelyOracleDatabaseJdbcExporter(parcely, connection);
 	}
 
 	@Override
 	public Exporter getBudovyExporter(List<Budovy> budovy) {
+		System.out.println("Saving Budovy to database. Total: " + budovy.size());
 		return new BudovyOracleDatabaseJdbcExporter(budovy, connection);
 	}
 
 	@Override
 	public Exporter getCastiBudovExporter(List<CastiBudov> castiBudov) {
+		System.out.println("Saving CastiBudov to database. Total: " + castiBudov.size());
 		return new CastiBudovOracleDatabaseJdbcExporter(castiBudov, connection);
 	}
 
@@ -391,6 +397,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getDalsiPrvkyMapyExporter(
 			List<DalsiPrvkyMapy> dalsiPrvkyMapy) {
+		System.out.println("Saving DalsiPrvkyMapy to database. Total: " + dalsiPrvkyMapy.size());
 		return new DalsiPrvkyMapyOracleDatabaseJdbcExporter(dalsiPrvkyMapy, connection);
 	}
 
@@ -408,11 +415,13 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getObrazyBoduBpExporter(List<ObrazyBoduBp> obrazyBoduBp) {
+		System.out.println("Saving ObrazyBoduBp to database. Total: " + obrazyBoduBp.size());
 		return new ObrazyBoduBpOracleDatabaseJdbcExporter(obrazyBoduBp, connection);
 	}
 
 	@Override
 	public Exporter getObrazyBudovExporter(List<ObrazyBudov> obrazyBudov) {
+		System.out.println("Saving ObrazyBudov to database. Total: " + obrazyBudov.size());
 		return new ObrazyBudovOracleDatabaseJdbcExporter(obrazyBudov, connection);
 	}
 
@@ -480,6 +489,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getHraniceBpejExporter(List<HraniceBpej> hraniceBpej) {
+		System.out.println("Saving HraniceBpej to database. Total: " + hraniceBpej.size());
 		return new HraniceBpejOracleDatabaseJdbcExporter(hraniceBpej, connection);
 	}
 
@@ -536,6 +546,7 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getObrazyDefBoduExporter(List<ObrazyDefBodu> obrazyDefBodu) {
+		System.out.println("Saving ObrazyDefBodu to database. Total: " + obrazyDefBodu.size());
 		return new ObrazyDefBoduOracleDatabaseJdbcExporter(obrazyDefBodu, connection);
 	}
 

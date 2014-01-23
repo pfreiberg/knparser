@@ -32,7 +32,6 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	private void prepareStatement() {
-		System.out.println(parcely.size());
 		try {
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
@@ -76,34 +75,25 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	private void processRecord(Parcely record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		System.out.println(record.toString());
 		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
 			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
 			insert(name, record, true);
-			System.out.println("Deleted and inserted record.");
 		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">=")) {
-			System.out.println("Record not inserted (older).");
 			return;
 		} else {
 			insert(name, record, true);
-			System.out.println("Record inserted.");
 		}
 	}
 
 	private void processHistoricalRecord(Parcely record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		System.out.println(record.getDatumVzniku());
 		if (!find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
 			insert(name + "_MIN", record, false);
-			System.out.println("Inserted historical record.");
 			if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
 				delete(name, "DATUM_VZNIKU", datumVzniku, "=");
-				System.out.println("Deleted historical record.");
 			}
-			System.out.println("Record not deleted.");
-		} else
-			System.out.println("Historical record exist.");
+		}
 	}
 
 	@Override
