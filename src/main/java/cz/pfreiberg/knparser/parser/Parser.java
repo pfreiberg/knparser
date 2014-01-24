@@ -220,11 +220,22 @@ public class Parser {
 		sb = null;
 		return tokensOnRow.toArray(new String[tokensOnRow.size()]);
 	}
-
+	
 	private boolean isStartOfText(String row, boolean inQuotes, int position) {
 		if (hasNextCharacter(row, position)) {
 			char nextCharacter = getNextCharacter(row, position);
-			return (!inQuotes && (nextCharacter != QUOTE_CHARACTER));
+			
+			if (inQuotes)
+				return false;
+			else if (nextCharacter == QUOTE_CHARACTER)
+			{
+				position++;
+				if (hasNextCharacter(row, position)) 
+				{
+					nextCharacter = getNextCharacter(row, position);
+					return !(getNextCharacter(row, position) == SEPARATOR);
+				} return false;
+			} return true;
 		}
 		return false;
 	}

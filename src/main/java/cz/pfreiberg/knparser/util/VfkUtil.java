@@ -136,7 +136,7 @@ public class VfkUtil {
 
 		if (value instanceof Date) {
 			Date date = (Date) value;
-			return format.format(date);
+			return "\"" + format.format(date) + "\"";
 		} else {
 			return "\"" + value + "\"";
 		}
