@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,7 +134,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 
 	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -159,7 +160,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(15, record.getDpmType());
 			preparedStatement.setObject(16, record.getVztaznyBod());
 			preparedStatement.setObject(17, record.getKatuzeKod());
-			// TODO GEOMETRY
+			preparedStatement.setNull(18, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 			
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
@@ -181,7 +182,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_DALSI_PRVKY_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_DALSI_PRVKY_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -207,7 +208,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(15, record.getDpmType());
 			preparedStatement.setObject(16, record.getVztaznyBod());
 			preparedStatement.setObject(17, record.getKatuzeKod());
-			// TODO GEOMETRY
+			preparedStatement.setNull(18, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 		
 			preparedStatement.executeUpdate();
 			preparedStatement.close();

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	private List<String> primaryKeys;
 	private List<String> methodsName;
 	private List<Object> primaryKeysValues;
-	
+
 	private String parId1;
 	private String parId2;
 
@@ -84,30 +85,28 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
 			insert(name, record, true);
 		} else if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
-			if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
-				
-				getParId(name, "DATUM_VZNIKU", datumVzniku);
-				
-				if (parId1 != null && parId2 != null)
-					return;
-				else
-				{
-					long parId1Number = Long.valueOf(parId1);
-					
-					if (record.getParId2() == null)
-					{
-						if (record.getParId1() == parId1Number)
-							return;
-						else
-						{
-							record.setParId1(Math.min(parId1Number, record.getParId1()));
-							record.setParId2(Math.max(parId1Number, record.getParId2()));
-						}
-					}
+
+			getParId(name, "DATUM_VZNIKU", datumVzniku);
+
+			if (parId1 != null && parId2 != null)
+				return;
+			else {
+				long parId1Number = Long.valueOf(parId1);
+
+				if (record.getParId2() == null) {
+					if (record.getParId1() == parId1Number)
+						return;
 					else {
-						record.setParId1(Math.min(record.getParId1(), record.getParId2()));
-						record.setParId2(Math.max(record.getParId1(), record.getParId2()));
+						record.setParId1(Math.min(parId1Number,
+								record.getParId1()));
+						record.setParId2(Math.max(parId1Number,
+								record.getParId2()));
 					}
+				} else {
+					record.setParId1(Math.min(record.getParId1(),
+							record.getParId2()));
+					record.setParId2(Math.max(record.getParId1(),
+							record.getParId2()));
 				}
 			}
 			insert(name, record, true);
@@ -120,43 +119,41 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
 		if (find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
-			
+
 			getParId(name + "_MIN", "DATUM_VZNIKU", datumVzniku);
-			
+
 			if (parId1 != null && parId2 != null)
 				return;
-			else
-			{
+			else {
 				long parId1Number = Long.valueOf(parId1);
-				
-				if (record.getParId2() == null)
-				{
+
+				if (record.getParId2() == null) {
 					if (record.getParId1() == parId1Number)
 						return;
-					else
-					{
-						record.setParId1(Math.min(parId1Number, record.getParId1()));
-						record.setParId2(Math.max(parId1Number, record.getParId2()));
+					else {
+						record.setParId1(Math.min(parId1Number,
+								record.getParId1()));
+						record.setParId2(Math.max(parId1Number,
+								record.getParId2()));
 					}
-				}
-				else {
-					record.setParId1(Math.min(record.getParId1(), record.getParId2()));
-					record.setParId2(Math.max(record.getParId1(), record.getParId2()));
+				} else {
+					record.setParId1(Math.min(record.getParId1(),
+							record.getParId2()));
+					record.setParId2(Math.max(record.getParId1(),
+							record.getParId2()));
 				}
 			}
 		}
-			
+
 		insert(name + "_MIN", record, false);
 		if (find(name, "DATUM_VZNIKU", datumVzniku, "="))
-				delete(name, "DATUM_VZNIKU", datumVzniku, "=");
+			delete(name, "DATUM_VZNIKU", datumVzniku, "=");
 	}
-	
-	
-	private void getParId(String table, String date, String dateValue)
-	{
-		String select = "SELECT PAR_ID_1, PAR_ID_2 FROM " + table + " WHERE *pk* AND " + date
-				+ "=" + dateValue;
-		
+
+	private void getParId(String table, String date, String dateValue) {
+		String select = "SELECT PAR_ID_1, PAR_ID_2 FROM " + table
+				+ " WHERE *pk* AND " + date + "=" + dateValue;
+
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			select = select.replace("*pk*", primaryKeys.get(i) + " = "
 					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
@@ -167,8 +164,10 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(select);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			parId1 = resultSet.getString("PAR_ID_1");
-			parId2 = resultSet.getString("PAR_ID_2");
+			if (resultSet.next()) {
+				parId1 = resultSet.getString("PAR_ID_1");
+				parId2 = resultSet.getString("PAR_ID_2");
+			}
 			preparedStatement.close();
 			return;
 		} catch (SQLException e) {
@@ -213,7 +212,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 
 	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?,?)";
+				+ "(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -232,8 +231,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(8, record.getTypppdKod());
 			preparedStatement.setObject(9, record.getParId1());
 			preparedStatement.setObject(10, record.getParId2());
-			// TODO GEOMETRY
-			
+			preparedStatement.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}
@@ -254,7 +253,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_HRANICE_PARCEL_MIN.nextval,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_HRANICE_PARCEL_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -273,8 +272,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(8, record.getTypppdKod());
 			preparedStatement.setObject(9, record.getParId1());
 			preparedStatement.setObject(10, record.getParId2());
-			// TODO GEOMETRY
-		
+			preparedStatement.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}

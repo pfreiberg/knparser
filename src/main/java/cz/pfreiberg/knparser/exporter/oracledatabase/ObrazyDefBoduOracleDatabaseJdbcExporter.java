@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,7 +134,7 @@ public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 
 	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -153,7 +154,7 @@ public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(9, record.getCisloDomovni());
 			preparedStatement.setObject(10, record.getSouradniceY());
 			preparedStatement.setObject(11, record.getSouradniceX());
-			// TODO GEOMETRY
+			preparedStatement.setNull(12, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
@@ -175,7 +176,7 @@ public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_OBRAZY_DEF_BODU_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_OBRAZY_DEF_BODU_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -195,7 +196,7 @@ public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(9, record.getCisloDomovni());
 			preparedStatement.setObject(10, record.getSouradniceY());
 			preparedStatement.setObject(11, record.getSouradniceX());
-			//TODO GEOMETRY
+			preparedStatement.setNull(12, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 		
 			preparedStatement.executeUpdate();
 			preparedStatement.close();

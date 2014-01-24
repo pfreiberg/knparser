@@ -84,6 +84,7 @@ import cz.pfreiberg.knparser.exporter.oracledatabase.CastiBudovOracleDatabaseJdb
 import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
 import cz.pfreiberg.knparser.exporter.oracledatabase.DalsiPrvkyMapyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.HraniceBpejOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.HraniceParcelOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.JednotkyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.JinePravVztahyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyBoduBpOracleDatabaseJdbcExporter;
@@ -416,8 +417,8 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getHraniceParcelExporter(List<HraniceParcel> hraniceParcel) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving HraniceParcel to database. Total: " + hraniceParcel.size());
+		return new HraniceParcelOracleDatabaseJdbcExporter(hraniceParcel, connection);
 	}
 
 	@Override
