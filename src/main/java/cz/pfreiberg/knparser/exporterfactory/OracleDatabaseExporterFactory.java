@@ -87,6 +87,7 @@ import cz.pfreiberg.knparser.exporter.oracledatabase.HraniceBpejOracleDatabaseJd
 import cz.pfreiberg.knparser.exporter.oracledatabase.HraniceParcelOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.JednotkyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.JinePravVztahyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ListinyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyBoduBpOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyBudovOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyDefBoduOracleDatabaseJdbcExporter;
@@ -300,8 +301,8 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getListinyExporter(List<Listiny> listiny) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving Listiny to database. Total: " + listiny.size());
+		return new ListinyOracleDatabaseJdbcExporter(listiny, connection);
 	}
 
 	@Override
