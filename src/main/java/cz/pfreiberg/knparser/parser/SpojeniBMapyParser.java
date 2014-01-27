@@ -11,14 +11,14 @@ public class SpojeniBMapyParser {
 		SpojeniBMapy spojeniBMapy = new SpojeniBMapy();
 		spojeniBMapy.setDatumVzniku(VfkUtil.getDate(tokens, i++));
 		spojeniBMapy.setDatumZaniku(VfkUtil.getDate(tokens, i++));
-		spojeniBMapy.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		spojeniBMapy.setPoradoveCisloBodu(VfkUtil.getLong(tokens, i++));
 		spojeniBMapy.setSouradniceY(VfkUtil.getDouble(tokens, i++));
 		spojeniBMapy.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		spojeniBMapy.setOpId(VfkUtil.getLong(tokens, i++));
-		spojeniBMapy.setDmpId(VfkUtil.getLong(tokens, i++));
+		spojeniBMapy.setDpmId(VfkUtil.getLong(tokens, i++));
 		spojeniBMapy.setHbpejId(VfkUtil.getLong(tokens, i++));
 		spojeniBMapy.setParametrySpojeni(VfkUtil.getString(tokens, i++));
+		spojeniBMapy.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		
 		return spojeniBMapy;
 	}

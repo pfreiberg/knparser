@@ -38,7 +38,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	public List<String> getPrimaryKeys(Connection connection, String table) {
 		List<String> output = new ArrayList<>();
 		try {
-			String select = "SELECT TABLE_NAME, TYP, POC_PK, PK1, PK2, PK3, PK4, PORADI FROM TABLE_INFO WHERE typ like 'HIS%' AND TABLE_NAME = '"
+			String select = "SELECT TABLE_NAME, TYP, POC_PK, PK1, PK2, PK3, PK4, PORADI FROM TABLE_INFO WHERE TABLE_NAME = '"
 					+ table + "'";
 			ResultSet rs = connection.prepareStatement(select).executeQuery();
 			if (rs.next()) {

@@ -197,7 +197,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
-				+ "(SEQ_PARCELY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_PARCELY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -234,6 +234,9 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(26, record.getParId());
 			preparedStatement.setObject(27, record.getBudId());
 			preparedStatement.setObject(28, record.getIdentBud());
+			preparedStatement.setObject(29, record.getSoucasti());
+			preparedStatement.setObject(30, record.getPsId());
+			preparedStatement.setObject(31, record.getIdentPs());
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();

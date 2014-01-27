@@ -179,7 +179,7 @@ public class BudovyOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_BUDOVY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_BUDOVY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -201,6 +201,9 @@ public class BudovyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(11, record.getCenaNemovitosti());
 			preparedStatement.setObject(12, record.getZpvybuKod());
 			preparedStatement.setObject(13, record.getTelId());
+			preparedStatement.setObject(14, record.getDocasnaStavba());
+			preparedStatement.setObject(15, record.getJeSoucasti());
+			preparedStatement.setObject(16, record.getPsId());
 		
 			preparedStatement.executeUpdate();
 			preparedStatement.close();

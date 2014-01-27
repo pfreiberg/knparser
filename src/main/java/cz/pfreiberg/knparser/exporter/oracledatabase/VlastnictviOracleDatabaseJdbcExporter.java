@@ -180,7 +180,7 @@ public class VlastnictviOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_VLASTNICTVI_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_VLASTNICTVI_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -203,6 +203,10 @@ public class VlastnictviOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(12, record.getPodilJmenovatel());
 			preparedStatement.setObject(13, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(14, record.getRizeniIdVzniku2());
+			preparedStatement.setObject(15, record.getParId());
+			preparedStatement.setObject(16, record.getBudId());
+			preparedStatement.setObject(17, record.getJedId());
+			preparedStatement.setObject(18, record.getPsId());
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
