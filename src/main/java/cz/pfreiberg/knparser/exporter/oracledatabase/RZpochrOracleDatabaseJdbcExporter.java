@@ -175,7 +175,7 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_R_ZPOCHR_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_R_ZPOCHR_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -195,6 +195,7 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(9, record.getParId());
 			preparedStatement.setObject(10, record.getBudId());
 			preparedStatement.setObject(11, record.getJedId());
+			preparedStatement.setObject(12, record.getPsId());
 		
 			preparedStatement.executeUpdate();
 			preparedStatement.close();

@@ -16,6 +16,7 @@ public class SpojeniBMapy {
 
 	private Date datumVzniku;
 	private Date datumZaniku;
+	private Integer priznakKontextu;
 	private Long poradoveCisloBodu;
 	private Double souradniceY;
 	private Double souradniceX;
@@ -23,7 +24,6 @@ public class SpojeniBMapy {
 	private Long dpmId;
 	private Long hbpejId;
 	private String parametrySpojeni;
-	private Integer priznakKontextu;
 
 	public Date getDatumVzniku() {
 		return datumVzniku;
@@ -39,6 +39,14 @@ public class SpojeniBMapy {
 
 	public void setDatumZaniku(Date datumZaniku) {
 		this.datumZaniku = datumZaniku;
+	}
+	
+	public Integer getPriznakKontextu() {
+		return priznakKontextu;
+	}
+
+	public void setPriznakKontextu(Integer priznakKontextu) {
+		this.priznakKontextu = priznakKontextu;
 	}
 	
 	public Long getPoradoveCisloBodu() {
@@ -97,26 +105,18 @@ public class SpojeniBMapy {
 		this.parametrySpojeni = parametrySpojeni;
 	}
 	
-	public Integer getPriznakKontextu() {
-		return priznakKontextu;
-	}
-
-	public void setPriznakKontextu(Integer priznakKontextu) {
-		this.priznakKontextu = priznakKontextu;
-	}
-	
 	@Override
 	public String toString() {
 		return "" + VfkUtil.formatValue(datumVzniku) + ","
 				+ VfkUtil.formatValue(datumZaniku) + ","
+				+ VfkUtil.formatValue(priznakKontextu) + ","
 				+ VfkUtil.formatValue(poradoveCisloBodu) + ","
 				+ VfkUtil.formatValue(souradniceY) + ","
 				+ VfkUtil.formatValue(souradniceX) + ","
 				+ VfkUtil.formatValue(opId) + "," 
 				+ VfkUtil.formatValue(dpmId) + "," 
 				+ VfkUtil.formatValue(hbpejId) + ","
-				+ VfkUtil.formatValue(parametrySpojeni) + "," 
-				+ VfkUtil.formatValue(priznakKontextu)
+				+ VfkUtil.formatValue(parametrySpojeni)
 				+ VfkUtil.getTerminator();
 	}
 

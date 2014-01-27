@@ -169,23 +169,41 @@ public class RJpvOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter {
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-		// TODO chybějící tabulka
-		/*
-		 * String insert = "INSERT INTO " + table + " VALUES" +
-		 * "(SEQ_**_MIN.nextval,?,?,?,?,?,?,?,?)"; PreparedStatement
-		 * preparedStatement = null; try {
-		 * 
-		 * preparedStatement = connection.prepareStatement(insert);
-		 * 
-		 * *
-		 * 
-		 * preparedStatement.executeUpdate(); preparedStatement.close(); }
-		 * 
-		 * catch (SQLException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } finally { try { preparedStatement.close(); }
-		 * catch (SQLException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } }
-		 */
+
+		String insert = "INSERT INTO " + table + " VALUES"
+				+ "(SEQ_R_JPV_MIN.nextval,?,?,?,?,?,?,?,?,?,?)";
+		PreparedStatement preparedStatement = null;
+		try {
+
+			preparedStatement = connection.prepareStatement(insert);
+			
+			RJpv record = (RJpv) rawRecord;
+			preparedStatement.setObject(1, record.getId());
+			preparedStatement.setObject(2, record.getVerze());
+			preparedStatement.setObject(3, 0);
+			preparedStatement.setObject(4,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(5,
+					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+			preparedStatement.setObject(6, record.getRizeniIdVzniku());
+			preparedStatement.setObject(7, record.getRizeniIdZaniku());
+			preparedStatement.setObject(8, record.getHjpvId1());
+			preparedStatement.setObject(9, record.getHjpvId2());
+			preparedStatement.setObject(10, record.getTypvazbyJpv());
+
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		}
+
+		catch (SQLException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) { // TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 

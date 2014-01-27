@@ -177,7 +177,7 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_R_LIST_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(SEQ_R_LIST_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -201,6 +201,7 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 			preparedStatement.setObject(13, record.getJpvId());
 			preparedStatement.setObject(14, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(15, record.getRizeniIdVzniku2());
+			preparedStatement.setObject(16, record.getPsId());
 
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
