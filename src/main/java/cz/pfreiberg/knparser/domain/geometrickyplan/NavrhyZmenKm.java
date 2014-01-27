@@ -16,7 +16,7 @@ public class NavrhyZmenKm {
 	private String nzType;
 	private String porizeniDatNz;
 	private Long rizeniId;
-	private String cisloPlanku;
+	private String cisloPlanu;
 	private String vyhotovil;
 	private String oznaceniMapovehoListu;
 
@@ -60,12 +60,12 @@ public class NavrhyZmenKm {
 		this.rizeniId = rizeniId;
 	}
 
-	public String getCisloPlanku() {
-		return cisloPlanku;
+	public String getCisloPlanu() {
+		return cisloPlanu;
 	}
 
-	public void setCisloPlanku(String cisloPlanku) {
-		this.cisloPlanku = cisloPlanku;
+	public void setCisloPlanku(String cisloPlanu) {
+		this.cisloPlanu = cisloPlanu;
 	}
 
 	public String getVyhotovil() {
@@ -91,7 +91,7 @@ public class NavrhyZmenKm {
 				+ VfkUtil.formatValue(nzType) + ","
 				+ VfkUtil.formatValue(porizeniDatNz) + ","
 				+ VfkUtil.formatValue(rizeniId) + ","
-				+ VfkUtil.formatValue(cisloPlanku) + ","
+				+ VfkUtil.formatValue(cisloPlanu) + ","
 				+ VfkUtil.formatValue(vyhotovil) + ","
 				+ VfkUtil.formatValue(oznaceniMapovehoListu)
 				+ VfkUtil.getTerminator();
