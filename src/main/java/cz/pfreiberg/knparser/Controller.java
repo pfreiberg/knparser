@@ -97,8 +97,8 @@ public class Controller {
 			exporterFactory = new OracleLoaderExporterFactory(vfk.getZmeny(),
 					"EE8MSWIN1250", configuration.getOutput());
 		}
-
-		exportBonitniDilParcely(vfk, exporterFactory);
+		exporterFactory.getKatastrUzemiExporter(vfk.getKatastrUzemi());
+		/*exportBonitniDilParcely(vfk, exporterFactory);
 		exportJednotky(vfk, exporterFactory);
 		exporterJinePravniVztahy(vfk, exporterFactory);
 		exportNemovitosti(vfk, exporterFactory);
@@ -109,7 +109,7 @@ public class Controller {
 		exporterGeometrickyPlan(vfk, exporterFactory);
 		exporterRezervovanaCisla(vfk, exporterFactory);
 		exporterDefinicniBody(vfk, exporterFactory);
-		exporterAdresniMista(vfk, exporterFactory);
+		exporterAdresniMista(vfk, exporterFactory);*/
 	}
 
 	private void exportBonitniDilParcely(Vfk vfk,

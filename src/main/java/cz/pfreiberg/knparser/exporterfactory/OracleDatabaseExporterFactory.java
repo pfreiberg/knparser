@@ -78,16 +78,25 @@ import cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Telesa;
 import cz.pfreiberg.knparser.domain.vlastnictvi.Vlastnictvi;
 import cz.pfreiberg.knparser.exporter.Exporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.AdresyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.BonitDilyParcOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.BudovyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.CastiBudovOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.CastiObciOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
 import cz.pfreiberg.knparser.exporter.oracledatabase.DalsiPrvkyMapyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.DalsiUdajeListinyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.HraniceBpejOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.HraniceParcelOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.JednotkyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.JinePravVztahyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.KatastrUzemiOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ListinyDalsiUdajeOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ListinyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.NavrhyZmenKmOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.NzZpmzOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ObeslaniMfOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ObjektyRizeniOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyBoduBpOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyBudovOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ObrazyDefBoduOracleDatabaseJdbcExporter;
@@ -95,16 +104,25 @@ import cz.pfreiberg.knparser.exporter.oracledatabase.OpravSubjektyOracleDatabase
 import cz.pfreiberg.knparser.exporter.oracledatabase.OznaceniBpejOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ParcelyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.PravaStavbyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.PredmetyRizeniOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.PrvkyOMapyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.RJpvOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.RListOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.RUcelNemOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.RZpochrOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.RizeniKuOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.RizeniOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.SouradniceObrazuOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.SouradnicePolohyOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.SpojeniBMapyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.SpojeniBPolohOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.SpojeniPoMapyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.TelesaOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.UcastniciOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.UcastniciTypOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.VlastnictviOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ZobrazeniVbOracleDatabaseJdbcExporter;
+import cz.pfreiberg.knparser.exporter.oracledatabase.ZpmzOracleDatabaseJdbcExporter;
 
 public class OracleDatabaseExporterFactory implements ExporterFactory {
 
@@ -222,8 +240,8 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getKatastrUzemiExporter(List<KatastrUzemi> katastrUzemi) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving KatastrUzemi to database. Total: " + katastrUzemi.size());
+		return new KatastrUzemiOracleDatabaseJdbcExporter(katastrUzemi, connection);
 	}
 
 	@Override
@@ -234,8 +252,8 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getCastiObciExporter(List<CastiObci> castiObci) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving CastiObci to database. Total: " + castiObci.size());
+		return new CastiObciOracleDatabaseJdbcExporter(castiObci, connection);
 	}
 
 	@Override
@@ -288,15 +306,15 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getAdresyExporter(List<Adresy> adresy) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving Adresy to database. Total: " + adresy.size());
+		return new AdresyOracleDatabaseJdbcExporter(adresy, connection);
 	}
 
 	@Override
 	public Exporter getDalsiUdajeListinyExporter(
 			List<DalsiUdajeListiny> dalsiUdajeListiny) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving DalsiUdajeListiny to database. Total: " + dalsiUdajeListiny.size());
+		return new DalsiUdajeListinyOracleDatabaseJdbcExporter(dalsiUdajeListiny, connection);
 	}
 
 	@Override
@@ -308,39 +326,39 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getListinyDalsiUdajeExporter(
 			List<ListinyDalsiUdaje> listinyDalsiUdaje) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving ListinyDalsiUdaje to database. Total: " + listinyDalsiUdaje.size());
+		return new ListinyDalsiUdajeOracleDatabaseJdbcExporter(listinyDalsiUdaje, connection);
 	}
 
 	@Override
 	public Exporter getObeslaniMfExporter(List<ObeslaniMf> obeslaniMf) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving ObeslaniMf to database. Total: " + obeslaniMf.size());
+		return new ObeslaniMfOracleDatabaseJdbcExporter(obeslaniMf, connection);
 	}
 
 	@Override
 	public Exporter getObjektyRizeniExporter(List<ObjektyRizeni> objektyRizeni) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving ObjektyRizeni to database. Total: " + objektyRizeni.size());
+		return new ObjektyRizeniOracleDatabaseJdbcExporter(objektyRizeni, connection);
 	}
 
 	@Override
 	public Exporter getPredmetyRizeniExporter(
 			List<PredmetyRizeni> predmetyRizeni) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving PredmetyRizeni to database. Total: " + predmetyRizeni.size());
+		return new PredmetyRizeniOracleDatabaseJdbcExporter(predmetyRizeni, connection);
 	}
 
 	@Override
 	public Exporter getRizeniExporter(List<Rizeni> rizeni) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving RizeniExporter to database. Total: " + rizeni.size());
+		return new RizeniOracleDatabaseJdbcExporter(rizeni, connection);
 	}
 
 	@Override
 	public Exporter getRizeniKuExporter(List<RizeniKu> rizeniKu) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving RizeniKu to database. Total: " + rizeniKu.size());
+		return new RizeniKuOracleDatabaseJdbcExporter(rizeniKu, connection);
 	}
 
 	@Override
@@ -375,14 +393,14 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getUcastniciExporter(List<Ucastnici> ucastnici) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving Ucastnici to database. Total: " + ucastnici.size());
+		return new UcastniciOracleDatabaseJdbcExporter(ucastnici, connection);
 	}
 
 	@Override
 	public Exporter getUcastniciTypExporter(List<UcastniciTyp> ucastniciTyp) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving UcastniciTyp to database. Total: " + ucastniciTyp.size());
+		return new UcastniciTypOracleDatabaseJdbcExporter(ucastniciTyp, connection);
 	}
 
 	@Override
@@ -455,21 +473,21 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 	@Override
 	public Exporter getSouradniceObrazuExporter(
 			List<SouradniceObrazu> souradniceObrazu) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving SouradniceObrazu to database. Total: " + souradniceObrazu.size());
+		return new SouradniceObrazuOracleDatabaseJdbcExporter(souradniceObrazu, connection);
 	}
 
 	@Override
 	public Exporter getSouradnicePolohyExporter(
 			List<SouradnicePolohy> souradnicePolohy) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving SouradnicePolohy to database. Total: " + souradnicePolohy.size());
+		return new SouradnicePolohyOracleDatabaseJdbcExporter(souradnicePolohy, connection);
 	}
 
 	@Override
 	public Exporter getSpojeniBMapyExporter(List<SpojeniBMapy> spojeniBMapy) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving SpojeniBMapy to database. Total: " + spojeniBMapy.size());
+		return new SpojeniBMapyOracleDatabaseJdbcExporter(spojeniBMapy, connection);
 	}
 
 	@Override
@@ -516,20 +534,20 @@ public class OracleDatabaseExporterFactory implements ExporterFactory {
 
 	@Override
 	public Exporter getNavrhyZmenKmExporter(List<NavrhyZmenKm> navrhyZmenKm) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving NavrhyZmenKm to database. Total: " + navrhyZmenKm.size());
+		return new NavrhyZmenKmOracleDatabaseJdbcExporter(navrhyZmenKm, connection);
 	}
 
 	@Override
 	public Exporter getNzZpmzExporter(List<NzZpmz> nzZpmz) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving NzZpmz to database. Total: " + nzZpmz.size());
+		return new NzZpmzOracleDatabaseJdbcExporter(nzZpmz, connection);
 	}
 
 	@Override
 	public Exporter getZpmzExporter(List<Zpmz> zpmz) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Saving Zpmz to database. Total: " + zpmz.size());
+		return new ZpmzOracleDatabaseJdbcExporter(zpmz, connection);
 	}
 
 	@Override
