@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import cz.pfreiberg.knparser.exporter.Exporter;
@@ -53,6 +55,15 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		}
 		return output;
 	}
+	
+	protected Date subtractOneSecond(Date originalDate) {
+		Calendar modifiedDate = Calendar.getInstance();
+		modifiedDate.setTime(originalDate);
+		modifiedDate.add(Calendar.SECOND, -1);
+		originalDate = modifiedDate.getTime();
+		return originalDate;
+	}
+
 
 	protected static List<String> getMethods(List<String> primaryKeys) {
 		List<String> methods = new ArrayList<>();

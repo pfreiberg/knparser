@@ -23,7 +23,8 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 
 	private final String name = "KATASTR_UZEMI";
 
-	public KatastrUzemiOracleDatabaseJdbcExporter(List<KatastrUzemi> katastrUzemi,
+	public KatastrUzemiOracleDatabaseJdbcExporter(
+			List<KatastrUzemi> katastrUzemi,
 			ConnectionParameters connectionParameters) {
 		this.katastrUzemi = katastrUzemi;
 		connection = super.getConnection(connectionParameters);
@@ -70,8 +71,7 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(KatastrUzemi record) {
-		String platnostOd = VfkUtil.formatValueDatabase(record
-				.getPlatnostOd());
+		String platnostOd = VfkUtil.formatValueDatabase(record.getPlatnostOd());
 		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
 			return;
 		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
@@ -107,9 +107,12 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 
 		return false;
 	}
-	
+
 	public void update(String table, Date platnostOd) {
-		String select = "UPDATE " + table + " SET PLATNOST_OD = PLATNOST_OD - INTERVAL '1' SECOND, PLATNOST_DO = " + VfkUtil.formatValueDatabase(platnostOd) + " WHERE PLATNOST_DO is NULL AND *pk*";
+		platnostOd = subtractOneSecond(platnostOd);
+		String select = "UPDATE " + table + " SET PLATNOST_DO = "
+				+ VfkUtil.formatValueDatabase(platnostOd)
+				+ " WHERE PLATNOST_DO is NULL AND *pk*";
 
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			select = select.replace("*pk*", primaryKeys.get(i) + " = "
@@ -130,14 +133,7 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		
-	}
-
-	public void insertRecord(String table, Object rawRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
-				+ "(?,?,?,?,?,?)";
+		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -169,27 +165,11 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 				e.printStackTrace();
 			}
 		}
+
 	}
 
 	@Override
 	public void delete(String table, String date, String dateValue,
 			String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk* AND " + date
-				+ operation + dateValue;
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		delete = delete.replace(" AND *pk*", "");
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(delete);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

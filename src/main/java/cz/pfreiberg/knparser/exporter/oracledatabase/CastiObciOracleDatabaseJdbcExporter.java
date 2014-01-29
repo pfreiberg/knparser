@@ -70,8 +70,7 @@ public class CastiObciOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(CastiObci record) {
-		String platnostOd = VfkUtil.formatValueDatabase(record
-				.getPlatnostOd());
+		String platnostOd = VfkUtil.formatValueDatabase(record.getPlatnostOd());
 		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
 			return;
 		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
@@ -107,9 +106,12 @@ public class CastiObciOracleDatabaseJdbcExporter extends
 
 		return false;
 	}
-	
+
 	public void update(String table, Date platnostOd) {
-		String select = "UPDATE " + table + " SET PLATNOST_OD = PLATNOST_OD - INTERVAL '1' SECOND, PLATNOST_DO = " + VfkUtil.formatValueDatabase(platnostOd) + " WHERE PLATNOST_DO is NULL AND *pk*";
+		platnostOd = subtractOneSecond(platnostOd);
+		String select = "UPDATE " + table + " SET PLATNOST_DO = "
+				+ VfkUtil.formatValueDatabase(platnostOd)
+				+ " WHERE PLATNOST_DO is NULL AND *pk*";
 
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			select = select.replace("*pk*", primaryKeys.get(i) + " = "
@@ -129,14 +131,7 @@ public class CastiObciOracleDatabaseJdbcExporter extends
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		
-	}
-
-	public void insertRecord(String table, Object rawRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
-				+ "(?,?,?,?,?)";
+		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -167,26 +162,9 @@ public class CastiObciOracleDatabaseJdbcExporter extends
 			}
 		}
 	}
-
+	
 	@Override
 	public void delete(String table, String date, String dateValue,
 			String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk* AND " + date
-				+ operation + dateValue;
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		delete = delete.replace(" AND *pk*", "");
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(delete);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
