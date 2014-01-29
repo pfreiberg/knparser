@@ -15,7 +15,7 @@ public class ZpVyuzitiBud {
 	private Integer kod;
 	private String nazev;
 	private Date platnostOd;
-	private Date plastnostDo;
+	private Date platnostDo;
 	private String zkratka;
 
 	public Integer getKod() {
@@ -42,12 +42,12 @@ public class ZpVyuzitiBud {
 		this.platnostOd = platnostOd;
 	}
 
-	public Date getPlastnostDo() {
-		return plastnostDo;
+	public Date getPlatnostDo() {
+		return platnostDo;
 	}
 
-	public void setPlastnostDo(Date plastnostDo) {
-		this.plastnostDo = plastnostDo;
+	public void setPlatnostDo(Date platnostDo) {
+		this.platnostDo = platnostDo;
 	}
 
 	public String getZkratka() {
@@ -63,7 +63,7 @@ public class ZpVyuzitiBud {
 		return "" + VfkUtil.formatValue(kod) + ","
 				+ VfkUtil.formatValue(nazev) + "," 
 				+ VfkUtil.formatValue(platnostOd) + ","
-				+ VfkUtil.formatValue(plastnostDo) + ","
+				+ VfkUtil.formatValue(platnostDo) + ","
 				+ VfkUtil.formatValue(zkratka)
 				+ VfkUtil.getTerminator();
 	}

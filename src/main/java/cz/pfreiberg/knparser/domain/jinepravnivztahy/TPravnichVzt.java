@@ -74,11 +74,11 @@ public class TPravnichVzt {
 		this.proNemovitost = proNemovitost;
 	}
 
-	public String getkNemovitosti() {
+	public String getKNemovitosti() {
 		return kNemovitosti;
 	}
 
-	public void setkNemovitosti(String kNemovitosti) {
+	public void setKNemovitosti(String kNemovitosti) {
 		this.kNemovitosti = kNemovitosti;
 	}
 
@@ -114,11 +114,11 @@ public class TPravnichVzt {
 		this.vlvztah = vlvztah;
 	}
 
-	public String getkOs() {
+	public String getKOs() {
 		return kOs;
 	}
 
-	public void setkOs(String kOs) {
+	public void setKOs(String kOs) {
 		this.kOs = kOs;
 	}
 
