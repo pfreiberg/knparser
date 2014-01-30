@@ -97,7 +97,7 @@ public class Controller {
 			exporterFactory = new OracleLoaderExporterFactory(vfk.getZmeny(),
 					"EE8MSWIN1250", configuration.getOutput());
 		}
-
+		
 		exportBonitniDilParcely(vfk, exporterFactory);
 		exportJednotky(vfk, exporterFactory);
 		exporterJinePravniVztahy(vfk, exporterFactory);

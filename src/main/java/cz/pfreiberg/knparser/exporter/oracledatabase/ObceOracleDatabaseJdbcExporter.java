@@ -12,8 +12,7 @@ import java.util.List;
 import cz.pfreiberg.knparser.domain.nemovitosti.Obce;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class ObceOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+public class ObceOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter {
 
 	private List<Obce> obce;
 	private Connection connection;
@@ -23,8 +22,7 @@ public class ObceOracleDatabaseJdbcExporter extends
 
 	private final String name = "OBCE";
 
-	public ObceOracleDatabaseJdbcExporter(
-			List<Obce> obce,
+	public ObceOracleDatabaseJdbcExporter(List<Obce> obce,
 			ConnectionParameters connectionParameters) {
 		this.obce = obce;
 		connection = super.getConnection(connectionParameters);
@@ -75,8 +73,8 @@ public class ObceOracleDatabaseJdbcExporter extends
 		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
 			return;
 		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
-			update(name, record.getPlatnostOd());
-			insert(name, record, true);
+			if (update(name, record.getPlatnostOd()))
+				insert(name, record, true);
 		} else {
 			insert(name, record, true);
 		}
@@ -108,7 +106,7 @@ public class ObceOracleDatabaseJdbcExporter extends
 		return false;
 	}
 
-	public void update(String table, Date platnostOd) {
+	public boolean update(String table, Date platnostOd) {
 		platnostOd = subtractOneSecond(platnostOd);
 		String select = "UPDATE " + table + " SET PLATNOST_DO = "
 				+ VfkUtil.formatValueDatabase(platnostOd)
@@ -123,12 +121,14 @@ public class ObceOracleDatabaseJdbcExporter extends
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(select);
-			preparedStatement.executeQuery();
+			int affectedRows = preparedStatement.executeUpdate();
 			preparedStatement.close();
+			return (affectedRows > 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override

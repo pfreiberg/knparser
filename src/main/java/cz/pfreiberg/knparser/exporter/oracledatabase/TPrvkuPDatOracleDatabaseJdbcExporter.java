@@ -23,8 +23,7 @@ public class TPrvkuPDatOracleDatabaseJdbcExporter extends
 
 	private final String name = "T_PRVKU_P_DAT";
 
-	public TPrvkuPDatOracleDatabaseJdbcExporter(
-			List<TPrvkuPDat> tPrvkuPDat,
+	public TPrvkuPDatOracleDatabaseJdbcExporter(List<TPrvkuPDat> tPrvkuPDat,
 			ConnectionParameters connectionParameters) {
 		this.tPrvkuPDat = tPrvkuPDat;
 		connection = super.getConnection(connectionParameters);
@@ -75,8 +74,8 @@ public class TPrvkuPDatOracleDatabaseJdbcExporter extends
 		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
 			return;
 		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
-			update(name, record.getPlatnostOd());
-			insert(name, record, true);
+			if (update(name, record.getPlatnostOd()))
+				insert(name, record, true);
 		} else {
 			insert(name, record, true);
 		}
@@ -108,7 +107,7 @@ public class TPrvkuPDatOracleDatabaseJdbcExporter extends
 		return false;
 	}
 
-	public void update(String table, Date platnostOd) {
+	public boolean update(String table, Date platnostOd) {
 		platnostOd = subtractOneSecond(platnostOd);
 		String select = "UPDATE " + table + " SET PLATNOST_DO = "
 				+ VfkUtil.formatValueDatabase(platnostOd)
@@ -123,17 +122,20 @@ public class TPrvkuPDatOracleDatabaseJdbcExporter extends
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(select);
-			preparedStatement.executeQuery();
+			int affectedRows = preparedStatement.executeUpdate();
 			preparedStatement.close();
+			return (affectedRows > 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?,?,?)";
+		String insert = "INSERT INTO " + table + " VALUES"
+				+ "(?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 

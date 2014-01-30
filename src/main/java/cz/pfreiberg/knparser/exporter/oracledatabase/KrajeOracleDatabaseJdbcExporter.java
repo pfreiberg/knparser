@@ -12,8 +12,7 @@ import java.util.List;
 import cz.pfreiberg.knparser.domain.nemovitosti.Kraje;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class KrajeOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter {
 
 	private List<Kraje> kraje;
 	private Connection connection;
@@ -23,8 +22,7 @@ public class KrajeOracleDatabaseJdbcExporter extends
 
 	private final String name = "KRAJE";
 
-	public KrajeOracleDatabaseJdbcExporter(
-			List<Kraje> kraje,
+	public KrajeOracleDatabaseJdbcExporter(List<Kraje> kraje,
 			ConnectionParameters connectionParameters) {
 		this.kraje = kraje;
 		connection = super.getConnection(connectionParameters);
@@ -75,8 +73,8 @@ public class KrajeOracleDatabaseJdbcExporter extends
 		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
 			return;
 		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
-			update(name, record.getPlatnostOd());
-			insert(name, record, true);
+			if (update(name, record.getPlatnostOd()))
+				insert(name, record, true);
 		} else {
 			insert(name, record, true);
 		}
@@ -108,7 +106,7 @@ public class KrajeOracleDatabaseJdbcExporter extends
 		return false;
 	}
 
-	public void update(String table, Date platnostOd) {
+	public boolean update(String table, Date platnostOd) {
 		platnostOd = subtractOneSecond(platnostOd);
 		String select = "UPDATE " + table + " SET PLATNOST_DO = "
 				+ VfkUtil.formatValueDatabase(platnostOd)
@@ -123,12 +121,14 @@ public class KrajeOracleDatabaseJdbcExporter extends
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(select);
-			preparedStatement.executeQuery();
+			int affectedRows = preparedStatement.executeUpdate();
 			preparedStatement.close();
+			return (affectedRows > 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class KrajeOracleDatabaseJdbcExporter extends
 					VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
 			preparedStatement.setObject(4,
 					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-			
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}

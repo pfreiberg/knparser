@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,8 +76,8 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
 			return;
 		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
-			update(name, record.getPlatnostOd());
-			insert(name, record, true);
+			if (update(name, record.getPlatnostOd()))
+				insert(name, record, true);
 		} else {
 			insert(name, record, true);
 		}
@@ -108,7 +109,7 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 		return false;
 	}
 
-	public void update(String table, Date platnostOd) {
+	public boolean update(String table, Date platnostOd) {
 		platnostOd = subtractOneSecond(platnostOd);
 		String select = "UPDATE " + table + " SET PLATNOST_DO = "
 				+ VfkUtil.formatValueDatabase(platnostOd)
@@ -123,12 +124,14 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(select);
-			preparedStatement.executeQuery();
+			int affectedRows = preparedStatement.executeUpdate();
 			preparedStatement.close();
+			return (affectedRows > 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
@@ -147,7 +150,7 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 					VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
 			preparedStatement.setObject(5,
 					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-			preparedStatement.setObject(6, null);
+			preparedStatement.setNull(6, Types.DECIMAL);
 			// TODO IS_DKN
 
 			preparedStatement.executeUpdate();

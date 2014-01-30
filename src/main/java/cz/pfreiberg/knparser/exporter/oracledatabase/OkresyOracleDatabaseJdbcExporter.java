@@ -23,8 +23,7 @@ public class OkresyOracleDatabaseJdbcExporter extends
 
 	private final String name = "OKRESY";
 
-	public OkresyOracleDatabaseJdbcExporter(
-			List<Okresy> okresy,
+	public OkresyOracleDatabaseJdbcExporter(List<Okresy> okresy,
 			ConnectionParameters connectionParameters) {
 		this.okresy = okresy;
 		connection = super.getConnection(connectionParameters);
@@ -75,8 +74,8 @@ public class OkresyOracleDatabaseJdbcExporter extends
 		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
 			return;
 		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
-			update(name, record.getPlatnostOd());
-			insert(name, record, true);
+			if (update(name, record.getPlatnostOd()))
+				insert(name, record, true);
 		} else {
 			insert(name, record, true);
 		}
@@ -108,7 +107,7 @@ public class OkresyOracleDatabaseJdbcExporter extends
 		return false;
 	}
 
-	public void update(String table, Date platnostOd) {
+	public boolean update(String table, Date platnostOd) {
 		platnostOd = subtractOneSecond(platnostOd);
 		String select = "UPDATE " + table + " SET PLATNOST_DO = "
 				+ VfkUtil.formatValueDatabase(platnostOd)
@@ -123,12 +122,14 @@ public class OkresyOracleDatabaseJdbcExporter extends
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(select);
-			preparedStatement.executeQuery();
+			int affectedRows = preparedStatement.executeUpdate();
 			preparedStatement.close();
+			return (affectedRows > 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override

@@ -75,8 +75,9 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
 			return;
 		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
-			update(name, record.getPlatnostOd());
-			insert(name, record, true);
+			if (update(name, record.getPlatnostOd()))
+				insert(name, record, true);
+
 		} else {
 			insert(name, record, true);
 		}
@@ -108,7 +109,7 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 		return false;
 	}
 
-	public void update(String table, Date platnostOd) {
+	public boolean update(String table, Date platnostOd) {
 		platnostOd = subtractOneSecond(platnostOd);
 		String select = "UPDATE " + table + " SET PLATNOST_DO = "
 				+ VfkUtil.formatValueDatabase(platnostOd)
@@ -123,17 +124,20 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(select);
-			preparedStatement.executeQuery();
+			int affectedRows = preparedStatement.executeUpdate();
 			preparedStatement.close();
+			return (affectedRows > 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String insert = "INSERT INTO " + table + " VALUES"
+				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
@@ -156,7 +160,7 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(12, record.getKOs());
 			preparedStatement.setObject(13, record.getPodilVeritele());
 			preparedStatement.setObject(14, record.getPoradi());
-			
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}

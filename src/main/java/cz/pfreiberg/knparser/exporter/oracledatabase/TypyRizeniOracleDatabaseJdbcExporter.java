@@ -6,27 +6,26 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import cz.pfreiberg.knparser.domain.nemovitosti.TBudov;
+import cz.pfreiberg.knparser.domain.rizeni.TypyRizeni;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class TBudovOracleDatabaseJdbcExporter extends
+public class TypyRizeniOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
-	private List<TBudov> tBudov;
+	private List<TypyRizeni> typyRizeni;
 	private Connection connection;
 	private List<String> primaryKeys;
 	private List<String> methodsName;
 	private List<Object> primaryKeysValues;
 
-	private final String name = "T_BUDOV";
+	private final String name = "TYPY_RIZENI";
 
-	public TBudovOracleDatabaseJdbcExporter(
-			List<TBudov> tBudov,
+	public TypyRizeniOracleDatabaseJdbcExporter(
+			List<TypyRizeni> typyRizeni,
 			ConnectionParameters connectionParameters) {
-		this.tBudov = tBudov;
+		this.typyRizeni = typyRizeni;
 		connection = super.getConnection(connectionParameters);
 		primaryKeys = super.getPrimaryKeys(connection, name);
 		methodsName = super.getMethods(primaryKeys);
@@ -40,7 +39,7 @@ public class TBudovOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (TBudov record : tBudov) {
+		for (TypyRizeni record : typyRizeni) {
 			primaryKeysValues = getPrimaryKeysValues(record);
 			processRecord(record);
 		}
@@ -57,9 +56,9 @@ public class TBudovOracleDatabaseJdbcExporter extends
 		try {
 			for (int i = 0; i < methodsName.size(); i++) {
 				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.nemovitosti.TBudov");
+						.forName("cz.pfreiberg.knparser.domain.rizeni.TypyRizeni");
 				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((TBudov) record));
+				primaryKeyValues.add(method.invoke((TypyRizeni) record));
 			}
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException
@@ -70,23 +69,20 @@ public class TBudovOracleDatabaseJdbcExporter extends
 		return primaryKeyValues;
 	}
 
-	private void processRecord(TBudov record) {
-		String platnostOd = VfkUtil.formatValueDatabase(record.getPlatnostOd());
-		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
-			return;
-		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
-			if (update(name, record.getPlatnostOd()))
-				insert(name, record, true);
-		} else {
+	private void processRecord(TypyRizeni record) {
+
+		if (find(name, null, null, null)) {
+			delete(name, null, null, null);
 			insert(name, record, true);
-		}
+		} else {	
+			insert(name, record, true);
+		} 
 	}
 
 	@Override
 	public boolean find(String table, String date, String dateValue,
 			String operation) {
-		String select = "SELECT * FROM " + table + " WHERE *pk* AND " + date
-				+ operation + dateValue;
+		String select = "SELECT * FROM " + table + " WHERE *pk* AND ";
 
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			select = select.replace("*pk*", primaryKeys.get(i) + " = "
@@ -108,49 +104,20 @@ public class TBudovOracleDatabaseJdbcExporter extends
 		return false;
 	}
 
-	public boolean update(String table, Date platnostOd) {
-		platnostOd = subtractOneSecond(platnostOd);
-		String select = "UPDATE " + table + " SET PLATNOST_DO = "
-				+ VfkUtil.formatValueDatabase(platnostOd)
-				+ " WHERE PLATNOST_DO is NULL AND *pk*";
-
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			select = select.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		select = select.replace(" AND *pk*", "");
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
-			int affectedRows = preparedStatement.executeUpdate();
-			preparedStatement.close();
-			return (affectedRows > 0);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
+		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
 
 			preparedStatement = connection.prepareStatement(insert);
 
-			TBudov record = (TBudov) rawRecord;
+			TypyRizeni record = (TypyRizeni) rawRecord;
 			preparedStatement.setObject(1, record.getKod());
 			preparedStatement.setObject(2, record.getNazev());
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-			preparedStatement.setObject(5, record.getZadaniCd());
-			preparedStatement.setObject(6, record.getZkratka());
-
+			preparedStatement.setObject(3, record.getPopis());
+			preparedStatement.setObject(4, record.getZpoplatneni());
+		
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}
@@ -172,5 +139,21 @@ public class TBudovOracleDatabaseJdbcExporter extends
 	@Override
 	public void delete(String table, String date, String dateValue,
 			String operation) {
+		String delete = "DELETE FROM " + table + " WHERE *pk* AND ";
+		for (int i = 0; i < primaryKeys.size(); i++) {
+			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
+					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
+					+ " AND *pk*");
+		}
+		delete = delete.replace(" AND *pk*", "");
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(delete);
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
