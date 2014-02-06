@@ -1,5 +1,11 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
+/**
+ * Zapouzdřuje parametry nutné pro připojení k databázi.
+ * 
+ * @author Petr Freiberg
+ *
+ */
 public class ConnectionParameters {
 
 	private String url;
