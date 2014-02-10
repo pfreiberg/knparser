@@ -16,8 +16,8 @@ public class SouradnicePolohyParser {
 		souradnicePolohy.setCisloTl(VfkUtil.getInteger(tokens, i++));
 		souradnicePolohy.setCisloBodu(VfkUtil.getLong(tokens, i++));
 		souradnicePolohy.setUplneCislo(VfkUtil.getLong(tokens, i++));
-		souradnicePolohy.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		souradnicePolohy.setSouradniceY(VfkUtil.getDouble(tokens, i++));
+		souradnicePolohy.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		souradnicePolohy.setKodchbKod(VfkUtil.getInteger(tokens, i++));
 		souradnicePolohy.setKatuzeKodMer(VfkUtil.getInteger(tokens, i++));
 		souradnicePolohy.setCisloZpmzMer(VfkUtil.getInteger(tokens, i++));

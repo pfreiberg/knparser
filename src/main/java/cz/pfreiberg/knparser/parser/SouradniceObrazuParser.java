@@ -16,8 +16,8 @@ public class SouradniceObrazuParser {
 		souradniceObrazu.setCisloTl(VfkUtil.getInteger(tokens, i++));
 		souradniceObrazu.setCisloBodu(VfkUtil.getLong(tokens, i++));
 		souradniceObrazu.setUplneCislo(VfkUtil.getLong(tokens, i++));
-		souradniceObrazu.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		souradniceObrazu.setSouradniceY(VfkUtil.getDouble(tokens, i++));
+		souradniceObrazu.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		souradniceObrazu.setKodchbKod(VfkUtil.getInteger(tokens, i++));
 		return souradniceObrazu;
 	}

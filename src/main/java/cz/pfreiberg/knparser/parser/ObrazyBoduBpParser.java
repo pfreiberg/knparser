@@ -17,8 +17,8 @@ public class ObrazyBoduBpParser {
 		obrazyBoduBp.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		obrazyBoduBp.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
 		obrazyBoduBp.setTypppdKod(VfkUtil.getInteger(tokens, i++));
-		obrazyBoduBp.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		obrazyBoduBp.setSouradniceY(VfkUtil.getDouble(tokens, i++));
+		obrazyBoduBp.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		obrazyBoduBp.setText(VfkUtil.getString(tokens, i++));
 		obrazyBoduBp.setVelikost(VfkUtil.getDouble(tokens, i++));
 		obrazyBoduBp.setUhel(VfkUtil.getDouble(tokens, i++));
