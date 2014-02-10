@@ -198,8 +198,8 @@ public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(6, record.getRizeniIdVzniku());
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
 			preparedStatement.setObject(8, record.getTypppdKod());
-			preparedStatement.setObject(9, record.getSouradniceX());
-			preparedStatement.setObject(10, record.getSouradniceY());
+			preparedStatement.setObject(9, record.getSouradniceY());
+			preparedStatement.setObject(10, record.getSouradniceX());
 			preparedStatement.setObject(11, record.getText());
 			preparedStatement.setObject(12, record.getVelikost());
 			preparedStatement.setObject(13, record.getUhel());

@@ -21,8 +21,8 @@ public class ObrazyBoduBp {
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
 	private Integer typppdKod;
-	private Double souradniceX;
 	private Double souradniceY;
+	private Double souradniceX;
 	private String text;
 	private Double velikost;
 	private Double uhel;
@@ -94,20 +94,20 @@ public class ObrazyBoduBp {
 		this.typppdKod = typppdKod;
 	}
 
-	public Double getSouradniceX() {
-		return souradniceX;
-	}
-
-	public void setSouradniceX(Double souradniceX) {
-		this.souradniceX = souradniceX;
-	}
-
 	public Double getSouradniceY() {
 		return souradniceY;
 	}
 
 	public void setSouradniceY(Double souradniceY) {
 		this.souradniceY = souradniceY;
+	}
+	
+	public Double getSouradniceX() {
+		return souradniceX;
+	}
+
+	public void setSouradniceX(Double souradniceX) {
+		this.souradniceX = souradniceX;
 	}
 
 	public String getText() {
