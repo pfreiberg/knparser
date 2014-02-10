@@ -20,7 +20,7 @@ public class HraniceParcel {
 	private Integer priznakKontextu;
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
-	private Integer typppdKod;
+	private Long typppdKod;
 	private Long parId1;
 	private Long parId2;
 
@@ -80,11 +80,11 @@ public class HraniceParcel {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public Integer getTypppdKod() {
+	public Long getTypppdKod() {
 		return typppdKod;
 	}
 
-	public void setTypppdKod(Integer typppdKod) {
+	public void setTypppdKod(Long typppdKod) {
 		this.typppdKod = typppdKod;
 	}
 

@@ -13,7 +13,7 @@ public class DPozemkuParser {
 		dPozemku.setNazev(VfkUtil.getString(tokens, i++));
 		dPozemku.setZemedelskaKultura(VfkUtil.getString(tokens, i++));
 		dPozemku.setPlatnostOd(VfkUtil.getDate(tokens, i++));
-		dPozemku.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		dPozemku.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		dPozemku.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 		dPozemku.setZkratka(VfkUtil.getString(tokens, i++));
 		dPozemku.setStavebniParcela(VfkUtil.getString(tokens, i++));

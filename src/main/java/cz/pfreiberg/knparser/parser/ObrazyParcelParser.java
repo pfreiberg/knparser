@@ -16,7 +16,7 @@ public class ObrazyParcelParser {
 		obrazyParcel.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		obrazyParcel.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		obrazyParcel.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
-		obrazyParcel.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		obrazyParcel.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		obrazyParcel.setSouradniceY(VfkUtil.getDouble(tokens, i++));
 		obrazyParcel.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		obrazyParcel.setText(VfkUtil.getString(tokens, i++));

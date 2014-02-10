@@ -16,7 +16,7 @@ public class DalsiPrvkyMapyParser {
 		dalsiPrvkyMapy.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		dalsiPrvkyMapy.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		dalsiPrvkyMapy.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
-		dalsiPrvkyMapy.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		dalsiPrvkyMapy.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		dalsiPrvkyMapy.setSouradniceY(VfkUtil.getDouble(tokens, i++));
 		dalsiPrvkyMapy.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		dalsiPrvkyMapy.setText(VfkUtil.getString(tokens, i++));

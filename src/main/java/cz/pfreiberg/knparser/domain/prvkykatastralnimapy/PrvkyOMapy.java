@@ -20,7 +20,7 @@ public class PrvkyOMapy {
 	private Integer priznakKontextu;
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
-	private Integer typppdKod;
+	private Long typppdKod;
 	private String text;
 	private Double velikost;
 	private Double uhel;
@@ -83,11 +83,11 @@ public class PrvkyOMapy {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public Integer getTypppdKod() {
+	public Long getTypppdKod() {
 		return typppdKod;
 	}
 
-	public void setTypppdKod(Integer typppdKod) {
+	public void setTypppdKod(Long typppdKod) {
 		this.typppdKod = typppdKod;
 	}
 

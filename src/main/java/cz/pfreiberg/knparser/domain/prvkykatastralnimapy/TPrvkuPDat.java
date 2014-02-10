@@ -13,7 +13,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  */
 public class TPrvkuPDat {
 
-	private Integer kod;
+	private Long kod;
 	private String polohopis;
 	private String editovatelny;
 	private Date platnostOd;
@@ -22,11 +22,11 @@ public class TPrvkuPDat {
 	private Integer typPrvku;
 	private Date platnostDo;
 
-	public Integer getKod() {
+	public Long getKod() {
 		return kod;
 	}
 
-	public void setKod(Integer kod) {
+	public void setKod(Long kod) {
 		this.kod = kod;
 	}
 

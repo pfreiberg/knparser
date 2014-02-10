@@ -16,7 +16,7 @@ public class PrvkyOMapyParser {
 		prvkyOMapy.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		prvkyOMapy.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		prvkyOMapy.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
-		prvkyOMapy.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		prvkyOMapy.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		prvkyOMapy.setText(VfkUtil.getString(tokens, i++));
 		prvkyOMapy.setVelikost(VfkUtil.getDouble(tokens, i++));
 		prvkyOMapy.setUhel(VfkUtil.getDouble(tokens, i++));

@@ -16,7 +16,7 @@ public class DPozemku {
 	private String nazev;
 	private String zemedelskaKultura;
 	private Date platnostOd;
-	private Integer typppdKod;
+	private Long typppdKod;
 	private Date platnostDo;
 	private String zkratka;
 	private String stavebniParcela;
@@ -53,11 +53,11 @@ public class DPozemku {
 		this.platnostOd = platnostOd;
 	}
 
-	public Integer getTypppdKod() {
+	public Long getTypppdKod() {
 		return typppdKod;
 	}
 
-	public void setTypppdKod(Integer typppdKod) {
+	public void setTypppdKod(Long typppdKod) {
 		this.typppdKod = typppdKod;
 	}
 

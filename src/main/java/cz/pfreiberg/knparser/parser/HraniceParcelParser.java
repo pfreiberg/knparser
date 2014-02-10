@@ -16,7 +16,7 @@ public class HraniceParcelParser {
 		hraniceParcel.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		hraniceParcel.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		hraniceParcel.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
-		hraniceParcel.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		hraniceParcel.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		hraniceParcel.setParId1(VfkUtil.getLong(tokens, i++));
 		hraniceParcel.setParId2(VfkUtil.getLong(tokens, i++));
 

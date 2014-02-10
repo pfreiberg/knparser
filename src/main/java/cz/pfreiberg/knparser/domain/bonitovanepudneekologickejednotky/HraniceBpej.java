@@ -20,7 +20,7 @@ public class HraniceBpej {
 	private Integer priznakKontextu;
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
-	private Integer typppdKod;
+	private Long typppdKod;
 	private String bpejKodHranice1;
 	private String bpejKodHranice2;
 	private Integer katuzeKod;
@@ -81,11 +81,11 @@ public class HraniceBpej {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public Integer getTypppdKod() {
+	public Long getTypppdKod() {
 		return typppdKod;
 	}
 
-	public void setTypppdKod(Integer typppdKod) {
+	public void setTypppdKod(Long typppdKod) {
 		this.typppdKod = typppdKod;
 	}
 

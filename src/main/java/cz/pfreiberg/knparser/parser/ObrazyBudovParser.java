@@ -16,7 +16,7 @@ public class ObrazyBudovParser {
 		obrazyBudov.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		obrazyBudov.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		obrazyBudov.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
-		obrazyBudov.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		obrazyBudov.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		obrazyBudov.setSouradniceY(VfkUtil.getDouble(tokens, i++));
 		obrazyBudov.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		obrazyBudov.setVelikost(VfkUtil.getDouble(tokens, i++));

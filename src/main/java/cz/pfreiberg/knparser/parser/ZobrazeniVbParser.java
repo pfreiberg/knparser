@@ -16,7 +16,7 @@ public class ZobrazeniVbParser {
 		zobrazeniVb.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		zobrazeniVb.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		zobrazeniVb.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
-		zobrazeniVb.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		zobrazeniVb.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		zobrazeniVb.setKatuzeKod(VfkUtil.getInteger(tokens, i++));
 		zobrazeniVb.setHjpvId(VfkUtil.getLong(tokens, i++));
 

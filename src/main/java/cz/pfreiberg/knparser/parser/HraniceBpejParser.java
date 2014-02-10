@@ -16,7 +16,7 @@ public class HraniceBpejParser {
 		hraniceBpej.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		hraniceBpej.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		hraniceBpej.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
-		hraniceBpej.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		hraniceBpej.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		hraniceBpej.setBpejKodHranice1(VfkUtil.getString(tokens, i++));
 		hraniceBpej.setBpejKodHranice2(VfkUtil.getString(tokens, i++));
 		hraniceBpej.setKatuzeKod(VfkUtil.getInteger(tokens, i++));

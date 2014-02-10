@@ -12,7 +12,7 @@ public class ZpVyuzitiPozParser {
 		zpVyuzitiPoz.setKod(VfkUtil.getInteger(tokens, i++));
 		zpVyuzitiPoz.setNazev(VfkUtil.getString(tokens, i++));
 		zpVyuzitiPoz.setPlatnostOd(VfkUtil.getDate(tokens, i++));
-		zpVyuzitiPoz.setTypppKod(VfkUtil.getInteger(tokens, i++));
+		zpVyuzitiPoz.setTypppKod(VfkUtil.getLong(tokens, i++));
 		zpVyuzitiPoz.setPlatnostDo(VfkUtil.getDate(tokens, i++));
 		zpVyuzitiPoz.setZkratka(VfkUtil.getString(tokens, i++));
 

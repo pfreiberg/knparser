@@ -20,7 +20,7 @@ public class ZobrazeniVb {
 	private Integer priznakKontextu;
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
-	private Integer typppdKod;
+	private Long typppdKod;
 	private Integer katuzeKod;
 	private Long hjpvId;
 
@@ -80,11 +80,11 @@ public class ZobrazeniVb {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public Integer getTypppdKod() {
+	public Long getTypppdKod() {
 		return typppdKod;
 	}
 
-	public void setTypppdKod(Integer typppdKod) {
+	public void setTypppdKod(Long typppdKod) {
 		this.typppdKod = typppdKod;
 	}
 

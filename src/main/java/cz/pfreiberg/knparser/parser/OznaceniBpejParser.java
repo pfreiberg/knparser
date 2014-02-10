@@ -16,7 +16,7 @@ public class OznaceniBpejParser {
 		oznaceniBpej.setPriznakKontextu(VfkUtil.getInteger(tokens, i++));
 		oznaceniBpej.setRizeniIdVzniku(VfkUtil.getLong(tokens, i++));
 		oznaceniBpej.setRizeniIdZaniku(VfkUtil.getLong(tokens, i++));
-		oznaceniBpej.setTypppdKod(VfkUtil.getInteger(tokens, i++));
+		oznaceniBpej.setTypppdKod(VfkUtil.getLong(tokens, i++));
 		oznaceniBpej.setSouradniceY(VfkUtil.getDouble(tokens, i++));
 		oznaceniBpej.setSouradniceX(VfkUtil.getDouble(tokens, i++));
 		oznaceniBpej.setText(VfkUtil.getString(tokens, i++));

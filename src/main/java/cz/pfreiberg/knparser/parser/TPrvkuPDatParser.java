@@ -9,7 +9,7 @@ public class TPrvkuPDatParser {
 		int i = 0;
 
 		TPrvkuPDat tPrvkuPDat = new TPrvkuPDat();
-		tPrvkuPDat.setKod(VfkUtil.getInteger(tokens, i++));
+		tPrvkuPDat.setKod(VfkUtil.getLong(tokens, i++));
 		tPrvkuPDat.setPolohopis(VfkUtil.getString(tokens, i++));
 		tPrvkuPDat.setEditovatelny(VfkUtil.getString(tokens, i++));
 		tPrvkuPDat.setPlatnostOd(VfkUtil.getDate(tokens, i++));

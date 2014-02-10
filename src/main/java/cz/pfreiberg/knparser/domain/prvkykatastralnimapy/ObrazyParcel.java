@@ -21,7 +21,7 @@ public class ObrazyParcel {
 	private Integer priznakKontextu;
 	private Long rizeniIdVzniku;
 	private Long rizeniIdZaniku;
-	private Integer typppdKod;
+	private Long typppdKod;
 	private Double souradniceY;
 	private Double souradniceX;
 	private String text;
@@ -87,11 +87,11 @@ public class ObrazyParcel {
 		this.rizeniIdZaniku = rizeniIdZaniku;
 	}
 
-	public Integer getTypppdKod() {
+	public Long getTypppdKod() {
 		return typppdKod;
 	}
 
-	public void setTypppdKod(Integer typppdKod) {
+	public void setTypppdKod(Long typppdKod) {
 		this.typppdKod = typppdKod;
 	}
 

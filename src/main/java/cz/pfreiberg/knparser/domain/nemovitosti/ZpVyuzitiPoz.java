@@ -15,7 +15,7 @@ public class ZpVyuzitiPoz {
 	private Integer kod;
 	private String nazev;
 	private Date platnostOd;
-	private Integer typppKod;
+	private Long typppKod;
 	private Date platnostDo;
 	private String zkratka;
 
@@ -43,11 +43,11 @@ public class ZpVyuzitiPoz {
 		this.platnostOd = platnostOd;
 	}
 
-	public Integer getTypppKod() {
+	public Long getTypppKod() {
 		return typppKod;
 	}
 
-	public void setTypppKod(Integer typppKod) {
+	public void setTypppKod(Long typppKod) {
 		this.typppKod = typppKod;
 	}
 
