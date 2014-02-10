@@ -89,20 +89,20 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			getParId(name, "DATUM_VZNIKU", datumVzniku);
 
 			if (parId1 != null && parId2 != null)
-				return;
+				return; // a
 			else {
 				long parId1Number = Long.valueOf(parId1);
 
 				if (record.getParId2() == null) {
 					if (record.getParId1() == parId1Number)
-						return;
-					else {
+						return; // b-b
+					else { // b-a
 						record.setParId1(Math.min(parId1Number,
 								record.getParId1()));
 						record.setParId2(Math.max(parId1Number,
-								record.getParId2()));
+								record.getParId1()));
 					}
-				} else {
+				} else { // b-c
 					record.setParId1(Math.min(record.getParId1(),
 							record.getParId2()));
 					record.setParId2(Math.max(record.getParId1(),
