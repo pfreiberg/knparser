@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.nemovitosti.Kraje;
@@ -69,12 +68,10 @@ public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 	}
 
 	private void processRecord(Kraje record) {
-		String platnostOd = VfkUtil.formatValueDatabase(record.getPlatnostOd());
-		if (find(name, "PLATNOST_OD", platnostOd, "=")) {
-			return;
-		} else if (find(name, "PLATNOST_OD", platnostOd, "!=")) {
-			if (update(name, record.getPlatnostOd()))
-				insert(name, record, true);
+
+		if (find(name, null, null, null)) {
+			delete(name, null, null, null);
+			insert(name, record, true);
 		} else {
 			insert(name, record, true);
 		}
@@ -83,8 +80,7 @@ public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 	@Override
 	public boolean find(String table, String date, String dateValue,
 			String operation) {
-		String select = "SELECT * FROM " + table + " WHERE *pk* AND " + date
-				+ operation + dateValue;
+		String select = "SELECT * FROM " + table + " WHERE *pk* AND ";
 
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			select = select.replace("*pk*", primaryKeys.get(i) + " = "
@@ -103,31 +99,6 @@ public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 			e.printStackTrace();
 		}
 
-		return false;
-	}
-
-	public boolean update(String table, Date platnostOd) {
-		platnostOd = subtractOneSecond(platnostOd);
-		String select = "UPDATE " + table + " SET PLATNOST_DO = "
-				+ VfkUtil.formatValueDatabase(platnostOd)
-				+ " WHERE PLATNOST_DO is NULL AND *pk*";
-
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			select = select.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		select = select.replace(" AND *pk*", "");
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
-			int affectedRows = preparedStatement.executeUpdate();
-			preparedStatement.close();
-			return (affectedRows > 0);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return false;
 	}
 
@@ -168,5 +139,21 @@ public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 	@Override
 	public void delete(String table, String date, String dateValue,
 			String operation) {
+		String delete = "DELETE FROM " + table + " WHERE *pk* AND ";
+		for (int i = 0; i < primaryKeys.size(); i++) {
+			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
+					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
+					+ " AND *pk*");
+		}
+		delete = delete.replace(" AND *pk*", "");
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(delete);
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
