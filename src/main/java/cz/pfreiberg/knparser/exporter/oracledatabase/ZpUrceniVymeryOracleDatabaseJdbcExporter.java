@@ -82,7 +82,7 @@ public class ZpUrceniVymeryOracleDatabaseJdbcExporter extends
 	@Override
 	public boolean find(String table, String date, String dateValue,
 			String operation) {
-		String select = "SELECT * FROM " + table + " WHERE *pk* AND ";
+		String select = "SELECT * FROM " + table + " WHERE *pk*";
 
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			select = select.replace("*pk*", primaryKeys.get(i) + " = "
@@ -141,7 +141,7 @@ public class ZpUrceniVymeryOracleDatabaseJdbcExporter extends
 	@Override
 	public void delete(String table, String date, String dateValue,
 			String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk* AND ";
+		String delete = "DELETE FROM " + table + " WHERE *pk*";
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
 					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
