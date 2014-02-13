@@ -101,18 +101,22 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 								record.getParId1()));
 						record.setParId2(Math.max(parId1Number,
 								record.getParId1()));
+						update(name, record);
 					}
 				} else { // b-c
 					record.setParId1(Math.min(record.getParId1(),
 							record.getParId2()));
 					record.setParId2(Math.max(record.getParId1(),
 							record.getParId2()));
+					update(name, record);
+
 				}
+				return;
 			}
-			insert(name, record, true);
 		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">")) {
 			return;
-		} else insert(name, record, true);
+		} else
+			insert(name, record, true);
 	}
 
 	private void processHistoricalRecord(HraniceParcel record) {
@@ -134,14 +138,18 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 						record.setParId1(Math.min(parId1Number,
 								record.getParId1()));
 						record.setParId2(Math.max(parId1Number,
-								record.getParId2()));
+								record.getParId1()));
+						update(name + "_MIN", record);
+					
 					}
 				} else {
 					record.setParId1(Math.min(record.getParId1(),
 							record.getParId2()));
 					record.setParId2(Math.max(record.getParId1(),
 							record.getParId2()));
+					update(name + "_MIN", record);
 				}
+				return;
 			}
 		}
 
@@ -214,11 +222,12 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
+		HraniceParcel record = null;
 		try {
 
 			preparedStatement = connection.prepareStatement(insert);
 
-			HraniceParcel record = (HraniceParcel) rawRecord;
+			record = (HraniceParcel) rawRecord;
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, 0);
 			preparedStatement.setObject(3,
@@ -237,8 +246,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.close();
 		}
 
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
+		catch (Exception e) {
+			System.out.println(record);
 			e.printStackTrace();
 		} finally {
 			try {
@@ -248,6 +257,32 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public boolean update(String table, HraniceParcel record) {
+		String select = "UPDATE " + table + " SET PAR_ID_1 = "
+				+ record.getParId1()
+				+ " , PAR_ID_2 = "
+				+ record.getParId2()
+				+ " WHERE *pk*";
+
+		for (int i = 0; i < primaryKeys.size(); i++) {
+			select = select.replace("*pk*", primaryKeys.get(i) + " = "
+					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
+					+ " AND *pk*");
+		}
+		select = select.replace(" AND *pk*", "");
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(select);
+			int affectedRows = preparedStatement.executeUpdate();
+			preparedStatement.close();
+			return (affectedRows > 0);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
