@@ -110,9 +110,9 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 				}
 			}
 			insert(name, record, true);
-		} else {
-			insert(name, record, true);
-		}
+		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">")) {
+			return;
+		} else insert(name, record, true);
 	}
 
 	private void processHistoricalRecord(HraniceParcel record) {
