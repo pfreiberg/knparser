@@ -12,6 +12,7 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.HraniceParcel;
+import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class HraniceParcelOracleDatabaseJdbcExporter extends
@@ -80,12 +81,18 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(HraniceParcel record) {
+		
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name, primaryKeys, primaryKeysValues, 
+				"DATUM_VZNIKU", record.getDatumVzniku());
+		
+		
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
-			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
+		if (newFind(parameters, Operations.lessThan, true)) {
+			newDelete(parameters, Operations.lessThan, true);
 			insert(name, record, true);
-		} else if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
+		} else if (newFind(parameters, Operations.equal, true)) {
 
 			getParId(name, "DATUM_VZNIKU", datumVzniku);
 
@@ -114,16 +121,21 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 				}
 				return;
 			}
-		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">")) {
+		} else if (newFind(parameters, Operations.greaterThan, true)) {
 			return;
 		} else
 			insert(name, record, true);
 	}
 
 	private void processHistoricalRecord(HraniceParcel record) {
+		
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
+				"DATUM_VZNIKU", record.getDatumVzniku());
+		
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		if (find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
+		if (newFind(parameters, Operations.equal, true)) {
 
 			getParId(name + "_MIN", "DATUM_VZNIKU", datumVzniku);
 
@@ -155,8 +167,9 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		}
 
 		insert(name + "_MIN", record, false);
-		if (find(name, "DATUM_VZNIKU", datumVzniku, "="))
-			delete(name, "DATUM_VZNIKU", datumVzniku, "=");
+		parameters.setTable(name);
+		if (newFind(parameters, Operations.equal, true))
+			newDelete(parameters, Operations.equal, true);
 	}
 
 	private void getParId(String table, String date, String dateValue) {
@@ -183,32 +196,6 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public boolean find(String table, String date, String dateValue,
-			String operation) {
-		String select = "SELECT * FROM " + table + " WHERE *pk* AND " + date
-				+ operation + dateValue;
-
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			select = select.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		select = select.replace(" AND *pk*", "");
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
-			boolean isFound = preparedStatement.executeQuery().next();
-			preparedStatement.close();
-			return isFound;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return false;
 	}
 
 	@Override
@@ -329,24 +316,16 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
+	public boolean find(String table, String date, String dateValue,
+			String operation) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public void delete(String table, String date, String dateValue,
 			String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk* AND " + date
-				+ operation + dateValue;
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		delete = delete.replace(" AND *pk*", "");
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(delete);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO Auto-generated method stub
+		
 	}
 }
