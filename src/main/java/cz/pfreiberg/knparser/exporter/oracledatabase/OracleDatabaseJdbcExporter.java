@@ -2,6 +2,7 @@ package cz.pfreiberg.knparser.exporter.oracledatabase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.exporter.Exporter;
+import cz.pfreiberg.knparser.util.Operations;
+import cz.pfreiberg.knparser.util.VfkUtil;
 
 public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
@@ -36,6 +39,40 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 
 		return database;
 	}
+	
+	@Override
+	public boolean newFind(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) {
+	
+		String select = "";
+		if (hasDate) {
+			select = "SELECT * FROM " + parameters.getTable() + " WHERE *pk* AND " + parameters.getDate()
+					+ operation.getOperator() + parameters.getDateValue();
+		}
+		else {
+			select = "SELECT * FROM " + parameters.getTable() + " WHERE *pk*";
+		}
+		
+		for (int i = 0; i < parameters.getPrimaryKeys().size(); i++) {
+			select = select.replace("*pk*", parameters.getPrimaryKeys().get(i) + " = "
+					+ VfkUtil.formatValueDatabase(parameters.getPrimaryKeysValues().get(i))
+					+ " AND *pk*");
+		}
+		select = select.replace(" AND *pk*", "");
+		
+		try {
+			PreparedStatement preparedStatement = parameters.getConnection()
+					.prepareStatement(select);
+			boolean isFound = preparedStatement.executeQuery().next();
+			preparedStatement.close();
+			return isFound;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+		
 
 	@Override
 	public List<String> getPrimaryKeys(Connection connection, String table) {

@@ -10,6 +10,7 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
+import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ParcelyOracleDatabaseJdbcExporter extends
@@ -74,53 +75,41 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(Parcely record) {
+		
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name, primaryKeys, primaryKeysValues, 
+				"DATUM_VZNIKU", record.getDatumVzniku());
+		
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
+		
+		if (newFind(parameters, Operations.lessThan, true)) {
 			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
 			insert(name, record, true);
-		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">=")) {
+		} else if (newFind(parameters, Operations.greaterThanOrEqual, true)) {
 			return;
 		} else {
 			insert(name, record, true);
 		}
+		
 	}
 
 	private void processHistoricalRecord(Parcely record) {
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		if (!find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
+		
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
+				"DATUM_VZNIKU", record.getDatumVzniku());
+		
+		if (!newFind(parameters, Operations.equal, true)) {
 			insert(name + "_MIN", record, false);
-			if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
+			parameters.setTable(name);
+			if (newFind(parameters, Operations.equal, true)) {
 				delete(name, "DATUM_VZNIKU", datumVzniku, "=");
 			}
 		}
-	}
-
-	@Override
-	public boolean find(String table, String date, String dateValue,
-			String operation) {
-		String select = "SELECT * FROM " + table + " WHERE *pk* AND " + date
-				+ operation + dateValue;
-
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			select = select.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		select = select.replace(" AND *pk*", "");
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
-			boolean isFound = preparedStatement.executeQuery().next();
-			preparedStatement.close();
-			return isFound;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return false;
+		
 	}
 
 	@Override
@@ -277,5 +266,12 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public boolean find(String table, String date, String dateValue,
+			String operation) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
