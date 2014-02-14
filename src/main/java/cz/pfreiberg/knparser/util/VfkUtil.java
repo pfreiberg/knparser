@@ -74,11 +74,10 @@ public class VfkUtil {
 			return Long.valueOf(value[i]);
 		} catch (NumberFormatException e) {
 			return null;
-		} 
+		}
 	}
-	
-	public static BigInteger getBigInteger(String[] value, int i)
-	{
+
+	public static BigInteger getBigInteger(String[] value, int i) {
 		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
 			return null;
 
@@ -172,5 +171,5 @@ public class VfkUtil {
 	private static boolean isEmptyValue(String[] value, int i) {
 		return (value[i].length() == 0);
 	}
-	
+
 }
