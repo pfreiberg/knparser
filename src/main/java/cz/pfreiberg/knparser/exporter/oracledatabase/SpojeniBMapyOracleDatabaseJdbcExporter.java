@@ -8,6 +8,7 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SpojeniBMapy;
+import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class SpojeniBMapyOracleDatabaseJdbcExporter extends
@@ -77,27 +78,36 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 
 
 	private void processRecord(SpojeniBMapy record) {
-		String datumVzniku = VfkUtil.formatValueDatabase(record
-				.getDatumVzniku());
-		if (find(name, "DATUM_VZNIKU", datumVzniku, "<")) {
-			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
+		
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name, primaryKeys, primaryKeysValues, 
+				"DATUM_VZNIKU", record.getDatumVzniku());
+		
+		if (newFind(parameters, Operations.lessThan, true)) {
+			newDelete(parameters, Operations.lessThan, true);
 			insert(name, record, true);
-		} else if (find(name, "DATUM_VZNIKU", datumVzniku, ">=")) {
+		} else if (newFind(parameters, Operations.greaterThanOrEqual, true)) {
 			return;
 		} else {
 			insert(name, record, true);
 		}
+		
 	}
 
 	private void processHistoricalRecord(SpojeniBMapy record) {
-		String datumVzniku = VfkUtil.formatValueDatabase(record
-				.getDatumVzniku());
-		if (!find(name + "_MIN", "DATUM_VZNIKU", datumVzniku, "=")) {
+		
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
+				"DATUM_VZNIKU", record.getDatumVzniku());
+		
+		if (!newFind(parameters, Operations.equal, true)) {
 			insert(name + "_MIN", record, false);
-			if (find(name, "DATUM_VZNIKU", datumVzniku, "=")) {
-				delete(name, "DATUM_VZNIKU", datumVzniku, "=");
+			parameters.setTable(name);
+			if (newFind(parameters, Operations.equal, true)) {
+				newDelete(parameters, Operations.equal, true);
 			}
 		}
+		
 	}
 
 	@Override
