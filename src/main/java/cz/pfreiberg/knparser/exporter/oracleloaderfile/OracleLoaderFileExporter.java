@@ -53,23 +53,4 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 		String output = loadFile.replace(",\ncolumns_value", "");
 		return output;
 	}
-	
-	@Override
-	public boolean find(String table, String date, String dateValue, String operation) {
-		return false;
-
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void delete(String table, String date, String dateValue, String operation) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -8,5 +8,11 @@ public interface OracleDatabaseJdbcOperations {
 	public Connection getConnection(ConnectionParameters connection);
 	
 	public List<String> getPrimaryKeys(Connection connection, String table);
+	
+	public boolean find(String table, String date, String dateValue, String operation);
+
+	public void insert(String table, Object rawRecord, boolean isRecord);
+
+	public void delete(String table, String date, String dateValue, String operation);
 
 }
