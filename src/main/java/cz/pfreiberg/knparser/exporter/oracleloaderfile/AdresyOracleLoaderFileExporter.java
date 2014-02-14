@@ -1,39 +1,33 @@
 package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.rizeni.Adresy;
 import cz.pfreiberg.knparser.parser.Parser;
-import cz.pfreiberg.knparser.parser.ParserException;
-import cz.pfreiberg.knparser.util.FileManager;
-import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class AdresyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final String prefix;
 	private final String characterSet;
-	private final String output;
 	private final String name = "ADRESY";
 
 	public AdresyOracleLoaderFileExporter(List<Adresy> adresy,
 			String prefix, String characterSet, String output) {
 		this.prefix = prefix;
 		this.characterSet = characterSet;
-		this.output = output;
+		output = output + prefix + name;
 
 		if (Parser.isFirstBatch()) {
-			makeControlFile();
+			super.appendControlFile(output, characterSet, makeControlFile());
 		}
-		super.appendLoadFile(output + prefix + name, characterSet, adresy);
+		super.appendLoadFile(output, characterSet, adresy);
 	}
 
 	@Override
 	public String makeControlFile() {
 		String controlFile = super.makeControlFile();
+		
 		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
-
 		controlFile = super.insertColumn(controlFile, "UCAST_ID");
 		controlFile = super.insertColumn(controlFile, "TYP_ADRESY");
 		controlFile = super.insertVarcharColumn(controlFile, "OKRES", "32");
@@ -50,14 +44,6 @@ public class AdresyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		controlFile = super.insertColumn(controlFile, "CP_CE");
 		controlFile = super.insertColumn(controlFile, "KOD_ADRM");
 		controlFile = super.end(controlFile);
-
-		try {
-			FileManager.writeToConfigFile(new File(output + prefix + name + ".CFG"),
-					controlFile, VfkUtil.convertEncoding(characterSet));
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		return controlFile;
 	}

@@ -24,6 +24,19 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 	
 	@Override
+	public void appendControlFile(String name, String characterSet,
+			String controlFile) {
+		try {
+			FileManager.writeToConfigFile(new File(name + ".CFG"), controlFile,
+					VfkUtil.convertEncoding(characterSet));
+		} catch (IOException | ParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Override
 	public void appendLoadFile(String name, String characterSet, Collection<?> lines) {
 		try {
 			File file = new File(name + ".TXT");
