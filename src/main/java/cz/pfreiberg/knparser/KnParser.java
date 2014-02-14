@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
-
 /**
  * Vstupní bod programu. Zpracuje parametry, se kterými byl program spuštěn,
  * vytvoří Controller, který zodpovídá za zpracování VFK a předá mu kontrolu nad

@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser;
 
-import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
 
 /**
  * Zapouzdržuje parametry, se kterými byl program spuštěn.

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SpojeniBMapy;
 import cz.pfreiberg.knparser.util.VfkUtil;
 

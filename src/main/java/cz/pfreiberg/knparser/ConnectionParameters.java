@@ -1,4 +1,4 @@
-package cz.pfreiberg.knparser.exporter.oracledatabase;
+package cz.pfreiberg.knparser;
 
 /**
  * Zapouzdřuje parametry nutné pro připojení k databázi.

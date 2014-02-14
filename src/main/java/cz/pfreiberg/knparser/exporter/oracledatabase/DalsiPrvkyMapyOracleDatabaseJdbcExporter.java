@@ -9,6 +9,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.DalsiPrvkyMapy;
 import cz.pfreiberg.knparser.util.VfkUtil;
 

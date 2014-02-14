@@ -2,6 +2,7 @@ package cz.pfreiberg.knparser.exporterfactory;
 
 import java.util.List;
 
+import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.adresnimista.Adresa;
 import cz.pfreiberg.knparser.domain.adresnimista.BudObj;
 import cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc;
@@ -84,7 +85,6 @@ import cz.pfreiberg.knparser.exporter.oracledatabase.BudovyOracleDatabaseJdbcExp
 import cz.pfreiberg.knparser.exporter.oracledatabase.CastiBudovOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.CastiObciOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.CharOsOracleDatabaseJdbcExporter;
-import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
 import cz.pfreiberg.knparser.exporter.oracledatabase.DPozemkuOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.DalsiPrvkyMapyOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.DalsiUdajeListinyOracleDatabaseJdbcExporter;

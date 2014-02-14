@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.exporter.Exporter;
 
 public abstract class OracleDatabaseJdbcExporter implements Exporter,
