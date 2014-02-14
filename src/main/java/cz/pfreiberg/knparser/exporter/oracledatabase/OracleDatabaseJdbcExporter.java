@@ -52,12 +52,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			select = "SELECT * FROM " + parameters.getTable() + " WHERE *pk*";
 		}
 		
-		for (int i = 0; i < parameters.getPrimaryKeys().size(); i++) {
-			select = select.replace("*pk*", parameters.getPrimaryKeys().get(i) + " = "
-					+ VfkUtil.formatValueDatabase(parameters.getPrimaryKeysValues().get(i))
-					+ " AND *pk*");
-		}
-		select = select.replace(" AND *pk*", "");
+		select = composeSqlStatement(parameters, select);
 		
 		try {
 			PreparedStatement preparedStatement = parameters.getConnection()
@@ -71,6 +66,42 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		}
 
 		return false;
+	}
+	
+	public void newDelete(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) {
+		
+		String delete = "";
+		if (hasDate) {
+			delete = "DELETE FROM " + parameters.getTable() + " WHERE *pk* AND " + parameters.getDate()
+				+ operation + parameters.getDateValue();
+		} else {
+
+			delete = "DELETE FROM " + parameters.getTable() + " WHERE *pk*";
+		}
+		
+		delete = composeSqlStatement(parameters, delete);
+		
+		try {
+			PreparedStatement preparedStatement = parameters.getConnection()
+					.prepareStatement(delete);
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private String composeSqlStatement(OracleDatabaseParameters parameters,
+			String select) {
+		for (int i = 0; i < parameters.getPrimaryKeys().size(); i++) {
+			select = select.replace("*pk*", parameters.getPrimaryKeys().get(i) + " = "
+					+ VfkUtil.formatValueDatabase(parameters.getPrimaryKeysValues().get(i))
+					+ " AND *pk*");
+		}
+		select = select.replace(" AND *pk*", "");
+		return select;
 	}
 		
 

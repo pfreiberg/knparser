@@ -19,5 +19,7 @@ public interface OracleDatabaseJdbcOperations {
 	public void insert(String table, Object rawRecord, boolean isRecord);
 
 	public void delete(String table, String date, String dateValue, String operation);
+	
+	public void newDelete(OracleDatabaseParameters parameters, Operations operation, boolean hasDate);
 
 }

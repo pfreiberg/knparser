@@ -80,11 +80,8 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 				connection, name, primaryKeys, primaryKeysValues, 
 				"DATUM_VZNIKU", record.getDatumVzniku());
 		
-		String datumVzniku = VfkUtil.formatValueDatabase(record
-				.getDatumVzniku());
-		
 		if (newFind(parameters, Operations.lessThan, true)) {
-			delete(name, "DATUM_VZNIKU", datumVzniku, "<");
+			newDelete(parameters, Operations.lessThan, true);
 			insert(name, record, true);
 		} else if (newFind(parameters, Operations.greaterThanOrEqual, true)) {
 			return;
@@ -95,9 +92,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	private void processHistoricalRecord(Parcely record) {
-		String datumVzniku = VfkUtil.formatValueDatabase(record
-				.getDatumVzniku());
-		
+
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
 				"DATUM_VZNIKU", record.getDatumVzniku());
@@ -106,7 +101,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			insert(name + "_MIN", record, false);
 			parameters.setTable(name);
 			if (newFind(parameters, Operations.equal, true)) {
-				delete(name, "DATUM_VZNIKU", datumVzniku, "=");
+				newDelete(parameters, Operations.equal, true);
 			}
 		}
 		
@@ -249,23 +244,8 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	@Override
 	public void delete(String table, String date, String dateValue,
 			String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk* AND " + date
-				+ operation + dateValue;
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		delete = delete.replace(" AND *pk*", "");
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(delete);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO Auto-generated method stub
+				return;
 	}
 
 	@Override
