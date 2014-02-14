@@ -71,12 +71,16 @@ public class CastiObciOracleDatabaseJdbcExporter extends
 
 	private void processRecord(CastiObci record) {
 
-		if (find(name, null, null, null)) {
-			delete(name, null, null, null);
-			insert(name, record, true);
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name, primaryKeys, primaryKeysValues, null, null);
+
+		if (newFind(parameters, null, false)) {
+			newDelete(parameters, null, false);
+			insert(name, record, false);
 		} else {
-			insert(name, record, true);
+			insert(name, record, false);
 		}
+		
 	}
 
 	@Override
