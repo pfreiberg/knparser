@@ -81,10 +81,10 @@ public class TelesaOracleDatabaseJdbcExporter extends
 				connection, name, primaryKeys, primaryKeysValues, 
 				"DATUM_VZNIKU", record.getDatumVzniku());
 		
-		if (newFind(parameters, Operations.lessThan, true)) {
-			newDelete(parameters, Operations.lessThan, true);
+		if (find(parameters, Operations.lessThan, true)) {
+			delete(parameters, Operations.lessThan, true);
 			insert(name, record, true);
-		} else if (newFind(parameters, Operations.greaterThanOrEqual, true)) {
+		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
 			return;
 		} else {
 			insert(name, record, true);
@@ -98,11 +98,11 @@ public class TelesaOracleDatabaseJdbcExporter extends
 				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
 				"DATUM_VZNIKU", record.getDatumVzniku());
 		
-		if (!newFind(parameters, Operations.equal, true)) {
+		if (!find(parameters, Operations.equal, true)) {
 			insert(name + "_MIN", record, false);
 			parameters.setTable(name);
-			if (newFind(parameters, Operations.equal, true)) {
-				newDelete(parameters, Operations.equal, true);
+			if (find(parameters, Operations.equal, true)) {
+				delete(parameters, Operations.equal, true);
 			}
 		}
 		

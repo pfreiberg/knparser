@@ -73,8 +73,8 @@ public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 				connection, name, primaryKeys, primaryKeysValues, null, null);
 
-		if (newFind(parameters, null, false)) {
-			newDelete(parameters, null, false);
+		if (find(parameters, null, false)) {
+			delete(parameters, null, false);
 			insert(name, record, false);
 		} else {
 			insert(name, record, false);

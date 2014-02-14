@@ -41,7 +41,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 	
 	@Override
-	public boolean newFind(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) {
+	public boolean find(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) {
 	
 		String select = "";
 		if (hasDate) {
@@ -68,7 +68,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return false;
 	}
 	
-	public void newDelete(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) {
+	public void delete(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) {
 		
 		String delete = "";
 		if (hasDate) {

@@ -89,10 +89,10 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		if (newFind(parameters, Operations.lessThan, true)) {
-			newDelete(parameters, Operations.lessThan, true);
+		if (find(parameters, Operations.lessThan, true)) {
+			delete(parameters, Operations.lessThan, true);
 			insert(name, record, true);
-		} else if (newFind(parameters, Operations.equal, true)) {
+		} else if (find(parameters, Operations.equal, true)) {
 
 			getParId(name, "DATUM_VZNIKU", datumVzniku);
 
@@ -121,7 +121,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 				}
 				return;
 			}
-		} else if (newFind(parameters, Operations.greaterThan, true)) {
+		} else if (find(parameters, Operations.greaterThan, true)) {
 			return;
 		} else
 			insert(name, record, true);
@@ -135,7 +135,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
-		if (newFind(parameters, Operations.equal, true)) {
+		if (find(parameters, Operations.equal, true)) {
 
 			getParId(name + "_MIN", "DATUM_VZNIKU", datumVzniku);
 
@@ -168,8 +168,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 
 		insert(name + "_MIN", record, false);
 		parameters.setTable(name);
-		if (newFind(parameters, Operations.equal, true))
-			newDelete(parameters, Operations.equal, true);
+		if (find(parameters, Operations.equal, true))
+			delete(parameters, Operations.equal, true);
 	}
 
 	private void getParId(String table, String date, String dateValue) {
