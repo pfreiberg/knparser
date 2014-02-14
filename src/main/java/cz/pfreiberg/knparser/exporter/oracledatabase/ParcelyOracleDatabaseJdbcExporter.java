@@ -241,17 +241,4 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 
 	}
 
-	@Override
-	public void delete(String table, String date, String dateValue,
-			String operation) {
-		// TODO Auto-generated method stub
-				return;
-	}
-
-	@Override
-	public boolean find(String table, String date, String dateValue,
-			String operation) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

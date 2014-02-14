@@ -134,18 +134,4 @@ public class ListinyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	@Override
-	public boolean find(String table, String date, String dateValue,
-			String operation) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void delete(String table, String date, String dateValue,
-			String operation) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

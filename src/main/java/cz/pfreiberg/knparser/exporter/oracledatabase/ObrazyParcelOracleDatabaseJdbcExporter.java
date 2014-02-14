@@ -11,6 +11,7 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.ObrazyParcel;
+import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ObrazyParcelOracleDatabaseJdbcExporter extends
@@ -42,7 +43,11 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 		}
 		for (ObrazyParcel record : obrazyParcel) {
 			primaryKeysValues = getPrimaryKeysValues(record);
-			processRecord(record);
+			if (record.getDatumZaniku() == null) {
+				processRecord(record);
+			} else {
+				processHistoricalRecord(record);
+			}
 		}
 		try {
 			connection.commit();
@@ -72,32 +77,46 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 
 	private void processRecord(ObrazyParcel record) {
 		
-		if (find(name, null, null, null)) {
-			delete(name, null, null, null);	
-		} 
-		insert(name, record, true);
-	}
-
-	@Override
-	public boolean find(String table, String date, String dateValue,
-			String operation) {
-		String select = "SELECT * FROM " + table + " WHERE *pk*";
-		select = appendPrimaryKeys(select);
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
-			boolean isFound = preparedStatement.executeQuery().next();
-			preparedStatement.close();
-			return isFound;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name, primaryKeys, primaryKeysValues, 
+				"DATUM_VZNIKU", record.getDatumVzniku());
+		
+		if (newFind(parameters, Operations.lessThan, true)) {
+			newDelete(parameters, Operations.lessThan, true);
+			insert(name, record, true);
+		} else if (newFind(parameters, Operations.greaterThanOrEqual, true)) {
+			return;
+		} else {
+			insert(name, record, true);
 		}
-		return false;
 	}
+	
+	private void processHistoricalRecord(ObrazyParcel record) {
 
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
+				"DATUM_VZNIKU", record.getDatumVzniku());
+		
+		if (!newFind(parameters, Operations.equal, true)) {
+			insert(name + "_MIN", record, false);
+			parameters.setTable(name);
+			if (newFind(parameters, Operations.equal, true)) {
+				newDelete(parameters, Operations.equal, true);
+			}
+		}
+		
+	}
+	
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
+		if (isRecord) {
+			insertRecord(table, rawRecord);
+		} else
+			insertHistoricalRecord(table, rawRecord);
+	}
+
+	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -143,29 +162,52 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 		}
 	}
 	
-	@Override
-	public void delete(String table, String date, String dateValue,
-			String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk*";
-		delete = appendPrimaryKeys(delete);
+	public void insertHistoricalRecord(String table, Object rawRecord) {
+
+		String insert = "INSERT INTO "
+				+ table
+				+ " VALUES"
+				+ "(SEQ_OBRAZY_PARCEL_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		PreparedStatement preparedStatement = null;
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(delete);
+
+			preparedStatement = connection.prepareStatement(insert);
+
+			ObrazyParcel record = (ObrazyParcel) rawRecord;
+			preparedStatement.setObject(1, record.getId());
+			preparedStatement.setObject(2, record.getStavDat());
+			preparedStatement.setObject(3, VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(4, VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+			preparedStatement.setObject(5, 0);
+			preparedStatement.setObject(6, record.getRizeniIdVzniku());
+			preparedStatement.setObject(7, record.getRizeniIdZaniku());
+			preparedStatement.setObject(8, record.getTypppdKod());
+			preparedStatement.setObject(9, record.getSouradniceY());
+			preparedStatement.setObject(10, record.getSouradniceX());
+			preparedStatement.setObject(11, record.getText());
+			preparedStatement.setObject(12, record.getVelikost());
+			preparedStatement.setObject(13, record.getParId());
+			preparedStatement.setObject(14, record.getOparType());
+			preparedStatement.setObject(15, record.getVztaznyBod());
+			preparedStatement.setObject(16, record.getUhel());
+			preparedStatement.setNull(17, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
-		} catch (SQLException e) {
+		}
+
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-	}
 
-	private String appendPrimaryKeys(String delete) {
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		delete = delete.replace(" AND *pk*", "");
-		return delete;
 	}
+	
 }

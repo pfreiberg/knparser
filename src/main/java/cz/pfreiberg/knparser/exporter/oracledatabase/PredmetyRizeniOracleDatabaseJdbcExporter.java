@@ -10,7 +10,6 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.rizeni.PredmetyRizeni;
-import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class PredmetyRizeniOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
@@ -82,24 +81,6 @@ public class PredmetyRizeniOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
-	public boolean find(String table, String date, String dateValue,
-			String operation) {
-		String select = "SELECT * FROM " + table + " WHERE *pk*";
-		select = appendPrimaryKeys(select);
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
-			boolean isFound = preparedStatement.executeQuery().next();
-			preparedStatement.close();
-			return isFound;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?)";
 		PreparedStatement preparedStatement = null;
@@ -126,31 +107,5 @@ public class PredmetyRizeniOracleDatabaseJdbcExporter extends
 				e.printStackTrace();
 			}
 		}
-	}
-
-	@Override
-	public void delete(String table, String date, String dateValue,
-			String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk*";
-		delete = appendPrimaryKeys(delete);
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(delete);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private String appendPrimaryKeys(String delete) {
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		delete = delete.replace(" AND *pk*", "");
-		return delete;
 	}
 }
