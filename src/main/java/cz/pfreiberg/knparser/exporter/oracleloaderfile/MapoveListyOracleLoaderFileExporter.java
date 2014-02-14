@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class MapoveListyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<MapoveListy> mapoveListy;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class MapoveListyOracleLoaderFileExporter extends OracleLoaderFileExporte
 
 	public MapoveListyOracleLoaderFileExporter(List<MapoveListy> mapoveListy,
 			String prefix, String characterSet, String output) {
-		this.mapoveListy = mapoveListy;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class MapoveListyOracleLoaderFileExporter extends OracleLoaderFileExporte
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, mapoveListy);
 	}
 
 	@Override
@@ -52,18 +50,6 @@ public class MapoveListyOracleLoaderFileExporter extends OracleLoaderFileExporte
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					mapoveListy);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

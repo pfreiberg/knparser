@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class DotHistParCislaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<DotHistParCisla> dotHistParCisla;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class DotHistParCislaOracleLoaderFileExporter extends OracleLoaderFileExp
 
 	public DotHistParCislaOracleLoaderFileExporter(List<DotHistParCisla> dotHistParCisla,
 			String prefix, String characterSet, String output) {
-		this.dotHistParCisla = dotHistParCisla;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class DotHistParCislaOracleLoaderFileExporter extends OracleLoaderFileExp
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, dotHistParCisla);
 	}
 
 	@Override
@@ -51,18 +49,6 @@ public class DotHistParCislaOracleLoaderFileExporter extends OracleLoaderFileExp
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					dotHistParCisla);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

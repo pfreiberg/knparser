@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class BonitDilyParcOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<BonitDilyParc> bonitDilyParc;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class BonitDilyParcOracleLoaderFileExporter extends OracleLoaderFileExpor
 
 	public BonitDilyParcOracleLoaderFileExporter(List<BonitDilyParc> bonitDilyParc,
 			String prefix, String characterSet, String output) {
-		this.bonitDilyParc = bonitDilyParc;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class BonitDilyParcOracleLoaderFileExporter extends OracleLoaderFileExpor
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, bonitDilyParc);
 	}
 
 	@Override
@@ -56,18 +54,6 @@ public class BonitDilyParcOracleLoaderFileExporter extends OracleLoaderFileExpor
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					bonitDilyParc);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ObrazyBudovOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<ObrazyBudov> obrazyBudov;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class ObrazyBudovOracleLoaderFileExporter extends OracleLoaderFileExporte
 
 	public ObrazyBudovOracleLoaderFileExporter(List<ObrazyBudov> obrazyBudov,
 			String prefix, String characterSet, String output) {
-		this.obrazyBudov = obrazyBudov;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class ObrazyBudovOracleLoaderFileExporter extends OracleLoaderFileExporte
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, obrazyBudov);
 	}
 
 	@Override
@@ -61,18 +59,6 @@ public class ObrazyBudovOracleLoaderFileExporter extends OracleLoaderFileExporte
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					obrazyBudov);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

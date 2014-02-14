@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class PrvkyOMapyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<PrvkyOMapy> prvkyOMapy;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class PrvkyOMapyOracleLoaderFileExporter extends OracleLoaderFileExporter
 
 	public PrvkyOMapyOracleLoaderFileExporter(List<PrvkyOMapy> prvkyOMapy,
 			String prefix, String characterSet, String output) {
-		this.prvkyOMapy = prvkyOMapy;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class PrvkyOMapyOracleLoaderFileExporter extends OracleLoaderFileExporter
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, prvkyOMapy);
 	}
 
 	@Override
@@ -61,18 +59,6 @@ public class PrvkyOMapyOracleLoaderFileExporter extends OracleLoaderFileExporter
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					prvkyOMapy);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

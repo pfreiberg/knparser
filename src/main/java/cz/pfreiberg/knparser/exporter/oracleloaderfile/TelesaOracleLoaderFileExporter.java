@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TelesaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<Telesa> telesa;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class TelesaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	public TelesaOracleLoaderFileExporter(List<Telesa> telesa, String prefix,
 			String characterSet, String output) {
-		this.telesa = telesa;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class TelesaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, telesa);
 	}
 
 	@Override
@@ -57,18 +55,6 @@ public class TelesaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					telesa);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

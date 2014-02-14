@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class NzZpmzOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<NzZpmz> nzZpmz;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class NzZpmzOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	public NzZpmzOracleLoaderFileExporter(List<NzZpmz> nzZpmz,
 			String prefix, String characterSet, String output) {
-		this.nzZpmz = nzZpmz;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class NzZpmzOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, nzZpmz);
 	}
 
 	@Override
@@ -50,18 +48,6 @@ public class NzZpmzOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					nzZpmz);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

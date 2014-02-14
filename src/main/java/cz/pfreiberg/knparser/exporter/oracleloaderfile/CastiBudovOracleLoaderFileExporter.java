@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class CastiBudovOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<CastiBudov> castiBudov;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class CastiBudovOracleLoaderFileExporter extends OracleLoaderFileExporter
 
 	public CastiBudovOracleLoaderFileExporter(List<CastiBudov> castiBudov,
 			String prefix, String characterSet, String output) {
-		this.castiBudov = castiBudov;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class CastiBudovOracleLoaderFileExporter extends OracleLoaderFileExporter
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, castiBudov);
 	}
 
 	@Override
@@ -57,18 +55,6 @@ public class CastiBudovOracleLoaderFileExporter extends OracleLoaderFileExporter
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					castiBudov);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class RezCislaPbppOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<RezCislaPbpp> rezCislaPbpp;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class RezCislaPbppOracleLoaderFileExporter extends OracleLoaderFileExport
 
 	public RezCislaPbppOracleLoaderFileExporter(List<RezCislaPbpp> rezCislaPbpp,
 			String prefix, String characterSet, String output) {
-		this.rezCislaPbpp = rezCislaPbpp;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class RezCislaPbppOracleLoaderFileExporter extends OracleLoaderFileExport
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, rezCislaPbpp);
 	}
 
 	@Override
@@ -51,18 +49,6 @@ public class RezCislaPbppOracleLoaderFileExporter extends OracleLoaderFileExport
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					rezCislaPbpp);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

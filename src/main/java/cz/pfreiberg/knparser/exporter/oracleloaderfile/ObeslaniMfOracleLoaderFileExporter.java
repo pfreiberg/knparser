@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ObeslaniMfOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<ObeslaniMf> obeslaniMf;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class ObeslaniMfOracleLoaderFileExporter extends OracleLoaderFileExporter
 
 	public ObeslaniMfOracleLoaderFileExporter(List<ObeslaniMf> obeslaniMf,
 			String prefix, String characterSet, String output) {
-		this.obeslaniMf = obeslaniMf;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class ObeslaniMfOracleLoaderFileExporter extends OracleLoaderFileExporter
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, obeslaniMf);
 	}
 
 	@Override
@@ -54,18 +52,6 @@ public class ObeslaniMfOracleLoaderFileExporter extends OracleLoaderFileExporter
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					obeslaniMf);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

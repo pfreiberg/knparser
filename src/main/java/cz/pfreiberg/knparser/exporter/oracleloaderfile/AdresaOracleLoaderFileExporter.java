@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class AdresaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<Adresa> adresa;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class AdresaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	public AdresaOracleLoaderFileExporter(List<Adresa> adresa, String prefix,
 			String characterSet, String output) {
-		this.adresa = adresa;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class AdresaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, adresa);
 	}
 
 	@Override
@@ -57,17 +55,4 @@ public class AdresaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		return controlFile;
 	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					adresa);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 }

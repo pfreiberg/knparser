@@ -13,7 +13,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class TypyUcastnikuOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private List<TypyUcastniku> typyUcastniku;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -21,7 +20,6 @@ public class TypyUcastnikuOracleLoaderFileExporter extends
 
 	public TypyUcastnikuOracleLoaderFileExporter(List<TypyUcastniku> typyUcastniku,
 			String prefix, String characterSet, String output) {
-		this.typyUcastniku = typyUcastniku;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -29,7 +27,7 @@ public class TypyUcastnikuOracleLoaderFileExporter extends
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, typyUcastniku);
 	}
 
 	@Override
@@ -52,18 +50,6 @@ public class TypyUcastnikuOracleLoaderFileExporter extends
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					typyUcastniku);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

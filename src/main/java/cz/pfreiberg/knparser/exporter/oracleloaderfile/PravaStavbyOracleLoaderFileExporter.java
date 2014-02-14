@@ -13,7 +13,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class PravaStavbyOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private List<PravaStavby> pravaStavby;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -21,7 +20,6 @@ public class PravaStavbyOracleLoaderFileExporter extends
 
 	public PravaStavbyOracleLoaderFileExporter(List<PravaStavby> pravaStavby,
 			String prefix, String characterSet, String output) {
-		this.pravaStavby = pravaStavby;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -29,7 +27,7 @@ public class PravaStavbyOracleLoaderFileExporter extends
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, pravaStavby);
 	}
 
 	@Override
@@ -59,18 +57,6 @@ public class PravaStavbyOracleLoaderFileExporter extends
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					pravaStavby);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

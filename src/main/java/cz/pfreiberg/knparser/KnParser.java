@@ -14,13 +14,12 @@ import cz.pfreiberg.knparser.exporter.oracledatabase.ConnectionParameters;
  * během.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
- * @version 1.0 (8.1.2014)
+ * @version 2.0 (14.2.2014)
  * 
  */
 public class KnParser {
 
 	public static void main(String[] args) {
-
 		boolean parseWholeFolder = false;
 		boolean toDatabase = false;
 		Configuration configuration = new Configuration();
@@ -52,7 +51,7 @@ public class KnParser {
 			properties.load(KnParser.class
 					.getResourceAsStream("KnParser.properties"));
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("KnParser.properties missing.");
 		}
 		configuration.setNumberOfRows(properties.getProperty("numberOfRows"));
 
@@ -68,7 +67,6 @@ public class KnParser {
 			Controller controller = new Controller(configuration);
 			controller.run();
 		}
-
 	}
 
 	private static ConnectionParameters getConnectionParameters(
@@ -82,13 +80,11 @@ public class KnParser {
 
 	private static void parseFolder(Configuration configuration,
 			ConnectionParameters connection) {
-
 		String input = configuration.getInput();
 		String output = configuration.getOutput();
 		String numberOfRows = configuration.getNumberOfRows();
 
 		List<String> files = getFilenames(input);
-
 		for (int i = 0; i < files.size(); i++) {
 			configuration = new Configuration(input + "\\" + files.get(i),
 					output + files.get(i) + "\\", numberOfRows, connection);
@@ -98,7 +94,6 @@ public class KnParser {
 	}
 
 	private static List<String> getFilenames(String path) {
-
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> output = new ArrayList<String>();
@@ -108,7 +103,7 @@ public class KnParser {
 				output.add(listOfFiles[i].getName());
 			}
 		}
-
+		
 		return output;
 	}
 

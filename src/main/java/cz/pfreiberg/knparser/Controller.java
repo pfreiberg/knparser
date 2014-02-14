@@ -15,7 +15,7 @@ import cz.pfreiberg.knparser.parser.ParserException;
 
 /**
  * Řídící část programu. Využívá parser k naplnění doménových tříd ze souboru.
- * Následně iniciuje jejich zpracování a převedení do load filu, nebo databáze.
+ * Následně iniciuje jejich zpracování a uložení do load filu, nebo databáze.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 

@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class DalsiPrvkyMapyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<DalsiPrvkyMapy> dalsiPrvkyMapy;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class DalsiPrvkyMapyOracleLoaderFileExporter extends OracleLoaderFileExpo
 
 	public DalsiPrvkyMapyOracleLoaderFileExporter(List<DalsiPrvkyMapy> dalsiPrvkyMapy,
 			String prefix, String characterSet, String output) {
-		this.dalsiPrvkyMapy = dalsiPrvkyMapy;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class DalsiPrvkyMapyOracleLoaderFileExporter extends OracleLoaderFileExpo
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, dalsiPrvkyMapy);
 	}
 
 	@Override
@@ -64,18 +62,6 @@ public class DalsiPrvkyMapyOracleLoaderFileExporter extends OracleLoaderFileExpo
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					dalsiPrvkyMapy);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

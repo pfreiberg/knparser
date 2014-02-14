@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<SpojeniPoMapy> spojeniPoMapy;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExpor
 
 	public SpojeniPoMapyOracleLoaderFileExporter(List<SpojeniPoMapy> spojeniPoMapy,
 			String prefix, String characterSet, String output) {
-		this.spojeniPoMapy = spojeniPoMapy;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExpor
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, spojeniPoMapy);
 	}
 
 	@Override
@@ -57,18 +55,6 @@ public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExpor
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					spojeniPoMapy);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

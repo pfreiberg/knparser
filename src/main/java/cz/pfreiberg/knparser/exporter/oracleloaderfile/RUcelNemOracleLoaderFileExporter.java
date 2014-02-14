@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class RUcelNemOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<RUcelNem> rUcelNem;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class RUcelNemOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	public RUcelNemOracleLoaderFileExporter(List<RUcelNem> rUcelNem,
 			String prefix, String characterSet, String output) {
-		this.rUcelNem = rUcelNem;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class RUcelNemOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, rUcelNem);
 	}
 
 	@Override
@@ -57,17 +55,5 @@ public class RUcelNemOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 		return controlFile;
 	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					rUcelNem);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
+	
 }

@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class RJpvOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<RJpv> rJpv;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class RJpvOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	public RJpvOracleLoaderFileExporter(List<RJpv> rJpv, String prefix,
 			String characterSet, String output) {
-		this.rJpv = rJpv;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class RJpvOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, rJpv);
 	}
 
 	@Override
@@ -59,18 +57,6 @@ public class RJpvOracleLoaderFileExporter extends OracleLoaderFileExporter {
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					rJpv);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

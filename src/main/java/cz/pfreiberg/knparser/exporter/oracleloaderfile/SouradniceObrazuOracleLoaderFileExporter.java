@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class SouradniceObrazuOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<SouradniceObrazu> souradniceObrazu;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class SouradniceObrazuOracleLoaderFileExporter extends OracleLoaderFileEx
 
 	public SouradniceObrazuOracleLoaderFileExporter(List<SouradniceObrazu> souradniceObrazu,
 			String prefix, String characterSet, String output) {
-		this.souradniceObrazu = souradniceObrazu;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class SouradniceObrazuOracleLoaderFileExporter extends OracleLoaderFileEx
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, souradniceObrazu);
 	}
 
 	@Override
@@ -57,18 +55,6 @@ public class SouradniceObrazuOracleLoaderFileExporter extends OracleLoaderFileEx
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					souradniceObrazu);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

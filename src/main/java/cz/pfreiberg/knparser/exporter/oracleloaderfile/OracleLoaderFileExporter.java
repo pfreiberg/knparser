@@ -1,6 +1,13 @@
 package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+
 import cz.pfreiberg.knparser.exporter.Exporter;
+import cz.pfreiberg.knparser.parser.ParserException;
+import cz.pfreiberg.knparser.util.FileManager;
+import cz.pfreiberg.knparser.util.VfkUtil;
 
 public abstract class OracleLoaderFileExporter implements Exporter,
 		OracleLoaderFileOperations {
@@ -14,6 +21,18 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 				+ "INTO TABLE into_table_value\n"
 				+ "FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'"  + "\n(\n" + "columns_value\n"
 				+ ")";
+	}
+	
+	@Override
+	public void appendLoadFile(String name, String characterSet, Collection<?> lines) {
+		try {
+			File file = new File(name + ".TXT");
+			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
+					lines);
+		} catch (IOException | ParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected String fillHeader(String loadFile, String characterSet,

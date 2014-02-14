@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TSouradSysOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<TSouradSys> tSouradSys;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class TSouradSysOracleLoaderFileExporter extends OracleLoaderFileExporter
 
 	public TSouradSysOracleLoaderFileExporter(List<TSouradSys> tSouradSys,
 			String prefix, String characterSet, String output) {
-		this.tSouradSys = tSouradSys;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class TSouradSysOracleLoaderFileExporter extends OracleLoaderFileExporter
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, tSouradSys);
 	}
 
 	@Override
@@ -51,18 +49,6 @@ public class TSouradSysOracleLoaderFileExporter extends OracleLoaderFileExporter
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					tSouradSys);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

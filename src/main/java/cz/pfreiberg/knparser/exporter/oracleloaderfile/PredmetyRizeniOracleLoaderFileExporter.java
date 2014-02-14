@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class PredmetyRizeniOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<PredmetyRizeni> predmetyRizeni;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class PredmetyRizeniOracleLoaderFileExporter extends OracleLoaderFileExpo
 
 	public PredmetyRizeniOracleLoaderFileExporter(List<PredmetyRizeni> predmetyRizeni,
 			String prefix, String characterSet, String output) {
-		this.predmetyRizeni = predmetyRizeni;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class PredmetyRizeniOracleLoaderFileExporter extends OracleLoaderFileExpo
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, predmetyRizeni);
 	}
 
 	@Override
@@ -49,18 +47,6 @@ public class PredmetyRizeniOracleLoaderFileExporter extends OracleLoaderFileExpo
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					predmetyRizeni);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

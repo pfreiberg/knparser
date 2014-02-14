@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class HraniceParcelOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<HraniceParcel> hraniceParcel;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class HraniceParcelOracleLoaderFileExporter extends OracleLoaderFileExpor
 
 	public HraniceParcelOracleLoaderFileExporter(List<HraniceParcel> hraniceParcel,
 			String prefix, String characterSet, String output) {
-		this.hraniceParcel = hraniceParcel;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class HraniceParcelOracleLoaderFileExporter extends OracleLoaderFileExpor
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, hraniceParcel);
 	}
 
 	@Override
@@ -57,18 +55,6 @@ public class HraniceParcelOracleLoaderFileExporter extends OracleLoaderFileExpor
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					hraniceParcel);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

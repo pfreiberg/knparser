@@ -13,7 +13,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class UcastniciTypOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private List<UcastniciTyp> ucastniciTyp;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -22,7 +21,6 @@ public class UcastniciTypOracleLoaderFileExporter extends
 	public UcastniciTypOracleLoaderFileExporter(
 			List<UcastniciTyp> ucastniciTyp, String prefix,
 			String characterSet, String output) {
-		this.ucastniciTyp = ucastniciTyp;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -30,7 +28,7 @@ public class UcastniciTypOracleLoaderFileExporter extends
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, ucastniciTyp);
 	}
 
 	@Override
@@ -52,18 +50,6 @@ public class UcastniciTypOracleLoaderFileExporter extends
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					ucastniciTyp);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

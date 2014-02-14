@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TPrvkuPDatOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<TPrvkuPDat> tPrvkuPDat;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class TPrvkuPDatOracleLoaderFileExporter extends OracleLoaderFileExporter
 
 	public TPrvkuPDatOracleLoaderFileExporter(List<TPrvkuPDat> tPrvkuPDat,
 			String prefix, String characterSet, String output) {
-		this.tPrvkuPDat = tPrvkuPDat;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class TPrvkuPDatOracleLoaderFileExporter extends OracleLoaderFileExporter
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, tPrvkuPDat);
 	}
 
 	@Override
@@ -55,18 +53,6 @@ public class TPrvkuPDatOracleLoaderFileExporter extends OracleLoaderFileExporter
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					tPrvkuPDat);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

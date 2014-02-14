@@ -13,7 +13,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class ZpVyuzitiJedOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private List<ZpVyuzitiJed> zpVyuzitiJed;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -22,7 +21,6 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 	public ZpVyuzitiJedOracleLoaderFileExporter(
 			List<ZpVyuzitiJed> zpVyuzitiJed, String prefix,
 			String characterSet, String output) {
-		this.zpVyuzitiJed = zpVyuzitiJed;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -30,7 +28,7 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, zpVyuzitiJed);
 	}
 
 	@Override
@@ -56,18 +54,6 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					zpVyuzitiJed);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -12,7 +12,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TJednotekOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private List<TJednotek> tJednotek;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -20,7 +19,6 @@ public class TJednotekOracleLoaderFileExporter extends OracleLoaderFileExporter 
 
 	public TJednotekOracleLoaderFileExporter(List<TJednotek> tJednotek,
 			String prefix, String characterSet, String output) {
-		this.tJednotek = tJednotek;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -28,7 +26,7 @@ public class TJednotekOracleLoaderFileExporter extends OracleLoaderFileExporter 
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, tJednotek);
 	}
 
 	@Override
@@ -53,18 +51,6 @@ public class TJednotekOracleLoaderFileExporter extends OracleLoaderFileExporter 
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					tJednotek);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

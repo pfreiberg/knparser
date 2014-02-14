@@ -13,7 +13,6 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class TPravnichVztOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private List<TPravnichVzt> tPravnichVzt;
 	private final String prefix;
 	private final String characterSet;
 	private final String output;
@@ -22,7 +21,6 @@ public class TPravnichVztOracleLoaderFileExporter extends
 	public TPravnichVztOracleLoaderFileExporter(
 			List<TPravnichVzt> tPravnichVzt, String prefix,
 			String characterSet, String output) {
-		this.tPravnichVzt = tPravnichVzt;
 		this.prefix = prefix;
 		this.characterSet = characterSet;
 		this.output = output;
@@ -30,7 +28,7 @@ public class TPravnichVztOracleLoaderFileExporter extends
 		if (Parser.isFirstBatch()) {
 			makeControlFile();
 		}
-		appendLoadFile();
+		super.appendLoadFile(output + prefix + name, characterSet, tPravnichVzt);
 	}
 
 	@Override
@@ -64,18 +62,6 @@ public class TPravnichVztOracleLoaderFileExporter extends
 		}
 
 		return controlFile;
-	}
-
-	@Override
-	public void appendLoadFile() {
-		try {
-			File file = new File(output + prefix + name + ".TXT");
-			FileManager.writeToDataFile(file, VfkUtil.convertEncoding(characterSet),
-					tPravnichVzt);
-		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }
