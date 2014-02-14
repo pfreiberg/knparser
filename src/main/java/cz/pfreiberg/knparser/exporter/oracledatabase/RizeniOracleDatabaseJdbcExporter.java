@@ -71,10 +71,13 @@ public class RizeniOracleDatabaseJdbcExporter extends
 
 	private void processRecord(Rizeni record) {
 
-		if (find(name, null, null, null)) {
-			delete(name, null, null, null);
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name, primaryKeys, primaryKeysValues, null, null);
+
+		if (newFind(parameters, null, false)) {
+			newDelete(parameters, null, false);
 		}
-		insert(name, record, true);
+		insert(name, record, false);
 	}
 
 	@Override

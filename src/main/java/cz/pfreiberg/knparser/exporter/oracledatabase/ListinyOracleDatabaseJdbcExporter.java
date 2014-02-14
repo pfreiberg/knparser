@@ -70,29 +70,14 @@ public class ListinyOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(Listiny record) {
-		
-		if (find(name, null, null, null)) {
-			delete(name, null, null, null);	
-		} 
-		insert(name, record, true);
-	}
 
-	@Override
-	public boolean find(String table, String date, String dateValue,
-			String operation) {
-		String select = "SELECT * FROM " + table + " WHERE *pk*";
-		select = appendPrimaryKeys(select);
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
-			boolean isFound = preparedStatement.executeQuery().next();
-			preparedStatement.close();
-			return isFound;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+				connection, name, primaryKeys, primaryKeysValues, null, null);
+
+		if (newFind(parameters, null, false)) {
+			newDelete(parameters, null, false);
 		}
-		return false;
+		insert(name, record, false);
 	}
 
 	@Override
@@ -148,30 +133,19 @@ public class ListinyOracleDatabaseJdbcExporter extends
 			}
 		}
 	}
-	
+
+	@Override
+	public boolean find(String table, String date, String dateValue,
+			String operation) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	@Override
 	public void delete(String table, String date, String dateValue,
 			String operation) {
-		String delete = "DELETE FROM " + table + " WHERE *pk*";
-		delete = appendPrimaryKeys(delete);
-		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(delete);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO Auto-generated method stub
+		
 	}
-
-	private String appendPrimaryKeys(String delete) {
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			delete = delete.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		delete = delete.replace(" AND *pk*", "");
-		return delete;
-	}
+	
 }
