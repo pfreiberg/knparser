@@ -1,11 +1,8 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
@@ -41,7 +38,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			e.printStackTrace();
 		}
 		for (Parcely record : parcely) {
-			primaryKeysValues = getPrimaryKeysValues(record);
+			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 			if (record.getDatumZaniku() == null) {
 				processRecord(record);
 			} else {
@@ -56,30 +53,12 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	private List<Object> getPrimaryKeysValues(Object record) {
-		List<Object> primaryKeyValues = new ArrayList<>();
-		try {
-			for (int i = 0; i < methodsName.size(); i++) {
-				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.nemovitosti.Parcely");
-				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((Parcely) record));
-			}
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return primaryKeyValues;
-	}
-
 	private void processRecord(Parcely record) {
-		
+
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
+				connection, name, primaryKeys, primaryKeysValues,
 				"DATUM_VZNIKU", record.getDatumVzniku());
-		
+
 		if (find(parameters, Operations.lessThan, true)) {
 			delete(parameters, Operations.lessThan, true);
 			insert(name, record, true);
@@ -88,15 +67,15 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		} else {
 			insert(name, record, true);
 		}
-		
+
 	}
 
 	private void processHistoricalRecord(Parcely record) {
 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
+				connection, name + "_MIN", primaryKeys, primaryKeysValues,
 				"DATUM_VZNIKU", record.getDatumVzniku());
-		
+
 		if (!find(parameters, Operations.equal, true)) {
 			insert(name + "_MIN", record, false);
 			parameters.setTable(name);
@@ -104,7 +83,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 				delete(parameters, Operations.equal, true);
 			}
 		}
-		
+
 	}
 
 	@Override

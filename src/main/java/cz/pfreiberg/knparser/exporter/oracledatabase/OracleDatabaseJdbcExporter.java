@@ -1,5 +1,7 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -125,6 +127,25 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return output;
 	}
 	
+	protected List<Object> getPrimaryKeysValues(Object record, List<String> methodsName) {
+		List<Object> primaryKeyValues = new ArrayList<>();
+		for (int i = 0; i < methodsName.size(); i++) {
+			try {
+				Class<?> c = record.getClass();
+				Method method = c.getDeclaredMethod(methodsName.get(i));
+				primaryKeyValues.add(method.invoke(c.cast(record)));
+			} catch (NoSuchMethodException | SecurityException
+					| IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return primaryKeyValues;
+	}
+
+	// TODO smazat?
 	protected Date subtractOneSecond(Date originalDate) {
 		Calendar modifiedDate = Calendar.getInstance();
 		modifiedDate.setTime(originalDate);
