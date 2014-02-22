@@ -1,11 +1,8 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
@@ -39,7 +36,7 @@ public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 			e.printStackTrace();
 		}
 		for (Kraje record : kraje) {
-			primaryKeysValues = getPrimaryKeysValues(record);
+			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 			processRecord(record);
 		}
 		try {
@@ -48,24 +45,6 @@ public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private List<Object> getPrimaryKeysValues(Object record) {
-		List<Object> primaryKeyValues = new ArrayList<>();
-		try {
-			for (int i = 0; i < methodsName.size(); i++) {
-				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.nemovitosti.Kraje");
-				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((Kraje) record));
-			}
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return primaryKeyValues;
 	}
 
 	private void processRecord(Kraje record) {

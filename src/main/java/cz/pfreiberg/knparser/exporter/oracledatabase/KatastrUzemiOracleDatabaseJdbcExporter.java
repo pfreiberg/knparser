@@ -1,12 +1,9 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
@@ -42,7 +39,7 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 			e.printStackTrace();
 		}
 		for (KatastrUzemi record : katastrUzemi) {
-			primaryKeysValues = getPrimaryKeysValues(record);
+			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 			processRecord(record);
 		}
 		try {
@@ -51,24 +48,6 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private List<Object> getPrimaryKeysValues(Object record) {
-		List<Object> primaryKeyValues = new ArrayList<>();
-		try {
-			for (int i = 0; i < methodsName.size(); i++) {
-				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.nemovitosti.KatastrUzemi");
-				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((KatastrUzemi) record));
-			}
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return primaryKeyValues;
 	}
 
 	private void processRecord(KatastrUzemi record) {

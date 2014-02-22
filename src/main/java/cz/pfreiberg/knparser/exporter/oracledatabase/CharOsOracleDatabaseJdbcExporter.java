@@ -1,11 +1,8 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
@@ -40,7 +37,7 @@ public class CharOsOracleDatabaseJdbcExporter extends
 			e.printStackTrace();
 		}
 		for (CharOs record : charOs) {
-			primaryKeysValues = getPrimaryKeysValues(record);
+			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 			processRecord(record);
 		}
 		try {
@@ -49,24 +46,6 @@ public class CharOsOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private List<Object> getPrimaryKeysValues(Object record) {
-		List<Object> primaryKeyValues = new ArrayList<>();
-		try {
-			for (int i = 0; i < methodsName.size(); i++) {
-				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.vlastnictvi.CharOs");
-				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((CharOs) record));
-			}
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return primaryKeyValues;
 	}
 
 	private void processRecord(CharOs record) {

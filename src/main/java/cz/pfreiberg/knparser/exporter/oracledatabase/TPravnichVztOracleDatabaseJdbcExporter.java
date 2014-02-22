@@ -1,11 +1,8 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
@@ -41,7 +38,7 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 			e.printStackTrace();
 		}
 		for (TPravnichVzt record : tPravnichVzt) {
-			primaryKeysValues = getPrimaryKeysValues(record);
+			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 			processRecord(record);
 		}
 		try {
@@ -50,24 +47,6 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private List<Object> getPrimaryKeysValues(Object record) {
-		List<Object> primaryKeyValues = new ArrayList<>();
-		try {
-			for (int i = 0; i < methodsName.size(); i++) {
-				Class<?> c = Class
-						.forName("cz.pfreiberg.knparser.domain.jinepravnivztahy.TPravnichVzt");
-				Method method = c.getDeclaredMethod(methodsName.get(i));
-				primaryKeyValues.add(method.invoke((TPravnichVzt) record));
-			}
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return primaryKeyValues;
 	}
 
 	private void processRecord(TPravnichVzt record) {
