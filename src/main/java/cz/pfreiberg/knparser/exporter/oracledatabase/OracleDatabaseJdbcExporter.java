@@ -8,8 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
@@ -40,6 +38,26 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		}
 
 		return database;
+	}
+	
+	@Override
+	public List<String> getPrimaryKeys(Connection connection, String table) {
+		List<String> output = new ArrayList<>();
+		try {
+			String select = "SELECT TABLE_NAME, TYP, POC_PK, PK1, PK2, PK3, PK4, PORADI FROM TABLE_INFO WHERE TABLE_NAME = '"
+					+ table + "'";
+			ResultSet rs = connection.prepareStatement(select).executeQuery();
+			if (rs.next()) {
+				int numberOfPrimaryKeys = rs.getInt("POC_PK");
+				for (int i = 1; i <= numberOfPrimaryKeys; i++) {
+					output.add(rs.getString("PK" + String.valueOf(i)));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return output;
 	}
 	
 	@Override
@@ -94,39 +112,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		}
 		
 	}
-	
-	private String composeSqlStatement(OracleDatabaseParameters parameters,
-			String select) {
-		for (int i = 0; i < parameters.getPrimaryKeys().size(); i++) {
-			select = select.replace("*pk*", parameters.getPrimaryKeys().get(i) + " = "
-					+ VfkUtil.formatValueDatabase(parameters.getPrimaryKeysValues().get(i))
-					+ " AND *pk*");
-		}
-		select = select.replace(" AND *pk*", "");
-		return select;
-	}
-		
-
-	@Override
-	public List<String> getPrimaryKeys(Connection connection, String table) {
-		List<String> output = new ArrayList<>();
-		try {
-			String select = "SELECT TABLE_NAME, TYP, POC_PK, PK1, PK2, PK3, PK4, PORADI FROM TABLE_INFO WHERE TABLE_NAME = '"
-					+ table + "'";
-			ResultSet rs = connection.prepareStatement(select).executeQuery();
-			if (rs.next()) {
-				int numberOfPrimaryKeys = rs.getInt("POC_PK");
-				for (int i = 1; i <= numberOfPrimaryKeys; i++) {
-					output.add(rs.getString("PK" + String.valueOf(i)));
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return output;
-	}
-	
+			
 	protected List<Object> getPrimaryKeysValues(Object record, List<String> methodsName) {
 		List<Object> primaryKeyValues = new ArrayList<>();
 		for (int i = 0; i < methodsName.size(); i++) {
@@ -145,25 +131,26 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return primaryKeyValues;
 	}
 
-	// TODO smazat?
-	protected Date subtractOneSecond(Date originalDate) {
-		Calendar modifiedDate = Calendar.getInstance();
-		modifiedDate.setTime(originalDate);
-		modifiedDate.add(Calendar.SECOND, -1);
-		originalDate = modifiedDate.getTime();
-		return originalDate;
-	}
-
-
-	protected static List<String> getMethods(List<String> primaryKeys) {
+	protected List<String> getMethods(List<String> primaryKeys) {
 		List<String> methods = new ArrayList<>();
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			methods.add(toCamelCase(primaryKeys.get(i)));
 		}
 		return methods;
 	}
+	
+	private String composeSqlStatement(OracleDatabaseParameters parameters,
+			String select) {
+		for (int i = 0; i < parameters.getPrimaryKeys().size(); i++) {
+			select = select.replace("*pk*", parameters.getPrimaryKeys().get(i) + " = "
+					+ VfkUtil.formatValueDatabase(parameters.getPrimaryKeysValues().get(i))
+					+ " AND *pk*");
+		}
+		select = select.replace(" AND *pk*", "");
+		return select;
+	}
 
-	private static String toCamelCase(String s) {
+	private String toCamelCase(String s) {
 		String[] parts = s.split("_");
 		String camelCaseString = "";
 		for (String part : parts) {
@@ -172,7 +159,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return ("get" + camelCaseString);
 	}
 
-	private static String toProperCase(String s) {
+	private String toProperCase(String s) {
 		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
 	}
 	

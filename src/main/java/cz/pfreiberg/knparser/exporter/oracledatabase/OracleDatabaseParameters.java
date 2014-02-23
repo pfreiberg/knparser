@@ -23,9 +23,7 @@ public class OracleDatabaseParameters {
 		this.primaryKeys = primaryKeys;
 		this.primaryKeysValues = primaryKeysValues;
 		this.date = date;
-		if (dateValue != null) {
-			this.dateValue = VfkUtil.formatValueDatabase(dateValue);
-		}
+		setDateValue(dateValue);
 	}
 
 	public Connection getConnection() {
@@ -74,6 +72,12 @@ public class OracleDatabaseParameters {
 
 	public void setDateValue(String dateValue) {
 		this.dateValue = dateValue;
+	}
+	
+	public void setDateValue(Date dateValue) {
+		if (dateValue != null) {
+			this.dateValue = VfkUtil.formatValueDatabase(dateValue);
+		}
 	}
 
 	@Override

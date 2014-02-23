@@ -13,9 +13,9 @@ public interface OracleDatabaseJdbcOperations {
 	public List<String> getPrimaryKeys(Connection connection, String table);
 	
 	public boolean find(OracleDatabaseParameters parameters, Operations operation, boolean hasDate);
-
-	public void insert(String table, Object rawRecord, boolean isRecord);
 	
 	public void delete(OracleDatabaseParameters parameters, Operations operation, boolean hasDate);
+	
+	public void insert(String table, Object rawRecord, boolean isRecord);
 
 }

@@ -7,11 +7,10 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.nemovitosti.Parcely;
-import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ParcelyOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		HisOracleDatabaseJdbcExporter {
 
 	private List<Parcely> parcely;
 	private Connection connection;
@@ -39,10 +38,11 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 		for (Parcely record : parcely) {
 			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+			OracleDatabaseParameters parameters = new OracleDatabaseParameters(connection, name, primaryKeys, primaryKeysValues, "DATUM_VZNIKU", record.getDatumVzniku());
 			if (record.getDatumZaniku() == null) {
-				processRecord(record);
+				processRecord(parameters, record);
 			} else {
-				processHistoricalRecord(record);
+				processHistoricalRecord(parameters, record);
 			}
 		}
 		try {
@@ -51,39 +51,6 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void processRecord(Parcely record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues,
-				"DATUM_VZNIKU", record.getDatumVzniku());
-
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(name, record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
-			return;
-		} else {
-			insert(name, record, true);
-		}
-
-	}
-
-	private void processHistoricalRecord(Parcely record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues,
-				"DATUM_VZNIKU", record.getDatumVzniku());
-
-		if (!find(parameters, Operations.equal, true)) {
-			insert(name + "_MIN", record, false);
-			parameters.setTable(name);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
-		}
-
 	}
 
 	@Override
