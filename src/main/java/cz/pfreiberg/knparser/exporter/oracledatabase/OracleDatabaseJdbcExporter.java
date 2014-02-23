@@ -17,7 +17,12 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
-
+	
+	protected Connection connection;
+	protected List<String> primaryKeys;
+	protected List<String> methodsName;
+	protected List<Object> primaryKeysValues;
+	
 	@Override
 	public Connection getConnection(ConnectionParameters connection) {
 		Connection database = null;

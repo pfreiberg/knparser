@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,11 +12,6 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
 	private List<Parcely> parcely;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
 	private final String name = "PARCELY";
 
 	public ParcelyOracleDatabaseJdbcExporter(List<Parcely> parcely,
@@ -32,10 +26,6 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		for (Parcely record : parcely) {
 			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 			OracleDatabaseParameters parameters = new OracleDatabaseParameters(connection, name, primaryKeys, primaryKeysValues, "DATUM_VZNIKU", record.getDatumVzniku());
@@ -45,7 +35,6 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 				processHistoricalRecord(parameters, record);
 			}
 		}
-		try {
 			connection.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -61,7 +50,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			insertHistoricalRecord(table, rawRecord);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	private void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -123,7 +112,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	private void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO "
 				+ table
