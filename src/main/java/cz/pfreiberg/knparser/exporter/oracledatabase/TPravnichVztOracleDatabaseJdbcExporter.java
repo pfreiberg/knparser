@@ -18,15 +18,13 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 	private List<String> methodsName;
 	private List<Object> primaryKeysValues;
 
-	private final String name = "T_PRAVNICH_VZT";
+	private final static String name = "T_PRAVNICH_VZT";
 
 	public TPravnichVztOracleDatabaseJdbcExporter(
 			List<TPravnichVzt> tPravnichVzt,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.tPravnichVzt = tPravnichVzt;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,19 +12,12 @@ public class DPozemkuOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<DPozemku> dPozemku;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "D_POZEMKU";
+	private final static String name = "D_POZEMKU";
 
 	public DPozemkuOracleDatabaseJdbcExporter(List<DPozemku> dPozemku,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.dPozemku = dPozemku;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

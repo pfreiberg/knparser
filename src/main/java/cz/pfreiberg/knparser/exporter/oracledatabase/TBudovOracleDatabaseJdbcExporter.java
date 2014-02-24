@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,19 +12,12 @@ public class TBudovOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<TBudov> tBudov;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "T_BUDOV";
+	private final static String name = "T_BUDOV";
 
 	public TBudovOracleDatabaseJdbcExporter(List<TBudov> tBudov,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.tBudov = tBudov;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

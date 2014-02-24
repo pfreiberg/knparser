@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,19 +12,12 @@ public class RizeniOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<Rizeni> rizeni;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "RIZENI";
+	private final static String name = "RIZENI";
 
 	public RizeniOracleDatabaseJdbcExporter(List<Rizeni> rizeni,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.rizeni = rizeni;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 
@@ -58,7 +50,7 @@ public class RizeniOracleDatabaseJdbcExporter extends
 		}
 		insert(name, record, false);
 	}
-	
+
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"

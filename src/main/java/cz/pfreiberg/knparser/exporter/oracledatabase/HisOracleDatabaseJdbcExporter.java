@@ -12,9 +12,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	public HisOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name) {
-		connection = getConnection(connectionParameters);
-		primaryKeys = getPrimaryKeys(connection, name);
-		methodsName = getMethods(primaryKeys);
+		super(connectionParameters, name);
 	}
 	
 	protected <T extends DomainWithDate> void prepareStatement(List<T> list, String name) {

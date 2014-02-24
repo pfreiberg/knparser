@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,19 +11,12 @@ public class ZpmzOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<Zpmz> zpmz;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "ZPMZ";
+	private final static String name = "ZPMZ";
 
 	public ZpmzOracleDatabaseJdbcExporter(List<Zpmz> zpmz,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.zpmz = zpmz;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

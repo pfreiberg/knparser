@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,23 +15,16 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<HraniceParcel> hraniceParcel;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
 	private String parId1;
 	private String parId2;
 
-	private final String name = "HRANICE_PARCEL";
+	private final static String name = "HRANICE_PARCEL";
 
 	public HraniceParcelOracleDatabaseJdbcExporter(
 			List<HraniceParcel> hraniceParcel,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.hraniceParcel = hraniceParcel;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 
@@ -60,12 +52,11 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(HraniceParcel record) {
-		
+
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
+				connection, name, primaryKeys, primaryKeysValues,
 				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		
+
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
 		if (find(parameters, Operations.lessThan, true)) {
@@ -107,11 +98,11 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	}
 
 	private void processHistoricalRecord(HraniceParcel record) {
-		
+
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
+				connection, name + "_MIN", primaryKeys, primaryKeysValues,
 				"DATUM_VZNIKU", record.getDatumVzniku());
-		
+
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
 		if (find(parameters, Operations.equal, true)) {
@@ -132,7 +123,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 						record.setParId2(Math.max(parId1Number,
 								record.getParId1()));
 						update(name + "_MIN", record);
-					
+
 					}
 				} else {
 					record.setParId1(Math.min(record.getParId1(),
@@ -191,7 +182,6 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		PreparedStatement preparedStatement = null;
 		HraniceParcel record = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			record = (HraniceParcel) rawRecord;
@@ -210,11 +200,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (Exception e) {
-			System.out.println(record);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -226,46 +213,11 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public boolean update(String table, HraniceParcel record) {
-		String select = "UPDATE " + table + " SET PAR_ID_1 = "
-				+ record.getParId1()
-				+ " , PAR_ID_2 = "
-				+ record.getParId2()
-				+ " WHERE *pk*";
-
-		for (int i = 0; i < primaryKeys.size(); i++) {
-			select = select.replace("*pk*", primaryKeys.get(i) + " = "
-					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-					+ " AND *pk*");
-		}
-		select = select.replace(" AND *pk*", "");
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(select);
-			int affectedRows = preparedStatement.executeUpdate();
-			return (affectedRows > 0);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally
-		{
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
-
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_HRANICE_PARCEL_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			HraniceParcel record = (HraniceParcel) rawRecord;
@@ -284,10 +236,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -300,4 +249,35 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		}
 
 	}
+
+	public boolean update(String table, HraniceParcel record) {
+		String select = "UPDATE " + table + " SET PAR_ID_1 = "
+				+ record.getParId1() + " , PAR_ID_2 = " + record.getParId2()
+				+ " WHERE *pk*";
+
+		for (int i = 0; i < primaryKeys.size(); i++) {
+			select = select.replace("*pk*", primaryKeys.get(i) + " = "
+					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
+					+ " AND *pk*");
+		}
+		select = select.replace(" AND *pk*", "");
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(select);
+			int affectedRows = preparedStatement.executeUpdate();
+			return (affectedRows > 0);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 }

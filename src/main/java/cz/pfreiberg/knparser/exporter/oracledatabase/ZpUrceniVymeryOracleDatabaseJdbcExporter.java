@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,20 +12,13 @@ public class ZpUrceniVymeryOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<ZpUrceniVymery> zpUrceniVymery;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "ZP_URCENI_VYMERY";
+	private final static String name = "ZP_URCENI_VYMERY";
 
 	public ZpUrceniVymeryOracleDatabaseJdbcExporter(
 			List<ZpUrceniVymery> zpUrceniVymery,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.zpUrceniVymery = zpUrceniVymery;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

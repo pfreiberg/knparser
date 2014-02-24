@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -15,19 +14,13 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<ObrazyParcel> obrazyParcel;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
+	private static final String name = "OBRAZY_PARCEL";
 
-	private final String name = "OBRAZY_PARCEL";
-
-	public ObrazyParcelOracleDatabaseJdbcExporter(List<ObrazyParcel> obrazyParcel,
+	public ObrazyParcelOracleDatabaseJdbcExporter(
+			List<ObrazyParcel> obrazyParcel,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.obrazyParcel = obrazyParcel;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 
@@ -55,11 +48,11 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(ObrazyParcel record) {
-		
+
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
+				connection, name, primaryKeys, primaryKeysValues,
 				"DATUM_VZNIKU", record.getDatumVzniku());
-		
+
 		if (find(parameters, Operations.lessThan, true)) {
 			delete(parameters, Operations.lessThan, true);
 			insert(name, record, true);
@@ -69,13 +62,13 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 			insert(name, record, true);
 		}
 	}
-	
+
 	private void processHistoricalRecord(ObrazyParcel record) {
 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
+				connection, name + "_MIN", primaryKeys, primaryKeysValues,
 				"DATUM_VZNIKU", record.getDatumVzniku());
-		
+
 		if (!find(parameters, Operations.equal, true)) {
 			insert(name + "_MIN", record, false);
 			parameters.setTable(name);
@@ -83,9 +76,9 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 				delete(parameters, Operations.equal, true);
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
 		if (isRecord) {
@@ -95,9 +88,7 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertRecord(String table, Object rawRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
+		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
@@ -107,8 +98,10 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 			ObrazyParcel record = (ObrazyParcel) rawRecord;
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, record.getStavDat());
-			preparedStatement.setObject(3, VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4, VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+			preparedStatement.setObject(3,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(4,
+					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
 			preparedStatement.setObject(5, 0);
 			preparedStatement.setObject(6, record.getRizeniIdVzniku());
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
@@ -122,7 +115,7 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(15, record.getVztaznyBod());
 			preparedStatement.setObject(16, record.getUhel());
 			preparedStatement.setNull(17, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
-		
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}
@@ -139,7 +132,7 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 			}
 		}
 	}
-	
+
 	public void insertHistoricalRecord(String table, Object rawRecord) {
 
 		String insert = "INSERT INTO "
@@ -154,8 +147,10 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 			ObrazyParcel record = (ObrazyParcel) rawRecord;
 			preparedStatement.setObject(1, record.getId());
 			preparedStatement.setObject(2, record.getStavDat());
-			preparedStatement.setObject(3, VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4, VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+			preparedStatement.setObject(3,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+			preparedStatement.setObject(4,
+					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
 			preparedStatement.setObject(5, 0);
 			preparedStatement.setObject(6, record.getRizeniIdVzniku());
 			preparedStatement.setObject(7, record.getRizeniIdZaniku());
@@ -187,5 +182,5 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 		}
 
 	}
-	
+
 }

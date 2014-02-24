@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,19 +11,12 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class UcelOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter {
 
 	private List<Ucel> ucel;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "UCEL";
+	private final static String name = "UCEL";
 
 	public UcelOracleDatabaseJdbcExporter(List<Ucel> ucel,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.ucel = ucel;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

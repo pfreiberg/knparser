@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,19 +11,12 @@ public class UcastniciTypOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<UcastniciTyp> ucastniciTyp;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "UCASTNICI_TYP";
+	private final static String name = "UCASTNICI_TYP";
 
 	public UcastniciTypOracleDatabaseJdbcExporter(List<UcastniciTyp> ucastniciTyp,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.ucastniciTyp = ucastniciTyp;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,20 +11,13 @@ public class TypyUcastnikuOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<TypyUcastniku> typyUcastniku;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "TYPY_UCASTNIKU";
+	private final static String name = "TYPY_UCASTNIKU";
 
 	public TypyUcastnikuOracleDatabaseJdbcExporter(
 			List<TypyUcastniku> typyUcastniku,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.typyUcastniku = typyUcastniku;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 
@@ -73,7 +65,7 @@ public class TypyUcastnikuOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(1, record.getKod());
 			preparedStatement.setObject(2, record.getNazev());
 			preparedStatement.setObject(3, record.getPopis());
-		
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}

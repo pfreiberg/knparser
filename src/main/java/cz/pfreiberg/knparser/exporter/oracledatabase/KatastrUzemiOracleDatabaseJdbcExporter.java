@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -14,20 +13,13 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<KatastrUzemi> katastrUzemi;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "KATASTR_UZEMI";
+	private final static String name = "KATASTR_UZEMI";
 
 	public KatastrUzemiOracleDatabaseJdbcExporter(
 			List<KatastrUzemi> katastrUzemi,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.katastrUzemi = katastrUzemi;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

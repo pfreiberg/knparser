@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,19 +12,12 @@ public class CastiObciOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<CastiObci> castiObci;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "CASTI_OBCI";
+	private final static String name = "CASTI_OBCI";
 
 	public CastiObciOracleDatabaseJdbcExporter(List<CastiObci> castiObci,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.castiObci = castiObci;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

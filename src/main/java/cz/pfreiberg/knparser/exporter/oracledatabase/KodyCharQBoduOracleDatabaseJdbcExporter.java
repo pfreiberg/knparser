@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,20 +12,13 @@ public class KodyCharQBoduOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<KodyCharQBodu> kodyCharQBodu;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "KODY_CHAR_Q_BODU";
+	private final static String name = "KODY_CHAR_Q_BODU";
 
 	public KodyCharQBoduOracleDatabaseJdbcExporter(
 			List<KodyCharQBodu> kodyCharQBodu,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.kodyCharQBodu = kodyCharQBodu;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,19 +12,12 @@ public class TJednotekOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<TJednotek> tJednotek;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "T_JEDNOTEK";
+	private final static String name = "T_JEDNOTEK";
 
 	public TJednotekOracleDatabaseJdbcExporter(List<TJednotek> tJednotek,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.tJednotek = tJednotek;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

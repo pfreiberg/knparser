@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,19 +11,12 @@ public class RizeniKuOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<RizeniKu> rizeniKu;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "RIZENI_KU";
+	private final static String name = "RIZENI_KU";
 
 	public RizeniKuOracleDatabaseJdbcExporter(List<RizeniKu> rizeniKu,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.rizeniKu = rizeniKu;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

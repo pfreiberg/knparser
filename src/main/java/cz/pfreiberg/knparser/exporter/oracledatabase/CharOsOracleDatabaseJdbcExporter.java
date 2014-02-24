@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,19 +12,12 @@ public class CharOsOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<CharOs> charOs;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "CHAR_OS";
+	private final static String name = "CHAR_OS";
 
 	public CharOsOracleDatabaseJdbcExporter(List<CharOs> charOs,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.charOs = charOs;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

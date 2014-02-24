@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -13,19 +12,12 @@ public class SouradniceObrazuOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<SouradniceObrazu> souradniceObrazu;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "SOURADNICE_OBRAZU";
+	private final static String name = "SOURADNICE_OBRAZU";
 
 	public SouradniceObrazuOracleDatabaseJdbcExporter(List<SouradniceObrazu> souradniceObrazu,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.souradniceObrazu = souradniceObrazu;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

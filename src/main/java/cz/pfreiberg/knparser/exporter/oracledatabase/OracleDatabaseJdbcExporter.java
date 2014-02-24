@@ -22,6 +22,17 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	protected List<String> primaryKeys;
 	protected List<String> methodsName;
 	protected List<Object> primaryKeysValues;
+	
+	public OracleDatabaseJdbcExporter(ConnectionParameters connectionParameters) {
+		connection = getConnection(connectionParameters);
+	}
+
+	public OracleDatabaseJdbcExporter(
+			ConnectionParameters connectionParameters, String name) {
+		connection = getConnection(connectionParameters);
+		primaryKeys = getPrimaryKeys(connection, name);
+		methodsName = getMethods(primaryKeys);
+	}
 
 	@Override
 	public Connection getConnection(ConnectionParameters connection) {

@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,19 +11,13 @@ public class SouradnicePolohyOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<SouradnicePolohy> souradnicePolohy;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
+	private final static String name = "SOURADNICE_POLOHY";
 
-	private final String name = "SOURADNICE_POLOHY";
-
-	public SouradnicePolohyOracleDatabaseJdbcExporter(List<SouradnicePolohy> souradnicePolohy,
+	public SouradnicePolohyOracleDatabaseJdbcExporter(
+			List<SouradnicePolohy> souradnicePolohy,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.souradnicePolohy = souradnicePolohy;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 
@@ -48,7 +41,7 @@ public class SouradnicePolohyOracleDatabaseJdbcExporter extends
 	}
 
 	private void processRecord(SouradnicePolohy record) {
-		
+
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 				connection, name, primaryKeys, primaryKeysValues, null, null);
 
@@ -60,9 +53,7 @@ public class SouradnicePolohyOracleDatabaseJdbcExporter extends
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
+		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
@@ -82,7 +73,7 @@ public class SouradnicePolohyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, record.getKodchbKod());
 			preparedStatement.setObject(11, record.getKatuzeKodMer());
 			preparedStatement.setObject(12, record.getCisloZpmzMer());
-		
+
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		}

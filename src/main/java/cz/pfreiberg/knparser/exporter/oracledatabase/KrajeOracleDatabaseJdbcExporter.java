@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -12,19 +11,12 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class KrajeOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter {
 
 	private List<Kraje> kraje;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "KRAJE";
+	private final static String name = "KRAJE";
 
 	public KrajeOracleDatabaseJdbcExporter(List<Kraje> kraje,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.kraje = kraje;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

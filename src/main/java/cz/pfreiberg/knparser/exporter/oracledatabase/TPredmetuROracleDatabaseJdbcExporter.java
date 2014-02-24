@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,19 +12,12 @@ public class TPredmetuROracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<TPredmetuR> tPredmetuR;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "T_PREDMETU_R";
+	private final static String name = "T_PREDMETU_R";
 
 	public TPredmetuROracleDatabaseJdbcExporter(List<TPredmetuR> tPredmetuR,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters, name);
 		this.tPredmetuR = tPredmetuR;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
 		prepareStatement();
 	}
 

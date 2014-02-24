@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,17 +14,13 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
 	private List<SpojeniBMapy> spojeniBMapy;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<Object> primaryKeysValues;
-
-	private final String name = "SPOJENI_B_MAPY";
+	private final static String name = "SPOJENI_B_MAPY";
 
 	public SpojeniBMapyOracleDatabaseJdbcExporter(
 			List<SpojeniBMapy> spojeniBMapy,
 			ConnectionParameters connectionParameters) {
+		super(connectionParameters);
 		this.spojeniBMapy = spojeniBMapy;
-		connection = super.getConnection(connectionParameters);
 		prepareStatement();
 	}
 
