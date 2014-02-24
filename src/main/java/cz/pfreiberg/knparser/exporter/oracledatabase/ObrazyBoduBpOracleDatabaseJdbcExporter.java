@@ -1,24 +1,17 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.ObrazyBoduBp;
-import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		HisOracleDatabaseJdbcExporter {
 
 	private List<ObrazyBoduBp> obrazyBoduBp;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
 	private final String name = "OBRAZY_BODU_BP";
 
 	public ObrazyBoduBpOracleDatabaseJdbcExporter(
@@ -34,57 +27,23 @@ public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (ObrazyBoduBp record : obrazyBoduBp) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			if (record.getDatumZaniku() == null) {
-				processRecord(record);
-			} else {
-				processHistoricalRecord(record);
+			for (ObrazyBoduBp record : obrazyBoduBp) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+						connection, name, primaryKeys, primaryKeysValues,
+						"DATUM_VZNIKU", record.getDatumVzniku());
+				if (record.getDatumZaniku() == null) {
+					processRecord(parameters, record);
+				} else {
+					processHistoricalRecord(parameters, record);
+				}
 			}
-		}
-		try {
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void processRecord(ObrazyBoduBp record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(name, record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
-			return;
-		} else {
-			insert(name, record, true);
-		}
-		
-	}
-
-	private void processHistoricalRecord(ObrazyBoduBp record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (!find(parameters, Operations.equal, true)) {
-			insert(name + "_MIN", record, false);
-			parameters.setTable(name);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
-		}
-		
 	}
 
 	@Override
@@ -100,7 +59,6 @@ public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			ObrazyBoduBp record = (ObrazyBoduBp) rawRecord;
@@ -124,10 +82,7 @@ public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(16, record.getVztaznyBod());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -141,14 +96,12 @@ public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
 				+ "(SEQ_OBRAZY_BODU_BP_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			ObrazyBoduBp record = (ObrazyBoduBp) rawRecord;
@@ -172,10 +125,7 @@ public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(16, record.getVztaznyBod());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

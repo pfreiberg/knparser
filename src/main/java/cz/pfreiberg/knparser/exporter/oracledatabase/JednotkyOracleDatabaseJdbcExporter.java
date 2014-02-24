@@ -1,24 +1,17 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.jednotky.Jednotky;
-import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class JednotkyOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		HisOracleDatabaseJdbcExporter {
 
 	private List<Jednotky> jednotky;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
 	private final String name = "JEDNOTKY";
 
 	public JednotkyOracleDatabaseJdbcExporter(List<Jednotky> jednotky,
@@ -33,57 +26,23 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Jednotky record : jednotky) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			if (record.getDatumZaniku() == null) {
-				processRecord(record);
-			} else {
-				processHistoricalRecord(record);
+			for (Jednotky record : jednotky) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+						connection, name, primaryKeys, primaryKeysValues,
+						"DATUM_VZNIKU", record.getDatumVzniku());
+				if (record.getDatumZaniku() == null) {
+					processRecord(parameters, record);
+				} else {
+					processHistoricalRecord(parameters, record);
+				}
 			}
-		}
-		try {
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void processRecord(Jednotky record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(name, record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
-			return;
-		} else {
-			insert(name, record, true);
-		}
-		
-	}
-
-	private void processHistoricalRecord(Jednotky record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (!find(parameters, Operations.equal, true)) {
-			insert(name + "_MIN", record, false);
-			parameters.setTable(name);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
-		}
-		
 	}
 
 	@Override
@@ -99,7 +58,6 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Jednotky record = (Jednotky) rawRecord;
@@ -123,10 +81,7 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(16, record.getPopis());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -140,12 +95,10 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_JEDNOTKY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Jednotky record = (Jednotky) rawRecord;
@@ -169,10 +122,7 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(16, record.getPopis());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

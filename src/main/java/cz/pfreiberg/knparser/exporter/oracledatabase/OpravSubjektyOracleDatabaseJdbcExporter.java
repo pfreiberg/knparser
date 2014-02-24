@@ -1,24 +1,17 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty;
-import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class OpravSubjektyOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		HisOracleDatabaseJdbcExporter {
 
 	private List<OpravSubjekty> opravSubjekty;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
 	private final String name = "OPRAV_SUBJEKTY";
 
 	public OpravSubjektyOracleDatabaseJdbcExporter(
@@ -34,57 +27,23 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (OpravSubjekty record : opravSubjekty) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			if (record.getDatumZaniku() == null) {
-				processRecord(record);
-			} else {
-				processHistoricalRecord(record);
+			for (OpravSubjekty record : opravSubjekty) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+						connection, name, primaryKeys, primaryKeysValues,
+						"DATUM_VZNIKU", record.getDatumVzniku());
+				if (record.getDatumZaniku() == null) {
+					processRecord(parameters, record);
+				} else {
+					processHistoricalRecord(parameters, record);
+				}
 			}
-		}
-		try {
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void processRecord(OpravSubjekty record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(name, record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
-			return;
-		} else {
-			insert(name, record, true);
-		}
-		
-	}
-
-	private void processHistoricalRecord(OpravSubjekty record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (!find(parameters, Operations.equal, true)) {
-			insert(name + "_MIN", record, false);
-			parameters.setTable(name);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
-		}
-		
 	}
 
 	@Override
@@ -96,11 +55,12 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertRecord(String table, Object rawRecord) {
-		String insert = "INSERT INTO " + table + " VALUES"
+		String insert = "INSERT INTO "
+				+ table
+				+ " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			OpravSubjekty record = (OpravSubjekty) rawRecord;
@@ -139,16 +99,14 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(31, record.getPsc());
 			preparedStatement.setObject(32, record.getCpCe());
 			preparedStatement.setObject(33, record.getMestskaCast());
-			preparedStatement.setObject(34, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
+			preparedStatement.setObject(34,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(35, record.getRizeniIdVzniku2());
 			preparedStatement.setObject(36, record.getKodAdrm());
 			preparedStatement.setObject(37, record.getIdNadrizenePo());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -162,12 +120,12 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-
-		String insert = "INSERT INTO " + table + " VALUES"
+		String insert = "INSERT INTO "
+				+ table
+				+ " VALUES"
 				+ "(SEQ_OPRAV_SUBJEKTY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			OpravSubjekty record = (OpravSubjekty) rawRecord;
@@ -206,16 +164,14 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(31, record.getPsc());
 			preparedStatement.setObject(32, record.getCpCe());
 			preparedStatement.setObject(33, record.getMestskaCast());
-			preparedStatement.setObject(34, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
+			preparedStatement.setObject(34,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(35, record.getRizeniIdVzniku2());
 			preparedStatement.setObject(36, record.getKodAdrm());
 			preparedStatement.setObject(37, record.getIdNadrizenePo());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

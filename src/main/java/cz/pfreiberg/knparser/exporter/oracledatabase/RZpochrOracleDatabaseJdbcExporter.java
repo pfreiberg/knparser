@@ -1,28 +1,20 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.nemovitosti.RZpochr;
-import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class RZpochrOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		HisOracleDatabaseJdbcExporter {
 
 	private List<RZpochr> rZpochr;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
 	private final String name = "R_ZPOCHR";
 
-	public RZpochrOracleDatabaseJdbcExporter(
-			List<RZpochr> rZpochr,
+	public RZpochrOracleDatabaseJdbcExporter(List<RZpochr> rZpochr,
 			ConnectionParameters connectionParameters) {
 		this.rZpochr = rZpochr;
 		connection = super.getConnection(connectionParameters);
@@ -34,57 +26,23 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (RZpochr record : rZpochr) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			if (record.getDatumZaniku() == null) {
-				processRecord(record);
-			} else {
-				processHistoricalRecord(record);
+			for (RZpochr record : rZpochr) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+						connection, name, primaryKeys, primaryKeysValues,
+						"DATUM_VZNIKU", record.getDatumVzniku());
+				if (record.getDatumZaniku() == null) {
+					processRecord(parameters, record);
+				} else {
+					processHistoricalRecord(parameters, record);
+				}
 			}
-		}
-		try {
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void processRecord(RZpochr record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(name, record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
-			return;
-		} else {
-			insert(name, record, true);
-		}
-		
-	}
-
-	private void processHistoricalRecord(RZpochr record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (!find(parameters, Operations.equal, true)) {
-			insert(name + "_MIN", record, false);
-			parameters.setTable(name);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
-		}
-		
 	}
 
 	@Override
@@ -100,7 +58,6 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			RZpochr record = (RZpochr) rawRecord;
@@ -120,10 +77,7 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(12, record.getPsId());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -137,12 +91,10 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_R_ZPOCHR_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			RZpochr record = (RZpochr) rawRecord;
@@ -160,12 +112,9 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, record.getBudId());
 			preparedStatement.setObject(11, record.getJedId());
 			preparedStatement.setObject(12, record.getPsId());
-		
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
 
-		catch (SQLException e) {
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

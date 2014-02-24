@@ -26,16 +26,19 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		for (Parcely record : parcely) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			OracleDatabaseParameters parameters = new OracleDatabaseParameters(connection, name, primaryKeys, primaryKeysValues, "DATUM_VZNIKU", record.getDatumVzniku());
-			if (record.getDatumZaniku() == null) {
-				processRecord(parameters, record);
-			} else {
-				processHistoricalRecord(parameters, record);
+			for (Parcely record : parcely) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+						connection, name, primaryKeys, primaryKeysValues,
+						"DATUM_VZNIKU", record.getDatumVzniku());
+				if (record.getDatumZaniku() == null) {
+					processRecord(parameters, record);
+				} else {
+					processHistoricalRecord(parameters, record);
+				}
 			}
-		}
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,7 +60,6 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Parcely record = (Parcely) rawRecord;
@@ -96,9 +98,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(31, record.getIdentPs());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
 		}
-
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,14 +113,12 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 	}
 
 	private void insertHistoricalRecord(String table, Object rawRecord) {
-
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
 				+ "(SEQ_PARCELY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Parcely record = (Parcely) rawRecord;
@@ -159,9 +157,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(31, record.getIdentPs());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
 		}
-
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

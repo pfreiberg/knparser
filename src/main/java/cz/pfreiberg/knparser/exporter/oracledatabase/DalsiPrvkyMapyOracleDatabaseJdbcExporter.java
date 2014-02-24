@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -8,18 +7,12 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.DalsiPrvkyMapy;
-import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		HisOracleDatabaseJdbcExporter {
 
 	private List<DalsiPrvkyMapy> dalsiPrvkyMapy;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
 	private final String name = "DALSI_PRVKY_MAPY";
 
 	public DalsiPrvkyMapyOracleDatabaseJdbcExporter(
@@ -35,57 +28,23 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (DalsiPrvkyMapy record : dalsiPrvkyMapy) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			if (record.getDatumZaniku() == null) {
-				processRecord(record);
-			} else {
-				processHistoricalRecord(record);
+			for (DalsiPrvkyMapy record : dalsiPrvkyMapy) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+						connection, name, primaryKeys, primaryKeysValues,
+						"DATUM_VZNIKU", record.getDatumVzniku());
+				if (record.getDatumZaniku() == null) {
+					processRecord(parameters, record);
+				} else {
+					processHistoricalRecord(parameters, record);
+				}
 			}
-		}
-		try {
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void processRecord(DalsiPrvkyMapy record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(name, record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
-			return;
-		} else {
-			insert(name, record, true);
-		}
-		
-	}
-
-	private void processHistoricalRecord(DalsiPrvkyMapy record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (!find(parameters, Operations.equal, true)) {
-			insert(name + "_MIN", record, false);
-			parameters.setTable(name);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
-		}
-		
 	}
 
 	@Override
@@ -101,7 +60,6 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			DalsiPrvkyMapy record = (DalsiPrvkyMapy) rawRecord;
@@ -127,9 +85,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(18, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 			
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
 		}
-
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,12 +100,10 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_DALSI_PRVKY_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			DalsiPrvkyMapy record = (DalsiPrvkyMapy) rawRecord;
@@ -175,9 +129,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(18, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 		
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
 		}
-
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

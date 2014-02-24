@@ -1,23 +1,17 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.rizeni.RList;
-import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter {
+public class RListOracleDatabaseJdbcExporter extends
+		HisOracleDatabaseJdbcExporter {
 
 	private List<RList> rList;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
-
 	private final String name = "R_LIST";
 
 	public RListOracleDatabaseJdbcExporter(List<RList> rList,
@@ -32,57 +26,23 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (RList record : rList) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			if (record.getDatumZaniku() == null) {
-				processRecord(record);
-			} else {
-				processHistoricalRecord(record);
+			for (RList record : rList) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+						connection, name, primaryKeys, primaryKeysValues,
+						"DATUM_VZNIKU", record.getDatumVzniku());
+				if (record.getDatumZaniku() == null) {
+					processRecord(parameters, record);
+				} else {
+					processHistoricalRecord(parameters, record);
+				}
 			}
-		}
-		try {
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void processRecord(RList record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(name, record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
-			return;
-		} else {
-			insert(name, record, true);
-		}
-		
-	}
-
-	private void processHistoricalRecord(RList record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
-				"DATUM_VZNIKU", record.getDatumVzniku());
-		
-		if (!find(parameters, Operations.equal, true)) {
-			insert(name + "_MIN", record, false);
-			parameters.setTable(name);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
-		}
-		
 	}
 
 	@Override
@@ -98,7 +58,6 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			RList record = (RList) rawRecord;
@@ -117,15 +76,13 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 			preparedStatement.setObject(11, record.getJedId());
 			preparedStatement.setObject(12, record.getOpsubId());
 			preparedStatement.setObject(13, record.getJpvId());
-			preparedStatement.setObject(14, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
+			preparedStatement.setObject(14,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(15, record.getRizeniIdVzniku2());
 			preparedStatement.setObject(16, record.getPsId());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -139,12 +96,10 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_R_LIST_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			RList record = (RList) rawRecord;
@@ -163,15 +118,13 @@ public class RListOracleDatabaseJdbcExporter extends OracleDatabaseJdbcExporter 
 			preparedStatement.setObject(11, record.getJedId());
 			preparedStatement.setObject(12, record.getOpsubId());
 			preparedStatement.setObject(13, record.getJpvId());
-			preparedStatement.setObject(14, VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
+			preparedStatement.setObject(14,
+					VfkUtil.convertToDatabaseDate(record.getDatumVzniku2()));
 			preparedStatement.setObject(15, record.getRizeniIdVzniku2());
 			preparedStatement.setObject(16, record.getPsId());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
