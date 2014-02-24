@@ -3,6 +3,7 @@ package cz.pfreiberg.knparser.domain.vlastnictvi;
 import java.math.BigInteger;
 import java.util.Date;
 
+import cz.pfreiberg.knparser.domain.DomainWithDate;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
@@ -11,7 +12,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
  */
-public class Vlastnictvi {
+public class Vlastnictvi implements DomainWithDate {
 
 	private Long id;
 	private Integer stavDat;

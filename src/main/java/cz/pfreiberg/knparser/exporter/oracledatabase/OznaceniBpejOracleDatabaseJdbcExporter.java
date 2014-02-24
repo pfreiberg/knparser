@@ -11,47 +11,13 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class OznaceniBpejOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
-	private List<OznaceniBpej> oznaceniBpej;
-	private final String name = "OZNACENI_BPEJ";
+	private final static String name = "OZNACENI_BPEJ";
 
 	public OznaceniBpejOracleDatabaseJdbcExporter(
 			List<OznaceniBpej> oznaceniBpej,
 			ConnectionParameters connectionParameters) {
-		this.oznaceniBpej = oznaceniBpej;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-			for (OznaceniBpej record : oznaceniBpej) {
-				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues,
-						"DATUM_VZNIKU", record.getDatumVzniku());
-				if (record.getDatumZaniku() == null) {
-					processRecord(parameters, record);
-				} else {
-					processHistoricalRecord(parameters, record);
-				}
-			}
-			connection.commit();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
+		super(connectionParameters, name);
+		prepareStatement(oznaceniBpej, name);
 	}
 
 	public void insertRecord(String table, Object rawRecord) {

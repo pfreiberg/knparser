@@ -10,47 +10,13 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class RListOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
-
-	private List<RList> rList;
-	private final String name = "R_LIST";
+	
+	private final static String name = "R_LIST";
 
 	public RListOracleDatabaseJdbcExporter(List<RList> rList,
 			ConnectionParameters connectionParameters) {
-		this.rList = rList;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-			for (RList record : rList) {
-				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues,
-						"DATUM_VZNIKU", record.getDatumVzniku());
-				if (record.getDatumZaniku() == null) {
-					processRecord(parameters, record);
-				} else {
-					processHistoricalRecord(parameters, record);
-				}
-			}
-			connection.commit();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
+		super(connectionParameters, name);
+		prepareStatement(rList, name);
 	}
 
 	public void insertRecord(String table, Object rawRecord) {

@@ -2,6 +2,7 @@ package cz.pfreiberg.knparser.domain.jinepravnivztahy;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.domain.DomainWithDate;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
@@ -10,7 +11,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
  */
-public class RJpv {
+public class RJpv implements DomainWithDate {
 
 	private Long id;
 	private Long verze;

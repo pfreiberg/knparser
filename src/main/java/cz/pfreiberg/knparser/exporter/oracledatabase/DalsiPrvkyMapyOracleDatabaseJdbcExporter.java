@@ -12,49 +12,15 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
-	private List<DalsiPrvkyMapy> dalsiPrvkyMapy;
-	private final String name = "DALSI_PRVKY_MAPY";
+	private final static String name = "DALSI_PRVKY_MAPY";
 
 	public DalsiPrvkyMapyOracleDatabaseJdbcExporter(
 			List<DalsiPrvkyMapy> dalsiPrvkyMapy,
 			ConnectionParameters connectionParameters) {
-		this.dalsiPrvkyMapy = dalsiPrvkyMapy;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
-		prepareStatement();
+		super(connectionParameters, name);
+		prepareStatement(dalsiPrvkyMapy, name);
 	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-			for (DalsiPrvkyMapy record : dalsiPrvkyMapy) {
-				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues,
-						"DATUM_VZNIKU", record.getDatumVzniku());
-				if (record.getDatumZaniku() == null) {
-					processRecord(parameters, record);
-				} else {
-					processHistoricalRecord(parameters, record);
-				}
-			}
-			connection.commit();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
-	}
-
+	
 	public void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";

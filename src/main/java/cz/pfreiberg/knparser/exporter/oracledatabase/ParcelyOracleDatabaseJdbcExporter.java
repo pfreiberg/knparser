@@ -11,49 +11,15 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class ParcelyOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
-	private List<Parcely> parcely;
-	private final String name = "PARCELY";
+	private final static String name = "PARCELY";
 
 	public ParcelyOracleDatabaseJdbcExporter(List<Parcely> parcely,
 			ConnectionParameters connectionParameters) {
-		this.parcely = parcely;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
-		prepareStatement();
+		super(connectionParameters, name);
+		prepareStatement(parcely, name);
 	}
 
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-			for (Parcely record : parcely) {
-				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues,
-						"DATUM_VZNIKU", record.getDatumVzniku());
-				if (record.getDatumZaniku() == null) {
-					processRecord(parameters, record);
-				} else {
-					processHistoricalRecord(parameters, record);
-				}
-			}
-			connection.commit();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
-	}
-
-	private void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -112,7 +78,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	private void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"

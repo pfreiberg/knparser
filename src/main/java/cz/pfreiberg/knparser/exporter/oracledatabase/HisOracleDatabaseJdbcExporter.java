@@ -1,12 +1,47 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import cz.pfreiberg.knparser.ConnectionParameters;
+import cz.pfreiberg.knparser.domain.DomainWithDate;
 import cz.pfreiberg.knparser.util.Operations;
 
 public abstract class HisOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 
-	protected void processRecord(OracleDatabaseParameters parameters, Object record) {
-		
+	public HisOracleDatabaseJdbcExporter(
+			ConnectionParameters connectionParameters, String name) {
+		connection = super.getConnection(connectionParameters);
+		primaryKeys = super.getPrimaryKeys(connection, name);
+		methodsName = super.getMethods(primaryKeys);
+	}
+	
+	protected <T extends DomainWithDate> void prepareStatement(List<T> list, String name) {
+		try {
+			connection.setAutoCommit(false);
+			for (T record : list) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
+						connection, name, primaryKeys, primaryKeysValues,
+						"DATUM_VZNIKU", record.getDatumVzniku());
+				if (record.getDatumZaniku() == null) {
+					processRecord(parameters, record);
+				} else {
+					processHistoricalRecord(parameters, record);
+				}
+			}
+			connection.commit();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	protected void processRecord(OracleDatabaseParameters parameters,
+			Object record) {
+
 		if (find(parameters, Operations.lessThan, true)) {
 			delete(parameters, Operations.lessThan, true);
 			insert(parameters.getTable(), record, true);
@@ -16,9 +51,10 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			insert(parameters.getTable(), record, true);
 		}
 	}
-	
-	protected void processHistoricalRecord(OracleDatabaseParameters parameters, Object record) {
-		
+
+	protected void processHistoricalRecord(OracleDatabaseParameters parameters,
+			Object record) {
+
 		String table = parameters.getTable();
 		parameters.setTable(table + "_MIN");
 
@@ -31,5 +67,19 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		}
 
 	}
+	
+	@Override
+	public void insert(String table, Object rawRecord, boolean isRecord) {
+		if (isRecord) {
+			insertRecord(table, rawRecord);
+		} else
+			insertHistoricalRecord(table, rawRecord);
+	}
+
+	protected abstract void insertRecord(String table, Object rawRecord);
+
+	protected abstract void insertHistoricalRecord(String table,
+			Object rawRecord);
+
 
 }

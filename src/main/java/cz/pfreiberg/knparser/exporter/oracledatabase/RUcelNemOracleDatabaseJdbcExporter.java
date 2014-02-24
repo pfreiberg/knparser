@@ -11,46 +11,12 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class RUcelNemOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
-	private List<RUcelNem> rUcelNem;
-	private final String name = "R_UCEL_NEM";
+	private final static String name = "R_UCEL_NEM";
 
 	public RUcelNemOracleDatabaseJdbcExporter(List<RUcelNem> rUcelNem,
 			ConnectionParameters connectionParameters) {
-		this.rUcelNem = rUcelNem;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-			for (RUcelNem record : rUcelNem) {
-				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues,
-						"DATUM_VZNIKU", record.getDatumVzniku());
-				if (record.getDatumZaniku() == null) {
-					processRecord(parameters, record);
-				} else {
-					processHistoricalRecord(parameters, record);
-				}
-			}
-			connection.commit();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
+		super(connectionParameters, name);
+		prepareStatement(rUcelNem, name);
 	}
 
 	public void insertRecord(String table, Object rawRecord) {

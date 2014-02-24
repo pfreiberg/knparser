@@ -11,47 +11,13 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class OpravSubjektyOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
-	private List<OpravSubjekty> opravSubjekty;
-	private final String name = "OPRAV_SUBJEKTY";
+	private final static String name = "OPRAV_SUBJEKTY";
 
 	public OpravSubjektyOracleDatabaseJdbcExporter(
 			List<OpravSubjekty> opravSubjekty,
 			ConnectionParameters connectionParameters) {
-		this.opravSubjekty = opravSubjekty;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-			for (OpravSubjekty record : opravSubjekty) {
-				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues,
-						"DATUM_VZNIKU", record.getDatumVzniku());
-				if (record.getDatumZaniku() == null) {
-					processRecord(parameters, record);
-				} else {
-					processHistoricalRecord(parameters, record);
-				}
-			}
-			connection.commit();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
+		super(connectionParameters, name);
+		prepareStatement(opravSubjekty, name);
 	}
 
 	public void insertRecord(String table, Object rawRecord) {

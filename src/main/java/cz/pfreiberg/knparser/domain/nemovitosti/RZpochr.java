@@ -2,6 +2,7 @@ package cz.pfreiberg.knparser.domain.nemovitosti;
 
 import java.util.Date;
 
+import cz.pfreiberg.knparser.domain.DomainWithDate;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
@@ -11,7 +12,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
  */
-public class RZpochr {
+public class RZpochr implements DomainWithDate {
 
 	private Long id;
 	private Integer stavDat;

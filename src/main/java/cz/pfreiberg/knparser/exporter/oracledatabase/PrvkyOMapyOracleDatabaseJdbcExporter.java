@@ -12,46 +12,12 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
-	private List<PrvkyOMapy> prvkyOMapy;
-	private final String name = "PRVKY_O_MAPY";
+	private final static String name = "PRVKY_O_MAPY";
 
 	public PrvkyOMapyOracleDatabaseJdbcExporter(List<PrvkyOMapy> prvkyOMapy,
 			ConnectionParameters connectionParameters) {
-		this.prvkyOMapy = prvkyOMapy;
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-			for (PrvkyOMapy record : prvkyOMapy) {
-				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues,
-						"DATUM_VZNIKU", record.getDatumVzniku());
-				if (record.getDatumZaniku() == null) {
-					processRecord(parameters, record);
-				} else {
-					processHistoricalRecord(parameters, record);
-				}
-			}
-			connection.commit();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
+		super(connectionParameters, name);
+		prepareStatement(prvkyOMapy, name);
 	}
 
 	public void insertRecord(String table, Object rawRecord) {
