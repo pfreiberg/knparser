@@ -239,15 +239,22 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 					+ " AND *pk*");
 		}
 		select = select.replace(" AND *pk*", "");
+		PreparedStatement preparedStatement = null;
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
+			preparedStatement = connection.prepareStatement(select);
 			int affectedRows = preparedStatement.executeUpdate();
-			preparedStatement.close();
 			return (affectedRows > 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally
+		{
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
