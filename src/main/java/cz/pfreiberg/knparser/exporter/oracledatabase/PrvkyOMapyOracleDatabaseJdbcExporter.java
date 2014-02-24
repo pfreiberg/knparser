@@ -20,7 +20,7 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 		prepareStatement(prvkyOMapy, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -59,7 +59,7 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_PRVKY_O_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;

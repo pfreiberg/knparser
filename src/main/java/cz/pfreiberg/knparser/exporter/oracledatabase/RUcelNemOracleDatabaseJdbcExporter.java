@@ -19,7 +19,7 @@ public class RUcelNemOracleDatabaseJdbcExporter extends
 		prepareStatement(rUcelNem, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -53,7 +53,7 @@ public class RUcelNemOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_R_UCEL_NEM_MIN.nextval,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;

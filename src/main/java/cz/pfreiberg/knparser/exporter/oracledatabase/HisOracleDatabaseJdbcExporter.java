@@ -12,9 +12,9 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	public HisOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name) {
-		connection = super.getConnection(connectionParameters);
-		primaryKeys = super.getPrimaryKeys(connection, name);
-		methodsName = super.getMethods(primaryKeys);
+		connection = getConnection(connectionParameters);
+		primaryKeys = getPrimaryKeys(connection, name);
+		methodsName = getMethods(primaryKeys);
 	}
 	
 	protected <T extends DomainWithDate> void prepareStatement(List<T> list, String name) {
@@ -41,7 +41,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	protected void processRecord(OracleDatabaseParameters parameters,
 			Object record) {
-
+		
 		if (find(parameters, Operations.lessThan, true)) {
 			delete(parameters, Operations.lessThan, true);
 			insert(parameters.getTable(), record, true);
@@ -50,6 +50,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		} else {
 			insert(parameters.getTable(), record, true);
 		}
+		
 	}
 
 	protected void processHistoricalRecord(OracleDatabaseParameters parameters,

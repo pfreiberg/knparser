@@ -19,7 +19,7 @@ public class TelesaOracleDatabaseJdbcExporter extends
 		prepareStatement(telesa, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -56,7 +56,7 @@ public class TelesaOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_TELESA_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;

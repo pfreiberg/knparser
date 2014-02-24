@@ -19,7 +19,7 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 		prepareStatement(jednotky, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -60,7 +60,7 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_JEDNOTKY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;

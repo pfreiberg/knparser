@@ -19,7 +19,7 @@ public class CastiBudovOracleDatabaseJdbcExporter extends
 		prepareStatement(castiBudov, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -54,7 +54,7 @@ public class CastiBudovOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_CASTI_BUDOV_MIN.nextval,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;

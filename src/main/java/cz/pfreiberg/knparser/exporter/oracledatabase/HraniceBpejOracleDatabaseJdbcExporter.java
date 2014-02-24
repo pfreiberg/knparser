@@ -19,7 +19,7 @@ public class HraniceBpejOracleDatabaseJdbcExporter extends
 		prepareStatement(hraniceBpej, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -56,7 +56,7 @@ public class HraniceBpejOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_HRANICE_BPEJ_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;

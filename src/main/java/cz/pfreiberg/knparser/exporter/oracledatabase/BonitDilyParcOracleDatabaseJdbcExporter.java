@@ -20,7 +20,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		prepareStatement(bonitDilyParc, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -54,7 +54,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_BONIT_DILY_PARC_MIN.nextval,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;

@@ -20,7 +20,7 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 		prepareStatement(opravSubjekty, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -85,7 +85,7 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"

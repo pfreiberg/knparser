@@ -20,7 +20,7 @@ public class SpojeniPoMapyOracleDatabaseJdbcExporter extends
 		prepareStatement(spojeniPoMapy, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -54,7 +54,7 @@ public class SpojeniPoMapyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_SPOJENI_PO_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
