@@ -29,7 +29,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	protected void processRecord(OracleDatabaseParameters parameters,
+	private void processRecord(OracleDatabaseParameters parameters,
 			Object record) {
 		if (find(parameters, null, false)) {
 			delete(parameters, null, false);
