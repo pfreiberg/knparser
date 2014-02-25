@@ -66,8 +66,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 	private void processRecord(SpojeniBMapy record) {
 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues,
-				"DATUM_VZNIKU", record.getDatumVzniku());
+				name, "DATUM_VZNIKU", record.getDatumVzniku());
 
 		if (find(parameters, Operations.lessThan, true)) {
 			delete(parameters, Operations.lessThan, true);
@@ -82,9 +81,8 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 
 	private void processHistoricalRecord(SpojeniBMapy record) {
 
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues,
-				"DATUM_VZNIKU", record.getDatumVzniku());
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(name
+				+ "_MIN", "DATUM_VZNIKU", record.getDatumVzniku());
 
 		if (!find(parameters, Operations.equal, true)) {
 			insert(name + "_MIN", record, false);

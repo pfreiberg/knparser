@@ -50,8 +50,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	private void processRecord(HraniceParcel record) {
 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues,
-				"DATUM_VZNIKU", record.getDatumVzniku());
+				name, "DATUM_VZNIKU", record.getDatumVzniku());
 
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());
@@ -95,9 +94,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 
 	private void processHistoricalRecord(HraniceParcel record) {
 
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues,
-				"DATUM_VZNIKU", record.getDatumVzniku());
+		OracleDatabaseParameters parameters = new OracleDatabaseParameters(name
+				+ "_MIN", "DATUM_VZNIKU", record.getDatumVzniku());
 
 		String datumVzniku = VfkUtil.formatValueDatabase(record
 				.getDatumVzniku());

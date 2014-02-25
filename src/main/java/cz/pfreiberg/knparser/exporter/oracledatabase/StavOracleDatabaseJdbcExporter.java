@@ -19,8 +19,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 			for (T record : list) {
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues, null,
-						null);
+						name, null, null);
 				processRecord(parameters, record);
 			}
 		} catch (SQLException e) {

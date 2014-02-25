@@ -14,15 +14,15 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			ConnectionParameters connectionParameters, String name) {
 		super(connectionParameters, name);
 	}
-	
-	protected <T extends DomainWithDate> void prepareStatement(List<T> list, String name) {
+
+	protected <T extends DomainWithDate> void prepareStatement(List<T> list,
+			String name) {
 		try {
 			connection.setAutoCommit(false);
 			for (T record : list) {
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-						connection, name, primaryKeys, primaryKeysValues,
-						"DATUM_VZNIKU", record.getDatumVzniku());
+						name, "DATUM_VZNIKU", record.getDatumVzniku());
 				if (record.getDatumZaniku() == null) {
 					processRecord(parameters, record);
 				} else {
@@ -39,7 +39,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	private void processRecord(OracleDatabaseParameters parameters,
 			Object record) {
-		
+
 		if (find(parameters, Operations.lessThan, true)) {
 			delete(parameters, Operations.lessThan, true);
 			insert(parameters.getTable(), record, true);
@@ -48,7 +48,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		} else {
 			insert(parameters.getTable(), record, true);
 		}
-		
+
 	}
 
 	private void processHistoricalRecord(OracleDatabaseParameters parameters,
@@ -66,7 +66,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		}
 
 	}
-	
+
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
 		if (isRecord) {
@@ -79,6 +79,5 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	protected abstract void insertHistoricalRecord(String table,
 			Object rawRecord);
-
 
 }

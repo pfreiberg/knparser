@@ -103,7 +103,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = parameters.getConnection().prepareStatement(select);
+			ps = connection.prepareStatement(select);
 			rs = ps.executeQuery();
 			boolean isFound = (rs.next());
 			return isFound;
@@ -139,7 +139,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		delete = composeSqlStatement(parameters, delete);
 		PreparedStatement ps = null;
 		try {
-			ps = parameters.getConnection().prepareStatement(delete);
+			ps = connection.prepareStatement(delete);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -174,27 +174,26 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return primaryKeyValues;
 	}
 
+	private String composeSqlStatement(OracleDatabaseParameters parameters,
+			String select) {
+		for (int i = 0; i < primaryKeys.size(); i++) {
+			select = select.replace(
+					"*pk*",
+					primaryKeys.get(i)
+							+ " = "
+							+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
+							+ " AND *pk*");
+		}
+		select = select.replace(" AND *pk*", "");
+		return select;
+	}
+	
 	private List<String> getMethods(List<String> primaryKeys) {
 		List<String> methods = new ArrayList<>();
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			methods.add(toCamelCase(primaryKeys.get(i)));
 		}
 		return methods;
-	}
-
-	private String composeSqlStatement(OracleDatabaseParameters parameters,
-			String select) {
-		for (int i = 0; i < parameters.getPrimaryKeys().size(); i++) {
-			select = select.replace(
-					"*pk*",
-					parameters.getPrimaryKeys().get(i)
-							+ " = "
-							+ VfkUtil.formatValueDatabase(parameters
-									.getPrimaryKeysValues().get(i))
-							+ " AND *pk*");
-		}
-		select = select.replace(" AND *pk*", "");
-		return select;
 	}
 
 	private String toCamelCase(String s) {
