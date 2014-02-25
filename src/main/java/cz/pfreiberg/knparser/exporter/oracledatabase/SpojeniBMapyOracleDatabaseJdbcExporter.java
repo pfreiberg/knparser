@@ -31,11 +31,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int i = 0;
 		for (SpojeniBMapy record : spojeniBMapy) {
-			i++;
-			if (i % 100 == 0)
-				System.out.println("SpojeniBMapy: " + i);
 			getActualValues(record);
 			if (record.getDatumZaniku() == null) {
 				processRecord(record);
@@ -118,7 +114,6 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			SpojeniBMapy record = (SpojeniBMapy) rawRecord;
@@ -136,9 +131,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, 0);
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
 		}
-
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -153,7 +146,6 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 	}
 
 	public void insertHistoricalRecord(String table, Object rawRecord) {
-
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_SPOJENI_B_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -176,9 +168,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, 0);
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
 		}
-
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
