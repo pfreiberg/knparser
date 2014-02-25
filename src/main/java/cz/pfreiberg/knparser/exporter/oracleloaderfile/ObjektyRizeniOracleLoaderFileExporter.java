@@ -3,33 +3,21 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.rizeni.ObjektyRizeni;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class ObjektyRizeniOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "OBJEKTY_RIZENI";
+	private final static String name = "OBJEKTY_RIZENI";
 
 	public ObjektyRizeniOracleLoaderFileExporter(
 			List<ObjektyRizeni> objektyRizeni, String prefix,
 			String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, objektyRizeni);
+		super(objektyRizeni, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
-		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
+	public String makeControlFile(String controlFile) {
+	
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertColumn(controlFile, "RIZENI_ID");
 		controlFile = super.insertColumn(controlFile, "PAR_ID");

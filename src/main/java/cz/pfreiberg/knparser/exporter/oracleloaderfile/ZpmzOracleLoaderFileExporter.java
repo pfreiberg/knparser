@@ -3,31 +3,19 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.geometrickyplan.Zpmz;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class ZpmzOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "ZPMZ";
+	private final static String name = "ZPMZ";
 
 	public ZpmzOracleLoaderFileExporter(List<Zpmz> zpmz, String prefix,
 			String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, zpmz);
+		super(zpmz, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
+	public String makeControlFile(String controlFile) {
 		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 		controlFile = super.insertColumn(controlFile, "KATUZE_KOD");
 		controlFile = super.insertColumn(controlFile, "CISLO_ZPMZ");
 		controlFile = super.insertColumn(controlFile, "PPZ_ID");

@@ -3,31 +3,19 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.TPrvkuPDat;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class TPrvkuPDatOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "T_PRVKU_P_DAT";
+	private final static String name = "T_PRVKU_P_DAT";
 
 	public TPrvkuPDatOracleLoaderFileExporter(List<TPrvkuPDat> tPrvkuPDat,
 			String prefix, String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, tPrvkuPDat);
+		super(tPrvkuPDat, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
-		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
+	public String makeControlFile(String controlFile) {
+	
 		controlFile = super.insertColumn(controlFile, "KOD");
 		controlFile = super.insertVarcharColumn(controlFile, "POLOHOPIS", "4");
 		controlFile = super.insertVarcharColumn(controlFile, "EDITOVATELNY", "4");

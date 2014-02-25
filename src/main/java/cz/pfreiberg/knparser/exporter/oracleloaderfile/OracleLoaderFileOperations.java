@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface OracleLoaderFileOperations {
 
-	public String makeControlFile();
+	public String makeControlFile(String controlFile);
 	
 	public void appendControlFile(String output, String characterSet, String controlFile);
 

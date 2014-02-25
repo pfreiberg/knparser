@@ -156,476 +156,460 @@ import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpmzOracleLoaderFileExpor
 
 public class OracleLoaderExporterFactory implements ExporterFactory {
 
-	private final String prefix;
 	private final String characterSet;
+	private final String prefix;
 	private final String output;
 
 	public OracleLoaderExporterFactory(int zmeny, String characterSet,
 			String output) {
-		this.prefix = (zmeny == 1) ? "TMP_" : "";
 		this.characterSet = characterSet;
+		this.prefix = (zmeny == 1) ? "TMP_" : "";
 		this.output = output;
 	}
 
 	@Override
 	public Exporter getParcelyExporter(List<Parcely> parcely) {
-		return new ParcelyOracleLoaderFileExporter(parcely, prefix,
-				characterSet, output);
-	}
-
-	@Override
-	public Exporter getBudovyExporter(List<Budovy> budovy) {
-		return new BudovyOracleLoaderFileExporter(budovy, prefix, characterSet,
+		return new ParcelyOracleLoaderFileExporter(parcely, prefix, characterSet, 
 				output);
 	}
 
 	@Override
+	public Exporter getBudovyExporter(List<Budovy> budovy) {
+		return new BudovyOracleLoaderFileExporter(budovy, prefix, characterSet,  output);
+	}
+
+	@Override
 	public Exporter getCastiBudovExporter(List<CastiBudov> castiBudov) {
-		return new CastiBudovOracleLoaderFileExporter(castiBudov, prefix,
-				characterSet, output);
+		return new CastiBudovOracleLoaderFileExporter(castiBudov, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getZpOchranyNemExporter(List<ZpOchranyNem> zpOchranyNem) {
-		return new ZpOchranyNemOracleLoaderFileExporter(zpOchranyNem, prefix,
-				characterSet, output);
+		return new ZpOchranyNemOracleLoaderFileExporter(zpOchranyNem,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getDPozemkuExporter(List<DPozemku> dPozemku) {
-		return new DPozemkuOracleLoaderFileExporter(dPozemku, prefix,
-				characterSet, output);
+		return new DPozemkuOracleLoaderFileExporter(dPozemku, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getZpVyuzitiPozExporter(List<ZpVyuzitiPoz> zpVyuzitiPoz) {
-		return new ZpVyuzitiPozOracleLoaderFileExporter(zpVyuzitiPoz, prefix,
-				characterSet, output);
+		return new ZpVyuzitiPozOracleLoaderFileExporter(zpVyuzitiPoz,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getZdrojeParcelZeExporter(
 			List<ZdrojeParcelZe> zdrojeParcelZe) {
 		return new ZdrojeParcelZeOracleLoaderFileExporter(zdrojeParcelZe,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getZpUrceniVymeryExporter(
 			List<ZpUrceniVymery> zpUrceniVymery) {
 		return new ZpUrceniVymeryOracleLoaderFileExporter(zpUrceniVymery,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getTBudovExporter(List<TBudov> tBudov) {
-		return new TBudovOracleLoaderFileExporter(tBudov, prefix, characterSet,
-				output);
+		return new TBudovOracleLoaderFileExporter(tBudov, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getMapoveListyExporter(List<MapoveListy> mapoveListy) {
-		return new MapoveListyOracleLoaderFileExporter(mapoveListy, prefix,
-				characterSet, output);
+		return new MapoveListyOracleLoaderFileExporter(mapoveListy,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getKatastrUzemiExporter(List<KatastrUzemi> katastrUzemi) {
-		return new KatastrUzemiOracleLoaderFileExporter(katastrUzemi, prefix,
-				characterSet, output);
+		return new KatastrUzemiOracleLoaderFileExporter(katastrUzemi,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getObceExporter(List<Obce> obce) {
-		return new ObceOracleLoaderFileExporter(obce, prefix, characterSet,
-				output);
+		return new ObceOracleLoaderFileExporter(obce, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getCastiObciExporter(List<CastiObci> castiObci) {
-		return new CastiObciOracleLoaderFileExporter(castiObci, prefix,
-				characterSet, output);
+		return new CastiObciOracleLoaderFileExporter(castiObci, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getOkresyExporter(List<Okresy> okresy) {
-		return new OkresyOracleLoaderFileExporter(okresy, prefix, characterSet,
-				output);
+		return new OkresyOracleLoaderFileExporter(okresy, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getKrajeExporter(List<Kraje> kraje) {
-		return new KrajeOracleLoaderFileExporter(kraje, prefix, characterSet,
-				output);
+		return new KrajeOracleLoaderFileExporter(kraje, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getNoveKrajeExporter(List<NoveKraje> noveKraje) {
-		return new NoveKrajeOracleLoaderFileExporter(noveKraje, prefix,
-				characterSet, output);
+		return new NoveKrajeOracleLoaderFileExporter(noveKraje, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getRZpochrExporter(List<RZpochr> rZpochr) {
-		return new RZpochrOracleLoaderFileExporter(rZpochr, prefix,
-				characterSet, output);
+		return new RZpochrOracleLoaderFileExporter(rZpochr, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getZpVyuzitiBudExporter(List<ZpVyuzitiBud> zpVyuzitiBud) {
-		return new ZpVyuzitiBudOracleLoaderFileExporter(zpVyuzitiBud, prefix,
-				characterSet, output);
+		return new ZpVyuzitiBudOracleLoaderFileExporter(zpVyuzitiBud,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getBonitDilyParcExporter(List<BonitDilyParc> bonitDilyParc) {
-		return new BonitDilyParcOracleLoaderFileExporter(bonitDilyParc, prefix,
-				characterSet, output);
+		return new BonitDilyParcOracleLoaderFileExporter(bonitDilyParc,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getJednotkyExporter(List<Jednotky> jednotky) {
-		return new JednotkyOracleLoaderFileExporter(jednotky, prefix,
-				characterSet, output);
+		return new JednotkyOracleLoaderFileExporter(jednotky, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getTJednotekExporter(List<TJednotek> tJednotek) {
-		return new TJednotekOracleLoaderFileExporter(tJednotek, prefix,
-				characterSet, output);
+		return new TJednotekOracleLoaderFileExporter(tJednotek, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getZpVyuzitiJedExporter(List<ZpVyuzitiJed> zpVyuzitiJed) {
-		return new ZpVyuzitiJedOracleLoaderFileExporter(zpVyuzitiJed, prefix,
-				characterSet, output);
+		return new ZpVyuzitiJedOracleLoaderFileExporter(zpVyuzitiJed,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getJinePravVztahyExporter(
 			List<JinePravVztahy> jinePravVztahy) {
 		return new JinePravVztahyOracleLoaderFileExporter(jinePravVztahy,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getTPravnichVztExporter(List<TPravnichVzt> tPravnichVzt) {
-		return new TPravnichVztOracleLoaderFileExporter(tPravnichVzt, prefix,
-				characterSet, output);
+		return new TPravnichVztOracleLoaderFileExporter(tPravnichVzt,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getAdresyExporter(List<Adresy> adresy) {
-		return new AdresyOracleLoaderFileExporter(adresy, prefix, characterSet,
-				output);
+		return new AdresyOracleLoaderFileExporter(adresy, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getDalsiUdajeListinyExporter(
 			List<DalsiUdajeListiny> dalsiUdajeListiny) {
 		return new DalsiUdajeListinyOracleLoaderFileExporter(dalsiUdajeListiny,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getListinyExporter(List<Listiny> listiny) {
-		return new ListinyOracleLoaderFileExporter(listiny, prefix,
-				characterSet, output);
+		return new ListinyOracleLoaderFileExporter(listiny, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getListinyDalsiUdajeExporter(
 			List<ListinyDalsiUdaje> listinyDalsiUdaje) {
 		return new ListinyDalsiUdajeOracleLoaderFileExporter(listinyDalsiUdaje,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getObeslaniMfExporter(List<ObeslaniMf> obeslaniMf) {
-		return new ObeslaniMfOracleLoaderFileExporter(obeslaniMf, prefix,
-				characterSet, output);
+		return new ObeslaniMfOracleLoaderFileExporter(obeslaniMf, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getObjektyRizeniExporter(List<ObjektyRizeni> objektyRizeni) {
-		return new ObjektyRizeniOracleLoaderFileExporter(objektyRizeni, prefix,
-				characterSet, output);
+		return new ObjektyRizeniOracleLoaderFileExporter(objektyRizeni,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getPredmetyRizeniExporter(
 			List<PredmetyRizeni> predmetyRizeni) {
 		return new PredmetyRizeniOracleLoaderFileExporter(predmetyRizeni,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getRizeniExporter(List<Rizeni> rizeni) {
-		return new RizeniOracleLoaderFileExporter(rizeni, prefix, characterSet,
-				output);
+		return new RizeniOracleLoaderFileExporter(rizeni, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getRizeniKuExporter(List<RizeniKu> rizeniKu) {
-		return new RizeniKuOracleLoaderFileExporter(rizeniKu, prefix,
-				characterSet, output);
+		return new RizeniKuOracleLoaderFileExporter(rizeniKu, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getRListExporter(List<RList> rList) {
-		return new RListOracleLoaderFileExporter(rList, prefix, characterSet,
-				output);
+		return new RListOracleLoaderFileExporter(rList, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getTListinExporter(List<TListin> tListin) {
-		return new TListinOracleLoaderFileExporter(tListin, prefix,
-				characterSet, output);
+		return new TListinOracleLoaderFileExporter(tListin, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getTPredmetuRExporter(List<TPredmetuR> tPredmetuR) {
-		return new TPredmetuROracleLoaderFileExporter(tPredmetuR, prefix,
-				characterSet, output);
+		return new TPredmetuROracleLoaderFileExporter(tPredmetuR, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getTypyRizeniExporter(List<TypyRizeni> typyRizeni) {
-		return new TypyRizeniOracleLoaderFileExporter(typyRizeni, prefix,
-				characterSet, output);
+		return new TypyRizeniOracleLoaderFileExporter(typyRizeni, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getTypyUcastnikuExporter(List<TypyUcastniku> typyUcastniku) {
-		return new TypyUcastnikuOracleLoaderFileExporter(typyUcastniku, prefix,
-				characterSet, output);
+		return new TypyUcastnikuOracleLoaderFileExporter(typyUcastniku,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getUcastniciExporter(List<Ucastnici> ucastnici) {
-		return new UcastniciOracleLoaderFileExporter(ucastnici, prefix,
-				characterSet, output);
+		return new UcastniciOracleLoaderFileExporter(ucastnici, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getUcastniciTypExporter(List<UcastniciTyp> ucastniciTyp) {
-		return new UcastniciTypOracleLoaderFileExporter(ucastniciTyp, prefix,
-				characterSet, output);
+		return new UcastniciTypOracleLoaderFileExporter(ucastniciTyp,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getCharOsExporter(List<CharOs> charOs) {
-		return new CharOsOracleLoaderFileExporter(charOs, prefix, characterSet,
-				output);
+		return new CharOsOracleLoaderFileExporter(charOs, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getOpravSubjektyExporter(List<OpravSubjekty> opravSubjekty) {
-		return new OpravSubjektyOracleLoaderFileExporter(opravSubjekty, prefix,
-				characterSet, output);
+		return new OpravSubjektyOracleLoaderFileExporter(opravSubjekty,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getTelesaExporter(List<Telesa> telesa) {
-		return new TelesaOracleLoaderFileExporter(telesa, prefix, characterSet,
-				output);
+		return new TelesaOracleLoaderFileExporter(telesa, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getVlastnictviExporter(List<Vlastnictvi> vlastnictvi) {
-		return new VlastnictviOracleLoaderFileExporter(vlastnictvi, prefix,
-				characterSet, output);
+		return new VlastnictviOracleLoaderFileExporter(vlastnictvi,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getDalsiPrvkyMapyExporter(
 			List<DalsiPrvkyMapy> dalsiPrvkyMapy) {
 		return new DalsiPrvkyMapyOracleLoaderFileExporter(dalsiPrvkyMapy,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getHraniceParcelExporter(List<HraniceParcel> hraniceParcel) {
-		return new HraniceParcelOracleLoaderFileExporter(hraniceParcel, prefix,
-				characterSet, output);
+		return new HraniceParcelOracleLoaderFileExporter(hraniceParcel,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getKodyCharQBoduExporter(List<KodyCharQBodu> kodyCharQBodu) {
-		return new KodyCharQBoduOracleLoaderFileExporter(kodyCharQBodu, prefix,
-				characterSet, output);
+		return new KodyCharQBoduOracleLoaderFileExporter(kodyCharQBodu,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getObrazyBoduBpExporter(List<ObrazyBoduBp> obrazyBoduBp) {
-		return new ObrazyBoduBpOracleLoaderFileExporter(obrazyBoduBp, prefix,
-				characterSet, output);
+		return new ObrazyBoduBpOracleLoaderFileExporter(obrazyBoduBp,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getObrazyBudovExporter(List<ObrazyBudov> obrazyBudov) {
-		return new ObrazyBudovOracleLoaderFileExporter(obrazyBudov, prefix,
-				characterSet, output);
+		return new ObrazyBudovOracleLoaderFileExporter(obrazyBudov,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getObrazyParcelExporter(List<ObrazyParcel> obrazyParcel) {
-		return new ObrazyParcelOracleLoaderFileExporter(obrazyParcel, prefix,
-				characterSet, output);
+		return new ObrazyParcelOracleLoaderFileExporter(obrazyParcel,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getPrvkyOMapyExporter(List<PrvkyOMapy> prvkyOMapy) {
-		return new PrvkyOMapyOracleLoaderFileExporter(prvkyOMapy, prefix,
-				characterSet, output);
+		return new PrvkyOMapyOracleLoaderFileExporter(prvkyOMapy, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getSouradniceObrazuExporter(
 			List<SouradniceObrazu> souradniceObrazu) {
 		return new SouradniceObrazuOracleLoaderFileExporter(souradniceObrazu,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getSouradnicePolohyExporter(
 			List<SouradnicePolohy> souradnicePolohy) {
 		return new SouradnicePolohyOracleLoaderFileExporter(souradnicePolohy,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getSpojeniBMapyExporter(List<SpojeniBMapy> spojeniBMapy) {
-		return new SpojeniBMapyOracleLoaderFileExporter(spojeniBMapy, prefix,
-				characterSet, output);
+		return new SpojeniBMapyOracleLoaderFileExporter(spojeniBMapy,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getSpojeniBPolohExporter(List<SpojeniBPoloh> spojeniBPoloh) {
-		return new SpojeniBPolohOracleLoaderFileExporter(spojeniBPoloh, prefix,
-				characterSet, output);
+		return new SpojeniBPolohOracleLoaderFileExporter(spojeniBPoloh,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getSpojeniPoMapyExporter(List<SpojeniPoMapy> spojeniPoMapy) {
-		return new SpojeniPoMapyOracleLoaderFileExporter(spojeniPoMapy, prefix,
-				characterSet, output);
+		return new SpojeniPoMapyOracleLoaderFileExporter(spojeniPoMapy,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getTPrvkuPDatExporter(List<TPrvkuPDat> tPrvkuPDat) {
-		return new TPrvkuPDatOracleLoaderFileExporter(tPrvkuPDat, prefix,
-				characterSet, output);
+		return new TPrvkuPDatOracleLoaderFileExporter(tPrvkuPDat, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getTSouradSysExporter(List<TSouradSys> tSouradSys) {
-		return new TSouradSysOracleLoaderFileExporter(tSouradSys, prefix,
-				characterSet, output);
+		return new TSouradSysOracleLoaderFileExporter(tSouradSys, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getZobrazeniVbExporter(List<ZobrazeniVb> zobrazeniVb) {
-		return new ZobrazeniVbOracleLoaderFileExporter(zobrazeniVb, prefix,
-				characterSet, output);
+		return new ZobrazeniVbOracleLoaderFileExporter(zobrazeniVb,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getHraniceBpejExporter(List<HraniceBpej> hraniceBpej) {
-		return new HraniceBpejOracleLoaderFileExporter(hraniceBpej, prefix,
-				characterSet, output);
+		return new HraniceBpejOracleLoaderFileExporter(hraniceBpej,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getOznaceniBpejExporter(List<OznaceniBpej> oznaceniBpej) {
-		return new OznaceniBpejOracleLoaderFileExporter(oznaceniBpej, prefix,
-				characterSet, output);
+		return new OznaceniBpejOracleLoaderFileExporter(oznaceniBpej,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getNavrhyZmenKmExporter(List<NavrhyZmenKm> navrhyZmenKm) {
-		return new NavrhyZmenKmOracleLoaderFileExporter(navrhyZmenKm, prefix,
-				characterSet, output);
+		return new NavrhyZmenKmOracleLoaderFileExporter(navrhyZmenKm,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getNzZpmzExporter(List<NzZpmz> nzZpmz) {
-		return new NzZpmzOracleLoaderFileExporter(nzZpmz, prefix, characterSet,
-				output);
+		return new NzZpmzOracleLoaderFileExporter(nzZpmz, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getZpmzExporter(List<Zpmz> zpmz) {
-		return new ZpmzOracleLoaderFileExporter(zpmz, prefix, characterSet,
-				output);
+		return new ZpmzOracleLoaderFileExporter(zpmz, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getDotcenaParCislaExporter(
 			List<DotcenaParCisla> dotcenaParCisla) {
 		return new DotcenaParCislaOracleLoaderFileExporter(dotcenaParCisla,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getDotHistParCislaExporter(
 			List<DotHistParCisla> dotHistParCisla) {
 		return new DotHistParCislaOracleLoaderFileExporter(dotHistParCisla,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getRezCislaPbppExporter(List<RezCislaPbpp> rezCislaPbpp) {
-		return new RezCislaPbppOracleLoaderFileExporter(rezCislaPbpp, prefix,
-				characterSet, output);
+		return new RezCislaPbppOracleLoaderFileExporter(rezCislaPbpp,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getRezParcelniCislaExporter(
 			List<RezParcelniCisla> rezParcelniCisla) {
 		return new RezParcelniCislaOracleLoaderFileExporter(rezParcelniCisla,
-				prefix, characterSet, output);
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getObrazyDefBoduExporter(List<ObrazyDefBodu> obrazyDefBodu) {
-		return new ObrazyDefBoduOracleLoaderFileExporter(obrazyDefBodu, prefix,
-				characterSet, output);
+		return new ObrazyDefBoduOracleLoaderFileExporter(obrazyDefBodu,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getAdresaExporter(List<Adresa> adresa) {
-		return new AdresaOracleLoaderFileExporter(adresa, prefix, characterSet,
-				output);
+		return new AdresaOracleLoaderFileExporter(adresa, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getBudObjExporter(List<BudObj> budObj) {
-		return new BudObjOracleLoaderFileExporter(budObj, prefix, characterSet,
-				output);
+		return new BudObjOracleLoaderFileExporter(budObj, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getPravaStavbyExporter(List<PravaStavby> pravaStavby) {
-		return new PravaStavbyOracleLoaderFileExporter(pravaStavby, prefix,
-				characterSet, output);
+		return new PravaStavbyOracleLoaderFileExporter(pravaStavby,
+				prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getRUcelNemExporter(List<RUcelNem> rUcelNem) {
-		return new RUcelNemOracleLoaderFileExporter(rUcelNem, prefix,
-				characterSet, output);
+		return new RUcelNemOracleLoaderFileExporter(rUcelNem, prefix, characterSet, 
+				output);
 	}
 
 	@Override
 	public Exporter getUcelExporter(List<Ucel> ucel) {
-		return new UcelOracleLoaderFileExporter(ucel, prefix, characterSet,
-				output);
+		return new UcelOracleLoaderFileExporter(ucel, prefix, characterSet,  output);
 	}
 
 	@Override
 	public Exporter getRJpvExporter(List<RJpv> rJpv) {
-		return new RJpvOracleLoaderFileExporter(rJpv, prefix, characterSet,
-				output);
+		return new RJpvOracleLoaderFileExporter(rJpv, prefix, characterSet,  output);
 	}
 }

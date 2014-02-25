@@ -3,31 +3,19 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.rizeni.RList;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class RListOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "R_LIST";
+	private final static String name = "R_LIST";
 
 	public RListOracleLoaderFileExporter(List<RList> rList, String prefix,
 			String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, rList);
+		super(rList, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
+	public String makeControlFile(String controlFile) {
 		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertZeroColumn(controlFile, "STAV_DAT");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");

@@ -3,31 +3,19 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.vlastnictvi.CharOs;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class CharOsOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "CHAR_OS";
+	private final static String name = "CHAR_OS";
 
 	public CharOsOracleLoaderFileExporter(List<CharOs> charOs, String prefix,
 			String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, charOs);
+		super(charOs, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
+	public String makeControlFile(String controlFile) {
 		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 		controlFile = super.insertColumn(controlFile, "KOD");
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");
 		controlFile = super.insertVarcharColumn(controlFile, "OPSUB_TYPE", "10");

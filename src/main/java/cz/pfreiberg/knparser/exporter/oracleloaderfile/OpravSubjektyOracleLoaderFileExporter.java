@@ -3,33 +3,21 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.vlastnictvi.OpravSubjekty;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class OpravSubjektyOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "OPRAV_SUBJEKTY";
+	private final static String name = "OPRAV_SUBJEKTY";
 
 	public OpravSubjektyOracleLoaderFileExporter(
 			List<OpravSubjekty> opravSubjekty, String prefix,
 			String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, opravSubjekty);
+		super(opravSubjekty, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
+	public String makeControlFile(String controlFile) {
 		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertZeroColumn(controlFile, "STAV_DAT");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");

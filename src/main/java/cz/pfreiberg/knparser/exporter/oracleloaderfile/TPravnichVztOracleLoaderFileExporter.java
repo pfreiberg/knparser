@@ -3,33 +3,21 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.jinepravnivztahy.TPravnichVzt;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class TPravnichVztOracleLoaderFileExporter extends
 		OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "T_PRAVNICH_VZT";
+	private final static String name = "T_PRAVNICH_VZT";
 
 	public TPravnichVztOracleLoaderFileExporter(
 			List<TPravnichVzt> tPravnichVzt, String prefix,
 			String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, tPravnichVzt);
+		super(tPravnichVzt, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
+	public String makeControlFile(String controlFile) {
 		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 		controlFile = super.insertVarcharColumn(controlFile, "KOD", "4");
 		controlFile = super.insertColumn(controlFile, "TPR_KOD");
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "60");

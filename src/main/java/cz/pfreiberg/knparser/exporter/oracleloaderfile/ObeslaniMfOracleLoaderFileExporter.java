@@ -3,31 +3,19 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.rizeni.ObeslaniMf;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class ObeslaniMfOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "OBESLANI_MF";
+	private final static String name = "OBESLANI_MF";
 
 	public ObeslaniMfOracleLoaderFileExporter(List<ObeslaniMf> obeslaniMf,
 			String prefix, String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, obeslaniMf);
+		super(obeslaniMf, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
+	public String makeControlFile(String controlFile) {
 		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
 		controlFile = super.insertColumn(controlFile, "OBESLANI_ID");
 		controlFile = super.insertColumn(controlFile, "ZPUSOB_OBESLANI");
 		controlFile = super.insertColumn(controlFile, "TYPOPE_KOD");

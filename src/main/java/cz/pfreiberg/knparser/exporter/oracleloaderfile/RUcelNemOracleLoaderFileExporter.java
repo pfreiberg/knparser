@@ -3,31 +3,19 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 import java.util.List;
 
 import cz.pfreiberg.knparser.domain.nemovitosti.RUcelNem;
-import cz.pfreiberg.knparser.parser.Parser;
 
 public class RUcelNemOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
-	private final String prefix;
-	private final String characterSet;
-	private final String name = "R_UCEL_NEM";
+	private final static String name = "R_UCEL_NEM";
 
 	public RUcelNemOracleLoaderFileExporter(List<RUcelNem> rUcelNem,
 			String prefix, String characterSet, String output) {
-		this.prefix = prefix;
-		this.characterSet = characterSet;
-		output = output + prefix + name;
-
-		if (Parser.isFirstBatch()) {
-			super.appendControlFile(output, characterSet, makeControlFile());
-		}
-		super.appendLoadFile(output, characterSet, rUcelNem);
+		super(rUcelNem, characterSet, output, prefix, name);
 	}
 
 	@Override
-	public String makeControlFile() {
-		String controlFile = super.makeControlFile();
-		
-		controlFile = super.fillHeader(controlFile, characterSet, prefix + name);
+	public String makeControlFile(String controlFile) {
+	
 		controlFile = super.insertColumn(controlFile, "ID");
 		controlFile = super.insertZeroColumn(controlFile, "STAV_DAT");
 		controlFile = super.insertDateColumn(controlFile, "DATUM_VZNIKU");
