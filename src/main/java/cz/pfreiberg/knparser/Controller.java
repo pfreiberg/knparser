@@ -110,6 +110,7 @@ public class Controller {
 		exporterRezervovanaCisla(vfk, exporterFactory);
 		exporterDefinicniBody(vfk, exporterFactory);
 		exporterAdresniMista(vfk, exporterFactory);
+
 	}
 
 	private void exportBonitniDilParcely(Vfk vfk,

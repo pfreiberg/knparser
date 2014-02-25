@@ -37,7 +37,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	protected void processRecord(OracleDatabaseParameters parameters,
+	private void processRecord(OracleDatabaseParameters parameters,
 			Object record) {
 		
 		if (find(parameters, Operations.lessThan, true)) {
@@ -51,7 +51,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		
 	}
 
-	protected void processHistoricalRecord(OracleDatabaseParameters parameters,
+	private void processHistoricalRecord(OracleDatabaseParameters parameters,
 			Object record) {
 
 		String table = parameters.getTable();

@@ -31,19 +31,14 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (HraniceParcel record : hraniceParcel) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			if (record.getDatumZaniku() == null) {
-				processRecord(record);
-			} else {
-				processHistoricalRecord(record);
+			for (HraniceParcel record : hraniceParcel) {
+				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
+				if (record.getDatumZaniku() == null) {
+					processRecord(record);
+				} else {
+					processHistoricalRecord(record);
+				}
 			}
-		}
-		try {
 			connection.commit();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

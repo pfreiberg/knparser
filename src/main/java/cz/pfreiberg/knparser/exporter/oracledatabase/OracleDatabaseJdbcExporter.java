@@ -129,7 +129,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		String delete = "";
 		if (hasDate) {
 			delete = "DELETE FROM " + parameters.getTable()
-					+ " WHERE *pk* AND " + parameters.getDate() + operation
+					+ " WHERE *pk* AND " + parameters.getDate() + operation.getOperator()
 					+ parameters.getDateValue();
 		} else {
 			delete = "DELETE FROM " + parameters.getTable() + " WHERE *pk*";

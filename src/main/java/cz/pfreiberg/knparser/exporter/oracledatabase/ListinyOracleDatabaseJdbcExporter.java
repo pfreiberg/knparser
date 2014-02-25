@@ -9,46 +9,14 @@ import cz.pfreiberg.knparser.domain.rizeni.Listiny;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ListinyOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<Listiny> listiny;
 	private final static String name = "LISTINY";
 
 	public ListinyOracleDatabaseJdbcExporter(List<Listiny> listiny,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.listiny = listiny;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Listiny record : listiny) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(Listiny record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(listiny, name);
 	}
 
 	@Override
@@ -59,7 +27,6 @@ public class ListinyOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Listiny record = (Listiny) rawRecord;
@@ -87,11 +54,8 @@ public class ListinyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(17,
 					VfkUtil.convertToDatabaseDate(record.getDatumHistDo()));
 		
-
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
 		}
-
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
