@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.jednotky.TJednotek;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TJednotekOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<TJednotek> tJednotek;
 	private final static String name = "T_JEDNOTEK";
 
 	public TJednotekOracleDatabaseJdbcExporter(List<TJednotek> tJednotek,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.tJednotek = tJednotek;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (TJednotek record : tJednotek) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(TJednotek record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(tJednotek, name);
 	}
 
 	@Override
@@ -58,7 +24,6 @@ public class TJednotekOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			TJednotek record = (TJednotek) rawRecord;
@@ -71,10 +36,7 @@ public class TJednotekOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(5, record.getZkratka());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

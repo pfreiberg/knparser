@@ -9,11 +9,5 @@ public abstract class CisOracleDatabaseJdbcExporter extends
 			ConnectionParameters connectionParameters, String name) {
 		super(connectionParameters, name);
 	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }

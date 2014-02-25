@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.nemovitosti.MapoveListy;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class MapoveListyOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<MapoveListy> mapoveListy;
 	private final static String name = "MAPOVE_LISTY";
 
 	public MapoveListyOracleDatabaseJdbcExporter(List<MapoveListy> mapoveListy,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.mapoveListy = mapoveListy;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (MapoveListy record : mapoveListy) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(MapoveListy record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(mapoveListy, name);
 	}
 
 	@Override
@@ -58,7 +24,6 @@ public class MapoveListyOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			MapoveListy record = (MapoveListy) rawRecord;
@@ -71,10 +36,7 @@ public class MapoveListyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(5, record.getMapa());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

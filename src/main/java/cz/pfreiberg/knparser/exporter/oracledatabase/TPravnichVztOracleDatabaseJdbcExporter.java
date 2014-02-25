@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,13 +9,7 @@ import cz.pfreiberg.knparser.domain.jinepravnivztahy.TPravnichVzt;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TPravnichVztOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
-
-	private List<TPravnichVzt> tPravnichVzt;
-	private Connection connection;
-	private List<String> primaryKeys;
-	private List<String> methodsName;
-	private List<Object> primaryKeysValues;
+		CisOracleDatabaseJdbcExporter {
 
 	private final static String name = "T_PRAVNICH_VZT";
 
@@ -24,40 +17,7 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 			List<TPravnichVzt> tPravnichVzt,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.tPravnichVzt = tPravnichVzt;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (TPravnichVzt record : tPravnichVzt) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(TPravnichVzt record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(tPravnichVzt, name);
 	}
 
 	@Override
@@ -66,7 +26,6 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			TPravnichVzt record = (TPravnichVzt) rawRecord;
@@ -88,10 +47,7 @@ public class TPravnichVztOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(14, record.getPoradi());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

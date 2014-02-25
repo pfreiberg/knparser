@@ -8,49 +8,14 @@ import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.rizeni.TypyRizeni;
 
 public class TypyRizeniOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<TypyRizeni> typyRizeni;
 	private final static String name = "TYPY_RIZENI";
 
-	public TypyRizeniOracleDatabaseJdbcExporter(
-			List<TypyRizeni> typyRizeni,
+	public TypyRizeniOracleDatabaseJdbcExporter(List<TypyRizeni> typyRizeni,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.typyRizeni = typyRizeni;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (TypyRizeni record : typyRizeni) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(TypyRizeni record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(typyRizeni, name);
 	}
 
 	@Override
@@ -58,7 +23,6 @@ public class TypyRizeniOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			TypyRizeni record = (TypyRizeni) rawRecord;
@@ -66,12 +30,9 @@ public class TypyRizeniOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(2, record.getNazev());
 			preparedStatement.setObject(3, record.getPopis());
 			preparedStatement.setObject(4, record.getZpoplatneni());
-		
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
 
-		catch (SQLException e) {
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

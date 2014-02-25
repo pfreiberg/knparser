@@ -27,20 +27,16 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 	private void prepareStatement() {
 		try {
 			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (SpojeniBMapy record : spojeniBMapy) {
-			getActualValues(record);
-			if (record.getDatumZaniku() == null) {
-				processRecord(record);
-			} else {
-				processHistoricalRecord(record);
+			for (SpojeniBMapy record : spojeniBMapy) {
+				getActualValues(record);
+				if (record.getDatumZaniku() == null) {
+					processRecord(record);
+				} else {
+					processHistoricalRecord(record);
+				}
 			}
-		}
-		try {
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,18 +58,17 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		}
 		actualPrimaryKeys.add("PORADOVE_CISLO_BODU");
 		actualPrimaryKeysValues.add(record.getPoradoveCisloBodu());
-		
+
 		primaryKeys = actualPrimaryKeys;
 		primaryKeysValues = actualPrimaryKeysValues;
 	}
 
-
 	private void processRecord(SpojeniBMapy record) {
-		
+
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, 
+				connection, name, primaryKeys, primaryKeysValues,
 				"DATUM_VZNIKU", record.getDatumVzniku());
-		
+
 		if (find(parameters, Operations.lessThan, true)) {
 			delete(parameters, Operations.lessThan, true);
 			insert(name, record, true);
@@ -82,15 +77,15 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		} else {
 			insert(name, record, true);
 		}
-		
+
 	}
 
 	private void processHistoricalRecord(SpojeniBMapy record) {
-		
+
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name + "_MIN", primaryKeys, primaryKeysValues, 
+				connection, name + "_MIN", primaryKeys, primaryKeysValues,
 				"DATUM_VZNIKU", record.getDatumVzniku());
-		
+
 		if (!find(parameters, Operations.equal, true)) {
 			insert(name + "_MIN", record, false);
 			parameters.setTable(name);
@@ -98,7 +93,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 				delete(parameters, Operations.equal, true);
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -109,7 +104,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			insertHistoricalRecord(table, rawRecord);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	private void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -131,8 +126,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, 0);
 
 			preparedStatement.executeUpdate();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -145,12 +139,11 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	private void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_SPOJENI_B_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			SpojeniBMapy record = (SpojeniBMapy) rawRecord;
@@ -168,8 +161,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, 0);
 
 			preparedStatement.executeUpdate();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -182,5 +174,5 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		}
 
 	}
-	
+
 }

@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.nemovitosti.DPozemku;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class DPozemkuOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<DPozemku> dPozemku;
 	private final static String name = "D_POZEMKU";
 
 	public DPozemkuOracleDatabaseJdbcExporter(List<DPozemku> dPozemku,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.dPozemku = dPozemku;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (DPozemku record : dPozemku) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(DPozemku record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(dPozemku, name);
 	}
 
 	@Override
@@ -59,7 +25,6 @@ public class DPozemkuOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			DPozemku record = (DPozemku) rawRecord;
@@ -75,10 +40,7 @@ public class DPozemkuOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(8, record.getStavebniParcela());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

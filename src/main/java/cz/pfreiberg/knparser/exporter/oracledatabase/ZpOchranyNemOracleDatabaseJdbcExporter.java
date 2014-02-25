@@ -9,49 +9,15 @@ import cz.pfreiberg.knparser.domain.nemovitosti.ZpOchranyNem;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ZpOchranyNemOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<ZpOchranyNem> zpOchranyNem;
 	private final static String name = "ZP_OCHRANY_NEM";
 
 	public ZpOchranyNemOracleDatabaseJdbcExporter(
 			List<ZpOchranyNem> zpOchranyNem,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.zpOchranyNem = zpOchranyNem;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (ZpOchranyNem record : zpOchranyNem) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(ZpOchranyNem record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(zpOchranyNem, name);
 	}
 
 	@Override
@@ -60,7 +26,6 @@ public class ZpOchranyNemOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			ZpOchranyNem record = (ZpOchranyNem) rawRecord;
@@ -76,10 +41,7 @@ public class ZpOchranyNemOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(8, record.getNemochr());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

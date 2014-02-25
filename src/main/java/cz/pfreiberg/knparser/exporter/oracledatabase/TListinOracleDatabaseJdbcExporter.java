@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.rizeni.TListin;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TListinOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<TListin> tListin;
 	private final static String name = "T_LISTIN";
 
 	public TListinOracleDatabaseJdbcExporter(List<TListin> tListin,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.tListin = tListin;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (TListin record : tListin) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(TListin record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(tListin, name);
 	}
 
 	@Override
@@ -58,7 +24,6 @@ public class TListinOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			TListin record = (TListin) rawRecord;
@@ -72,10 +37,7 @@ public class TListinOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(6, record.getDruhList());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

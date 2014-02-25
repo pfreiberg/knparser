@@ -9,49 +9,14 @@ import cz.pfreiberg.knparser.domain.nemovitosti.CastiObci;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class CastiObciOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<CastiObci> castiObci;
 	private final static String name = "CASTI_OBCI";
 
 	public CastiObciOracleDatabaseJdbcExporter(List<CastiObci> castiObci,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.castiObci = castiObci;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (CastiObci record : castiObci) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(CastiObci record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
-		
+		prepareStatement(castiObci, name);
 	}
 
 	@Override
@@ -59,7 +24,6 @@ public class CastiObciOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			CastiObci record = (CastiObci) rawRecord;
@@ -72,10 +36,7 @@ public class CastiObciOracleDatabaseJdbcExporter extends
 					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

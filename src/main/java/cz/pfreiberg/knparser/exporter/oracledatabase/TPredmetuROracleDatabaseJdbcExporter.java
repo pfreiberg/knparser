@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.rizeni.TPredmetuR;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TPredmetuROracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<TPredmetuR> tPredmetuR;
 	private final static String name = "T_PREDMETU_R";
 
 	public TPredmetuROracleDatabaseJdbcExporter(List<TPredmetuR> tPredmetuR,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.tPredmetuR = tPredmetuR;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (TPredmetuR record : tPredmetuR) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(TPredmetuR record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(tPredmetuR, name);
 	}
 
 	@Override
@@ -58,7 +24,6 @@ public class TPredmetuROracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			TPredmetuR record = (TPredmetuR) rawRecord;
@@ -71,10 +36,7 @@ public class TPredmetuROracleDatabaseJdbcExporter extends
 					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

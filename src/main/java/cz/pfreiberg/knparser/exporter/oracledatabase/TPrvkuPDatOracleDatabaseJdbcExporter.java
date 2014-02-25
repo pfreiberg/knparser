@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.TPrvkuPDat;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TPrvkuPDatOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<TPrvkuPDat> tPrvkuPDat;
 	private final static String name = "T_PRVKU_P_DAT";
 
 	public TPrvkuPDatOracleDatabaseJdbcExporter(List<TPrvkuPDat> tPrvkuPDat,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.tPrvkuPDat = tPrvkuPDat;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (TPrvkuPDat record : tPrvkuPDat) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(TPrvkuPDat record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(tPrvkuPDat, name);
 	}
 
 	@Override
@@ -59,7 +25,6 @@ public class TPrvkuPDatOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			TPrvkuPDat record = (TPrvkuPDat) rawRecord;
@@ -75,10 +40,7 @@ public class TPrvkuPDatOracleDatabaseJdbcExporter extends
 					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

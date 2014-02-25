@@ -40,6 +40,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 				}
 			}
 			connection.commit();
+			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -171,7 +172,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			insertHistoricalRecord(table, rawRecord);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	private void insertRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -208,7 +209,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	private void insertHistoricalRecord(String table, Object rawRecord) {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_HRANICE_PARCEL_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -245,7 +246,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 
 	}
 
-	public boolean update(String table, HraniceParcel record) {
+	private boolean update(String table, HraniceParcel record) {
 		String select = "UPDATE " + table + " SET PAR_ID_1 = "
 				+ record.getParId1() + " , PAR_ID_2 = " + record.getParId2()
 				+ " WHERE *pk*";

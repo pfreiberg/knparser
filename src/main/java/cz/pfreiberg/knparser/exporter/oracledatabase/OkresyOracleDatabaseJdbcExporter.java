@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.nemovitosti.Okresy;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class OkresyOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<Okresy> okresy;
 	private final static String name = "OKRESY";
 
 	public OkresyOracleDatabaseJdbcExporter(List<Okresy> okresy,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.okresy = okresy;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Okresy record : okresy) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(Okresy record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(okresy, name);
 	}
 
 	@Override
@@ -58,7 +24,6 @@ public class OkresyOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Okresy record = (Okresy) rawRecord;
@@ -73,10 +38,7 @@ public class OkresyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(7, record.getNkrajeKod());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

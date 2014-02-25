@@ -9,49 +9,15 @@ import cz.pfreiberg.knparser.domain.nemovitosti.ZpVyuzitiPoz;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ZpVyuzitiPozOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<ZpVyuzitiPoz> zpVyuzitiPoz;
 	private final static String name = "ZP_VYUZITI_POZ";
 
 	public ZpVyuzitiPozOracleDatabaseJdbcExporter(
 			List<ZpVyuzitiPoz> zpVyuzitiPoz,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.zpVyuzitiPoz = zpVyuzitiPoz;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (ZpVyuzitiPoz record : zpVyuzitiPoz) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(ZpVyuzitiPoz record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(zpVyuzitiPoz, name);
 	}
 
 	@Override
@@ -59,7 +25,6 @@ public class ZpVyuzitiPozOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			ZpVyuzitiPoz record = (ZpVyuzitiPoz) rawRecord;
@@ -73,10 +38,7 @@ public class ZpVyuzitiPozOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(6, record.getZkratka());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.vlastnictvi.CharOs;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class CharOsOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<CharOs> charOs;
 	private final static String name = "CHAR_OS";
 
 	public CharOsOracleDatabaseJdbcExporter(List<CharOs> charOs,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.charOs = charOs;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (CharOs record : charOs) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(CharOs record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(charOs, name);
 	}
 
 	@Override
@@ -58,7 +24,6 @@ public class CharOsOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			CharOs record = (CharOs) rawRecord;
@@ -72,10 +37,7 @@ public class CharOsOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(6, record.getZkratka());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

@@ -9,48 +9,14 @@ import cz.pfreiberg.knparser.domain.nemovitosti.TBudov;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class TBudovOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<TBudov> tBudov;
 	private final static String name = "T_BUDOV";
 
 	public TBudovOracleDatabaseJdbcExporter(List<TBudov> tBudov,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.tBudov = tBudov;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (TBudov record : tBudov) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(TBudov record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(tBudov, name);
 	}
 
 	@Override
@@ -58,7 +24,6 @@ public class TBudovOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			TBudov record = (TBudov) rawRecord;
@@ -72,10 +37,7 @@ public class TBudovOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(6, record.getZkratka());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

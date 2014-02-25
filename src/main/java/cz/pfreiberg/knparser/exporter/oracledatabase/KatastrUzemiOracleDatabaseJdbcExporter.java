@@ -10,49 +10,15 @@ import cz.pfreiberg.knparser.domain.nemovitosti.KatastrUzemi;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class KatastrUzemiOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		CisOracleDatabaseJdbcExporter {
 
-	private List<KatastrUzemi> katastrUzemi;
 	private final static String name = "KATASTR_UZEMI";
 
 	public KatastrUzemiOracleDatabaseJdbcExporter(
 			List<KatastrUzemi> katastrUzemi,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.katastrUzemi = katastrUzemi;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (KatastrUzemi record : katastrUzemi) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(KatastrUzemi record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-			insert(name, record, false);
-		} else {
-			insert(name, record, false);
-		}
+		prepareStatement(katastrUzemi, name);
 	}
 
 	@Override
@@ -60,7 +26,6 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			KatastrUzemi record = (KatastrUzemi) rawRecord;
@@ -75,10 +40,7 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 			// TODO IS_DKN
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
