@@ -9,57 +9,23 @@ import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SouradniceObrazu;
 
 public class SouradniceObrazuOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<SouradniceObrazu> souradniceObrazu;
 	private final static String name = "SOURADNICE_OBRAZU";
 
-	public SouradniceObrazuOracleDatabaseJdbcExporter(List<SouradniceObrazu> souradniceObrazu,
+	public SouradniceObrazuOracleDatabaseJdbcExporter(
+			List<SouradniceObrazu> souradniceObrazu,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.souradniceObrazu = souradniceObrazu;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (SouradniceObrazu record : souradniceObrazu) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(SouradniceObrazu record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(souradniceObrazu, name);
 	}
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
+		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			SouradniceObrazu record = (SouradniceObrazu) rawRecord;
@@ -76,10 +42,7 @@ public class SouradniceObrazuOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -91,5 +54,5 @@ public class SouradniceObrazuOracleDatabaseJdbcExporter extends
 			}
 		}
 	}
-	
+
 }

@@ -8,46 +8,14 @@ import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.geometrickyplan.NzZpmz;
 
 public class NzZpmzOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<NzZpmz> nzZpmz;
 	private final static String name = "NZ_ZPMZ";
 
 	public NzZpmzOracleDatabaseJdbcExporter(List<NzZpmz> nzZpmz,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.nzZpmz = nzZpmz;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (NzZpmz record : nzZpmz) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(NzZpmz record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(nzZpmz, name);
 	}
 
 	@Override
@@ -55,7 +23,6 @@ public class NzZpmzOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			NzZpmz record = (NzZpmz) rawRecord;
@@ -64,10 +31,7 @@ public class NzZpmzOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(3, record.getZpmzKatuzeKod());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

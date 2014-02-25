@@ -8,57 +8,22 @@ import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.rizeni.UcastniciTyp;
 
 public class UcastniciTypOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<UcastniciTyp> ucastniciTyp;
 	private final static String name = "UCASTNICI_TYP";
 
-	public UcastniciTypOracleDatabaseJdbcExporter(List<UcastniciTyp> ucastniciTyp,
+	public UcastniciTypOracleDatabaseJdbcExporter(
+			List<UcastniciTyp> ucastniciTyp,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.ucastniciTyp = ucastniciTyp;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (UcastniciTyp record : ucastniciTyp) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(UcastniciTyp record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(ucastniciTyp, name);
 	}
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
-				+ "(?,?)";
+		String insert = "INSERT INTO " + table + " VALUES" + "(?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			UcastniciTyp record = (UcastniciTyp) rawRecord;
@@ -66,10 +31,7 @@ public class UcastniciTypOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(2, record.getTypucaKod());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

@@ -22,7 +22,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	protected List<String> primaryKeys;
 	protected List<String> methodsName;
 	protected List<Object> primaryKeysValues;
-	
+
 	public OracleDatabaseJdbcExporter(ConnectionParameters connectionParameters) {
 		connection = getConnection(connectionParameters);
 	}
@@ -123,14 +123,15 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return false;
 	}
 
+	@Override
 	public void delete(OracleDatabaseParameters parameters,
 			Operations operation, boolean hasDate) {
 
 		String delete = "";
 		if (hasDate) {
 			delete = "DELETE FROM " + parameters.getTable()
-					+ " WHERE *pk* AND " + parameters.getDate() + operation.getOperator()
-					+ parameters.getDateValue();
+					+ " WHERE *pk* AND " + parameters.getDate()
+					+ operation.getOperator() + parameters.getDateValue();
 		} else {
 			delete = "DELETE FROM " + parameters.getTable() + " WHERE *pk*";
 		}
@@ -173,7 +174,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return primaryKeyValues;
 	}
 
-	protected List<String> getMethods(List<String> primaryKeys) {
+	private List<String> getMethods(List<String> primaryKeys) {
 		List<String> methods = new ArrayList<>();
 		for (int i = 0; i < primaryKeys.size(); i++) {
 			methods.add(toCamelCase(primaryKeys.get(i)));

@@ -9,46 +9,14 @@ import cz.pfreiberg.knparser.domain.rizeni.Rizeni;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class RizeniOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<Rizeni> rizeni;
 	private final static String name = "RIZENI";
 
 	public RizeniOracleDatabaseJdbcExporter(List<Rizeni> rizeni,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.rizeni = rizeni;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Rizeni record : rizeni) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(Rizeni record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(rizeni, name);
 	}
 
 	@Override
@@ -57,7 +25,6 @@ public class RizeniOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Rizeni record = (Rizeni) rawRecord;
@@ -85,10 +52,7 @@ public class RizeniOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(18, record.getPraresKod());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

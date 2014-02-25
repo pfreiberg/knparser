@@ -9,47 +9,15 @@ import cz.pfreiberg.knparser.domain.rizeni.ObjektyRizeni;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class ObjektyRizeniOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<ObjektyRizeni> objektyRizeni;
 	private final static String name = "OBJEKTY_RIZENI";
 
 	public ObjektyRizeniOracleDatabaseJdbcExporter(
 			List<ObjektyRizeni> objektyRizeni,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.objektyRizeni = objektyRizeni;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (ObjektyRizeni record : objektyRizeni) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(ObjektyRizeni record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(objektyRizeni, name);
 	}
 
 	@Override
@@ -58,7 +26,6 @@ public class ObjektyRizeniOracleDatabaseJdbcExporter extends
 				+ "(?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			ObjektyRizeni record = (ObjektyRizeni) rawRecord;
@@ -78,10 +45,7 @@ public class ObjektyRizeniOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, record.getPsId());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

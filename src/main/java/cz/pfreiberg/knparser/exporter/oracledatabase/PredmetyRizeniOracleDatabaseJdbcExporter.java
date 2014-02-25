@@ -8,47 +8,15 @@ import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.rizeni.PredmetyRizeni;
 
 public class PredmetyRizeniOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<PredmetyRizeni> predmetyRizeni;
 	private final static String name = "PREDMETY_RIZENI";
 
 	public PredmetyRizeniOracleDatabaseJdbcExporter(
 			List<PredmetyRizeni> predmetyRizeni,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.predmetyRizeni = predmetyRizeni;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (PredmetyRizeni record : predmetyRizeni) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(PredmetyRizeni record) {
-
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(predmetyRizeni, name);
 	}
 
 	@Override
@@ -56,7 +24,6 @@ public class PredmetyRizeniOracleDatabaseJdbcExporter extends
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			PredmetyRizeni record = (PredmetyRizeni) rawRecord;
@@ -64,10 +31,7 @@ public class PredmetyRizeniOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(2, record.getTyppreKod());
 
 			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

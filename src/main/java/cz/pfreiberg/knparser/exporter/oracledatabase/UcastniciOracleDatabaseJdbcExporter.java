@@ -8,57 +8,22 @@ import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.rizeni.Ucastnici;
 
 public class UcastniciOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<Ucastnici> ucastnici;
 	private final static String name = "UCASTNICI";
 
 	public UcastniciOracleDatabaseJdbcExporter(List<Ucastnici> ucastnici,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.ucastnici = ucastnici;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Ucastnici record : ucastnici) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(Ucastnici record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(ucastnici, name);
 	}
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
+		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Ucastnici record = (Ucastnici) rawRecord;
@@ -82,12 +47,9 @@ public class UcastniciOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(18, record.getOverenPodpis());
 			preparedStatement.setObject(19, record.getOverenProtiRs());
 			preparedStatement.setObject(20, record.getOverenProtiOs());
-		
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
 
-		catch (SQLException e) {
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

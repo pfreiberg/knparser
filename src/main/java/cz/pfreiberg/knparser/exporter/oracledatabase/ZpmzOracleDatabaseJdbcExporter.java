@@ -8,57 +8,22 @@ import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.geometrickyplan.Zpmz;
 
 public class ZpmzOracleDatabaseJdbcExporter extends
-		OracleDatabaseJdbcExporter {
+		StavOracleDatabaseJdbcExporter {
 
-	private List<Zpmz> zpmz;
 	private final static String name = "ZPMZ";
 
 	public ZpmzOracleDatabaseJdbcExporter(List<Zpmz> zpmz,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
-		this.zpmz = zpmz;
-		prepareStatement();
-	}
-
-	private void prepareStatement() {
-		try {
-			connection.setAutoCommit(false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Zpmz record : zpmz) {
-			primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-			processRecord(record);
-		}
-		try {
-			connection.commit();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void processRecord(Zpmz record) {
-		
-		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
-				connection, name, primaryKeys, primaryKeysValues, null, null);
-
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
-		insert(name, record, false);
+		prepareStatement(zpmz, name);
 	}
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		String insert = "INSERT INTO "
-				+ table
-				+ " VALUES"
+		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
-
 			preparedStatement = connection.prepareStatement(insert);
 
 			Zpmz record = (Zpmz) rawRecord;
@@ -70,12 +35,9 @@ public class ZpmzOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(6, record.getZapisnikPodrobMereni());
 			preparedStatement.setObject(7, record.getVypocetProtokolVymer());
 			preparedStatement.setObject(8, record.getTypsosKod());
-		
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		}
 
-		catch (SQLException e) {
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
