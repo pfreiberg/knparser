@@ -3,12 +3,17 @@ package cz.pfreiberg.knparser.exporter.oracledatabase;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.DomainWithDate;
 import cz.pfreiberg.knparser.util.Operations;
 
 public abstract class HisOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
+
+	private static final Logger log = Logger
+			.getLogger(HisOracleDatabaseJdbcExporter.class);
 
 	public HisOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name) {
@@ -69,15 +74,21 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
+		try {
+			if (isRecord) {
+				insertRecord(table, rawRecord);
+			} else
+				insertHistoricalRecord(table, rawRecord);
+		} catch (SQLException e) {
+			log.error("Error during processing record: " + rawRecord.toString());
+			log.error(e.getStackTrace()[0]);
+		}
 	}
 
-	protected abstract void insertRecord(String table, Object rawRecord);
+	protected abstract void insertRecord(String table, Object rawRecord)
+			throws SQLException;
 
 	protected abstract void insertHistoricalRecord(String table,
-			Object rawRecord);
+			Object rawRecord) throws SQLException;
 
 }

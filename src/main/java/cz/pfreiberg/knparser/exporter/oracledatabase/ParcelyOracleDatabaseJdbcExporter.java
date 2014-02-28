@@ -19,7 +19,8 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		prepareStatement(parcely, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord)
+			throws SQLException {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -64,21 +65,13 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(31, record.getIdentPs());
 
 			preparedStatement.executeUpdate();
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord)
+			throws SQLException {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -123,19 +116,9 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(31, record.getIdentPs());
 
 			preparedStatement.executeUpdate();
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
-
 	}
 
 }
