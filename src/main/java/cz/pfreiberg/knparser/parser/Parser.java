@@ -9,6 +9,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import cz.pfreiberg.knparser.Configuration;
 import cz.pfreiberg.knparser.domain.Vfk;
 import cz.pfreiberg.knparser.util.VfkUtil;
@@ -24,6 +27,8 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  * 
  */
 public class Parser {
+	
+	private static final Logger log = Logger.getLogger(Parser.class);
 
 	private static boolean isParsing = true;
 	private static boolean firstBatch = true;
@@ -83,7 +88,7 @@ public class Parser {
 			try {
 				values = processRow();
 			} catch (ParserException e) {
-				System.out.println(e);
+				log.error(e.getMessage());
 				escapedRows++;
 				continue;
 			}
@@ -111,7 +116,7 @@ public class Parser {
 				}
 
 				if ((actualRow % ROWS_PER_BATCH) == 0) {
-					System.out.println("Currently parsed row: " + actualRow);
+					log.info("Currently parsed row: " + actualRow);
 					batch.setZmeny(zmeny);
 					return;
 				}
@@ -120,7 +125,7 @@ public class Parser {
 
 		} while (true);
 
-		System.out.println("Last row: " + actualRow);
+		log.info("Last row: " + actualRow);
 		isParsing = false;
 		batch.setZmeny(zmeny);
 	}

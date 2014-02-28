@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 /**
  * Vstupní bod programu. Zpracuje parametry, se kterými byl program spuštěn,
  * vytvoří Controller, který zodpovídá za zpracování VFK a předá mu kontrolu nad
@@ -16,8 +18,13 @@ import java.util.Properties;
  * 
  */
 public class KnParser {
+	
+	
+	private static final Logger log = Logger.getLogger(KnParser.class);
 
 	public static void main(String[] args) {
+		log.info("KnParser started.");
+		
 		boolean parseWholeFolder = false;
 		boolean toDatabase = false;
 		Configuration configuration = new Configuration();
@@ -39,7 +46,7 @@ public class KnParser {
 				configuration.setOutput(args[i] + "\\");
 				break;
 			default:
-				System.out.println("Invalid command line switch.");
+				log.fatal("Invalid command line switch.");
 				return;
 			}
 		}
@@ -49,7 +56,7 @@ public class KnParser {
 			properties.load(KnParser.class
 					.getResourceAsStream("KnParser.properties"));
 		} catch (IOException e) {
-			System.out.println("KnParser.properties missing.");
+			log.fatal("KnParser.properties missing.");
 		}
 		configuration.setNumberOfRows(properties.getProperty("numberOfRows"));
 
@@ -65,6 +72,8 @@ public class KnParser {
 			Controller controller = new Controller(configuration);
 			controller.run();
 		}
+		
+		log.info("KnParser finished.");
 	}
 
 	private static ConnectionParameters getConnectionParameters(

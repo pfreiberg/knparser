@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.exporter.Exporter;
 import cz.pfreiberg.knparser.util.Operations;
@@ -17,6 +19,9 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
+
+	private static final Logger log = Logger
+			.getLogger(OracleDatabaseJdbcExporter.class);
 
 	protected Connection connection;
 	protected List<String> primaryKeys;
@@ -43,14 +48,14 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 					+ connection.getUrl(), connection.getUser(),
 					connection.getPassword());
 		} catch (SQLException e) {
-			System.out.println("Connection failed!");
+			log.error("Connection failed.");
 			return database;
 		}
 
 		if (database != null) {
 			return database;
 		} else {
-			System.out.println("Failed to make connection!");
+			log.error("Connection failed.");
 		}
 
 		return database;
@@ -177,17 +182,14 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	private String composeSqlStatement(OracleDatabaseParameters parameters,
 			String select) {
 		for (int i = 0; i < primaryKeys.size(); i++) {
-			select = select.replace(
-					"*pk*",
-					primaryKeys.get(i)
-							+ " = "
-							+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
-							+ " AND *pk*");
+			select = select.replace("*pk*", primaryKeys.get(i) + " = "
+					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
+					+ " AND *pk*");
 		}
 		select = select.replace(" AND *pk*", "");
 		return select;
 	}
-	
+
 	private List<String> getMethods(List<String> primaryKeys) {
 		List<String> methods = new ArrayList<>();
 		for (int i = 0; i < primaryKeys.size(); i++) {

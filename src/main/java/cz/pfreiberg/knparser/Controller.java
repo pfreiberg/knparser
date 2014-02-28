@@ -6,6 +6,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
 import cz.pfreiberg.knparser.domain.Vfk;
 import cz.pfreiberg.knparser.exporterfactory.ExporterFactory;
 import cz.pfreiberg.knparser.exporterfactory.OracleDatabaseExporterFactory;
@@ -21,6 +23,8 @@ import cz.pfreiberg.knparser.parser.ParserException;
  * 
  */
 public class Controller {
+
+	private static final Logger log = Logger.getLogger(Controller.class);
 
 	private final Configuration configuration;
 	private final boolean toDatabase;
@@ -43,41 +47,40 @@ public class Controller {
 
 		try {
 			Vfk vfk;
+			log.info("Parsing started.");
 			do {
 				vfk = parseBatch();
-				System.out
-						.println("Batch is parsed. Starting the storage sequence.\n");
+				log.info("Batch is parsed. Starting the storage sequence.\n");
 				storeParsedData(vfk);
 				Parser.setFirstBatchToFalse();
 			} while (Parser.isParsing());
 
-			System.out.println(parser.getEscapedRows() + " row/s was escaped.");
-			System.out.println("Parsing finished.");
+			log.info(parser.getEscapedRows() + " row/s was escaped.");
+			log.info("Parsing finished.");
 
 		} catch (FileNotFoundException e) {
-			System.out.println("Input file was NOT found.");
+			log.fatal("Input file was NOT found.");
 		} catch (ParserException e) {
-			System.out.println(e.getMessage());
+			log.fatal(e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
-		} finally
-		{
+			log.fatal(e.getMessage());
+		} finally {
 			executor.shutdown();
 		}
-		
+
 	}
 
 	private ScheduledExecutorService getTimer() {
 
 		Runnable runnableTime = new Runnable() {
 			public void run() {
-				System.out.println("\n" + seconds + " seconds..." + "\n");
-				seconds++;
+				log.info(seconds + " seconds..." + "\n");
+				seconds += 10;
 			}
 		};
 
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-		executor.scheduleAtFixedRate(runnableTime, 0, 3, TimeUnit.SECONDS);
+		executor.scheduleAtFixedRate(runnableTime, 0, 10, TimeUnit.SECONDS);
 		return executor;
 	}
 
@@ -97,7 +100,7 @@ public class Controller {
 			exporterFactory = new OracleLoaderExporterFactory(vfk.getZmeny(),
 					"EE8MSWIN1250", configuration.getOutput());
 		}
-		
+
 		exportBonitniDilParcely(vfk, exporterFactory);
 		exportJednotky(vfk, exporterFactory);
 		exporterJinePravniVztahy(vfk, exporterFactory);
