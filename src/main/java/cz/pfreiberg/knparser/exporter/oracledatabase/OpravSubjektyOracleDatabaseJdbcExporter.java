@@ -20,7 +20,7 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 		prepareStatement(opravSubjekty, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -72,20 +72,12 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(37, record.getIdNadrizenePo());
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -137,18 +129,9 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(37, record.getIdNadrizenePo());
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
-
 	}
 
 }

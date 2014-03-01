@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.DomainWithDate;
+import cz.pfreiberg.knparser.util.LogUtil;
 import cz.pfreiberg.knparser.util.Operations;
 
 public abstract class HisOracleDatabaseJdbcExporter extends
@@ -37,8 +38,9 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			connection.commit();
 			connection.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String stackTrace = e.getStackTrace()[0].toString();
+			log.error("Error during commiting batch in "
+					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
 		}
 	}
 
@@ -80,8 +82,10 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			} else
 				insertHistoricalRecord(table, rawRecord);
 		} catch (SQLException e) {
-			log.error("Error during processing record: " + rawRecord.toString());
-			log.error(e.getStackTrace()[0]);
+			String stackTrace = e.getStackTrace()[0].toString();
+			log.error("Error during inserting "
+					+ LogUtil.getMethodWhichThrowsException(stackTrace) + " in "
+					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
 		}
 	}
 

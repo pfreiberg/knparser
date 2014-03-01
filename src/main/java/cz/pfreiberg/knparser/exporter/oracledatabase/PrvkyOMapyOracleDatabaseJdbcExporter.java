@@ -20,7 +20,7 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 		prepareStatement(prvkyOMapy, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -46,20 +46,12 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(14, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_PRVKY_O_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -85,16 +77,8 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(14, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 
 	}

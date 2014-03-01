@@ -20,7 +20,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 		prepareStatement(jinePravVztahy, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -60,21 +60,12 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(28, VfkUtil.convertToDatabaseDate(record.getDatumUkonceni()));
 
 			preparedStatement.executeUpdate();
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_JINE_PRAV_VZTAHY_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -114,17 +105,8 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(28, VfkUtil.convertToDatabaseDate(record.getDatumUkonceni()));
 		
 			preparedStatement.executeUpdate();
-		}
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 
 	}

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import cz.pfreiberg.knparser.exporter.Exporter;
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
@@ -14,9 +16,12 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 public abstract class OracleLoaderFileExporter implements Exporter,
 		OracleLoaderFileOperations {
 
+	private static final Logger log = Logger
+			.getLogger(OracleLoaderFileExporter.class);
+
 	public OracleLoaderFileExporter(List<?> list, String characterSet,
 			String output, String prefix, String name) {
-		
+
 		output = output + prefix + name;
 		if (Parser.isFirstBatch()) {
 			String controlFileTemplate = getTemplateOfControlFile(characterSet,
@@ -25,7 +30,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 					makeControlFile(controlFileTemplate));
 		}
 		appendLoadFile(output, characterSet, list);
-		
+
 	}
 
 	private String getTemplateOfControlFile(String characterSet, String name) {
@@ -45,8 +50,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 			FileManager.writeToConfigFile(new File(name + ".CFG"), controlFile,
 					VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("File " + name + ".CFG" + " was not created.");
 		}
 
 	}
@@ -59,8 +63,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 			FileManager.writeToDataFile(file,
 					VfkUtil.convertEncoding(characterSet), lines);
 		} catch (IOException | ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("File " + name + ".TXT" + " is corrupted. Missing data.");
 		}
 	}
 

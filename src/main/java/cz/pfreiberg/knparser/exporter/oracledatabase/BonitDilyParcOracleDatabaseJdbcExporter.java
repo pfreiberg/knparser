@@ -20,7 +20,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		prepareStatement(bonitDilyParc, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -41,20 +41,12 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(9, record.getVymera());
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_BONIT_DILY_PARC_MIN.nextval,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -75,16 +67,8 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(9, record.getVymera());
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 
 	}

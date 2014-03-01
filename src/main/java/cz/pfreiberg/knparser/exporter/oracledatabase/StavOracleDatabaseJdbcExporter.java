@@ -3,10 +3,16 @@ package cz.pfreiberg.knparser.exporter.oracledatabase;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import cz.pfreiberg.knparser.ConnectionParameters;
+import cz.pfreiberg.knparser.util.LogUtil;
 
 public abstract class StavOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
+
+	private static final Logger log = Logger
+			.getLogger(StavOracleDatabaseJdbcExporter.class);
 
 	public StavOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name) {
@@ -23,8 +29,9 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 				processRecord(parameters, record);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String stackTrace = e.getStackTrace()[0].toString();
+			log.error("Error during commiting batch in "
+					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
 		}
 	}
 
@@ -33,7 +40,13 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 		if (find(parameters, null, false)) {
 			delete(parameters, null, false);
 		}
-		insert(parameters.getTable(), record, false);
+		try {
+			insert(parameters.getTable(), record, false);
+		} catch (SQLException e) {
+			String stackTrace = e.getStackTrace()[0].toString();
+			log.error("Error during inserting record in "
+					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+		}
 	}
 
 }

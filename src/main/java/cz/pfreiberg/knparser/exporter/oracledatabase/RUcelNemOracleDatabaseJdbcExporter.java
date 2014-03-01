@@ -19,7 +19,7 @@ public class RUcelNemOracleDatabaseJdbcExporter extends
 		prepareStatement(rUcelNem, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord) {
+	protected void insertRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -40,20 +40,12 @@ public class RUcelNemOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(9, record.getUcelKod());
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord) {
+	protected void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_R_UCEL_NEM_MIN.nextval,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -74,18 +66,9 @@ public class RUcelNemOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(9, record.getUcelKod());
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
-
 	}
 
 }

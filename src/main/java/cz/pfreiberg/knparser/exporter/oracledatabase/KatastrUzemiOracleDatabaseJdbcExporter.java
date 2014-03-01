@@ -22,7 +22,7 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
+	public void insert(String table, Object rawRecord, boolean isRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
 		try {
@@ -37,21 +37,11 @@ public class KatastrUzemiOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(5,
 					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
 			preparedStatement.setNull(6, Types.DECIMAL);
-			// TODO IS_DKN
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
-
 	}
 
 }

@@ -20,7 +20,7 @@ public class DPozemkuOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
+	public void insert(String table, Object rawRecord, boolean isRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -40,17 +40,8 @@ public class DPozemkuOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(8, record.getStavebniParcela());
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
-
 	}
 }

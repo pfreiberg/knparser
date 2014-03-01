@@ -21,7 +21,7 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 		prepareStatement(obrazyParcel, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) {
+	public void insertRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -50,20 +50,12 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(17, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) {
+	public void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"
@@ -94,16 +86,8 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.setNull(17, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 
 	}

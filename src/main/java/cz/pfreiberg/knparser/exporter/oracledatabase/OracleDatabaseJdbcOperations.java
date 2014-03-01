@@ -1,6 +1,7 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
@@ -16,6 +17,6 @@ public interface OracleDatabaseJdbcOperations {
 	
 	public void delete(OracleDatabaseParameters parameters, Operations operation, boolean hasDate);
 	
-	public void insert(String table, Object rawRecord, boolean isRecord);
+	public void insert(String table, Object rawRecord, boolean isRecord) throws SQLException;
 
 }
