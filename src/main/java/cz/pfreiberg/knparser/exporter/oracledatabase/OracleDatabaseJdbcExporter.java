@@ -91,8 +91,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				rs.close();
 				ps.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Error during closing connection.");
 			}
 		}
 		return output;
@@ -125,8 +124,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				rs.close();
 				ps.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Error during closing connection.");
 			}
 		}
 	}
@@ -155,8 +153,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			try {
 				ps.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Error during closing connection.");
 			}
 		}
 
@@ -165,16 +162,23 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	protected List<Object> getPrimaryKeysValues(Object record,
 			List<String> methodsName) {
 		List<Object> primaryKeyValues = new ArrayList<>();
+		Class<?> c = null;
 		for (int i = 0; i < methodsName.size(); i++) {
 			try {
-				Class<?> c = record.getClass();
+				c = record.getClass();
 				Method method = c.getDeclaredMethod(methodsName.get(i));
 				primaryKeyValues.add(method.invoke(c.cast(record)));
 			} catch (NoSuchMethodException | SecurityException
 					| IllegalAccessException | IllegalArgumentException
 					| InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.fatal("Fatal error during method call: "
+						+ methodsName.get(i) + "\nClass: " + c.getName());
+				try {
+					connection.close();
+				} catch (SQLException e1) {
+					log.error("Error during closing connection.");
+				}
+				System.exit(1);
 			}
 
 		}

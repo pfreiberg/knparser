@@ -26,14 +26,23 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 						name, null, null);
-				processRecord(parameters, record);
+				try {
+					processRecord(parameters, record);
+				} catch (JdbcException e) {
+					log.error(e.getMessage());
+				}
 			}
+			connection.commit();
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
 			log.error("Error during commiting batch in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
-		} catch (JdbcException e) {
-			log.error(e.getMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				log.error("Error during closing connection.");
+			}
 		}
 	}
 
@@ -47,7 +56,8 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting record in "
-					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+					+ LogUtil.getClassWhichThrowsException(stackTrace) + "."
+					+ "\n" + record.toString());
 		}
 	}
 

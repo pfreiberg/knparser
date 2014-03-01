@@ -39,20 +39,28 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			connection.setAutoCommit(false);
 			for (HraniceParcel record : hraniceParcel) {
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-				if (record.getDatumZaniku() == null) {
-					processRecord(record);
-				} else {
-					processHistoricalRecord(record);
+
+				try {
+					if (record.getDatumZaniku() == null) {
+						processRecord(record);
+					} else {
+						processHistoricalRecord(record);
+					}
+				} catch (JdbcException e) {
+					log.error(e.getMessage());
 				}
 			}
 			connection.commit();
-			connection.close();
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
 			log.error("Error during commiting batch in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
-		} catch (JdbcException e) {
-			log.error(e.getMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				log.error("Error during closing connection.");
+			}
 		}
 	}
 
@@ -101,7 +109,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			insert(name, record, true);
 	}
 
-	private void processHistoricalRecord(HraniceParcel record) throws JdbcException {
+	private void processHistoricalRecord(HraniceParcel record)
+			throws JdbcException {
 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(name
 				+ "_MIN", "DATUM_VZNIKU", record.getDatumVzniku());
@@ -145,7 +154,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			delete(parameters, Operations.equal, true);
 	}
 
-	private void getParId(String table, String date, String dateValue) {
+	private void getParId(String table, String date, String dateValue) throws JdbcException {
 		String select = "SELECT PAR_ID_1, PAR_ID_2 FROM " + table
 				+ " WHERE *pk* AND " + date + "=" + dateValue;
 
@@ -166,13 +175,12 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			preparedStatement.close();
 			return;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new JdbcException("Error during " + select);
 		}
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
+	public void insert(String table, Object rawRecord, boolean isRecord) throws JdbcException {
 		try {
 			if (isRecord) {
 				insertRecord(table, rawRecord);
@@ -180,10 +188,10 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 				insertHistoricalRecord(table, rawRecord);
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
-			log.error("Error during inserting "
+			throw new JdbcException("Error during inserting "
 					+ LogUtil.getMethodWhichThrowsException(stackTrace)
 					+ " in " + LogUtil.getClassWhichThrowsException(stackTrace)
-					+ ".");
+					+ "." + "\n" + rawRecord.toString());
 		}
 	}
 
@@ -246,34 +254,31 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	private boolean update(String table, HraniceParcel record) {
-		String select = "UPDATE " + table + " SET PAR_ID_1 = "
+	private boolean update(String table, HraniceParcel record) throws JdbcException {
+		String update = "UPDATE " + table + " SET PAR_ID_1 = "
 				+ record.getParId1() + " , PAR_ID_2 = " + record.getParId2()
 				+ " WHERE *pk*";
 
 		for (int i = 0; i < primaryKeys.size(); i++) {
-			select = select.replace("*pk*", primaryKeys.get(i) + " = "
+			update = update.replace("*pk*", primaryKeys.get(i) + " = "
 					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
 					+ " AND *pk*");
 		}
-		select = select.replace(" AND *pk*", "");
+		update = update.replace(" AND *pk*", "");
 		PreparedStatement preparedStatement = null;
 		try {
-			preparedStatement = connection.prepareStatement(select);
+			preparedStatement = connection.prepareStatement(update);
 			int affectedRows = preparedStatement.executeUpdate();
 			return (affectedRows > 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new JdbcException("Error during " + update);
 		} finally {
 			try {
 				preparedStatement.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Error during closing connection.");
 			}
 		}
-		return false;
 	}
 
 }

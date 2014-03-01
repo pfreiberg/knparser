@@ -23,27 +23,33 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	protected <T extends DomainWithDate> void prepareStatement(List<T> list,
 			String name) {
-
 		try {
 			connection.setAutoCommit(false);
 			for (T record : list) {
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 						name, "DATUM_VZNIKU", record.getDatumVzniku());
-				if (record.getDatumZaniku() == null) {
-					processRecord(parameters, record);
-				} else {
-					processHistoricalRecord(parameters, record);
+				try {
+					if (record.getDatumZaniku() == null) {
+						processRecord(parameters, record);
+					} else {
+						processHistoricalRecord(parameters, record);
+					}
+				} catch (JdbcException e) {
+					log.error(e.getMessage());
 				}
 			}
 			connection.commit();
-			connection.close();
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
 			log.error("Error during commiting batch in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
-		} catch (JdbcException e) {
-			log.error(e.getMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				log.error("Error during closing connection.");
+			}
 		}
 	}
 
@@ -90,7 +96,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			throw new JdbcException("Error during inserting "
 					+ LogUtil.getMethodWhichThrowsException(stackTrace)
 					+ " in " + LogUtil.getClassWhichThrowsException(stackTrace)
-					+ ".");
+					+ "." + "\n" + rawRecord.toString());
 		}
 	}
 

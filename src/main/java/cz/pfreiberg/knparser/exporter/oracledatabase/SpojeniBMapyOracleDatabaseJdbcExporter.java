@@ -35,20 +35,28 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			connection.setAutoCommit(false);
 			for (SpojeniBMapy record : spojeniBMapy) {
 				getActualValues(record);
-				if (record.getDatumZaniku() == null) {
-					processRecord(record);
-				} else {
-					processHistoricalRecord(record);
+
+				try {
+					if (record.getDatumZaniku() == null) {
+						processRecord(record);
+					} else {
+						processHistoricalRecord(record);
+					}
+				} catch (JdbcException e) {
+					log.error(e.getMessage());
 				}
 			}
 			connection.commit();
-			connection.close();
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
 			log.error("Error during commiting batch in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
-		} catch (JdbcException e) {
-			log.error(e.getMessage());
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				log.error("Error during closing connection.");
+			}
 		}
 	}
 
@@ -88,7 +96,8 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 
 	}
 
-	private void processHistoricalRecord(SpojeniBMapy record) throws JdbcException {
+	private void processHistoricalRecord(SpojeniBMapy record)
+			throws JdbcException {
 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(name
 				+ "_MIN", "DATUM_VZNIKU", record.getDatumVzniku());
@@ -104,7 +113,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
+	public void insert(String table, Object rawRecord, boolean isRecord) throws JdbcException {
 		try {
 			if (isRecord) {
 				insertRecord(table, rawRecord);
@@ -112,10 +121,10 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 				insertHistoricalRecord(table, rawRecord);
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
-			log.error("Error during inserting "
+			throw new JdbcException("Error during inserting "
 					+ LogUtil.getMethodWhichThrowsException(stackTrace)
 					+ " in " + LogUtil.getClassWhichThrowsException(stackTrace)
-					+ ".");
+					+ "." + "\n" + rawRecord.toString());
 		}
 	}
 
