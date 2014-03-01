@@ -29,36 +29,43 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	protected List<Object> primaryKeysValues;
 
 	public OracleDatabaseJdbcExporter(ConnectionParameters connectionParameters) {
-		connection = getConnection(connectionParameters);
+		establishConnection(connectionParameters);
 	}
 
 	public OracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name) {
-		connection = getConnection(connectionParameters);
-		primaryKeys = getPrimaryKeys(connection, name);
+		do {
+			establishConnection(connectionParameters);
+			primaryKeys = getPrimaryKeys(connection, name);
+		} while (connection == null && primaryKeys == null);
 		methodsName = getMethods(primaryKeys);
 	}
 
+	private void establishConnection(ConnectionParameters connectionParameters) {
+		do {
+			try {
+				connection = getConnection(connectionParameters);
+				break;
+			} catch (SQLException e) {
+				log.error("Connection failed.");
+				log.info("Attempting to reconnect in five seconds.");
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException i) {
+					Thread.currentThread().interrupt();
+				}
+			}
+		} while (true);
+	}
+
 	@Override
-	public Connection getConnection(ConnectionParameters connection) {
-		Connection database = null;
+	public Connection getConnection(ConnectionParameters connection)
+			throws SQLException {
 
-		try {
-			database = DriverManager.getConnection("jdbc:oracle:thin:@"
-					+ connection.getUrl(), connection.getUser(),
-					connection.getPassword());
-		} catch (SQLException e) {
-			log.error("Connection failed.");
-			return database;
-		}
+		return DriverManager.getConnection(
+				"jdbc:oracle:thin:@" + connection.getUrl(),
+				connection.getUser(), connection.getPassword());
 
-		if (database != null) {
-			return database;
-		} else {
-			log.error("Connection failed.");
-		}
-
-		return database;
 	}
 
 	@Override
@@ -78,8 +85,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Error during fetching primary keys for " + table);
 		} finally {
 			try {
 				rs.close();
@@ -94,7 +100,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 
 	@Override
 	public boolean find(OracleDatabaseParameters parameters,
-			Operations operation, boolean hasDate) {
+			Operations operation, boolean hasDate) throws JdbcException {
 		String select = "";
 		if (hasDate) {
 			select = "SELECT * FROM " + parameters.getTable()
@@ -113,8 +119,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			boolean isFound = (rs.next());
 			return isFound;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new JdbcException("Error during " + select);
 		} finally {
 			try {
 				rs.close();
@@ -124,13 +129,11 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				e.printStackTrace();
 			}
 		}
-
-		return false;
 	}
 
 	@Override
 	public void delete(OracleDatabaseParameters parameters,
-			Operations operation, boolean hasDate) {
+			Operations operation, boolean hasDate) throws JdbcException {
 
 		String delete = "";
 		if (hasDate) {
@@ -147,8 +150,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			ps = connection.prepareStatement(delete);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new JdbcException("Error during " + delete);
 		} finally {
 			try {
 				ps.close();

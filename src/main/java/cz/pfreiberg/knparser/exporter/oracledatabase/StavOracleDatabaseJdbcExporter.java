@@ -32,11 +32,13 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 			String stackTrace = e.getStackTrace()[0].toString();
 			log.error("Error during commiting batch in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+		} catch (JdbcException e) {
+			log.error(e.getMessage());
 		}
 	}
 
 	private void processRecord(OracleDatabaseParameters parameters,
-			Object record) {
+			Object record) throws JdbcException {
 		if (find(parameters, null, false)) {
 			delete(parameters, null, false);
 		}
@@ -44,7 +46,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 			insert(parameters.getTable(), record, false);
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
-			log.error("Error during inserting record in "
+			throw new JdbcException("Error during inserting record in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
 		}
 	}

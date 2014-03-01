@@ -9,14 +9,14 @@ import cz.pfreiberg.knparser.util.Operations;
 
 public interface OracleDatabaseJdbcOperations {
 	
-	public Connection getConnection(ConnectionParameters connection);
+	public Connection getConnection(ConnectionParameters connection) throws SQLException;
 	
-	public List<String> getPrimaryKeys(Connection connection, String table);
+	public List<String> getPrimaryKeys(Connection connection, String table) throws SQLException;
 	
-	public boolean find(OracleDatabaseParameters parameters, Operations operation, boolean hasDate);
+	public boolean find(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) throws JdbcException;
 	
-	public void delete(OracleDatabaseParameters parameters, Operations operation, boolean hasDate);
+	public void delete(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) throws JdbcException;
 	
-	public void insert(String table, Object rawRecord, boolean isRecord) throws SQLException;
+	public void insert(String table, Object rawRecord, boolean isRecord) throws SQLException, JdbcException;
 
 }

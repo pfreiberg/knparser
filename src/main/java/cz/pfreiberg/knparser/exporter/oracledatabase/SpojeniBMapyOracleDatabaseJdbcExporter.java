@@ -5,13 +5,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SpojeniBMapy;
+import cz.pfreiberg.knparser.util.LogUtil;
 import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
+
+	private static final Logger log = Logger
+			.getLogger(SpojeniBMapyOracleDatabaseJdbcExporter.class);
 
 	private List<SpojeniBMapy> spojeniBMapy;
 	private final static String name = "SPOJENI_B_MAPY";
@@ -38,8 +44,11 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			connection.commit();
 			connection.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String stackTrace = e.getStackTrace()[0].toString();
+			log.error("Error during commiting batch in "
+					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+		} catch (JdbcException e) {
+			log.error(e.getMessage());
 		}
 	}
 
@@ -63,7 +72,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		primaryKeysValues = actualPrimaryKeysValues;
 	}
 
-	private void processRecord(SpojeniBMapy record) {
+	private void processRecord(SpojeniBMapy record) throws JdbcException {
 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 				name, "DATUM_VZNIKU", record.getDatumVzniku());
@@ -79,7 +88,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 
 	}
 
-	private void processHistoricalRecord(SpojeniBMapy record) {
+	private void processHistoricalRecord(SpojeniBMapy record) throws JdbcException {
 
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(name
 				+ "_MIN", "DATUM_VZNIKU", record.getDatumVzniku());
@@ -96,13 +105,22 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 
 	@Override
 	public void insert(String table, Object rawRecord, boolean isRecord) {
-		if (isRecord) {
-			insertRecord(table, rawRecord);
-		} else
-			insertHistoricalRecord(table, rawRecord);
+		try {
+			if (isRecord) {
+				insertRecord(table, rawRecord);
+			} else
+				insertHistoricalRecord(table, rawRecord);
+		} catch (SQLException e) {
+			String stackTrace = e.getStackTrace()[0].toString();
+			log.error("Error during inserting "
+					+ LogUtil.getMethodWhichThrowsException(stackTrace)
+					+ " in " + LogUtil.getClassWhichThrowsException(stackTrace)
+					+ ".");
+		}
 	}
 
-	private void insertRecord(String table, Object rawRecord) {
+	private void insertRecord(String table, Object rawRecord)
+			throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -124,20 +142,13 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, 0);
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 	}
 
-	private void insertHistoricalRecord(String table, Object rawRecord) {
+	private void insertHistoricalRecord(String table, Object rawRecord)
+			throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(SEQ_SPOJENI_B_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -159,16 +170,8 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			preparedStatement.setObject(10, 0);
 
 			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			preparedStatement.close();
 		}
 
 	}

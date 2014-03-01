@@ -50,7 +50,7 @@ public class Controller {
 			log.info("Parsing started.");
 			do {
 				vfk = parseBatch();
-				log.info("Batch is parsed. Starting the storage sequence.\n");
+				log.info("Batch is parsed. Starting the storage sequence.");
 				storeParsedData(vfk);
 				Parser.setFirstBatchToFalse();
 			} while (Parser.isParsing());
@@ -74,7 +74,7 @@ public class Controller {
 
 		Runnable runnableTime = new Runnable() {
 			public void run() {
-				log.info(seconds + " seconds..." + "\n");
+				log.info(seconds + " seconds...");
 				seconds += 10;
 			}
 		};

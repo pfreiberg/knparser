@@ -23,6 +23,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	protected <T extends DomainWithDate> void prepareStatement(List<T> list,
 			String name) {
+
 		try {
 			connection.setAutoCommit(false);
 			for (T record : list) {
@@ -41,11 +42,13 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			String stackTrace = e.getStackTrace()[0].toString();
 			log.error("Error during commiting batch in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+		} catch (JdbcException e) {
+			log.error(e.getMessage());
 		}
 	}
 
 	private void processRecord(OracleDatabaseParameters parameters,
-			Object record) {
+			Object record) throws JdbcException {
 
 		if (find(parameters, Operations.lessThan, true)) {
 			delete(parameters, Operations.lessThan, true);
@@ -59,7 +62,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 	}
 
 	private void processHistoricalRecord(OracleDatabaseParameters parameters,
-			Object record) {
+			Object record) throws JdbcException {
 
 		String table = parameters.getTable();
 		parameters.setTable(table + "_MIN");
@@ -75,7 +78,8 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) {
+	public void insert(String table, Object rawRecord, boolean isRecord)
+			throws JdbcException {
 		try {
 			if (isRecord) {
 				insertRecord(table, rawRecord);
@@ -83,9 +87,10 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 				insertHistoricalRecord(table, rawRecord);
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
-			log.error("Error during inserting "
-					+ LogUtil.getMethodWhichThrowsException(stackTrace) + " in "
-					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+			throw new JdbcException("Error during inserting "
+					+ LogUtil.getMethodWhichThrowsException(stackTrace)
+					+ " in " + LogUtil.getClassWhichThrowsException(stackTrace)
+					+ ".");
 		}
 	}
 
