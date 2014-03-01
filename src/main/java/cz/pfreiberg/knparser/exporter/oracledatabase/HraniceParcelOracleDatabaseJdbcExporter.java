@@ -56,11 +56,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			log.error("Error during commiting batch in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
 		} finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				log.error("Error during closing connection.");
-			}
+			closeConnection(connection);
 		}
 	}
 

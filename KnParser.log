@@ -28908,3 +28908,35 @@
 2014-03-01 21:30:39 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
 2014-03-01 21:30:39 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.
 2014-03-01 21:30:41 INFO  Controller:77 - 10 seconds...
+2014-03-01 23:22:50 INFO  KnParser:26 - KnParser started.
+2014-03-01 23:22:50 INFO  Controller:50 - Parsing started.
+2014-03-01 23:22:50 INFO  Controller:77 - 0 seconds...
+2014-03-01 23:22:52 INFO  Parser:119 - Currently parsed row: 100000
+2014-03-01 23:22:52 INFO  Controller:53 - Batch is parsed. Starting the storage sequence.
+2014-03-01 23:22:52 INFO  OracleDatabaseExporterFactory:166 - Saving BonitDilyParc to database. Total: 0
+2014-03-01 23:22:54 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
+2014-03-01 23:22:54 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.
+2014-03-01 23:22:59 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
+2014-03-01 23:22:59 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.
+2014-03-01 23:23:00 INFO  Controller:77 - 10 seconds...
+2014-03-01 23:23:07 INFO  KnParser:26 - KnParser started.
+2014-03-01 23:23:07 INFO  Controller:77 - 0 seconds...
+2014-03-01 23:23:07 INFO  Controller:50 - Parsing started.
+2014-03-01 23:23:08 INFO  Parser:119 - Currently parsed row: 100000
+2014-03-01 23:23:08 INFO  Controller:53 - Batch is parsed. Starting the storage sequence.
+2014-03-01 23:23:08 INFO  OracleDatabaseExporterFactory:166 - Saving BonitDilyParc to database. Total: 0
+2014-03-01 23:23:11 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
+2014-03-01 23:23:11 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.
+2014-03-01 23:23:16 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
+2014-03-01 23:23:16 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.
+2014-03-01 23:23:17 INFO  Controller:77 - 10 seconds...
+2014-03-01 23:23:23 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
+2014-03-01 23:23:23 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.
+2014-03-01 23:23:27 INFO  Controller:77 - 20 seconds...
+2014-03-01 23:23:28 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
+2014-03-01 23:23:28 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.
+2014-03-01 23:23:35 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
+2014-03-01 23:23:35 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.
+2014-03-01 23:23:37 INFO  Controller:77 - 30 seconds...
+2014-03-01 23:23:40 ERROR OracleDatabaseJdbcExporter:50 - Connection failed.
+2014-03-01 23:23:40 INFO  OracleDatabaseJdbcExporter:51 - Attempting to reconnect in five seconds.

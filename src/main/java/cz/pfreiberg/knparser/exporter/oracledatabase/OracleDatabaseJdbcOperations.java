@@ -11,6 +11,8 @@ public interface OracleDatabaseJdbcOperations {
 	
 	public Connection getConnection(ConnectionParameters connection) throws SQLException;
 	
+	public void closeConnection(Connection connection);
+	
 	public List<String> getPrimaryKeys(Connection connection, String table) throws SQLException;
 	
 	public boolean find(OracleDatabaseParameters parameters, Operations operation, boolean hasDate) throws JdbcException;

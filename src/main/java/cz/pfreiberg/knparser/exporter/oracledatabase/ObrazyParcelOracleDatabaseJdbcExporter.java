@@ -21,7 +21,7 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 		prepareStatement(obrazyParcel, name);
 	}
 
-	public void insertRecord(String table, Object rawRecord) throws SQLException {
+	protected void insertRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO " + table + " VALUES"
 				+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = null;
@@ -55,7 +55,7 @@ public class ObrazyParcelOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	public void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
+	protected void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
 		String insert = "INSERT INTO "
 				+ table
 				+ " VALUES"

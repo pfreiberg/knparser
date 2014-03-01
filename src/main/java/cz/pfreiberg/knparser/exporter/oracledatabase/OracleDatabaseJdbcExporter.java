@@ -48,7 +48,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				break;
 			} catch (SQLException e) {
 				log.error("Connection failed.");
-				log.info("Attempting to reconnect in five seconds.");
+				log.info("Attempting to reconnect in 5 seconds.");
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException i) {
@@ -66,6 +66,15 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				"jdbc:oracle:thin:@" + connection.getUrl(),
 				connection.getUser(), connection.getPassword());
 
+	}
+	
+	@Override
+	public void closeConnection(Connection connection) {
+		try {
+			connection.close();
+		} catch (SQLException e1) {
+			log.error("Error during closing connection.");
+		}
 	}
 
 	@Override
@@ -173,11 +182,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 					| InvocationTargetException e) {
 				log.fatal("Fatal error during method call: "
 						+ methodsName.get(i) + "\nClass: " + c.getName());
-				try {
-					connection.close();
-				} catch (SQLException e1) {
-					log.error("Error during closing connection.");
-				}
+				closeConnection(connection);
 				System.exit(1);
 			}
 
