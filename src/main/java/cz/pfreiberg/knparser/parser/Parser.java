@@ -51,7 +51,7 @@ public class Parser {
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
 		file = new File(configuration.getInput());
-		ROWS_PER_BATCH = Integer.parseInt(configuration.getNumberOfRows());
+		ROWS_PER_BATCH = configuration.getNumberOfRows();
 		encoding = VfkUtil.getEncoding(file);
 		br = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), VfkUtil.convertEncoding(encoding)));

@@ -53,28 +53,40 @@ public class KnParser {
 			}
 		}
 
-		Properties properties = new Properties();
 		try {
-			properties.load(KnParser.class
-					.getResourceAsStream("KnParser.properties"));
+			loadPropertyFile(toDatabase, configuration);
+			if (parseWholeFolder) {
+				parseFolder(configuration);
+			} else {
+				startParsing(configuration);
+			}
+		} catch (NullPointerException e) {
+			log.fatal("KnParser.properties was not found");
+			log.debug("Stack trace: " + e);
 		} catch (IOException e) {
-			log.fatal("KnParser.properties missing.");
+			log.fatal("Error during reading KnParser.properties");
+			log.debug("Stack trace: " + e);
+		} catch (NumberFormatException e) {
+			log.fatal("KnParser.properties is corrupted - couldn't obtain number of rows.");
+			log.debug("Stack trace: " + e);
 		}
-		configuration.setNumberOfRows(properties.getProperty("numberOfRows"));
 
+		log.info("KnParser finished.");
+	}
+
+	private static void loadPropertyFile(boolean toDatabase,
+			Configuration configuration) throws IOException {
+		Properties properties = new Properties();
+		properties.load(KnParser.class
+				.getResourceAsStream("KnParser.properties"));
+
+		String numberOfRows = properties.getProperty("numberOfRows");
+		configuration.setNumberOfRows(Integer.parseInt(numberOfRows));
 		ConnectionParameters connection = null;
 		if (toDatabase) {
 			connection = getConnectionParameters(properties);
 		}
 		configuration.setConnection(connection);
-
-		if (parseWholeFolder) {
-			parseFolder(configuration);
-		} else {
-			startParsing(configuration);
-		}
-
-		log.info("KnParser finished.");
 	}
 
 	private static ConnectionParameters getConnectionParameters(
@@ -93,7 +105,9 @@ public class KnParser {
 		List<String> files = getFilenames(input);
 		for (int i = 0; i < files.size(); i++) {
 			configuration = new Configuration(input + "\\" + files.get(i),
-					output + files.get(i) + "\\", configuration.getNumberOfRows(), configuration.getConnection());
+					output + files.get(i) + "\\",
+					configuration.getNumberOfRows(),
+					configuration.getConnection());
 			startParsing(configuration);
 		}
 	}

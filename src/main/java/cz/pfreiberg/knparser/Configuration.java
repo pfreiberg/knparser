@@ -11,13 +11,13 @@ public class Configuration {
 
 	private String input;
 	private String output;
-	private String numberOfRows;
+	private int numberOfRows;
 	private ConnectionParameters connection;
 
 	public Configuration() {
 	}
 
-	public Configuration(String input, String output, String numberOfRows,
+	public Configuration(String input, String output, int numberOfRows,
 			ConnectionParameters connection) {
 		this.input = input;
 		this.output = output;
@@ -41,11 +41,11 @@ public class Configuration {
 		this.output = output;
 	}
 
-	public String getNumberOfRows() {
+	public int getNumberOfRows() {
 		return numberOfRows;
 	}
 
-	public void setNumberOfRows(String numberOfRows) {
+	public void setNumberOfRows(int numberOfRows) {
 		this.numberOfRows = numberOfRows;
 	}
 
