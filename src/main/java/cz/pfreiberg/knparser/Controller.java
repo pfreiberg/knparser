@@ -65,7 +65,7 @@ public class Controller {
 			log.fatal(e.getMessage());
 			log.debug("Stack trace:", e);
 		} catch (IOException e) {
-			log.fatal(e.getMessage());
+			log.fatal("I/O operation failed.");
 			log.debug("Stack trace:", e);
 		} finally {
 			executor.shutdown();
