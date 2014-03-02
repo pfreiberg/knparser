@@ -48,6 +48,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 					}
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
+					log.debug("Stack trace:", e);
 				}
 			}
 			connection.commit();
@@ -273,6 +274,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 				preparedStatement.close();
 			} catch (SQLException e) {
 				log.error("Error during closing connection.");
+				log.debug("Stack trace:", e);
 			}
 		}
 	}

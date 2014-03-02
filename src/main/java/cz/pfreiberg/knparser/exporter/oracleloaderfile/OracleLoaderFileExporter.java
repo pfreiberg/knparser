@@ -51,6 +51,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 					VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
 			log.error("File " + name + ".CFG" + " was not created.");
+			log.debug("Stack trace:", e);
 		}
 
 	}
@@ -64,6 +65,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 					VfkUtil.convertEncoding(characterSet), lines);
 		} catch (IOException | ParserException e) {
 			log.error("File " + name + ".TXT" + " is corrupted. Missing data.");
+			log.debug("Stack trace:", e);
 		}
 	}
 

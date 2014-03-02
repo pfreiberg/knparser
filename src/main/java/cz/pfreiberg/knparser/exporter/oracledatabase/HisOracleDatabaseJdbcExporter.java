@@ -37,6 +37,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 					}
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
+					log.debug("Stack trace:", e);
 				}
 			}
 			connection.commit();

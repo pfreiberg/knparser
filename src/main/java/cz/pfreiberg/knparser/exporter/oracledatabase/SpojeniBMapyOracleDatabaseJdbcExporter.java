@@ -44,6 +44,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 					}
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
+					log.debug("Stack trace:", e);
 				}
 			}
 			connection.commit();

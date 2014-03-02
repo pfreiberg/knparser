@@ -48,6 +48,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				break;
 			} catch (SQLException e) {
 				log.error("Connection failed.");
+				log.debug("Stack trace:", e);
 				log.info("Attempting to reconnect in 5 seconds.");
 				try {
 					Thread.sleep(5000);
@@ -72,8 +73,9 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	public void closeConnection(Connection connection) {
 		try {
 			connection.close();
-		} catch (SQLException e1) {
+		} catch (SQLException e) {
 			log.error("Error during closing connection.");
+			log.debug("Stack trace:", e);
 		}
 	}
 
@@ -101,6 +103,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				ps.close();
 			} catch (SQLException e) {
 				log.error("Error during closing connection.");
+				log.debug("Stack trace:", e);
 			}
 		}
 		return output;
@@ -134,6 +137,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				ps.close();
 			} catch (SQLException e) {
 				log.error("Error during closing connection.");
+				log.debug("Stack trace:", e);
 			}
 		}
 	}
@@ -163,6 +167,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				ps.close();
 			} catch (SQLException e) {
 				log.error("Error during closing connection.");
+				log.debug("Stack trace:", e);
 			}
 		}
 
@@ -182,6 +187,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 					| InvocationTargetException e) {
 				log.fatal("Fatal error during method call: "
 						+ methodsName.get(i) + "\nClass: " + c.getName());
+				log.debug("Stack trace:", e);
 				closeConnection(connection);
 				System.exit(1);
 			}

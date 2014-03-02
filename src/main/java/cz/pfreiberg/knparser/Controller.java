@@ -60,10 +60,13 @@ public class Controller {
 
 		} catch (FileNotFoundException e) {
 			log.fatal("Input file was NOT found.");
+			log.debug("Stack trace:", e);
 		} catch (ParserException e) {
 			log.fatal(e.getMessage());
+			log.debug("Stack trace:", e);
 		} catch (IOException e) {
 			log.fatal(e.getMessage());
+			log.debug("Stack trace:", e);
 		} finally {
 			executor.shutdown();
 		}

@@ -30,6 +30,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 					processRecord(parameters, record);
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
+					log.debug("Stack trace:", e);
 				}
 			}
 			connection.commit();

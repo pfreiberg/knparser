@@ -89,6 +89,7 @@ public class Parser {
 				values = processRow();
 			} catch (ParserException e) {
 				log.error(e.getMessage());
+				log.debug("Stack trace:", e);
 				escapedRows++;
 				continue;
 			}
