@@ -51,9 +51,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 
 	private void processRecord(OracleDatabaseParameters parameters,
 			Object record) throws JdbcException {
-		if (find(parameters, null, false)) {
-			delete(parameters, null, false);
-		}
+		delete(parameters, null, false);
 		try {
 			insert(parameters.getTable(), record, false);
 		} catch (SQLException e) {

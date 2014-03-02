@@ -12,9 +12,9 @@ import cz.pfreiberg.knparser.util.Operations;
 
 /**
  * Abstraktní třída poskytující logiku pro historizační tabulky.
- *
+ * 
  * @author Petr Freiberg (freibergp@gmail.com)
- *
+ * 
  */
 public abstract class HisOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
@@ -59,12 +59,10 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 	private void processRecord(OracleDatabaseParameters parameters,
 			Object record) throws JdbcException {
 
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(parameters.getTable(), record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
+		if (find(parameters, Operations.greaterThanOrEqual, true)) {
 			return;
 		} else {
+			delete(parameters, Operations.lessThan, true);
 			insert(parameters.getTable(), record, true);
 		}
 
@@ -79,9 +77,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		if (!find(parameters, Operations.equal, true)) {
 			insert(parameters.getTable(), record, false);
 			parameters.setTable(table);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
+			delete(parameters, Operations.equal, true);
 		}
 
 	}

@@ -137,7 +137,7 @@ public class KnParser {
 			log.fatal(e.getMessage());
 			log.debug("Stack trace:", e);
 		} catch (IOException e) {
-			log.fatal("I/O operation failed.");
+			log.fatal("Error during reading input file.");
 			log.debug("Stack trace:", e);
 		}
 	}

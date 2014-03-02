@@ -82,13 +82,11 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 				name, "DATUM_VZNIKU", record.getDatumVzniku());
 
-		if (find(parameters, Operations.lessThan, true)) {
-			delete(parameters, Operations.lessThan, true);
-			insert(name, record, true);
-		} else if (find(parameters, Operations.greaterThanOrEqual, true)) {
+		if (find(parameters, Operations.greaterThanOrEqual, true)) {
 			return;
 		} else {
-			insert(name, record, true);
+			delete(parameters, Operations.lessThan, true);
+			insert(parameters.getTable(), record, true);
 		}
 
 	}
@@ -102,9 +100,7 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 		if (!find(parameters, Operations.equal, true)) {
 			insert(name + "_MIN", record, false);
 			parameters.setTable(name);
-			if (find(parameters, Operations.equal, true)) {
-				delete(parameters, Operations.equal, true);
-			}
+			delete(parameters, Operations.equal, true);
 		}
 
 	}
