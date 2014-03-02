@@ -2,7 +2,7 @@ package cz.pfreiberg.knparser.util;
 
 /**
  * Představuje dva druhy kódování, ve kterých se VFK dodává (iso-8859-2 a
- * windows-1250).
+ * windows-1250). Výstup je realizován ve windows-1250.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 

@@ -10,6 +10,12 @@ import cz.pfreiberg.knparser.domain.DomainWithDate;
 import cz.pfreiberg.knparser.util.LogUtil;
 import cz.pfreiberg.knparser.util.Operations;
 
+/**
+ * Abstraktní třída poskytující logiku pro historizační tabulky.
+ *
+ * @author Petr Freiberg (freibergp@gmail.com)
+ *
+ */
 public abstract class HisOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 

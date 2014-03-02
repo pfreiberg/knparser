@@ -8,6 +8,12 @@ import org.apache.log4j.Logger;
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.util.LogUtil;
 
+/**
+ * Abstraktní třída poskytující logiku pro stavové tabulky.
+ *
+ * @author Petr Freiberg (freibergp@gmail.com)
+ *
+ */
 public abstract class StavOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
 

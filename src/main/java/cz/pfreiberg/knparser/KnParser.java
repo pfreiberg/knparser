@@ -1,6 +1,7 @@
 package cz.pfreiberg.knparser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,23 +9,24 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import cz.pfreiberg.knparser.parser.ParserException;
+
 /**
  * Vstupní bod programu. Zpracuje parametry, se kterými byl program spuštěn,
  * vytvoří Controller, který zodpovídá za zpracování VFK a předá mu kontrolu nad
  * během.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
- * @version 2.0 (14.2.2014)
+ * @version 2.0 (2.3.2014)
  * 
  */
 public class KnParser {
-	
-	
+
 	private static final Logger log = Logger.getLogger(KnParser.class);
 
 	public static void main(String[] args) {
 		log.info("KnParser started.");
-		
+
 		boolean parseWholeFolder = false;
 		boolean toDatabase = false;
 		Configuration configuration = new Configuration();
@@ -67,12 +69,11 @@ public class KnParser {
 		configuration.setConnection(connection);
 
 		if (parseWholeFolder) {
-			parseFolder(configuration, connection);
+			parseFolder(configuration);
 		} else {
-			Controller controller = new Controller(configuration);
-			controller.run();
+			startParsing(configuration);
 		}
-		
+
 		log.info("KnParser finished.");
 	}
 
@@ -85,18 +86,15 @@ public class KnParser {
 		return connection;
 	}
 
-	private static void parseFolder(Configuration configuration,
-			ConnectionParameters connection) {
+	private static void parseFolder(Configuration configuration) {
 		String input = configuration.getInput();
 		String output = configuration.getOutput();
-		String numberOfRows = configuration.getNumberOfRows();
 
 		List<String> files = getFilenames(input);
 		for (int i = 0; i < files.size(); i++) {
 			configuration = new Configuration(input + "\\" + files.get(i),
-					output + files.get(i) + "\\", numberOfRows, connection);
-			Controller controller = new Controller(configuration);
-			controller.run();
+					output + files.get(i) + "\\", configuration.getNumberOfRows(), configuration.getConnection());
+			startParsing(configuration);
 		}
 	}
 
@@ -110,8 +108,24 @@ public class KnParser {
 				output.add(listOfFiles[i].getName());
 			}
 		}
-		
+
 		return output;
+	}
+
+	private static void startParsing(Configuration configuration) {
+		try {
+			Controller controller = new Controller(configuration);
+			controller.run();
+		} catch (FileNotFoundException e) {
+			log.fatal("Input file was NOT found.");
+			log.debug("Stack trace:", e);
+		} catch (ParserException e) {
+			log.fatal(e.getMessage());
+			log.debug("Stack trace:", e);
+		} catch (IOException e) {
+			log.fatal("I/O operation failed.");
+			log.debug("Stack trace:", e);
+		}
 	}
 
 }

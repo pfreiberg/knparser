@@ -13,6 +13,12 @@ import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.FileManager;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
+/**
+ * Abstraktní třída poskytující logiku pro práci s loader file
+ *
+ * @author Petr Freiberg (freibergp@gmail.com)
+ *
+ */
 public abstract class OracleLoaderFileExporter implements Exporter,
 		OracleLoaderFileOperations {
 

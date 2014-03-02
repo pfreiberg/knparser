@@ -17,6 +17,12 @@ import cz.pfreiberg.knparser.exporter.Exporter;
 import cz.pfreiberg.knparser.util.Operations;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
+/**
+ * Abstraktní třída poskytující společnou logiku pro práci nad Oracle Database.
+ *
+ * @author Petr Freiberg (freibergp@gmail.com)
+ *
+ */
 public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
 

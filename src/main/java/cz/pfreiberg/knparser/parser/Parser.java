@@ -223,7 +223,6 @@ public class Parser {
 			tokensOnRow.add(sb.toString());
 		}
 
-		sb = null;
 		return tokensOnRow.toArray(new String[tokensOnRow.size()]);
 	}
 	

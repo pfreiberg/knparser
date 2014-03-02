@@ -14,6 +14,7 @@ import cz.pfreiberg.knparser.exporterfactory.OracleDatabaseExporterFactory;
 import cz.pfreiberg.knparser.exporterfactory.OracleLoaderExporterFactory;
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
+import cz.pfreiberg.knparser.util.EncodingCzech;
 
 /**
  * Řídící část programu. Využívá parser k naplnění doménových tříd ze souboru.
@@ -31,17 +32,16 @@ public class Controller {
 	private Parser parser;
 	private long seconds;
 
-	public Controller(Configuration configuration) {
+	public Controller(Configuration configuration)
+			throws FileNotFoundException, ParserException, IOException {
 		this.configuration = configuration;
-		this.toDatabase = (configuration.getConnection() != null);
-		try {
-			parser = new Parser(configuration);
-		} catch (ParserException | IOException e) {
-			e.printStackTrace();
-		}
+		toDatabase = (configuration.getConnection() != null);
+		parser = new Parser(configuration);
+
 	}
 
-	public void run() {
+	public void run() throws FileNotFoundException, ParserException,
+			IOException {
 
 		ScheduledExecutorService executor = getTimer();
 
@@ -54,19 +54,9 @@ public class Controller {
 				storeParsedData(vfk);
 				Parser.setFirstBatchToFalse();
 			} while (Parser.isParsing());
-
+			
 			log.info(parser.getEscapedRows() + " row/s was escaped.");
 			log.info("Parsing finished.");
-
-		} catch (FileNotFoundException e) {
-			log.fatal("Input file was NOT found.");
-			log.debug("Stack trace:", e);
-		} catch (ParserException e) {
-			log.fatal(e.getMessage());
-			log.debug("Stack trace:", e);
-		} catch (IOException e) {
-			log.fatal("I/O operation failed.");
-			log.debug("Stack trace:", e);
 		} finally {
 			executor.shutdown();
 		}
@@ -101,7 +91,7 @@ public class Controller {
 					configuration.getConnection());
 		} else {
 			exporterFactory = new OracleLoaderExporterFactory(vfk.getZmeny(),
-					"EE8MSWIN1250", configuration.getOutput());
+					EncodingCzech.windows1250.getEncodingVfk(), configuration.getOutput());
 		}
 
 		exportBonitniDilParcely(vfk, exporterFactory);

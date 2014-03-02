@@ -111,20 +111,21 @@ public class VfkUtil {
 			return null;
 		}
 	}
-
-	public static java.sql.Date convertToDatabaseDate(Date date) {
-		if (date == null)
-			return null;
-
-		return new java.sql.Date(date.getTime());
-	}
-
+	
 	public static String getString(String[] value, int i) {
 
 		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
 			return null;
 
 		return value[i];
+	}
+
+
+	public static java.sql.Date convertToDatabaseDate(Date date) {
+		if (date == null)
+			return null;
+
+		return new java.sql.Date(date.getTime());
 	}
 
 	public static String formatValue(Object value) {
