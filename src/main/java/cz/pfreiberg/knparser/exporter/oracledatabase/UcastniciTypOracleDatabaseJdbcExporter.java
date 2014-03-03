@@ -24,8 +24,8 @@ public class UcastniciTypOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		UcastniciTyp record = (UcastniciTyp) rawRecord;
-		preparedStatement.setObject(1, record.getUcastId());
-		preparedStatement.setObject(2, record.getTypucaKod());
+		psInsert.setObject(1, record.getUcastId());
+		psInsert.setObject(2, record.getTypucaKod());
 	}
 
 }

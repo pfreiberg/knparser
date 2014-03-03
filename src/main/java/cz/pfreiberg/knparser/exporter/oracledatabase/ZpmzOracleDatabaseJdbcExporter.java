@@ -23,13 +23,13 @@ public class ZpmzOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		Zpmz record = (Zpmz) rawRecord;
-		preparedStatement.setObject(1, record.getKatuzeKod());
-		preparedStatement.setObject(2, record.getCisloZpmz());
-		preparedStatement.setObject(3, record.getPpzId());
-		preparedStatement.setObject(4, record.getStavZpmz());
-		preparedStatement.setObject(5, record.getMerickyNacrt());
-		preparedStatement.setObject(6, record.getZapisnikPodrobMereni());
-		preparedStatement.setObject(7, record.getVypocetProtokolVymer());
-		preparedStatement.setObject(8, record.getTypsosKod());
+		psInsert.setObject(1, record.getKatuzeKod());
+		psInsert.setObject(2, record.getCisloZpmz());
+		psInsert.setObject(3, record.getPpzId());
+		psInsert.setObject(4, record.getStavZpmz());
+		psInsert.setObject(5, record.getMerickyNacrt());
+		psInsert.setObject(6, record.getZapisnikPodrobMereni());
+		psInsert.setObject(7, record.getVypocetProtokolVymer());
+		psInsert.setObject(8, record.getTypsosKod());
 	}
 }

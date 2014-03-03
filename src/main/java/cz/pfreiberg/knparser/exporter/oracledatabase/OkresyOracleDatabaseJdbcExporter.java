@@ -24,15 +24,15 @@ public class OkresyOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		Okresy record = (Okresy) rawRecord;
-		preparedStatement.setObject(1, record.getKod());
-		preparedStatement.setObject(2, record.getKrajeKod());
-		preparedStatement.setObject(3, record.getNazev());
-		preparedStatement.setObject(4,
+		psInsert.setObject(1, record.getKod());
+		psInsert.setObject(2, record.getKrajeKod());
+		psInsert.setObject(3, record.getNazev());
+		psInsert.setObject(4,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-		preparedStatement.setObject(5,
+		psInsert.setObject(5,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-		preparedStatement.setObject(6, record.getNuts4());
-		preparedStatement.setObject(7, record.getNkrajeKod());
+		psInsert.setObject(6, record.getNuts4());
+		psInsert.setObject(7, record.getNkrajeKod());
 	}
 
 }

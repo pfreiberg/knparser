@@ -23,9 +23,9 @@ public class NzZpmzOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		NzZpmz record = (NzZpmz) rawRecord;
-		preparedStatement.setObject(1, record.getNzId());
-		preparedStatement.setObject(2, record.getZpmzCisloZpmz());
-		preparedStatement.setObject(3, record.getZpmzKatuzeKod());
+		psInsert.setObject(1, record.getNzId());
+		psInsert.setObject(2, record.getZpmzCisloZpmz());
+		psInsert.setObject(3, record.getZpmzKatuzeKod());
 	}
 
 }

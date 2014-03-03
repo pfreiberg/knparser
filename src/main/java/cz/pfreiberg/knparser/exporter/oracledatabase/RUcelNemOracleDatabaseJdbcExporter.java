@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,63 +11,47 @@ public class RUcelNemOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
 	private final static String name = "R_UCEL_NEM";
+	private final static String insert = "INSERT INTO " + name + " VALUES"
+			+ "(?,?,?,?,?,?,?,?,?)";
+	private final static String hisInsert = "INSERT INTO " + name + "_MIN"
+			+ " VALUES" + "(SEQ_R_UCEL_NEM_MIN.nextval,?,?,?,?,?,?,?,?,?)";
 
 	public RUcelNemOracleDatabaseJdbcExporter(List<RUcelNem> rUcelNem,
 			ConnectionParameters connectionParameters) {
-		super(connectionParameters, name);
+		super(connectionParameters, name, insert, hisInsert);
 		prepareStatement(rUcelNem, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord) throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
-
-			RUcelNem record = (RUcelNem) rawRecord;
-			preparedStatement.setObject(1, record.getId());
-			preparedStatement.setObject(2, 0);
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(5, 0);
-			preparedStatement.setObject(6, record.getRizeniIdVzniku());
-			preparedStatement.setObject(7, record.getRizeniIdZaniku());
-			preparedStatement.setObject(8, record.getPsId());
-			preparedStatement.setObject(9, record.getUcelKod());
-
-			preparedStatement.executeUpdate();
-		} finally {
-			preparedStatement.close();
-		}
+	protected void insertRecord(String table, Object rawRecord)
+			throws SQLException {
+		RUcelNem record = (RUcelNem) rawRecord;
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, 0);
+		psInsert.setObject(3,
+				VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+		psInsert.setObject(4,
+				VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+		psInsert.setObject(5, 0);
+		psInsert.setObject(6, record.getRizeniIdVzniku());
+		psInsert.setObject(7, record.getRizeniIdZaniku());
+		psInsert.setObject(8, record.getPsId());
+		psInsert.setObject(9, record.getUcelKod());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_R_UCEL_NEM_MIN.nextval,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
-
-			RUcelNem record = (RUcelNem) rawRecord;
-			preparedStatement.setObject(1, record.getId());
-			preparedStatement.setObject(2, 0);
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(5, 0);
-			preparedStatement.setObject(6, record.getRizeniIdVzniku());
-			preparedStatement.setObject(7, record.getRizeniIdZaniku());
-			preparedStatement.setObject(8, record.getPsId());
-			preparedStatement.setObject(9, record.getUcelKod());
-
-			preparedStatement.executeUpdate();
-		} finally {
-			preparedStatement.close();
-		}
+	protected void insertHistoricalRecord(String table, Object rawRecord)
+			throws SQLException {
+		RUcelNem record = (RUcelNem) rawRecord;
+		psHisInsert.setObject(1, record.getId());
+		psHisInsert.setObject(2, 0);
+		psHisInsert.setObject(3,
+				VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+		psHisInsert.setObject(4,
+				VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+		psHisInsert.setObject(5, 0);
+		psHisInsert.setObject(6, record.getRizeniIdVzniku());
+		psHisInsert.setObject(7, record.getRizeniIdZaniku());
+		psHisInsert.setObject(8, record.getPsId());
+		psHisInsert.setObject(9, record.getUcelKod());
 	}
 
 }

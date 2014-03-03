@@ -24,14 +24,14 @@ public class ObeslaniMfOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		ObeslaniMf record = (ObeslaniMf) rawRecord;
-		preparedStatement.setObject(1, record.getObeslaniId());
-		preparedStatement.setObject(2, record.getZpusobObeslani());
-		preparedStatement.setObject(3, record.getTypopeKod());
-		preparedStatement.setObject(4, record.getUcastId());
-		preparedStatement.setObject(5, record.getStavObeslani());
-		preparedStatement.setObject(6, VfkUtil.convertToDatabaseDate(record
+		psInsert.setObject(1, record.getObeslaniId());
+		psInsert.setObject(2, record.getZpusobObeslani());
+		psInsert.setObject(3, record.getTypopeKod());
+		psInsert.setObject(4, record.getUcastId());
+		psInsert.setObject(5, record.getStavObeslani());
+		psInsert.setObject(6, VfkUtil.convertToDatabaseDate(record
 				.getDatumPrijetiDorucenky()));
-		preparedStatement.setObject(7, record.getOpsubId());
+		psInsert.setObject(7, record.getOpsubId());
 	}
 
 }

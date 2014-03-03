@@ -21,14 +21,14 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 	private static final Logger log = Logger
 			.getLogger(StavOracleDatabaseJdbcExporter.class);
 
-	protected PreparedStatement preparedStatement;
+	protected PreparedStatement psInsert;
 
 	public StavOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name,
 			String insert) {
 		super(connectionParameters, name);
 		try {
-			preparedStatement = connection.prepareStatement(insert);
+			psInsert = connection.prepareStatement(insert);
 		} catch (SQLException e) {
 			log.error("Error during initializing prepared statement for " + name);
 			log.debug("Stack trace:", e);
@@ -64,7 +64,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 		delete(parameters, null, false);
 		try {
 			insert(parameters.getTable(), record, false);
-			addToBatch(preparedStatement);
+			addToBatch(psInsert);
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting record in "

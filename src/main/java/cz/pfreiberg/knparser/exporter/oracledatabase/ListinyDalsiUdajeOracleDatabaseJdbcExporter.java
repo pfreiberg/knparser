@@ -25,9 +25,9 @@ public class ListinyDalsiUdajeOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		ListinyDalsiUdaje record = (ListinyDalsiUdaje) rawRecord;
-		preparedStatement.setObject(1, record.getListinId());
-		preparedStatement.setObject(2, record.getDulKod());
-		preparedStatement.setObject(3,
+		psInsert.setObject(1, record.getListinId());
+		psInsert.setObject(2, record.getDulKod());
+		psInsert.setObject(3,
 				VfkUtil.convertToDatabaseDate(record.getCreateDate()));
 	}
 }

@@ -24,11 +24,11 @@ public class TSouradSysOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		TSouradSys record = (TSouradSys) rawRecord;
-		preparedStatement.setObject(1, record.getKod());
-		preparedStatement.setObject(2, record.getNazev());
-		preparedStatement.setObject(3,
+		psInsert.setObject(1, record.getKod());
+		psInsert.setObject(2, record.getNazev());
+		psInsert.setObject(3,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-		preparedStatement.setObject(4,
+		psInsert.setObject(4,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
 	}
 

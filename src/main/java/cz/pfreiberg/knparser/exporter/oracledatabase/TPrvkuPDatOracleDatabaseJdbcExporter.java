@@ -24,15 +24,15 @@ public class TPrvkuPDatOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		TPrvkuPDat record = (TPrvkuPDat) rawRecord;
-		preparedStatement.setObject(1, record.getKod());
-		preparedStatement.setObject(2, record.getPolohopis());
-		preparedStatement.setObject(3, record.getEditovatelny());
-		preparedStatement.setObject(4,
+		psInsert.setObject(1, record.getKod());
+		psInsert.setObject(2, record.getPolohopis());
+		psInsert.setObject(3, record.getEditovatelny());
+		psInsert.setObject(4,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-		preparedStatement.setObject(5, record.getVyznam());
-		preparedStatement.setObject(6, record.getKrivka());
-		preparedStatement.setObject(7, record.getTypPrvku());
-		preparedStatement.setObject(8,
+		psInsert.setObject(5, record.getVyznam());
+		psInsert.setObject(6, record.getKrivka());
+		psInsert.setObject(7, record.getTypPrvku());
+		psInsert.setObject(8,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
 	}
 

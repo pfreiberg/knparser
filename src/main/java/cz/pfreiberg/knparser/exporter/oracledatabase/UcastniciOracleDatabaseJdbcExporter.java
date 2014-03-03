@@ -23,26 +23,26 @@ public class UcastniciOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		Ucastnici record = (Ucastnici) rawRecord;
-		preparedStatement.setObject(1, record.getId());
-		preparedStatement.setObject(2, record.getRizeniId());
-		preparedStatement.setObject(3, record.getDruhUcastnika());
-		preparedStatement.setObject(4, record.getJmeno());
-		preparedStatement.setObject(5, record.getJmenoU());
-		preparedStatement.setObject(6, record.getPrijmeni());
-		preparedStatement.setObject(7, record.getPrijmeniU());
-		preparedStatement.setObject(8, record.getTitulPredJmenem());
-		preparedStatement.setObject(9, record.getTitulZaJmenem());
-		preparedStatement.setObject(10, record.getRc());
-		preparedStatement.setObject(11, record.getRodnePrijmeni());
-		preparedStatement.setObject(12, record.getRodinnyStav());
-		preparedStatement.setObject(13, record.getObchodniJmeno());
-		preparedStatement.setObject(14, record.getObchodniJmenoU());
-		preparedStatement.setObject(15, record.getDic());
-		preparedStatement.setObject(16, record.getIco());
-		preparedStatement.setObject(17, record.getDoplnekIco());
-		preparedStatement.setObject(18, record.getOverenPodpis());
-		preparedStatement.setObject(19, record.getOverenProtiRs());
-		preparedStatement.setObject(20, record.getOverenProtiOs());
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, record.getRizeniId());
+		psInsert.setObject(3, record.getDruhUcastnika());
+		psInsert.setObject(4, record.getJmeno());
+		psInsert.setObject(5, record.getJmenoU());
+		psInsert.setObject(6, record.getPrijmeni());
+		psInsert.setObject(7, record.getPrijmeniU());
+		psInsert.setObject(8, record.getTitulPredJmenem());
+		psInsert.setObject(9, record.getTitulZaJmenem());
+		psInsert.setObject(10, record.getRc());
+		psInsert.setObject(11, record.getRodnePrijmeni());
+		psInsert.setObject(12, record.getRodinnyStav());
+		psInsert.setObject(13, record.getObchodniJmeno());
+		psInsert.setObject(14, record.getObchodniJmenoU());
+		psInsert.setObject(15, record.getDic());
+		psInsert.setObject(16, record.getIco());
+		psInsert.setObject(17, record.getDoplnekIco());
+		psInsert.setObject(18, record.getOverenPodpis());
+		psInsert.setObject(19, record.getOverenProtiRs());
+		psInsert.setObject(20, record.getOverenProtiOs());
 	}
 
 }

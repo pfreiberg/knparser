@@ -23,8 +23,8 @@ public class RizeniKuOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		RizeniKu record = (RizeniKu) rawRecord;
-		preparedStatement.setObject(1, record.getKatuzeKod());
-		preparedStatement.setObject(2, record.getRizeniId());
+		psInsert.setObject(1, record.getKatuzeKod());
+		psInsert.setObject(2, record.getRizeniId());
 	}
 
 }

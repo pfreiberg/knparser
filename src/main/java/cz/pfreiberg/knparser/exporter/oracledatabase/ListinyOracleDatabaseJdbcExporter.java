@@ -24,28 +24,28 @@ public class ListinyOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		Listiny record = (Listiny) rawRecord;
-		preparedStatement.setObject(1, record.getId());
-		preparedStatement.setObject(2, record.getTyplistKod());
-		preparedStatement.setObject(3, record.getPopis());
-		preparedStatement.setObject(4, record.getObsah());
-		preparedStatement.setObject(5, record.getStran());
-		preparedStatement.setObject(6,
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, record.getTyplistKod());
+		psInsert.setObject(3, record.getPopis());
+		psInsert.setObject(4, record.getObsah());
+		psInsert.setObject(5, record.getStran());
+		psInsert.setObject(6,
 				VfkUtil.convertToDatabaseDate(record.getDatumVyhotoveni()));
-		preparedStatement.setObject(7, record.getZhotovitel());
-		preparedStatement.setObject(8, record.getPoradoveCisloZhotovitele());
-		preparedStatement.setObject(9,
+		psInsert.setObject(7, record.getZhotovitel());
+		psInsert.setObject(8, record.getPoradoveCisloZhotovitele());
+		psInsert.setObject(9,
 				VfkUtil.convertToDatabaseDate(record.getRokZhotovitele()));
-		preparedStatement.setObject(10, record.getDoplneniZhotovitele());
-		preparedStatement.setObject(11, record.getZkratka());
-		preparedStatement.setObject(12, record.getRizeniId());
-		preparedStatement.setObject(13, record.getZmenaPravVztahu());
-		preparedStatement.setObject(14,
+		psInsert.setObject(10, record.getDoplneniZhotovitele());
+		psInsert.setObject(11, record.getZkratka());
+		psInsert.setObject(12, record.getRizeniId());
+		psInsert.setObject(13, record.getZmenaPravVztahu());
+		psInsert.setObject(14,
 				VfkUtil.convertToDatabaseDate(record.getDatumPravMoci()));
-		preparedStatement.setObject(15,
+		psInsert.setObject(15,
 				VfkUtil.convertToDatabaseDate(record.getDatumVykonatelnosti()));
-		preparedStatement.setObject(16,
+		psInsert.setObject(16,
 				VfkUtil.convertToDatabaseDate(record.getDatumHistOd()));
-		preparedStatement.setObject(17,
+		psInsert.setObject(17,
 				VfkUtil.convertToDatabaseDate(record.getDatumHistDo()));
 	}
 

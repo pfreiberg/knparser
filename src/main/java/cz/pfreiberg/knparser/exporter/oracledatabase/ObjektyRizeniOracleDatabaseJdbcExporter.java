@@ -25,20 +25,20 @@ public class ObjektyRizeniOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		ObjektyRizeni record = (ObjektyRizeni) rawRecord;
-		preparedStatement.setObject(1, record.getId());
-		preparedStatement.setObject(2, record.getRizeniId());
-		preparedStatement.setObject(3, record.getParId());
-		preparedStatement.setObject(4, record.getBudId());
-		preparedStatement.setObject(5, record.getJedId());
-		preparedStatement.setObject(6,
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, record.getRizeniId());
+		psInsert.setObject(3, record.getParId());
+		psInsert.setObject(4, record.getBudId());
+		psInsert.setObject(5, record.getJedId());
+		psInsert.setObject(6,
 				VfkUtil.convertToDatabaseDate(record.getDatumPlomby()));
-		preparedStatement.setObject(7, VfkUtil.convertToDatabaseDate(record
+		psInsert.setObject(7, VfkUtil.convertToDatabaseDate(record
 				.getDatumOdstraneniPlomby()));
-		preparedStatement.setObject(8,
+		psInsert.setObject(8,
 				VfkUtil.convertToDatabaseDate(record.getDatumHistOd()));
-		preparedStatement.setObject(9,
+		psInsert.setObject(9,
 				VfkUtil.convertToDatabaseDate(record.getDatumHistDo()));
-		preparedStatement.setObject(10, record.getPsId());
+		psInsert.setObject(10, record.getPsId());
 	}
 
 }

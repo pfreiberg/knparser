@@ -1,5 +1,6 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,24 +23,51 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 	private static final Logger log = Logger
 			.getLogger(HisOracleDatabaseJdbcExporter.class);
 
+	protected PreparedStatement psInsert;
+	protected PreparedStatement psHisInsert;
+
+	private enum LastInserted {
+		record(), hisRecord(), nothing();
+	}
+
 	public HisOracleDatabaseJdbcExporter(
-			ConnectionParameters connectionParameters, String name) {
+			ConnectionParameters connectionParameters, String name,
+			String insert, String hisInsert) {
 		super(connectionParameters, name);
+		try {
+			psInsert = connection.prepareStatement(insert);
+			psHisInsert = connection.prepareStatement(hisInsert);
+		} catch (SQLException e) {
+			log.error("Error during initializing prepared statement for "
+					+ name);
+			log.debug("Stack trace:", e);
+		}
 	}
 
 	protected <T extends DomainWithDate> void prepareStatement(List<T> list,
 			String name) {
 		try {
 			connection.setAutoCommit(false);
+			LastInserted lastInserted = LastInserted.nothing;
 			for (T record : list) {
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 						name, "DATUM_VZNIKU", record.getDatumVzniku());
 				try {
 					if (record.getDatumZaniku() == null) {
+
+						if (lastInserted != LastInserted.record)
+							executeBatch(psHisInsert);
+
 						processRecord(parameters, record);
+						lastInserted = LastInserted.record;
 					} else {
+
+						if (lastInserted != LastInserted.hisRecord)
+							executeBatch(psInsert);
+
 						processHistoricalRecord(parameters, record);
+						lastInserted = LastInserted.hisRecord;
 					}
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
@@ -88,8 +116,10 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		try {
 			if (isRecord) {
 				insertRecord(table, rawRecord);
+				addToBatch(psInsert);
 			} else {
 				insertHistoricalRecord(table, rawRecord);
+				addToBatch(psHisInsert);
 			}
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();

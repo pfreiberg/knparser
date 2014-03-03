@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,64 +11,49 @@ public class SpojeniPoMapyOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
 	private final static String name = "SPOJENI_PO_MAPY";
+	private final static String insert = "INSERT INTO " + name + "_MIN"
+			+ " VALUES" + "(?,?,?,?,?,?,?,?,?)";
+	private final static String hisInsert = "INSERT INTO " + name + "_MIN"
+			+ " VALUES" + "(SEQ_SPOJENI_PO_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?)";
 
 	public SpojeniPoMapyOracleDatabaseJdbcExporter(
 			List<SpojeniPoMapy> spojeniPoMapy,
 			ConnectionParameters connectionParameters) {
-		super(connectionParameters, name);
+		super(connectionParameters, name, insert, hisInsert);
 		prepareStatement(spojeniPoMapy, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord) throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
+	protected void insertRecord(String table, Object rawRecord)
+			throws SQLException {
+		SpojeniPoMapy record = (SpojeniPoMapy) rawRecord;
+		psInsert.setObject(1, 0);
+		psInsert.setObject(2,
+				VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+		psInsert.setObject(3,
+				VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+		psInsert.setObject(4, 0);
+		psInsert.setObject(5, record.getPoradoveCisloBodu());
+		psInsert.setObject(6, record.getSouradniceY());
+		psInsert.setObject(7, record.getSouradniceX());
+		psInsert.setObject(8, record.getPomId());
+		psInsert.setObject(9, record.getParametrySpojeni());
 
-			SpojeniPoMapy record = (SpojeniPoMapy) rawRecord;
-			preparedStatement.setObject(1, 0);
-			preparedStatement.setObject(2,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(4, 0);
-			preparedStatement.setObject(5, record.getPoradoveCisloBodu());
-			preparedStatement.setObject(6, record.getSouradniceY());
-			preparedStatement.setObject(7, record.getSouradniceX());
-			preparedStatement.setObject(8, record.getPomId());
-			preparedStatement.setObject(9, record.getParametrySpojeni());
-
-			preparedStatement.executeUpdate();
-		} finally {
-			preparedStatement.close();
-		}
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord) throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_SPOJENI_PO_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
-
-			SpojeniPoMapy record = (SpojeniPoMapy) rawRecord;
-			preparedStatement.setObject(1, 0);
-			preparedStatement.setObject(2,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(4, 0);
-			preparedStatement.setObject(5, record.getPoradoveCisloBodu());
-			preparedStatement.setObject(6, record.getSouradniceY());
-			preparedStatement.setObject(7, record.getSouradniceX());
-			preparedStatement.setObject(8, record.getPomId());
-			preparedStatement.setObject(9, record.getParametrySpojeni());
-
-			preparedStatement.executeUpdate();
-		} finally {
-			preparedStatement.close();
-		}
+	protected void insertHistoricalRecord(String table, Object rawRecord)
+			throws SQLException {
+		SpojeniPoMapy record = (SpojeniPoMapy) rawRecord;
+		psHisInsert.setObject(1, 0);
+		psHisInsert.setObject(2,
+				VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+		psHisInsert.setObject(3,
+				VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+		psHisInsert.setObject(4, 0);
+		psHisInsert.setObject(5, record.getPoradoveCisloBodu());
+		psHisInsert.setObject(6, record.getSouradniceY());
+		psHisInsert.setObject(7, record.getSouradniceX());
+		psHisInsert.setObject(8, record.getPomId());
+		psHisInsert.setObject(9, record.getParametrySpojeni());
 	}
 
 }

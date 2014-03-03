@@ -24,14 +24,14 @@ public class NavrhyZmenKmOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		NavrhyZmenKm record = (NavrhyZmenKm) rawRecord;
-		preparedStatement.setObject(1, record.getId());
-		preparedStatement.setObject(2, record.getStavNz());
-		preparedStatement.setObject(3, record.getNzType());
-		preparedStatement.setObject(4, record.getPorizeniDatNz());
-		preparedStatement.setObject(5, record.getRizeniId());
-		preparedStatement.setObject(6, record.getCisloPlanu());
-		preparedStatement.setObject(7, record.getVyhotovil());
-		preparedStatement.setObject(8, record.getOznaceniMapovehoListu());
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, record.getStavNz());
+		psInsert.setObject(3, record.getNzType());
+		psInsert.setObject(4, record.getPorizeniDatNz());
+		psInsert.setObject(5, record.getRizeniId());
+		psInsert.setObject(6, record.getCisloPlanu());
+		psInsert.setObject(7, record.getVyhotovil());
+		psInsert.setObject(8, record.getOznaceniMapovehoListu());
 	}
 
 }

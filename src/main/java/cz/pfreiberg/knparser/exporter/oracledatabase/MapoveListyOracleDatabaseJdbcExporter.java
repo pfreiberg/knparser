@@ -24,13 +24,13 @@ public class MapoveListyOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		MapoveListy record = (MapoveListy) rawRecord;
-		preparedStatement.setObject(1, record.getId());
-		preparedStatement.setObject(2, record.getOznaceniMapovehoListu());
-		preparedStatement.setObject(3,
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, record.getOznaceniMapovehoListu());
+		psInsert.setObject(3,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-		preparedStatement.setObject(4,
+		psInsert.setObject(4,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-		preparedStatement.setObject(5, record.getMapa());
+		psInsert.setObject(5, record.getMapa());
 	}
 
 }

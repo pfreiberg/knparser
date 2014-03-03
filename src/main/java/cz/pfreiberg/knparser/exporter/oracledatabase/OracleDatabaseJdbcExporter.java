@@ -183,10 +183,14 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	protected void executeBatchIfFull(PreparedStatement preparedStatement)
 			throws SQLException {
 		if (batchSize >= BATCH_MAX) {
-			batchSize = 0;
-			preparedStatement.executeBatch();
-			preparedStatement.clearBatch();
+			executeBatch(preparedStatement);
 		}
+	}
+	
+	protected void executeBatch(PreparedStatement preparedStatement) throws SQLException {
+		batchSize = 0;
+		preparedStatement.executeBatch();
+		preparedStatement.clearBatch();
 	}
 
 	protected List<Object> getPrimaryKeysValues(Object record,

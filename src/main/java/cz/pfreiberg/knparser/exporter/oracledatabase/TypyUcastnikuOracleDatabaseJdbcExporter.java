@@ -24,8 +24,8 @@ public class TypyUcastnikuOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		TypyUcastniku record = (TypyUcastniku) rawRecord;
-		preparedStatement.setObject(1, record.getKod());
-		preparedStatement.setObject(2, record.getNazev());
-		preparedStatement.setObject(3, record.getPopis());
+		psInsert.setObject(1, record.getKod());
+		psInsert.setObject(2, record.getNazev());
+		psInsert.setObject(3, record.getPopis());
 	}
 }

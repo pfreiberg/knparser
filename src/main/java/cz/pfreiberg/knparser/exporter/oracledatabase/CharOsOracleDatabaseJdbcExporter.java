@@ -24,13 +24,13 @@ public class CharOsOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		CharOs record = (CharOs) rawRecord;
-		preparedStatement.setObject(1, record.getKod());
-		preparedStatement.setObject(2, record.getNazev());
-		preparedStatement.setObject(3, record.getOpsubType());
-		preparedStatement.setObject(4,
+		psInsert.setObject(1, record.getKod());
+		psInsert.setObject(2, record.getNazev());
+		psInsert.setObject(3, record.getOpsubType());
+		psInsert.setObject(4,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-		preparedStatement.setObject(5,
+		psInsert.setObject(5,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-		preparedStatement.setObject(6, record.getZkratka());
+		psInsert.setObject(6, record.getZkratka());
 	}
 }

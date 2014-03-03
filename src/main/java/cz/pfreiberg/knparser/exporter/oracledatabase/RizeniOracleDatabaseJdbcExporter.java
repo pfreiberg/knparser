@@ -24,27 +24,27 @@ public class RizeniOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		Rizeni record = (Rizeni) rawRecord;
-		preparedStatement.setObject(1, record.getId());
-		preparedStatement.setObject(2, record.getTyprizKod());
-		preparedStatement.setObject(3, record.getPoradoveCislo());
-		preparedStatement.setObject(4,
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, record.getTyprizKod());
+		psInsert.setObject(3, record.getPoradoveCislo());
+		psInsert.setObject(4,
 				VfkUtil.convertToDatabaseDate(record.getRok()));
-		preparedStatement.setObject(5, record.getStav());
-		preparedStatement.setObject(6, record.getFunkceKod());
-		preparedStatement.setObject(7, record.getTypopeKod());
-		preparedStatement.setObject(8, record.getFunkceKodVyznamna());
-		preparedStatement.setObject(9, record.getTypopeKodVyznamna());
-		preparedStatement.setObject(10, record.getUzisysUsername());
-		preparedStatement.setObject(11, record.getUzirolNazev());
-		preparedStatement.setObject(12, record.getOsvobozeno());
-		preparedStatement.setObject(13, record.getHodnotaKolku());
-		preparedStatement.setObject(14,
+		psInsert.setObject(5, record.getStav());
+		psInsert.setObject(6, record.getFunkceKod());
+		psInsert.setObject(7, record.getTypopeKod());
+		psInsert.setObject(8, record.getFunkceKodVyznamna());
+		psInsert.setObject(9, record.getTypopeKodVyznamna());
+		psInsert.setObject(10, record.getUzisysUsername());
+		psInsert.setObject(11, record.getUzirolNazev());
+		psInsert.setObject(12, record.getOsvobozeno());
+		psInsert.setObject(13, record.getHodnotaKolku());
+		psInsert.setObject(14,
 				VfkUtil.convertToDatabaseDate(record.getDatum()));
-		preparedStatement.setObject(15,
+		psInsert.setObject(15,
 				VfkUtil.convertToDatabaseDate(record.getDatum2()));
-		preparedStatement.setObject(16, record.getPopis());
-		preparedStatement.setObject(17,
+		psInsert.setObject(16, record.getPopis());
+		psInsert.setObject(17,
 				VfkUtil.convertToDatabaseDate(record.getDatumUzavreni()));
-		preparedStatement.setObject(18, record.getPraresKod());
+		psInsert.setObject(18, record.getPraresKod());
 	}
 }

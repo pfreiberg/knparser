@@ -25,14 +25,14 @@ public class ZpVyuzitiJedOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		ZpVyuzitiJed record = (ZpVyuzitiJed) rawRecord;
-		preparedStatement.setObject(1, record.getKod());
-		preparedStatement.setObject(2, record.getNazev());
-		preparedStatement.setObject(3,
+		psInsert.setObject(1, record.getKod());
+		psInsert.setObject(2, record.getNazev());
+		psInsert.setObject(3,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-		preparedStatement.setObject(4,
+		psInsert.setObject(4,
 				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-		preparedStatement.setObject(5, record.getZkratka());
-		preparedStatement.setObject(6, record.getDoplKod());
+		psInsert.setObject(5, record.getZkratka());
+		psInsert.setObject(6, record.getDoplKod());
 	}
 
 }

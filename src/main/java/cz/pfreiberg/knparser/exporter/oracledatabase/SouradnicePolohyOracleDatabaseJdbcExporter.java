@@ -24,18 +24,18 @@ public class SouradnicePolohyOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		SouradnicePolohy record = (SouradnicePolohy) rawRecord;
-		preparedStatement.setObject(1, record.getId());
-		preparedStatement.setObject(2, record.getStavDat());
-		preparedStatement.setObject(3, record.getKatuzeKod());
-		preparedStatement.setObject(4, record.getCisloZpmz());
-		preparedStatement.setObject(5, record.getCisloTl());
-		preparedStatement.setObject(6, record.getCisloBodu());
-		preparedStatement.setObject(7, record.getUplneCislo());
-		preparedStatement.setObject(8, record.getSouradniceY());
-		preparedStatement.setObject(9, record.getSouradniceX());
-		preparedStatement.setObject(10, record.getKodchbKod());
-		preparedStatement.setObject(11, record.getKatuzeKodMer());
-		preparedStatement.setObject(12, record.getCisloZpmzMer());
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, record.getStavDat());
+		psInsert.setObject(3, record.getKatuzeKod());
+		psInsert.setObject(4, record.getCisloZpmz());
+		psInsert.setObject(5, record.getCisloTl());
+		psInsert.setObject(6, record.getCisloBodu());
+		psInsert.setObject(7, record.getUplneCislo());
+		psInsert.setObject(8, record.getSouradniceY());
+		psInsert.setObject(9, record.getSouradniceX());
+		psInsert.setObject(10, record.getKodchbKod());
+		psInsert.setObject(11, record.getKatuzeKodMer());
+		psInsert.setObject(12, record.getCisloZpmzMer());
 	}
 
 }

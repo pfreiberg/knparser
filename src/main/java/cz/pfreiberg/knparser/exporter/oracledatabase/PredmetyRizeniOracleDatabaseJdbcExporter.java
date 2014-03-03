@@ -24,7 +24,7 @@ public class PredmetyRizeniOracleDatabaseJdbcExporter extends
 	public void insert(String table, Object rawRecord, boolean isRecord)
 			throws SQLException {
 		PredmetyRizeni record = (PredmetyRizeni) rawRecord;
-		preparedStatement.setObject(1, record.getRizeniId());
-		preparedStatement.setObject(2, record.getTyppreKod());
+		psInsert.setObject(1, record.getRizeniId());
+		psInsert.setObject(2, record.getTyppreKod());
 	}
 }
