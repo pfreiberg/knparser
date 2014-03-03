@@ -26,7 +26,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 		prepareStatement(jinePravVztahy, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		JinePravVztahy record = (JinePravVztahy) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -63,7 +63,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 				VfkUtil.convertToDatabaseDate(record.getDatumUkonceni()));
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		JinePravVztahy record = (JinePravVztahy) rawRecord;
 		psHisInsert.setObject(1, record.getId());

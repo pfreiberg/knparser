@@ -25,7 +25,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		prepareStatement(parcely, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		Parcely record = (Parcely) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -63,7 +63,7 @@ public class ParcelyOracleDatabaseJdbcExporter extends
 		psInsert.setObject(31, record.getIdentPs());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		Parcely record = (Parcely) rawRecord;
 		psHisInsert.setObject(1, record.getId());

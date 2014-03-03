@@ -23,7 +23,7 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 		prepareStatement(jednotky, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		Jednotky record = (Jednotky) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -46,7 +46,7 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 		psInsert.setObject(16, record.getPopis());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		Jednotky record = (Jednotky) rawRecord;
 		psHisInsert.setObject(1, record.getId());

@@ -23,7 +23,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		prepareStatement(bonitDilyParc, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		BonitDilyParc record = (BonitDilyParc) rawRecord;
 		psInsert.setObject(1, 0);
@@ -39,7 +39,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		psInsert.setObject(9, record.getVymera());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		BonitDilyParc record = (BonitDilyParc) rawRecord;
 		psHisInsert.setObject(1, 0);

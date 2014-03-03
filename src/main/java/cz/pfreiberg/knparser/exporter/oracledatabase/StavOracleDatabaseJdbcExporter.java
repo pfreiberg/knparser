@@ -30,7 +30,8 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 		try {
 			psInsert = connection.prepareStatement(insert);
 		} catch (SQLException e) {
-			log.error("Error during initializing prepared statement for " + name);
+			log.error("Error during initializing prepared statement for "
+					+ name);
 			log.debug("Stack trace:", e);
 		}
 	}
@@ -49,6 +50,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 					log.debug("Stack trace:", e);
 				}
 			}
+			executeBatch(psInsert);
 			connection.commit();
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();

@@ -22,7 +22,7 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 		prepareStatement(rZpochr, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		RZpochr record = (RZpochr) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -41,7 +41,7 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 		psInsert.setObject(12, record.getPsId());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		RZpochr record = (RZpochr) rawRecord;
 		psHisInsert.setObject(1, record.getId());

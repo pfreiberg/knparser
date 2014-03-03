@@ -93,7 +93,7 @@ public class Controller {
 			exporterFactory = new OracleLoaderExporterFactory(vfk.getZmeny(),
 					EncodingCzech.windows1250.getEncodingVfk(), configuration.getOutput());
 		}
-
+		
 		exportBonitniDilParcely(vfk, exporterFactory);
 		exportJednotky(vfk, exporterFactory);
 		exporterJinePravniVztahy(vfk, exporterFactory);
@@ -106,7 +106,6 @@ public class Controller {
 		exporterRezervovanaCisla(vfk, exporterFactory);
 		exporterDefinicniBody(vfk, exporterFactory);
 		exporterAdresniMista(vfk, exporterFactory);
-
 	}
 
 	private void exportBonitniDilParcely(Vfk vfk,

@@ -23,7 +23,7 @@ public class SpojeniPoMapyOracleDatabaseJdbcExporter extends
 		prepareStatement(spojeniPoMapy, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		SpojeniPoMapy record = (SpojeniPoMapy) rawRecord;
 		psInsert.setObject(1, 0);
@@ -40,7 +40,7 @@ public class SpojeniPoMapyOracleDatabaseJdbcExporter extends
 
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		SpojeniPoMapy record = (SpojeniPoMapy) rawRecord;
 		psHisInsert.setObject(1, 0);

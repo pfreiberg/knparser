@@ -23,7 +23,7 @@ public class RListOracleDatabaseJdbcExporter extends
 		prepareStatement(rList, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		RList record = (RList) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -47,7 +47,7 @@ public class RListOracleDatabaseJdbcExporter extends
 		psInsert.setObject(16, record.getPsId());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		RList record = (RList) rawRecord;
 		psHisInsert.setObject(1, record.getId());

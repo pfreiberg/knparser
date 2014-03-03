@@ -74,6 +74,11 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 					log.debug("Stack trace:", e);
 				}
 			}
+
+			if (lastInserted == LastInserted.record)
+				executeBatch(psInsert);
+			else
+				executeBatch(psHisInsert);
 			connection.commit();
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
@@ -115,10 +120,10 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			throws JdbcException {
 		try {
 			if (isRecord) {
-				insertRecord(table, rawRecord);
+				insertRecord(rawRecord);
 				addToBatch(psInsert);
 			} else {
-				insertHistoricalRecord(table, rawRecord);
+				insertHistoricalRecord(rawRecord);
 				addToBatch(psHisInsert);
 			}
 		} catch (SQLException e) {
@@ -130,10 +135,9 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	protected abstract void insertRecord(String table, Object rawRecord)
-			throws SQLException;
+	protected abstract void insertRecord(Object rawRecord) throws SQLException;
 
-	protected abstract void insertHistoricalRecord(String table,
-			Object rawRecord) throws SQLException;
+	protected abstract void insertHistoricalRecord(Object rawRecord)
+			throws SQLException;
 
 }

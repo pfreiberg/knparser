@@ -28,7 +28,7 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 		prepareStatement(opravSubjekty, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		OpravSubjekty record = (OpravSubjekty) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -73,7 +73,7 @@ public class OpravSubjektyOracleDatabaseJdbcExporter extends
 		psInsert.setObject(37, record.getIdNadrizenePo());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		OpravSubjekty record = (OpravSubjekty) rawRecord;
 		psHisInsert.setObject(1, record.getId());

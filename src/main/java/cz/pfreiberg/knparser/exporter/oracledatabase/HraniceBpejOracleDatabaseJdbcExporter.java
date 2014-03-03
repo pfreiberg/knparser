@@ -23,7 +23,7 @@ public class HraniceBpejOracleDatabaseJdbcExporter extends
 		prepareStatement(hraniceBpej, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		HraniceBpej record = (HraniceBpej) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -41,7 +41,7 @@ public class HraniceBpejOracleDatabaseJdbcExporter extends
 		psInsert.setObject(11, record.getKatuzeKod());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		HraniceBpej record = (HraniceBpej) rawRecord;
 		psHisInsert.setObject(1, record.getId());

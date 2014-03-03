@@ -29,7 +29,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	private static final Logger log = Logger
 			.getLogger(OracleDatabaseJdbcExporter.class);
 
-	protected static final int BATCH_MAX = 1000;
+	protected static final int BATCH_MAX = 250;
 	protected int batchSize = 0;
 
 	protected Connection connection;

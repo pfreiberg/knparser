@@ -25,7 +25,7 @@ public class VlastnictviOracleDatabaseJdbcExporter extends
 		prepareStatement(vlastnictvi, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		Vlastnictvi record = (Vlastnictvi) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -51,7 +51,7 @@ public class VlastnictviOracleDatabaseJdbcExporter extends
 		psInsert.setObject(18, record.getPsId());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		Vlastnictvi record = (Vlastnictvi) rawRecord;
 		psHisInsert.setObject(1, record.getId());

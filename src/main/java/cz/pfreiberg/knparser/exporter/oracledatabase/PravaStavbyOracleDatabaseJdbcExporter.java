@@ -22,7 +22,7 @@ public class PravaStavbyOracleDatabaseJdbcExporter extends
 		prepareStatement(pravaStavby, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		PravaStavby record = (PravaStavby) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -41,7 +41,7 @@ public class PravaStavbyOracleDatabaseJdbcExporter extends
 				VfkUtil.convertToDatabaseDate(record.getDatumUkonceni()));
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		PravaStavby record = (PravaStavby) rawRecord;
 		psHisInsert.setObject(1, record.getId());

@@ -23,7 +23,7 @@ public class ObrazyBudovOracleDatabaseJdbcExporter extends
 		prepareStatement(obrazyBudov, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		ObrazyBudov record = (ObrazyBudov) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -44,7 +44,7 @@ public class ObrazyBudovOracleDatabaseJdbcExporter extends
 		psInsert.setObject(14, record.getObrbudType());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		ObrazyBudov record = (ObrazyBudov) rawRecord;
 		psHisInsert.setObject(1, record.getId());

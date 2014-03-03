@@ -23,7 +23,7 @@ public class BudovyOracleDatabaseJdbcExporter extends
 		prepareStatement(budovy, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		Budovy record = (Budovy) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -46,7 +46,7 @@ public class BudovyOracleDatabaseJdbcExporter extends
 		psInsert.setObject(16, record.getPsId());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		Budovy record = (Budovy) rawRecord;
 		psHisInsert.setObject(1, record.getId());

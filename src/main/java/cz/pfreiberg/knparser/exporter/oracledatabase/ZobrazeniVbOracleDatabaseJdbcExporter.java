@@ -22,7 +22,7 @@ public class ZobrazeniVbOracleDatabaseJdbcExporter extends
 		prepareStatement(zobrazeniVb, name);
 	}
 
-	protected void insertRecord(String table, Object rawRecord)
+	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		ZobrazeniVb record = (ZobrazeniVb) rawRecord;
 		psInsert.setObject(1, record.getId());
@@ -39,7 +39,7 @@ public class ZobrazeniVbOracleDatabaseJdbcExporter extends
 		psInsert.setObject(10, record.getHjpvId());
 	}
 
-	protected void insertHistoricalRecord(String table, Object rawRecord)
+	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		ZobrazeniVb record = (ZobrazeniVb) rawRecord;
 		psHisInsert.setObject(1, record.getId());
