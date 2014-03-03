@@ -48,7 +48,6 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 					}
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
-					log.debug("Stack trace:", e);
 				}
 			}
 			connection.commit();
@@ -184,6 +183,7 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			} else
 				insertHistoricalRecord(table, rawRecord);
 		} catch (SQLException e) {
+			log.debug("Stack trace:", e);
 			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting "
 					+ LogUtil.getMethodWhichThrowsException(stackTrace)

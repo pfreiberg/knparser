@@ -47,7 +47,6 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 					processRecord(parameters, record);
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
-					log.debug("Stack trace:", e);
 				}
 			}
 			executeBatch(psInsert);
@@ -68,6 +67,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 			insert(parameters.getTable(), record, false);
 			addToBatch(psInsert);
 		} catch (SQLException e) {
+			log.debug("Stack trace:", e);
 			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting record in "
 					+ LogUtil.getClassWhichThrowsException(stackTrace) + "."

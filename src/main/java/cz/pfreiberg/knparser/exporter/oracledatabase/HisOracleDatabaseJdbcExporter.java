@@ -71,7 +71,6 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 					}
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
-					log.debug("Stack trace:", e);
 				}
 			}
 
@@ -127,6 +126,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 				addToBatch(psHisInsert);
 			}
 		} catch (SQLException e) {
+			log.debug("Stack trace:", e);
 			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting "
 					+ LogUtil.getMethodWhichThrowsException(stackTrace)
