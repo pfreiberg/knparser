@@ -12,8 +12,8 @@ public abstract class CisOracleDatabaseJdbcExporter extends
 		StavOracleDatabaseJdbcExporter {
 
 	public CisOracleDatabaseJdbcExporter(
-			ConnectionParameters connectionParameters, String name) {
-		super(connectionParameters, name);
+			ConnectionParameters connectionParameters, String name, String insert) {
+		super(connectionParameters, name, insert);
 	}
 	
 }

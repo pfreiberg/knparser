@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,35 +11,28 @@ public class OkresyOracleDatabaseJdbcExporter extends
 		CisOracleDatabaseJdbcExporter {
 
 	private final static String name = "OKRESY";
+	private final static String insert = "INSERT INTO " + name + " VALUES"
+			+ "(?,?,?,?,?,?,?)";
 
 	public OkresyOracleDatabaseJdbcExporter(List<Okresy> okresy,
 			ConnectionParameters connectionParameters) {
-		super(connectionParameters, name);
+		super(connectionParameters, name, insert);
 		prepareStatement(okresy, name);
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
-
-			Okresy record = (Okresy) rawRecord;
-			preparedStatement.setObject(1, record.getKod());
-			preparedStatement.setObject(2, record.getKrajeKod());
-			preparedStatement.setObject(3, record.getNazev());
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-			preparedStatement.setObject(5,
-					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-			preparedStatement.setObject(6, record.getNuts4());
-			preparedStatement.setObject(7, record.getNkrajeKod());
-
-			preparedStatement.executeUpdate();
-		} finally {
-			preparedStatement.close();
-		}
+	public void insert(String table, Object rawRecord, boolean isRecord)
+			throws SQLException {
+		Okresy record = (Okresy) rawRecord;
+		preparedStatement.setObject(1, record.getKod());
+		preparedStatement.setObject(2, record.getKrajeKod());
+		preparedStatement.setObject(3, record.getNazev());
+		preparedStatement.setObject(4,
+				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
+		preparedStatement.setObject(5,
+				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
+		preparedStatement.setObject(6, record.getNuts4());
+		preparedStatement.setObject(7, record.getNkrajeKod());
 	}
 
 }

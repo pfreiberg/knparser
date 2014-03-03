@@ -88,8 +88,9 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		try {
 			if (isRecord) {
 				insertRecord(table, rawRecord);
-			} else
+			} else {
 				insertHistoricalRecord(table, rawRecord);
+			}
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting "

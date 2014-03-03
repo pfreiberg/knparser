@@ -19,15 +19,18 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
  * Abstraktní třída poskytující společnou logiku pro práci nad Oracle Database.
- *
+ * 
  * @author Petr Freiberg (freibergp@gmail.com)
- *
+ * 
  */
 public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		OracleDatabaseJdbcOperations {
 
 	private static final Logger log = Logger
 			.getLogger(OracleDatabaseJdbcExporter.class);
+
+	protected static final int BATCH_MAX = 1000;
+	protected int batchSize = 0;
 
 	protected Connection connection;
 	protected List<String> primaryKeys;
@@ -74,7 +77,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 				connection.getUser(), connection.getPassword());
 
 	}
-	
+
 	@Override
 	public void closeConnection(Connection connection) {
 		try {
@@ -151,7 +154,6 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	@Override
 	public void delete(OracleDatabaseParameters parameters,
 			Operations operation, boolean hasDate) throws JdbcException {
-
 		String delete = "";
 		if (hasDate) {
 			delete = "DELETE FROM " + parameters.getTable()
@@ -160,23 +162,31 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		} else {
 			delete = "DELETE FROM " + parameters.getTable() + " WHERE *pk*";
 		}
-
 		delete = composeSqlStatement(parameters, delete);
-		PreparedStatement ps = null;
+		PreparedStatement preparedStatement = null;
 		try {
-			ps = connection.prepareStatement(delete);
-			ps.executeUpdate();
+			preparedStatement = connection.prepareStatement(delete);
+			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new JdbcException("Error during " + delete);
-		} finally {
-			try {
-				ps.close();
-			} catch (SQLException e) {
-				log.error("Error during closing connection.");
-				log.debug("Stack trace:", e);
-			}
 		}
 
+	}
+
+	protected void addToBatch(PreparedStatement preparedStatement) throws SQLException {
+		preparedStatement.addBatch();
+		preparedStatement.clearParameters();
+		batchSize++;
+		executeBatchIfFull(preparedStatement);
+	}
+
+	protected void executeBatchIfFull(PreparedStatement preparedStatement)
+			throws SQLException {
+		if (batchSize >= BATCH_MAX) {
+			batchSize = 0;
+			preparedStatement.executeBatch();
+			preparedStatement.clearBatch();
+		}
 	}
 
 	protected List<Object> getPrimaryKeysValues(Object record,
@@ -203,14 +213,14 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	private String composeSqlStatement(OracleDatabaseParameters parameters,
-			String select) {
+			String statement) {
 		for (int i = 0; i < primaryKeys.size(); i++) {
-			select = select.replace("*pk*", primaryKeys.get(i) + " = "
+			statement = statement.replace("*pk*", primaryKeys.get(i) + " = "
 					+ VfkUtil.formatValueDatabase(primaryKeysValues.get(i))
 					+ " AND *pk*");
 		}
-		select = select.replace(" AND *pk*", "");
-		return select;
+		statement = statement.replace(" AND *pk*", "");
+		return statement;
 	}
 
 	private List<String> getMethods(List<String> primaryKeys) {

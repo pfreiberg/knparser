@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,35 +11,28 @@ public class ZpVyuzitiJedOracleDatabaseJdbcExporter extends
 		CisOracleDatabaseJdbcExporter {
 
 	private final static String name = "ZP_VYUZITI_JED";
+	private final static String insert = "INSERT INTO " + name + " VALUES"
+			+ "(?,?,?,?,?,?)";
 
 	public ZpVyuzitiJedOracleDatabaseJdbcExporter(
 			List<ZpVyuzitiJed> zpVyuzitiJed,
 			ConnectionParameters connectionParameters) {
-		super(connectionParameters, name);
+		super(connectionParameters, name, insert);
 		prepareStatement(zpVyuzitiJed, name);
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
-
-			ZpVyuzitiJed record = (ZpVyuzitiJed) rawRecord;
-			preparedStatement.setObject(1, record.getKod());
-			preparedStatement.setObject(2, record.getNazev());
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-			preparedStatement.setObject(5, record.getZkratka());
-			preparedStatement.setObject(6, record.getDoplKod());
-
-			preparedStatement.executeUpdate();
-		} finally {
-			preparedStatement.close();
-		}
+	public void insert(String table, Object rawRecord, boolean isRecord)
+			throws SQLException {
+		ZpVyuzitiJed record = (ZpVyuzitiJed) rawRecord;
+		preparedStatement.setObject(1, record.getKod());
+		preparedStatement.setObject(2, record.getNazev());
+		preparedStatement.setObject(3,
+				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
+		preparedStatement.setObject(4,
+				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
+		preparedStatement.setObject(5, record.getZkratka());
+		preparedStatement.setObject(6, record.getDoplKod());
 	}
 
 }

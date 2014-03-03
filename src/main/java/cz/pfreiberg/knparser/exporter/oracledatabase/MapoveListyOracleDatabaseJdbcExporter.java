@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,33 +11,26 @@ public class MapoveListyOracleDatabaseJdbcExporter extends
 		CisOracleDatabaseJdbcExporter {
 
 	private final static String name = "MAPOVE_LISTY";
+	private final static String insert = "INSERT INTO " + name + " VALUES"
+			+ "(?,?,?,?,?)";
 
 	public MapoveListyOracleDatabaseJdbcExporter(List<MapoveListy> mapoveListy,
 			ConnectionParameters connectionParameters) {
-		super(connectionParameters, name);
+		super(connectionParameters, name, insert);
 		prepareStatement(mapoveListy, name);
 	}
 
 	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES" + "(?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
-
-			MapoveListy record = (MapoveListy) rawRecord;
-			preparedStatement.setObject(1, record.getId());
-			preparedStatement.setObject(2, record.getOznaceniMapovehoListu());
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
-			preparedStatement.setObject(5, record.getMapa());
-
-			preparedStatement.executeUpdate();
-		} finally {
-			preparedStatement.close();
-		}
+	public void insert(String table, Object rawRecord, boolean isRecord)
+			throws SQLException {
+		MapoveListy record = (MapoveListy) rawRecord;
+		preparedStatement.setObject(1, record.getId());
+		preparedStatement.setObject(2, record.getOznaceniMapovehoListu());
+		preparedStatement.setObject(3,
+				VfkUtil.convertToDatabaseDate(record.getPlatnostOd()));
+		preparedStatement.setObject(4,
+				VfkUtil.convertToDatabaseDate(record.getPlatnostDo()));
+		preparedStatement.setObject(5, record.getMapa());
 	}
 
 }

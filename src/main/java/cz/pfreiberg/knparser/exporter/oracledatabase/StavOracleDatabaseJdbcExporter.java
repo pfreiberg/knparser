@@ -1,5 +1,6 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,9 +11,9 @@ import cz.pfreiberg.knparser.util.LogUtil;
 
 /**
  * Abstraktní třída poskytující logiku pro stavové tabulky.
- *
+ * 
  * @author Petr Freiberg (freibergp@gmail.com)
- *
+ * 
  */
 public abstract class StavOracleDatabaseJdbcExporter extends
 		OracleDatabaseJdbcExporter {
@@ -20,9 +21,18 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 	private static final Logger log = Logger
 			.getLogger(StavOracleDatabaseJdbcExporter.class);
 
+	protected PreparedStatement preparedStatement;
+
 	public StavOracleDatabaseJdbcExporter(
-			ConnectionParameters connectionParameters, String name) {
+			ConnectionParameters connectionParameters, String name,
+			String insert) {
 		super(connectionParameters, name);
+		try {
+			preparedStatement = connection.prepareStatement(insert);
+		} catch (SQLException e) {
+			log.error("Error during initializing prepared statement for " + name);
+			log.debug("Stack trace:", e);
+		}
 	}
 
 	protected <T> void prepareStatement(List<T> list, String name) {
@@ -54,6 +64,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 		delete(parameters, null, false);
 		try {
 			insert(parameters.getTable(), record, false);
+			addToBatch(preparedStatement);
 		} catch (SQLException e) {
 			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting record in "
