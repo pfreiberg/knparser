@@ -1,24 +1,28 @@
 package cz.pfreiberg.knparser.util;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.sql.SQLException;
 
 public class LogUtil {
-	
-	public static String getClassWhichThrowsException(String stackTrace) {
-		String inBrackets = "\\((.*?)\\)";
-		Pattern pattern = Pattern.compile(inBrackets);
-		Matcher matcher = pattern.matcher(stackTrace);
-		if (matcher.find()) {
-			return stackTrace.substring(matcher.start() + 1, matcher.end() - 1)
-					.split("Oracle")[0];
+
+	public static String getClassWhichThrowsException(SQLException e) {
+		for (StackTraceElement element : e.getStackTrace()) {
+			if (element.getClassName().contains("pfreiberg")) {
+				String[] tokens = element.getClassName().split("\\.");
+				return tokens[tokens.length - 1];
+			}
 		}
 		return "";
 	}
-	
-	public static String getMethodWhichThrowsException(String stackTrace) {
-		return (stackTrace.contains("insertRecord")) ? "record"
-				: "historical record";
+
+	public static String getMethodWhichThrowsException(SQLException e) {
+		for (StackTraceElement element : e.getStackTrace()) {
+			if (element.getClassName().contains("pfreiberg")) {
+				return element.getMethodName().equals("insertRecord") ? "record"
+						: "historical record";
+			}
+
+		}
+		return "";
 	}
-	
+
 }

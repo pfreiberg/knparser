@@ -31,7 +31,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 			psInsert = connection.prepareStatement(insert);
 		} catch (SQLException e) {
 			log.error("Error during initializing prepared statement for "
-					+ name);
+					+ name + ".");
 			log.debug("Stack trace:", e);
 		}
 	}
@@ -52,9 +52,8 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 			executeBatch(psInsert);
 			connection.commit();
 		} catch (SQLException e) {
-			String stackTrace = e.getStackTrace()[0].toString();
-			log.error("Error during commiting batch in "
-					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+			log.error("Error during commiting batch in table " + name + ".");
+			log.debug("Stack trace: " + e);
 		} finally {
 			closeConnection(connection);
 		}
@@ -68,9 +67,8 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 			addToBatch(psInsert);
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);
-			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting record in "
-					+ LogUtil.getClassWhichThrowsException(stackTrace) + "."
+					+ LogUtil.getClassWhichThrowsException(e) + "."
 					+ "\n" + record.toString());
 		}
 	}

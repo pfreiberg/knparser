@@ -48,9 +48,8 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			}
 			connection.commit();
 		} catch (SQLException e) {
-			String stackTrace = e.getStackTrace()[0].toString();
-			log.error("Error during commiting batch in "
-					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+			log.error("Error during commiting batch in table " + name + ".");
+			log.debug("Stack trace: " + e);
 		} finally {
 			closeConnection(connection);
 		}
@@ -113,10 +112,9 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 				insertHistoricalRecord(table, rawRecord);
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);
-			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting "
-					+ LogUtil.getMethodWhichThrowsException(stackTrace)
-					+ " in " + LogUtil.getClassWhichThrowsException(stackTrace)
+					+ LogUtil.getMethodWhichThrowsException(e)
+					+ " in " + LogUtil.getClassWhichThrowsException(e)
 					+ "." + "\n" + rawRecord.toString());
 		}
 	}

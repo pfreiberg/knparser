@@ -39,7 +39,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			psHisInsert = connection.prepareStatement(hisInsert);
 		} catch (SQLException e) {
 			log.error("Error during initializing prepared statement for "
-					+ name);
+					+ name + ".");
 			log.debug("Stack trace:", e);
 		}
 	}
@@ -80,9 +80,8 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 				executeBatch(psHisInsert);
 			connection.commit();
 		} catch (SQLException e) {
-			String stackTrace = e.getStackTrace()[0].toString();
-			log.error("Error during commiting batch in "
-					+ LogUtil.getClassWhichThrowsException(stackTrace) + ".");
+			log.error("Error during commiting batch in table " + name + ".");
+			log.debug("Stack trace: " + e);
 		} finally {
 			closeConnection(connection);
 		}
@@ -90,7 +89,6 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	private void processRecord(OracleDatabaseParameters parameters,
 			Object record) throws JdbcException {
-
 		if (find(parameters, Operations.greaterThanOrEqual, true)) {
 			return;
 		} else {
@@ -127,10 +125,9 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			}
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);
-			String stackTrace = e.getStackTrace()[0].toString();
 			throw new JdbcException("Error during inserting "
-					+ LogUtil.getMethodWhichThrowsException(stackTrace)
-					+ " in " + LogUtil.getClassWhichThrowsException(stackTrace)
+					+ LogUtil.getMethodWhichThrowsException(e)
+					+ " in " + LogUtil.getClassWhichThrowsException(e)
 					+ "." + "\n" + rawRecord.toString());
 		}
 	}

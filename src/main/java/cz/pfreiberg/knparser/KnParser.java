@@ -55,11 +55,6 @@ public class KnParser {
 
 		try {
 			loadPropertyFile(toDatabase, configuration);
-			if (parseWholeFolder) {
-				parseFolder(configuration);
-			} else {
-				startParsing(configuration);
-			}
 		} catch (NullPointerException e) {
 			log.fatal("KnParser.properties was not found");
 			log.debug("Stack trace: " + e);
@@ -71,6 +66,11 @@ public class KnParser {
 			log.debug("Stack trace: " + e);
 		}
 
+		if (parseWholeFolder) {
+			parseFolder(configuration);
+		} else {
+			startParsing(configuration);
+		}
 		log.info("KnParser finished.");
 	}
 
