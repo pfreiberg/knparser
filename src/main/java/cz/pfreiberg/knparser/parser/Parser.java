@@ -27,16 +27,15 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  * 
  */
 public class Parser {
-	
+
 	private static final Logger log = Logger.getLogger(Parser.class);
 
-	private static boolean isParsing = true;
 	private static boolean firstBatch = true;
-
+	
+	private boolean isParsing = true;
 	private Vfk batch;
 	private int escapedRows;
 
-	private File file;
 	private BufferedReader br;
 	private String buffer;
 	private long actualRow;
@@ -50,7 +49,7 @@ public class Parser {
 
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
-		file = new File(configuration.getInput());
+		File file = new File(configuration.getInput());
 		ROWS_PER_BATCH = configuration.getNumberOfRows();
 		encoding = VfkUtil.getEncoding(file);
 		br = new BufferedReader(new InputStreamReader(
@@ -65,7 +64,7 @@ public class Parser {
 		return escapedRows;
 	}
 
-	public static boolean isParsing() {
+	public boolean isParsing() {
 		return isParsing;
 	}
 
@@ -81,9 +80,7 @@ public class Parser {
 
 	public void parseFile() throws IOException {
 		batch = new Vfk();
-
 		do {
-
 			String[] values;
 			try {
 				values = processRow();
@@ -184,10 +181,10 @@ public class Parser {
 				else if (isNextCharacterEscapable(row, inQuotes, i)) {
 					sb.append("\"\"");
 					i++;
-				// je v uvozovkách a další znak není "
+					// je v uvozovkách a další znak není "
 				} else if (isEndOfText(row, inQuotes, i)) {
 					inQuotes = !inQuotes;
-				// prázdný text
+					// prázdný text
 				} else {
 					i++;
 				}
@@ -225,22 +222,22 @@ public class Parser {
 
 		return tokensOnRow.toArray(new String[tokensOnRow.size()]);
 	}
-	
+
 	private boolean isStartOfText(String row, boolean inQuotes, int position) {
 		if (hasNextCharacter(row, position)) {
 			char nextCharacter = getNextCharacter(row, position);
-			
+
 			if (inQuotes)
 				return false;
-			else if (nextCharacter == QUOTE_CHARACTER)
-			{
+			else if (nextCharacter == QUOTE_CHARACTER) {
 				position++;
-				if (hasNextCharacter(row, position)) 
-				{
+				if (hasNextCharacter(row, position)) {
 					nextCharacter = getNextCharacter(row, position);
 					return !(getNextCharacter(row, position) == SEPARATOR);
-				} return false;
-			} return true;
+				}
+				return false;
+			}
+			return true;
 		}
 		return false;
 	}

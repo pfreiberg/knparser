@@ -28,33 +28,32 @@ public class Controller {
 	private static final Logger log = Logger.getLogger(Controller.class);
 
 	private final Configuration configuration;
-	private final boolean toDatabase;
 	private Parser parser;
 	private long seconds;
+	
+	private boolean parserRunning;
 
 	public Controller(Configuration configuration)
 			throws FileNotFoundException, ParserException, IOException {
 		this.configuration = configuration;
-		toDatabase = (configuration.getConnection() != null);
 		parser = new Parser(configuration);
-
 	}
 
-	public void run() throws FileNotFoundException, ParserException,
-			IOException {
+	public void run() throws FileNotFoundException, IOException {
 
 		ScheduledExecutorService executor = getTimer();
 
 		try {
 			Vfk vfk;
 			log.info("Parsing started.");
+			parserRunning = true;
 			do {
 				vfk = parseBatch();
 				log.info("Batch is parsed. Starting the storage sequence.");
 				storeParsedData(vfk);
 				Parser.setFirstBatchToFalse();
-			} while (Parser.isParsing());
-			
+			} while (parserRunning);
+
 			log.info(parser.getEscapedRows() + " row/s was escaped.");
 			log.info("Parsing finished.");
 		} finally {
@@ -77,23 +76,24 @@ public class Controller {
 		return executor;
 	}
 
-	private Vfk parseBatch() throws FileNotFoundException, ParserException,
-			IOException {
+	private Vfk parseBatch() throws FileNotFoundException, IOException {
 		parser.parseFile();
+		parserRunning = parser.isParsing();
 		return parser.getBatch();
 	}
 
 	private void storeParsedData(Vfk vfk) {
 
 		ExporterFactory exporterFactory;
-		if (toDatabase) {
+		if (configuration.isConnectionParametersValid()) {
 			exporterFactory = new OracleDatabaseExporterFactory(
 					configuration.getConnection());
 		} else {
 			exporterFactory = new OracleLoaderExporterFactory(vfk.getZmeny(),
-					EncodingCzech.windows1250.getEncodingVfk(), configuration.getOutput());
+					EncodingCzech.windows1250.getEncodingVfk(),
+					configuration.getOutput());
 		}
-		
+
 		exportBonitniDilParcely(vfk, exporterFactory);
 		exportJednotky(vfk, exporterFactory);
 		exporterJinePravniVztahy(vfk, exporterFactory);

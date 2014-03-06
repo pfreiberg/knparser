@@ -56,7 +56,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 			FileManager.writeToConfigFile(new File(name + ".CFG"), controlFile,
 					VfkUtil.convertEncoding(characterSet));
 		} catch (IOException | ParserException e) {
-			log.error("File " + name + ".CFG" + " was not created.");
+			log.error("Error during writing to " + name + ".CFG");
 			log.debug("Stack trace:", e);
 		}
 
@@ -70,7 +70,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 			FileManager.writeToDataFile(file,
 					VfkUtil.convertEncoding(characterSet), lines);
 		} catch (IOException | ParserException e) {
-			log.error("File " + name + ".TXT" + " is corrupted. Missing data.");
+			log.error("Error during writing to " + name + ".TXT");
 			log.debug("Stack trace:", e);
 		}
 	}

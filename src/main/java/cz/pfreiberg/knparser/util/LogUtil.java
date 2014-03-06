@@ -14,7 +14,7 @@ public class LogUtil {
 		return "";
 	}
 
-	public static String getMethodWhichThrowsException(SQLException e) {
+	public static String getHisMethodWhichThrowsException(SQLException e) {
 		for (StackTraceElement element : e.getStackTrace()) {
 			if (element.getClassName().contains("pfreiberg")) {
 				return element.getMethodName().equals("insertRecord") ? "record"

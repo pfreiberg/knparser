@@ -4,7 +4,7 @@ package cz.pfreiberg.knparser;
  * Zapouzdřuje parametry nutné pro připojení k databázi.
  * 
  * @author Petr Freiberg
- *
+ * 
  */
 public class ConnectionParameters {
 

@@ -106,6 +106,8 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			}
 		} catch (SQLException e) {
 			log.error("Error during fetching primary keys for " + table);
+			log.debug("Stack trace:", e);
+			return null;
 		} finally {
 			try {
 				rs.close();
@@ -139,6 +141,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			boolean isFound = (rs.next());
 			return isFound;
 		} catch (SQLException e) {
+			log.debug("Stack trace:", e);
 			throw new JdbcException("Error during " + select);
 		} finally {
 			try {
@@ -168,6 +171,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			preparedStatement = connection.prepareStatement(delete);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
+			log.debug("Stack trace:", e);
 			throw new JdbcException("Error during " + delete);
 		}
 

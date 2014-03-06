@@ -17,7 +17,7 @@ import cz.pfreiberg.knparser.parser.ParserException;
  * během.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
- * @version 2.0 (2.3.2014)
+ * @version 2.0 (6.3.2014)
  * 
  */
 public class KnParser {
@@ -55,38 +55,45 @@ public class KnParser {
 
 		try {
 			loadPropertyFile(toDatabase, configuration);
+			if (toDatabase && !configuration.isConnectionParametersValid()) {
+				log.fatal("KnParser.properties must contain url, username and password to be able to connect to database.");
+				return;
+			}
 		} catch (NullPointerException e) {
-			log.fatal("KnParser.properties was not found");
+			log.fatal("KnParser.properties was not found.");
 			log.debug("Stack trace: " + e);
+			return;
 		} catch (IOException e) {
 			log.fatal("Error during reading KnParser.properties");
 			log.debug("Stack trace: " + e);
+			return;
 		} catch (NumberFormatException e) {
 			log.fatal("KnParser.properties is corrupted - couldn't obtain number of rows.");
 			log.debug("Stack trace: " + e);
+			return;
 		}
 
 		if (parseWholeFolder) {
 			parseFolder(configuration);
 		} else {
-			startParsing(configuration);
+			parseFile(configuration);
 		}
 		log.info("KnParser finished.");
 	}
 
 	private static void loadPropertyFile(boolean toDatabase,
-			Configuration configuration) throws IOException {
+			Configuration configuration) throws IOException,
+			NumberFormatException {
 		Properties properties = new Properties();
 		properties.load(KnParser.class
 				.getResourceAsStream("KnParser.properties"));
 
 		String numberOfRows = properties.getProperty("numberOfRows");
 		configuration.setNumberOfRows(Integer.parseInt(numberOfRows));
-		ConnectionParameters connection = null;
 		if (toDatabase) {
-			connection = getConnectionParameters(properties);
+			ConnectionParameters connection = getConnectionParameters(properties);
+			configuration.setConnection(connection);
 		}
-		configuration.setConnection(connection);
 	}
 
 	private static ConnectionParameters getConnectionParameters(
@@ -101,14 +108,14 @@ public class KnParser {
 	private static void parseFolder(Configuration configuration) {
 		String input = configuration.getInput();
 		String output = configuration.getOutput();
-
 		List<String> files = getFilenames(input);
+		
 		for (int i = 0; i < files.size(); i++) {
 			configuration = new Configuration(input + "\\" + files.get(i),
 					output + files.get(i) + "\\",
 					configuration.getNumberOfRows(),
 					configuration.getConnection());
-			startParsing(configuration);
+			parseFile(configuration);
 		}
 	}
 
@@ -126,7 +133,8 @@ public class KnParser {
 		return output;
 	}
 
-	private static void startParsing(Configuration configuration) {
+	private static void parseFile(Configuration configuration) {
+		log.info("Parsing file " + configuration.getInput());
 		try {
 			Controller controller = new Controller(configuration);
 			controller.run();

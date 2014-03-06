@@ -1,6 +1,5 @@
 package cz.pfreiberg.knparser;
 
-
 /**
  * Zapouzdržuje parametry, se kterými byl program spuštěn.
  * 
@@ -55,6 +54,13 @@ public class Configuration {
 
 	public void setConnection(ConnectionParameters connection) {
 		this.connection = connection;
+	}
+
+	public boolean isConnectionParametersValid() {
+		if (connection != null)
+			return (connection.getUrl() != null && connection.getUser() != null && connection
+					.getPassword() != null);
+		return false;
 	}
 
 }

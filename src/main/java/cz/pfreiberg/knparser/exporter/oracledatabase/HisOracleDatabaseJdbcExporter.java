@@ -126,7 +126,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);
 			throw new JdbcException("Error during inserting "
-					+ LogUtil.getMethodWhichThrowsException(e)
+					+ LogUtil.getHisMethodWhichThrowsException(e)
 					+ " in " + LogUtil.getClassWhichThrowsException(e)
 					+ "." + "\n" + rawRecord.toString());
 		}

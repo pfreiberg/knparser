@@ -24,23 +24,20 @@ public class VfkUtil {
 
 	public static String getEncoding(File file) throws ParserException,
 			IOException {
-
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String currentLine;
-
-		while ((currentLine = br.readLine()) != null) {
-			if (currentLine.contains("&HCODEPAGE")) {
-				br.close();
-				try {
+		try {
+			while ((currentLine = br.readLine()) != null) {
+				if (currentLine.contains("&HCODEPAGE")) {
 					return currentLine.split("\"")[1];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					throw new ParserException("HCODEPAGE has undefine value.");
 				}
 			}
+			throw new ParserException("HCODEPAGE was NOT found in the file.");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new ParserException("HCODEPAGE has undefine value.");
+		} finally {
+			br.close();
 		}
-
-		br.close();
-		throw new ParserException("HCODEPAGE was NOT found in the file.");
 	}
 
 	public static String convertEncoding(String encoding)
@@ -111,7 +108,7 @@ public class VfkUtil {
 			return null;
 		}
 	}
-	
+
 	public static String getString(String[] value, int i) {
 
 		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
@@ -119,7 +116,6 @@ public class VfkUtil {
 
 		return value[i];
 	}
-
 
 	public static java.sql.Date convertToDatabaseDate(Date date) {
 		if (date == null)
