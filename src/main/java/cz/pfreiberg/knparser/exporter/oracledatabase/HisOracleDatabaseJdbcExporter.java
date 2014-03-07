@@ -12,7 +12,9 @@ import cz.pfreiberg.knparser.util.LogUtil;
 import cz.pfreiberg.knparser.util.Operations;
 
 /**
- * Abstraktní třída poskytující logiku pro historizační tabulky.
+ * Abstraktní třída poskytující logiku pro historizační tabulky. Speciálním
+ * případem je tabulka SpojeniBMapy, která implementuje odlišným způsobem
+ * získání primárních klíčů a jejich hodnot.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
@@ -126,9 +128,9 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);
 			throw new JdbcException("Error during inserting "
-					+ LogUtil.getHisMethodWhichThrowsException(e)
-					+ " in " + LogUtil.getClassWhichThrowsException(e)
-					+ "." + "\n" + rawRecord.toString());
+					+ LogUtil.getHisMethodWhichThrowsException(e) + " in "
+					+ LogUtil.getClassWhichThrowsException(e) + "." + "\n"
+					+ rawRecord.toString());
 		}
 	}
 
