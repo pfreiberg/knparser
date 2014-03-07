@@ -189,28 +189,6 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 
 	}
 
-	protected void addToBatch(PreparedStatement preparedStatement)
-			throws SQLException {
-		preparedStatement.addBatch();
-		preparedStatement.clearParameters();
-		batchSize++;
-		executeBatchIfFull(preparedStatement);
-	}
-
-	private void executeBatchIfFull(PreparedStatement preparedStatement)
-			throws SQLException {
-		if (batchSize >= BATCH_MAX) {
-			executeBatch(preparedStatement);
-		}
-	}
-
-	protected void executeBatch(PreparedStatement preparedStatement)
-			throws SQLException {
-		batchSize = 0;
-		preparedStatement.executeBatch();
-		preparedStatement.clearBatch();
-	}
-
 	protected List<Object> getPrimaryKeysValues(Object record,
 			List<String> methodsName) {
 		List<Object> primaryKeyValues = new ArrayList<>();
@@ -232,6 +210,28 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 
 		}
 		return primaryKeyValues;
+	}
+
+	protected void addToBatch(PreparedStatement preparedStatement)
+			throws SQLException {
+		preparedStatement.addBatch();
+		preparedStatement.clearParameters();
+		batchSize++;
+		executeBatchIfFull(preparedStatement);
+	}
+
+	private void executeBatchIfFull(PreparedStatement preparedStatement)
+			throws SQLException {
+		if (batchSize >= BATCH_MAX) {
+			executeBatch(preparedStatement);
+		}
+	}
+
+	protected void executeBatch(PreparedStatement preparedStatement)
+			throws SQLException {
+		batchSize = 0;
+		preparedStatement.executeBatch();
+		preparedStatement.clearBatch();
 	}
 
 	private String composeSqlStatement(OracleDatabaseParameters parameters,
@@ -263,7 +263,8 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	private String toProperCase(String value) {
-		return value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
+		return value.substring(0, 1).toUpperCase()
+				+ value.substring(1).toLowerCase();
 	}
 
 }
