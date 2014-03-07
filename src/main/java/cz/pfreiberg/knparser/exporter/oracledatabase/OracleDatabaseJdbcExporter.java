@@ -32,29 +32,26 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	protected static final int BATCH_MAX = 250;
 	protected int batchSize = 0;
 
-	protected Connection connection;
+	protected final Connection connection;
 	protected List<String> primaryKeys;
 	protected List<String> methodsName;
 	protected List<Object> primaryKeysValues;
 
-	public OracleDatabaseJdbcExporter(ConnectionParameters connectionParameters) {
-		establishConnection(connectionParameters);
-	}
-
 	public OracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name) {
+		Connection tempConnection = null;
 		do {
-			establishConnection(connectionParameters);
-			primaryKeys = getPrimaryKeys(connection, name);
-		} while (connection == null && primaryKeys == null);
+			tempConnection = establishConnection(connectionParameters);
+			primaryKeys = getPrimaryKeys(tempConnection, name);
+		} while (tempConnection == null && primaryKeys == null);
+		connection = tempConnection;
 		methodsName = getMethods(primaryKeys);
 	}
 
-	private void establishConnection(ConnectionParameters connectionParameters) {
+	private Connection establishConnection(ConnectionParameters connectionParameters) {
 		do {
 			try {
-				connection = getConnection(connectionParameters);
-				break;
+				return getConnection(connectionParameters);
 			} catch (SQLException e) {
 				log.error("Connection failed.");
 				log.debug("Stack trace:", e);
