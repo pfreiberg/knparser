@@ -21,19 +21,21 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 	private static final Logger log = Logger
 			.getLogger(StavOracleDatabaseJdbcExporter.class);
 
-	protected PreparedStatement psInsert;
+	protected final PreparedStatement psInsert;
 
 	public StavOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name,
 			String insert) {
 		super(connectionParameters, name);
+		PreparedStatement tempPsInsert = null;
 		try {
-			psInsert = connection.prepareStatement(insert);
+			tempPsInsert = connection.prepareStatement(insert);
 		} catch (SQLException e) {
 			log.error("Error during initializing prepared statement for "
 					+ name + ".");
 			log.debug("Stack trace:", e);
 		}
+		psInsert = tempPsInsert;
 	}
 
 	protected final <T> void prepareStatement(List<T> list, String name) {

@@ -23,8 +23,8 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 	private static final Logger log = Logger
 			.getLogger(HisOracleDatabaseJdbcExporter.class);
 
-	protected PreparedStatement psInsert;
-	protected PreparedStatement psHisInsert;
+	protected final PreparedStatement psInsert;
+	protected final PreparedStatement psHisInsert;
 
 	private enum LastInserted {
 		record(), hisRecord(), nothing();
@@ -34,18 +34,22 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			ConnectionParameters connectionParameters, String name,
 			String insert, String hisInsert) {
 		super(connectionParameters, name);
+		PreparedStatement tempPsInsert = null;
+		PreparedStatement tempHisPsInsert = null;
 		try {
-			psInsert = connection.prepareStatement(insert);
-			psHisInsert = connection.prepareStatement(hisInsert);
+			tempPsInsert = connection.prepareStatement(insert);
+			tempHisPsInsert = connection.prepareStatement(hisInsert);
 		} catch (SQLException e) {
 			log.error("Error during initializing prepared statement for "
 					+ name + ".");
 			log.debug("Stack trace:", e);
 		}
+		psInsert = tempPsInsert;
+		psHisInsert = tempHisPsInsert;
 	}
 
-	protected final <T extends DomainWithDate> void prepareStatement(List<T> list,
-			String name) {
+	protected final <T extends DomainWithDate> void prepareStatement(
+			List<T> list, String name) {
 		try {
 			connection.setAutoCommit(false);
 			LastInserted lastInserted = LastInserted.nothing;
