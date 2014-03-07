@@ -36,7 +36,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 		}
 	}
 
-	protected <T> void prepareStatement(List<T> list, String name) {
+	protected final <T> void prepareStatement(List<T> list, String name) {
 		try {
 			connection.setAutoCommit(false);
 			for (T record : list) {

@@ -24,6 +24,7 @@ public class SpojeniBPolohOracleDatabaseJdbcExporter extends
 		prepareStatement(spojeniBPoloh, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		SpojeniBPoloh record = (SpojeniBPoloh) rawRecord;
@@ -45,6 +46,7 @@ public class SpojeniBPolohOracleDatabaseJdbcExporter extends
 		psInsert.setObject(14, record.getZvbId());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		SpojeniBPoloh record = (SpojeniBPoloh) rawRecord;

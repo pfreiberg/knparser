@@ -24,6 +24,7 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 		prepareStatement(prvkyOMapy, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		PrvkyOMapy record = (PrvkyOMapy) rawRecord;
@@ -45,6 +46,7 @@ public class PrvkyOMapyOracleDatabaseJdbcExporter extends
 		psInsert.setNull(14, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		PrvkyOMapy record = (PrvkyOMapy) rawRecord;

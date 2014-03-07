@@ -24,6 +24,7 @@ public class OznaceniBpejOracleDatabaseJdbcExporter extends
 		prepareStatement(oznaceniBpej, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		OznaceniBpej record = (OznaceniBpej) rawRecord;
@@ -47,6 +48,7 @@ public class OznaceniBpejOracleDatabaseJdbcExporter extends
 		psInsert.setObject(16, record.getVztaznyBod());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		OznaceniBpej record = (OznaceniBpej) rawRecord;

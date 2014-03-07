@@ -23,6 +23,7 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 		prepareStatement(jednotky, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		Jednotky record = (Jednotky) rawRecord;
@@ -45,7 +46,8 @@ public class JednotkyOracleDatabaseJdbcExporter extends
 		psInsert.setObject(15, record.getPodilJmenovatel());
 		psInsert.setObject(16, record.getPopis());
 	}
-
+	
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		Jednotky record = (Jednotky) rawRecord;

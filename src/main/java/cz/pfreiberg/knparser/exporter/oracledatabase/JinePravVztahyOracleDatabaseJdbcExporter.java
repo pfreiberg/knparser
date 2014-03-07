@@ -26,6 +26,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 		prepareStatement(jinePravVztahy, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		JinePravVztahy record = (JinePravVztahy) rawRecord;
@@ -63,6 +64,7 @@ public class JinePravVztahyOracleDatabaseJdbcExporter extends
 				VfkUtil.convertToDatabaseDate(record.getDatumUkonceni()));
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		JinePravVztahy record = (JinePravVztahy) rawRecord;

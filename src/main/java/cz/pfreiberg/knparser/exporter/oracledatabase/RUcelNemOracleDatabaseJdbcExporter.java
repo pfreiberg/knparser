@@ -22,6 +22,7 @@ public class RUcelNemOracleDatabaseJdbcExporter extends
 		prepareStatement(rUcelNem, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		RUcelNem record = (RUcelNem) rawRecord;
@@ -38,6 +39,7 @@ public class RUcelNemOracleDatabaseJdbcExporter extends
 		psInsert.setObject(9, record.getUcelKod());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		RUcelNem record = (RUcelNem) rawRecord;

@@ -25,6 +25,7 @@ public class VlastnictviOracleDatabaseJdbcExporter extends
 		prepareStatement(vlastnictvi, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		Vlastnictvi record = (Vlastnictvi) rawRecord;
@@ -51,6 +52,7 @@ public class VlastnictviOracleDatabaseJdbcExporter extends
 		psInsert.setObject(18, record.getPsId());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		Vlastnictvi record = (Vlastnictvi) rawRecord;

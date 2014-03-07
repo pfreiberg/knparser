@@ -25,6 +25,7 @@ public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 		prepareStatement(obrazyDefBodu, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		ObrazyDefBodu record = (ObrazyDefBodu) rawRecord;
@@ -44,6 +45,7 @@ public class ObrazyDefBoduOracleDatabaseJdbcExporter extends
 		psInsert.setNull(12, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		ObrazyDefBodu record = (ObrazyDefBodu) rawRecord;

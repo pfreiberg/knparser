@@ -22,6 +22,7 @@ public class RJpvOracleDatabaseJdbcExporter extends
 		prepareStatement(rJpv, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		RJpv record = (RJpv) rawRecord;
@@ -39,6 +40,7 @@ public class RJpvOracleDatabaseJdbcExporter extends
 		psInsert.setObject(10, record.getTypvazbyJpv());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		RJpv record = (RJpv) rawRecord;

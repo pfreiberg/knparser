@@ -22,6 +22,7 @@ public class TelesaOracleDatabaseJdbcExporter extends
 		prepareStatement(telesa, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		Telesa record = (Telesa) rawRecord;
@@ -40,6 +41,7 @@ public class TelesaOracleDatabaseJdbcExporter extends
 		psInsert.setObject(11, null);
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		Telesa record = (Telesa) rawRecord;

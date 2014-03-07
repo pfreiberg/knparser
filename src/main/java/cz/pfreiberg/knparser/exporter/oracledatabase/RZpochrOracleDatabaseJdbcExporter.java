@@ -22,6 +22,7 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 		prepareStatement(rZpochr, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		RZpochr record = (RZpochr) rawRecord;
@@ -41,6 +42,7 @@ public class RZpochrOracleDatabaseJdbcExporter extends
 		psInsert.setObject(12, record.getPsId());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		RZpochr record = (RZpochr) rawRecord;

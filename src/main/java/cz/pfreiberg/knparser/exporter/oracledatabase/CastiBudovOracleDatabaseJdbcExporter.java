@@ -22,6 +22,7 @@ public class CastiBudovOracleDatabaseJdbcExporter extends
 		prepareStatement(castiBudov, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		CastiBudov record = (CastiBudov) rawRecord;
@@ -39,6 +40,7 @@ public class CastiBudovOracleDatabaseJdbcExporter extends
 		psInsert.setObject(10, record.getCenaNemovitosti());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		CastiBudov record = (CastiBudov) rawRecord;

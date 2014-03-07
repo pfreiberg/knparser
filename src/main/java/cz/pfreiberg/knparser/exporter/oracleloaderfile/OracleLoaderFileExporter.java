@@ -50,7 +50,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 
 	@Override
-	public void appendControlFile(String name, String characterSet,
+	public final void appendControlFile(String name, String characterSet,
 			String controlFile) {
 		try {
 			FileManager.writeToConfigFile(new File(name + ".CFG"), controlFile,
@@ -63,7 +63,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 	}
 
 	@Override
-	public void appendLoadFile(String name, String characterSet,
+	public final void appendLoadFile(String name, String characterSet,
 			Collection<?> lines) {
 		try {
 			File file = new File(name + ".TXT");
@@ -75,13 +75,13 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 		}
 	}
 
-	protected String insertColumn(String loadFile, String name) {
+	protected final String insertColumn(String loadFile, String name) {
 		String output = loadFile.replace("columns_value", "\t" + name
 				+ " NULLIF ( " + name + " = \"NULL\" ),\ncolumns_value");
 		return output;
 	}
 
-	protected String insertVarcharColumn(String loadFile, String name,
+	protected final String insertVarcharColumn(String loadFile, String name,
 			String value) {
 		String output = loadFile.replace("columns_value", "\t" + name
 				+ " CHAR(" + value + ") NULLIF ( " + name
@@ -89,20 +89,20 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 		return output;
 	}
 
-	protected String insertDateColumn(String loadFile, String name) {
+	protected final String insertDateColumn(String loadFile, String name) {
 		String output = loadFile.replace("columns_value", "\t" + name
 				+ " DATE \"DD.MM.YYYY HH24:MI:SS\" NULLIF ( " + name
 				+ " = \"NULL\" ),\ncolumns_value");
 		return output;
 	}
 
-	protected String insertZeroColumn(String loadFile, String name) {
+	protected final String insertZeroColumn(String loadFile, String name) {
 		String output = loadFile.replace("columns_value", "\t" + name
 				+ " \"0\",\ncolumns_value");
 		return output;
 	}
 
-	protected String end(String loadFile) {
+	protected final String end(String loadFile) {
 		String output = loadFile.replace(",\ncolumns_value", "");
 		return output;
 	}

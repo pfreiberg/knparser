@@ -69,7 +69,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public Connection getConnection(ConnectionParameters connection)
+	public final Connection getConnection(ConnectionParameters connection)
 			throws SQLException {
 
 		return DriverManager.getConnection(
@@ -79,7 +79,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public void closeConnection(Connection connection) {
+	public final void closeConnection(Connection connection) {
 		try {
 			connection.close();
 		} catch (SQLException e) {
@@ -89,7 +89,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public void closePreparedStatement(PreparedStatement preparedStatement) {
+	public final void closePreparedStatement(PreparedStatement preparedStatement) {
 		try {
 			preparedStatement.close();
 		} catch (SQLException e) {
@@ -99,7 +99,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public void closeResultSet(ResultSet resultSet) {
+	public final void closeResultSet(ResultSet resultSet) {
 		try {
 			resultSet.close();
 		} catch (SQLException e) {
@@ -109,7 +109,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public List<String> getPrimaryKeys(Connection connection, String table) {
+	public final List<String> getPrimaryKeys(Connection connection, String table) {
 		List<String> output = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -136,7 +136,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public boolean find(OracleDatabaseParameters parameters,
+	public final boolean find(OracleDatabaseParameters parameters,
 			Operations operation, boolean hasDate) throws JdbcException {
 		String select = "";
 		if (hasDate) {
@@ -165,7 +165,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
-	public void delete(OracleDatabaseParameters parameters,
+	public final void delete(OracleDatabaseParameters parameters,
 			Operations operation, boolean hasDate) throws JdbcException {
 		String delete = "";
 		if (hasDate) {
@@ -212,7 +212,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return primaryKeyValues;
 	}
 
-	protected void addToBatch(PreparedStatement preparedStatement)
+	protected final void addToBatch(PreparedStatement preparedStatement)
 			throws SQLException {
 		preparedStatement.addBatch();
 		preparedStatement.clearParameters();
@@ -227,7 +227,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		}
 	}
 
-	protected void executeBatch(PreparedStatement preparedStatement)
+	protected final void executeBatch(PreparedStatement preparedStatement)
 			throws SQLException {
 		batchSize = 0;
 		preparedStatement.executeBatch();

@@ -23,6 +23,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		prepareStatement(bonitDilyParc, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		BonitDilyParc record = (BonitDilyParc) rawRecord;
@@ -39,6 +40,7 @@ public class BonitDilyParcOracleDatabaseJdbcExporter extends
 		psInsert.setObject(9, record.getVymera());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		BonitDilyParc record = (BonitDilyParc) rawRecord;

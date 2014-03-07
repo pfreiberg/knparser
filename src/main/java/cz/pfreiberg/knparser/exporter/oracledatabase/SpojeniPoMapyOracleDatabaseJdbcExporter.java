@@ -23,6 +23,7 @@ public class SpojeniPoMapyOracleDatabaseJdbcExporter extends
 		prepareStatement(spojeniPoMapy, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		SpojeniPoMapy record = (SpojeniPoMapy) rawRecord;
@@ -40,6 +41,7 @@ public class SpojeniPoMapyOracleDatabaseJdbcExporter extends
 
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		SpojeniPoMapy record = (SpojeniPoMapy) rawRecord;

@@ -22,6 +22,7 @@ public class ZobrazeniVbOracleDatabaseJdbcExporter extends
 		prepareStatement(zobrazeniVb, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		ZobrazeniVb record = (ZobrazeniVb) rawRecord;
@@ -39,6 +40,7 @@ public class ZobrazeniVbOracleDatabaseJdbcExporter extends
 		psInsert.setObject(10, record.getHjpvId());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		ZobrazeniVb record = (ZobrazeniVb) rawRecord;

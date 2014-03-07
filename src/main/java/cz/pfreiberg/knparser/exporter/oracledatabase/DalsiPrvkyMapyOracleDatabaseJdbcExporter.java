@@ -27,6 +27,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 		prepareStatement(dalsiPrvkyMapy, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		DalsiPrvkyMapy record = (DalsiPrvkyMapy) rawRecord;
@@ -52,6 +53,7 @@ public class DalsiPrvkyMapyOracleDatabaseJdbcExporter extends
 		psInsert.setNull(18, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		DalsiPrvkyMapy record = (DalsiPrvkyMapy) rawRecord;

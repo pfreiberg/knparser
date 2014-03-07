@@ -31,7 +31,7 @@ public class Controller {
 
 	private final Configuration configuration;
 	private final int BUFFER_SIZE = 9;
-	private Parser parser;
+	private final Parser parser;
 	private long seconds;
 
 	private boolean parserRunning;

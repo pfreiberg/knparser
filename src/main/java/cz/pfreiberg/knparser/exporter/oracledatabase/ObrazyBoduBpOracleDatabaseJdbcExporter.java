@@ -26,6 +26,7 @@ public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
 		prepareStatement(obrazyBoduBp, name);
 	}
 
+	@Override
 	protected void insertRecord(Object rawRecord)
 			throws SQLException {
 		ObrazyBoduBp record = (ObrazyBoduBp) rawRecord;
@@ -49,6 +50,7 @@ public class ObrazyBoduBpOracleDatabaseJdbcExporter extends
 		psInsert.setObject(16, record.getVztaznyBod());
 	}
 
+	@Override
 	protected void insertHistoricalRecord(Object rawRecord)
 			throws SQLException {
 		ObrazyBoduBp record = (ObrazyBoduBp) rawRecord;
