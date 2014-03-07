@@ -9,7 +9,7 @@ public class BonitDilyParcOracleLoaderFileExporter extends OracleLoaderFileExpor
 	private final static String name = "BONIT_DILY_PARC";
 
 	public BonitDilyParcOracleLoaderFileExporter(List<BonitDilyParc> bonitDilyParc,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(bonitDilyParc, characterSet, output, prefix, name);
 	}
 

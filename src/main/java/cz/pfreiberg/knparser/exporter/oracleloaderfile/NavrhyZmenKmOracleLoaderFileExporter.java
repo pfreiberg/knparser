@@ -9,7 +9,7 @@ public class NavrhyZmenKmOracleLoaderFileExporter extends OracleLoaderFileExport
 	private final static String name = "NAVRHY_ZMEN_KM";
 
 	public NavrhyZmenKmOracleLoaderFileExporter(List<NavrhyZmenKm> navrhyZmenKm,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(navrhyZmenKm, characterSet, output, prefix, name);
 	}
 

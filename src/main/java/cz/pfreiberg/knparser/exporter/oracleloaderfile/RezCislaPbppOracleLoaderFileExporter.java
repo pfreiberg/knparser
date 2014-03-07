@@ -9,7 +9,7 @@ public class RezCislaPbppOracleLoaderFileExporter extends OracleLoaderFileExport
 	private final static String name = "REZ_CISLA_PBPP";
 
 	public RezCislaPbppOracleLoaderFileExporter(List<RezCislaPbpp> rezCislaPbpp,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(rezCislaPbpp, characterSet, output, prefix, name);
 	}
 

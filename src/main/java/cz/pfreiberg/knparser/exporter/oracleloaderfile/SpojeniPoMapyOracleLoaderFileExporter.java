@@ -9,7 +9,7 @@ public class SpojeniPoMapyOracleLoaderFileExporter extends OracleLoaderFileExpor
 	private final static String name = "SPOJENI_PO_MAPY";
 
 	public SpojeniPoMapyOracleLoaderFileExporter(List<SpojeniPoMapy> spojeniPoMapy,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(spojeniPoMapy, characterSet, output, prefix, name);
 	}
 

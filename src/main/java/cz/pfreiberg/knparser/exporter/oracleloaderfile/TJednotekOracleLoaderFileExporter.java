@@ -9,7 +9,7 @@ public class TJednotekOracleLoaderFileExporter extends OracleLoaderFileExporter 
 	private final static String name = "T_JEDNOTEK";
 
 	public TJednotekOracleLoaderFileExporter(List<TJednotek> tJednotek,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(tJednotek, characterSet, output, prefix, name);
 	}
 

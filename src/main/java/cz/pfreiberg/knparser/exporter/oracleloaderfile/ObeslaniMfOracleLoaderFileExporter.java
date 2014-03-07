@@ -9,7 +9,7 @@ public class ObeslaniMfOracleLoaderFileExporter extends OracleLoaderFileExporter
 	private final static String name = "OBESLANI_MF";
 
 	public ObeslaniMfOracleLoaderFileExporter(List<ObeslaniMf> obeslaniMf,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(obeslaniMf, characterSet, output, prefix, name);
 	}
 

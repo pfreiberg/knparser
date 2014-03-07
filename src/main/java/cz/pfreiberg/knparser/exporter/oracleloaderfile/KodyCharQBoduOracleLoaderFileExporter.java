@@ -8,8 +8,8 @@ public class KodyCharQBoduOracleLoaderFileExporter extends OracleLoaderFileExpor
 
 	private final static String name = "KODY_CHAR_Q_BODU";
 
-	public KodyCharQBoduOracleLoaderFileExporter(List<KodyCharQBodu> kodyCharQBodu, String prefix,
-			String characterSet, String output) {
+	public KodyCharQBoduOracleLoaderFileExporter(List<KodyCharQBodu> kodyCharQBodu, String characterSet,
+			String output, String prefix) {
 		super(kodyCharQBodu, characterSet, output, prefix, name);
 	}
 

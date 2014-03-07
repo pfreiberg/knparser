@@ -10,8 +10,8 @@ public class UcastniciTypOracleLoaderFileExporter extends
 	private final static String name = "UCASTNICI_TYP";
 
 	public UcastniciTypOracleLoaderFileExporter(
-			List<UcastniciTyp> ucastniciTyp, String prefix,
-			String characterSet, String output) {
+			List<UcastniciTyp> ucastniciTyp, String characterSet,
+			String output, String prefix) {
 		super(ucastniciTyp, characterSet, output, prefix, name);
 	}
 

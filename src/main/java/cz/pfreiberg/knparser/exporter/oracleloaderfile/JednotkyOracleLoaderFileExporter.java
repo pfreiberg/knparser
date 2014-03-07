@@ -9,7 +9,7 @@ public class JednotkyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "JEDNOTKY";
 
 	public JednotkyOracleLoaderFileExporter(List<Jednotky> jednotky,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(jednotky, characterSet, output, prefix, name);
 	}
 

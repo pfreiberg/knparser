@@ -9,7 +9,7 @@ public class HraniceBpejOracleLoaderFileExporter extends OracleLoaderFileExporte
 	private final static String name = "HRANICE_BPEJ";
 
 	public HraniceBpejOracleLoaderFileExporter(List<HraniceBpej> hraniceBpej,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(hraniceBpej, characterSet, output, prefix, name);
 	}
 

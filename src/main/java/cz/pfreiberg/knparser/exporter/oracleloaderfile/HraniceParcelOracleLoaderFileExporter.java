@@ -9,7 +9,7 @@ public class HraniceParcelOracleLoaderFileExporter extends OracleLoaderFileExpor
 	private final static String name = "HRANICE_PARCEL";
 
 	public HraniceParcelOracleLoaderFileExporter(List<HraniceParcel> hraniceParcel,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(hraniceParcel, characterSet, output, prefix, name);
 	}
 

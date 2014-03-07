@@ -8,8 +8,8 @@ public class TBudovOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "T_BUDOV";
 
-	public TBudovOracleLoaderFileExporter(List<TBudov> tBudov, String prefix,
-			String characterSet, String output) {
+	public TBudovOracleLoaderFileExporter(List<TBudov> tBudov, String characterSet,
+			String output, String prefix) {
 		super(tBudov, characterSet, output, prefix, name);
 	}
 

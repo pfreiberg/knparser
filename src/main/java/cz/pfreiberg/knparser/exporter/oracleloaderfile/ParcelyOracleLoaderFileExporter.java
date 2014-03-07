@@ -8,7 +8,7 @@ public class ParcelyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private static final String name = "PARCELY";
 
-	public ParcelyOracleLoaderFileExporter(List<Parcely> parcely, String prefix, String characterSet, String output) {
+	public ParcelyOracleLoaderFileExporter(List<Parcely> parcely, String characterSet, String output, String prefix) {
 		super(parcely, characterSet, output, prefix, name);
 	}
 

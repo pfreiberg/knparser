@@ -19,11 +19,12 @@ import cz.pfreiberg.knparser.domain.Vfk;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
- * Parser výměnného formátu. Z konfiguračního souboru je zjištěno, kolik řádků
- * se má najednou maximálně zpracovat a ze souboru se získá jeho kódování. Po
- * načtení a rozparsování jednoho řádku je určeno, do jaké doménové třídy má být
- * uložen. Po zpracování daného počtu řádku (nebo dosažení konce souboru) jsou
- * pak již instance doménových tříd vráceny Controlleru.
+ * Parser výměnného formátu katastru nemovitostí. Z konfiguračního souboru je
+ * zjištěno, kolik řádků se má najednou maximálně zpracovat a ze souboru se
+ * získá jeho kódování. Po načtení a rozparsování jednoho řádku je určeno, do
+ * jaké doménové třídy má být uložen. Po zpracování daného počtu řádku (nebo
+ * dosažení konce souboru) jsou pak již instance doménových tříd vráceny
+ * Controlleru.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
@@ -35,10 +36,10 @@ public class Parser {
 	private static boolean firstBatch = true;
 
 	private boolean isParsing = true;
-	private Vfk batch;
 	private int escapedRows;
 
 	private BufferedReader br;
+	private Vfk batch;
 	private String buffer;
 	private long actualRow;
 
@@ -174,11 +175,12 @@ public class Parser {
 				else if (isNextCharacterEscapable(row, inQuotes, i)) {
 					sb.append("\"\"");
 					i++;
-					// je v uvozovkách a další znak není "
-				} else if (isEndOfText(row, inQuotes, i)) {
+				}
+				// je v uvozovkách a další znak není "
+				else if (isEndOfText(row, inQuotes, i)) {
 					inQuotes = !inQuotes;
-					// prázdný text
-				} else {
+				} // prázdný text
+				else {
 					i++;
 				}
 				break;
@@ -271,7 +273,7 @@ public class Parser {
 		return (buffer != null);
 	}
 
-	interface Action {
+	private interface Action {
 		void run(String[] tokens);
 	}
 

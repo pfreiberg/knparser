@@ -9,7 +9,7 @@ public class CastiObciOracleLoaderFileExporter extends OracleLoaderFileExporter 
 	private final static String name = "CASTI_OBCI";
 
 	public CastiObciOracleLoaderFileExporter(List<CastiObci> castiObci,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(castiObci, characterSet, output, prefix, name);
 	}
 

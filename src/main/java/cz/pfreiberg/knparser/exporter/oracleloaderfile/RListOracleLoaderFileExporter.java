@@ -8,8 +8,8 @@ public class RListOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "R_LIST";
 
-	public RListOracleLoaderFileExporter(List<RList> rList, String prefix,
-			String characterSet, String output) {
+	public RListOracleLoaderFileExporter(List<RList> rList, String characterSet,
+			String output, String prefix) {
 		super(rList, characterSet, output, prefix, name);
 	}
 

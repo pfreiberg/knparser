@@ -10,8 +10,8 @@ public class TPravnichVztOracleLoaderFileExporter extends
 	private final static String name = "T_PRAVNICH_VZT";
 
 	public TPravnichVztOracleLoaderFileExporter(
-			List<TPravnichVzt> tPravnichVzt, String prefix,
-			String characterSet, String output) {
+			List<TPravnichVzt> tPravnichVzt, String characterSet,
+			String output, String prefix) {
 		super(tPravnichVzt, characterSet, output, prefix, name);
 	}
 

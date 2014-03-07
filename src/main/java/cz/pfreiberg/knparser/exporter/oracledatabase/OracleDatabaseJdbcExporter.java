@@ -184,7 +184,7 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		executeBatchIfFull(preparedStatement);
 	}
 
-	protected void executeBatchIfFull(PreparedStatement preparedStatement)
+	private void executeBatchIfFull(PreparedStatement preparedStatement)
 			throws SQLException {
 		if (batchSize >= BATCH_MAX) {
 			executeBatch(preparedStatement);

@@ -10,8 +10,8 @@ public class ZpVyuzitiJedOracleLoaderFileExporter extends
 	private final static String name = "ZP_VYUZITI_JED";
 
 	public ZpVyuzitiJedOracleLoaderFileExporter(
-			List<ZpVyuzitiJed> zpVyuzitiJed, String prefix,
-			String characterSet, String output) {
+			List<ZpVyuzitiJed> zpVyuzitiJed, String characterSet,
+			String output, String prefix) {
 		super(zpVyuzitiJed, characterSet, output, prefix, name);
 	}
 

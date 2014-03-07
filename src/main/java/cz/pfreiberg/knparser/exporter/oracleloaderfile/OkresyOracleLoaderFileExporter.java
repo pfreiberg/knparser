@@ -9,7 +9,7 @@ public class OkresyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "OKRESY";
 
 	public OkresyOracleLoaderFileExporter(List<Okresy> okresy,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(okresy, characterSet, output, prefix, name);
 	}
 

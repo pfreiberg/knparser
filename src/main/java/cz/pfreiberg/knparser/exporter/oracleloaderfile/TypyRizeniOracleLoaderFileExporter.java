@@ -10,7 +10,7 @@ public class TypyRizeniOracleLoaderFileExporter extends
 	private final static String name = "TYPY_RIZENI";
 
 	public TypyRizeniOracleLoaderFileExporter(List<TypyRizeni> typyRizeni,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(typyRizeni, characterSet, output, prefix, name);
 	}
 

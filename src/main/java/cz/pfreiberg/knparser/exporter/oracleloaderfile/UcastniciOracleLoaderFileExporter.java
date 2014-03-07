@@ -9,7 +9,7 @@ public class UcastniciOracleLoaderFileExporter extends OracleLoaderFileExporter 
 	private final static String name = "UCASTNICI";
 
 	public UcastniciOracleLoaderFileExporter(List<Ucastnici> ucastnici,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(ucastnici, characterSet, output, prefix, name);
 	}
 

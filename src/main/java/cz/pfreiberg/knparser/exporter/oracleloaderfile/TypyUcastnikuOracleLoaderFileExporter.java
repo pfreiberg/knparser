@@ -10,7 +10,7 @@ public class TypyUcastnikuOracleLoaderFileExporter extends
 	private final static String name = "TYPY_UCASTNIKU";
 
 	public TypyUcastnikuOracleLoaderFileExporter(List<TypyUcastniku> typyUcastniku,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(typyUcastniku, characterSet, output, prefix, name);
 	}
 

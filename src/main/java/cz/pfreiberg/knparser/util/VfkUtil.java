@@ -18,10 +18,14 @@ import cz.pfreiberg.knparser.parser.ParserException;
  * 
  */
 public class VfkUtil {
-	
+
+	/**
+	 * SimpleDateFormat není vláknově bezpečný (jedna instance pro
+	 * producenta, druhá pro konzumenta).
+	 */
 	private final static SimpleDateFormat formatParse = new SimpleDateFormat(
 			"dd.MM.yyyy HH:mm:ss");
-	
+
 	private final static SimpleDateFormat formatStoring = new SimpleDateFormat(
 			"dd.MM.yyyy HH:mm:ss");
 

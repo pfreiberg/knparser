@@ -9,7 +9,7 @@ public class ZdrojeParcelZeOracleLoaderFileExporter extends OracleLoaderFileExpo
 	private final static String name = "ZDROJE_PARCEL_ZE";
 
 	public ZdrojeParcelZeOracleLoaderFileExporter(List<ZdrojeParcelZe> zdrojeParcelZe,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(zdrojeParcelZe, characterSet, output, prefix, name);
 	}
 

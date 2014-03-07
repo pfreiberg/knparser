@@ -9,7 +9,7 @@ public class ZpOchranyNemOracleLoaderFileExporter extends OracleLoaderFileExport
 	private final static String name = "ZP_OCHRANY_NEM";
 
 	public ZpOchranyNemOracleLoaderFileExporter(List<ZpOchranyNem> zpOchranyNem,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(zpOchranyNem, characterSet, output, prefix, name);
 	}
 

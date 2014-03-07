@@ -8,8 +8,8 @@ public class RJpvOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "R_JPV";
 
-	public RJpvOracleLoaderFileExporter(List<RJpv> rJpv, String prefix,
-			String characterSet, String output) {
+	public RJpvOracleLoaderFileExporter(List<RJpv> rJpv, String characterSet,
+			String output, String prefix) {
 		super(rJpv, characterSet, output, prefix, name);
 	}
 

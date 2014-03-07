@@ -10,7 +10,7 @@ public class TPredmetuROracleLoaderFileExporter extends
 	private final static String name = "T_PREDMETU_R";
 
 	public TPredmetuROracleLoaderFileExporter(List<TPredmetuR> tPredmetuR,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(tPredmetuR, characterSet, output, prefix, name);
 	}
 

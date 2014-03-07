@@ -9,7 +9,7 @@ public class MapoveListyOracleLoaderFileExporter extends OracleLoaderFileExporte
 	private final static String name = "MAPOVE_LISTY";
 
 	public MapoveListyOracleLoaderFileExporter(List<MapoveListy> mapoveListy,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(mapoveListy, characterSet, output, prefix, name);
 	}
 

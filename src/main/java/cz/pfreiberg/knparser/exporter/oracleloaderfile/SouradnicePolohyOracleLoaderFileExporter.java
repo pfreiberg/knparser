@@ -9,7 +9,7 @@ public class SouradnicePolohyOracleLoaderFileExporter extends OracleLoaderFileEx
 	private final static String name = "SOURADNICE_POLOHY";
 
 	public SouradnicePolohyOracleLoaderFileExporter(List<SouradnicePolohy> souradnicePolohy,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(souradnicePolohy, characterSet, output, prefix, name);
 	}
 

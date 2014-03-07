@@ -8,8 +8,8 @@ public class CharOsOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "CHAR_OS";
 
-	public CharOsOracleLoaderFileExporter(List<CharOs> charOs, String prefix,
-			String characterSet, String output) {
+	public CharOsOracleLoaderFileExporter(List<CharOs> charOs, String characterSet,
+			String output, String prefix) {
 		super(charOs, characterSet, output, prefix, name);
 	}
 

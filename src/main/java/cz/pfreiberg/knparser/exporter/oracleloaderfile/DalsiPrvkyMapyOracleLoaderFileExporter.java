@@ -9,7 +9,7 @@ public class DalsiPrvkyMapyOracleLoaderFileExporter extends OracleLoaderFileExpo
 	private final static String name = "DALSI_PRVKY_MAPY";
 
 	public DalsiPrvkyMapyOracleLoaderFileExporter(List<DalsiPrvkyMapy> dalsiPrvkyMapy,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(dalsiPrvkyMapy, characterSet, output, prefix, name);
 	}
 

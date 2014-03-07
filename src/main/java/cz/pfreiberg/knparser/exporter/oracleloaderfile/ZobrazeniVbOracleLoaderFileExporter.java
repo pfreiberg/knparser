@@ -9,7 +9,7 @@ public class ZobrazeniVbOracleLoaderFileExporter extends OracleLoaderFileExporte
 	private final static String name = "ZOBRAZENI_VB";
 
 	public ZobrazeniVbOracleLoaderFileExporter(List<ZobrazeniVb> zobrazeniVb,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(zobrazeniVb, characterSet, output, prefix, name);
 	}
 

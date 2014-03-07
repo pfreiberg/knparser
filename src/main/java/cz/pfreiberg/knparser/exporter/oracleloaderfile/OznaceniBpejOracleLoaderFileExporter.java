@@ -9,7 +9,7 @@ public class OznaceniBpejOracleLoaderFileExporter extends OracleLoaderFileExport
 	private final static String name = "OZNACENI_BPEJ";
 
 	public OznaceniBpejOracleLoaderFileExporter(List<OznaceniBpej> oznaceniBpej,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(oznaceniBpej, characterSet, output, prefix, name);
 	}
 

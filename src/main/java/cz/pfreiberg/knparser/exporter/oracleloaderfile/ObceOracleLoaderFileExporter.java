@@ -8,8 +8,8 @@ public class ObceOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "OBCE";
 
-	public ObceOracleLoaderFileExporter(List<Obce> obce, String prefix,
-			String characterSet, String output) {
+	public ObceOracleLoaderFileExporter(List<Obce> obce, String characterSet,
+			String output, String prefix) {
 		super(obce, characterSet, output, prefix, name);
 	}
 

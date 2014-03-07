@@ -8,8 +8,8 @@ public class AdresaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "ADROBJ";
 
-	public AdresaOracleLoaderFileExporter(List<Adresa> adresa, String prefix,
-			String characterSet, String output) {
+	public AdresaOracleLoaderFileExporter(List<Adresa> adresa, String characterSet,
+			String output, String prefix) {
 		super(adresa, characterSet, output, prefix, name);
 	}
 

@@ -2,6 +2,12 @@ package cz.pfreiberg.knparser.util;
 
 import java.sql.SQLException;
 
+/**
+ * Pomocná třída vytvářející části logů pro log4j.
+ *
+ * @author Petr Freiberg (freibergp@gmail.com)
+ *
+ */
 public class LogUtil {
 
 	public static String getClassWhichThrowsException(SQLException e) {

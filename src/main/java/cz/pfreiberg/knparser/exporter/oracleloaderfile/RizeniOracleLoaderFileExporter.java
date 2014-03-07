@@ -9,7 +9,7 @@ public class RizeniOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "RIZENI";
 
 	public RizeniOracleLoaderFileExporter(List<Rizeni> rizeni,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(rizeni, characterSet, output, prefix, name);
 	}
 

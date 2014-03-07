@@ -9,7 +9,7 @@ public class DotHistParCislaOracleLoaderFileExporter extends OracleLoaderFileExp
 	private final static String name = "DOT_HIST_PAR_CISLA";
 
 	public DotHistParCislaOracleLoaderFileExporter(List<DotHistParCisla> dotHistParCisla,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(dotHistParCisla, characterSet, output, prefix, name);
 	}
 

@@ -9,7 +9,7 @@ public class SpojeniBPolohOracleLoaderFileExporter extends OracleLoaderFileExpor
 	private final static String name = "SPOJENI_B_POLOH";
 
 	public SpojeniBPolohOracleLoaderFileExporter(List<SpojeniBPoloh> spojeniBPoloh,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(spojeniBPoloh, characterSet, output, prefix, name);
 	}
 

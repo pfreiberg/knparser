@@ -9,7 +9,7 @@ public class TPrvkuPDatOracleLoaderFileExporter extends OracleLoaderFileExporter
 	private final static String name = "T_PRVKU_P_DAT";
 
 	public TPrvkuPDatOracleLoaderFileExporter(List<TPrvkuPDat> tPrvkuPDat,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(tPrvkuPDat, characterSet, output, prefix, name);
 	}
 

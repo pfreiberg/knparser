@@ -9,7 +9,7 @@ public class RUcelNemOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "R_UCEL_NEM";
 
 	public RUcelNemOracleLoaderFileExporter(List<RUcelNem> rUcelNem,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(rUcelNem, characterSet, output, prefix, name);
 	}
 

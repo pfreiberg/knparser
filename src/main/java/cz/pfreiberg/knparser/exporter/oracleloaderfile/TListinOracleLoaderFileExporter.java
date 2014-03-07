@@ -9,7 +9,7 @@ public class TListinOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "T_LISTIN";
 
 	public TListinOracleLoaderFileExporter(List<TListin> tListin,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(tListin, characterSet, output, prefix, name);
 	}
 

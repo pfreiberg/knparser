@@ -9,7 +9,7 @@ public class ListinyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "LISTINY";
 
 	public ListinyOracleLoaderFileExporter(List<Listiny> listiny,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(listiny, characterSet, output, prefix, name);
 	}
 

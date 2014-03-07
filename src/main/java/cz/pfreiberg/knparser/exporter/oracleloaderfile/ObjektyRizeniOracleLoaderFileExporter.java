@@ -10,8 +10,8 @@ public class ObjektyRizeniOracleLoaderFileExporter extends
 	private final static String name = "OBJEKTY_RIZENI";
 
 	public ObjektyRizeniOracleLoaderFileExporter(
-			List<ObjektyRizeni> objektyRizeni, String prefix,
-			String characterSet, String output) {
+			List<ObjektyRizeni> objektyRizeni, String characterSet,
+			String output, String prefix) {
 		super(objektyRizeni, characterSet, output, prefix, name);
 	}
 

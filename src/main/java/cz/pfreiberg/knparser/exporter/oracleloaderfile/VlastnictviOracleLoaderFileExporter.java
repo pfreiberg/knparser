@@ -10,7 +10,7 @@ public class VlastnictviOracleLoaderFileExporter extends
 	private final static String name = "VLASTNICTVI";
 
 	public VlastnictviOracleLoaderFileExporter(List<Vlastnictvi> vlastnictvi,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(vlastnictvi, characterSet, output, prefix, name);
 	}
 

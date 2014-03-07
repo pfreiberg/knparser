@@ -9,7 +9,7 @@ public class RezParcelniCislaOracleLoaderFileExporter extends OracleLoaderFileEx
 	private final static String name = "REZ_PARCELNI_CISLA";
 
 	public RezParcelniCislaOracleLoaderFileExporter(List<RezParcelniCisla> rezParcelniCisla,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(rezParcelniCisla, characterSet, output, prefix, name);
 	}
 

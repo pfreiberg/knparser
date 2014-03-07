@@ -9,7 +9,7 @@ public class ZpVyuzitiPozOracleLoaderFileExporter extends OracleLoaderFileExport
 	private final static String name = "ZP_VYUZITI_POZ";
 
 	public ZpVyuzitiPozOracleLoaderFileExporter(List<ZpVyuzitiPoz> zpVyuzitiPoz,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(zpVyuzitiPoz, characterSet, output, prefix, name);
 	}
 

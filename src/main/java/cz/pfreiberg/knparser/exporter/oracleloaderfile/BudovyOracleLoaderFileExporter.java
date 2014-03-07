@@ -9,7 +9,7 @@ public class BudovyOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "BUDOVY";
 
 	public BudovyOracleLoaderFileExporter(List<Budovy> budovy,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(budovy, characterSet, output, prefix, name);
 	}
 

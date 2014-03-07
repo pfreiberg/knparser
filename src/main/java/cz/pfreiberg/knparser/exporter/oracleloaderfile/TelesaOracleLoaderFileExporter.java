@@ -8,8 +8,8 @@ public class TelesaOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "TELESA";
 
-	public TelesaOracleLoaderFileExporter(List<Telesa> telesa, String prefix,
-			String characterSet, String output) {
+	public TelesaOracleLoaderFileExporter(List<Telesa> telesa, String characterSet,
+			String output, String prefix) {
 		super(telesa, characterSet, output, prefix, name);
 	}
 

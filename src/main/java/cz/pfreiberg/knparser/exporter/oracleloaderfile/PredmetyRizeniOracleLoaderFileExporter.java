@@ -9,7 +9,7 @@ public class PredmetyRizeniOracleLoaderFileExporter extends OracleLoaderFileExpo
 	private final static String name = "PREDMETY_RIZENI";
 
 	public PredmetyRizeniOracleLoaderFileExporter(List<PredmetyRizeni> predmetyRizeni,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(predmetyRizeni, characterSet, output, prefix, name);
 	}
 

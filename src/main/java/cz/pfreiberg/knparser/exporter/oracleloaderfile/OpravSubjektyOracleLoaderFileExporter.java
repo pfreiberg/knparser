@@ -10,8 +10,8 @@ public class OpravSubjektyOracleLoaderFileExporter extends
 	private final static String name = "OPRAV_SUBJEKTY";
 
 	public OpravSubjektyOracleLoaderFileExporter(
-			List<OpravSubjekty> opravSubjekty, String prefix,
-			String characterSet, String output) {
+			List<OpravSubjekty> opravSubjekty, String characterSet,
+			String output, String prefix) {
 		super(opravSubjekty, characterSet, output, prefix, name);
 	}
 

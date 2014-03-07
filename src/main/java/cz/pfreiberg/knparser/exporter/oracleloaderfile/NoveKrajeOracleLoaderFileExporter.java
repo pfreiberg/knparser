@@ -9,7 +9,7 @@ public class NoveKrajeOracleLoaderFileExporter extends OracleLoaderFileExporter 
 	private final static String name = "NOVE_KRAJE";
 
 	public NoveKrajeOracleLoaderFileExporter(List<NoveKraje> noveKraje,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(noveKraje, characterSet, output, prefix, name);
 	}
 

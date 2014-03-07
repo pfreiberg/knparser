@@ -9,7 +9,7 @@ public class ZpUrceniVymeryOracleLoaderFileExporter extends OracleLoaderFileExpo
 	private final static String name = "ZP_URCENI_VYMERY";
 
 	public ZpUrceniVymeryOracleLoaderFileExporter(List<ZpUrceniVymery> zpUrceniVymery,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(zpUrceniVymery, characterSet, output, prefix, name);
 	}
 

@@ -10,7 +10,7 @@ public class PravaStavbyOracleLoaderFileExporter extends
 	private final static String name = "PRAVA_STAVBY";
 
 	public PravaStavbyOracleLoaderFileExporter(List<PravaStavby> pravaStavby,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(pravaStavby, characterSet, output, prefix, name);
 	}
 

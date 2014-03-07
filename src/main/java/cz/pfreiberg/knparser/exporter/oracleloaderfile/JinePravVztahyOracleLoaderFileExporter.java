@@ -10,8 +10,8 @@ public class JinePravVztahyOracleLoaderFileExporter extends
 	private final static String name = "JINE_PRAV_VZTAHY";
 
 	public JinePravVztahyOracleLoaderFileExporter(
-			List<JinePravVztahy> jinePravVztahy, String prefix,
-			String characterSet, String output) {
+			List<JinePravVztahy> jinePravVztahy, String characterSet,
+			String output, String prefix) {
 		super(jinePravVztahy, characterSet, output, prefix, name);
 	}
 

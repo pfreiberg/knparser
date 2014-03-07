@@ -9,7 +9,7 @@ public class ObrazyParcelOracleLoaderFileExporter extends OracleLoaderFileExport
 	private final static String name = "OBRAZY_PARCEL";
 
 	public ObrazyParcelOracleLoaderFileExporter(List<ObrazyParcel> obrazyParcel,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(obrazyParcel, characterSet, output, prefix, name);
 	}
 

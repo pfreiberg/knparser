@@ -9,7 +9,7 @@ public class NzZpmzOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "NZ_ZPMZ";
 
 	public NzZpmzOracleLoaderFileExporter(List<NzZpmz> nzZpmz,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(nzZpmz, characterSet, output, prefix, name);
 	}
 

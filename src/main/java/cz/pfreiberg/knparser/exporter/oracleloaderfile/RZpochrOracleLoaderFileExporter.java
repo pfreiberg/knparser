@@ -9,7 +9,7 @@ public class RZpochrOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "R_ZPOCHR";
 
 	public RZpochrOracleLoaderFileExporter(List<RZpochr> rZpochr,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(rZpochr, characterSet, output, prefix, name);
 	}
 

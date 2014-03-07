@@ -9,7 +9,7 @@ public class DPozemkuOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "D_POZEMKU";
 
 	public DPozemkuOracleLoaderFileExporter(List<DPozemku> dPozemku,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(dPozemku, characterSet, output, prefix, name);
 	}
 

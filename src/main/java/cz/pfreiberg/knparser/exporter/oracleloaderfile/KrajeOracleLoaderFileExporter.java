@@ -9,7 +9,7 @@ public class KrajeOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "KRAJE";
 
 	public KrajeOracleLoaderFileExporter(List<Kraje> kraje,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(kraje, characterSet, output, prefix, name);
 	}
 

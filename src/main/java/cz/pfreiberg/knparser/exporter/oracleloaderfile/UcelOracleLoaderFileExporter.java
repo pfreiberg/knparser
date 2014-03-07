@@ -8,8 +8,8 @@ public class UcelOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "UCEL";
 
-	public UcelOracleLoaderFileExporter(List<Ucel> ucel, String prefix,
-			String characterSet, String output) {
+	public UcelOracleLoaderFileExporter(List<Ucel> ucel, String characterSet,
+			String output, String prefix) {
 		super(ucel, characterSet, output, prefix, name);
 	}
 

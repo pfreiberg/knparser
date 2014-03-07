@@ -9,7 +9,7 @@ public class DotcenaParCislaOracleLoaderFileExporter extends OracleLoaderFileExp
 	private final static String name = "DOTCENA_PAR_CISLA";
 
 	public DotcenaParCislaOracleLoaderFileExporter(List<DotcenaParCisla> dotcenaParCisla,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(dotcenaParCisla, characterSet, output, prefix, name);
 	}
 

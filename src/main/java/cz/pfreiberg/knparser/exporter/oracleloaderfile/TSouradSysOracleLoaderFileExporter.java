@@ -9,7 +9,7 @@ public class TSouradSysOracleLoaderFileExporter extends OracleLoaderFileExporter
 	private final static String name = "T_SOURAD_SYS";
 
 	public TSouradSysOracleLoaderFileExporter(List<TSouradSys> tSouradSys,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(tSouradSys, characterSet, output, prefix, name);
 	}
 

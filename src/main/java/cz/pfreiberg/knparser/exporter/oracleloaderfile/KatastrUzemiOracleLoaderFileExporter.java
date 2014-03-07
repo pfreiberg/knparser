@@ -9,7 +9,7 @@ public class KatastrUzemiOracleLoaderFileExporter extends OracleLoaderFileExport
 	private final static String name = "KATASTR_UZEMI";
 
 	public KatastrUzemiOracleLoaderFileExporter(List<KatastrUzemi> katastrUzemi,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(katastrUzemi, characterSet, output, prefix, name);
 	}
 

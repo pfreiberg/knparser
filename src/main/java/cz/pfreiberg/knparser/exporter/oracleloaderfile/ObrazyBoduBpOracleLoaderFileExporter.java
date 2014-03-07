@@ -9,7 +9,7 @@ public class ObrazyBoduBpOracleLoaderFileExporter extends OracleLoaderFileExport
 	private final static String name = "OBRAZY_BODU_BP";
 
 	public ObrazyBoduBpOracleLoaderFileExporter(List<ObrazyBoduBp> obrazyBoduBp,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(obrazyBoduBp, characterSet, output, prefix, name);
 	}
 

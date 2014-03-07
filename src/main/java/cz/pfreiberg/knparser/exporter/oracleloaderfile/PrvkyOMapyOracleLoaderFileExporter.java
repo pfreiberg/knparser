@@ -9,7 +9,7 @@ public class PrvkyOMapyOracleLoaderFileExporter extends OracleLoaderFileExporter
 	private final static String name = "PRVKY_O_MAPY";
 
 	public PrvkyOMapyOracleLoaderFileExporter(List<PrvkyOMapy> prvkyOMapy,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(prvkyOMapy, characterSet, output, prefix, name);
 	}
 

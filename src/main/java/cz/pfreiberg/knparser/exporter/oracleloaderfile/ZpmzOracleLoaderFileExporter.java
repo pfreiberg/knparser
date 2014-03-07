@@ -8,8 +8,8 @@ public class ZpmzOracleLoaderFileExporter extends OracleLoaderFileExporter {
 
 	private final static String name = "ZPMZ";
 
-	public ZpmzOracleLoaderFileExporter(List<Zpmz> zpmz, String prefix,
-			String characterSet, String output) {
+	public ZpmzOracleLoaderFileExporter(List<Zpmz> zpmz, String characterSet,
+			String output, String prefix) {
 		super(zpmz, characterSet, output, prefix, name);
 	}
 

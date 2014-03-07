@@ -9,7 +9,7 @@ public class ListinyDalsiUdajeOracleLoaderFileExporter extends OracleLoaderFileE
 	private final static String name = "LISTINY_DALSI_UDAJE";
 
 	public ListinyDalsiUdajeOracleLoaderFileExporter(List<ListinyDalsiUdaje> listinyDalsiUdaje,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(listinyDalsiUdaje, characterSet, output, prefix, name);
 	}
 

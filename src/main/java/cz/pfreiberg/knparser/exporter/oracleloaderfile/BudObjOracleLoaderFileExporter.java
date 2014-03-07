@@ -9,7 +9,7 @@ public class BudObjOracleLoaderFileExporter extends OracleLoaderFileExporter {
 	private final static String name = "BUDOBJ";
 
 	public BudObjOracleLoaderFileExporter(List<BudObj> budObj,
-			String prefix, String characterSet, String output) {
+			String characterSet, String output, String prefix) {
 		super(budObj, characterSet, output, prefix, name);
 	}
 
