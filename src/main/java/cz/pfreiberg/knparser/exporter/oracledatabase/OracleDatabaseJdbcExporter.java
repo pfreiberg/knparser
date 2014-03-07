@@ -89,6 +89,26 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	}
 
 	@Override
+	public void closePreparedStatement(PreparedStatement preparedStatement) {
+		try {
+			preparedStatement.close();
+		} catch (SQLException e) {
+			log.error("Error during closing prepared statement.");
+			log.debug("Stack trace:", e);
+		}
+	}
+
+	@Override
+	public void closeResultSet(ResultSet resultSet) {
+		try {
+			resultSet.close();
+		} catch (SQLException e) {
+			log.error("Error during closing result set.");
+			log.debug("Stack trace:", e);
+		}
+	}
+
+	@Override
 	public List<String> getPrimaryKeys(Connection connection, String table) {
 		List<String> output = new ArrayList<>();
 		PreparedStatement ps = null;
@@ -109,13 +129,8 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			log.debug("Stack trace:", e);
 			return null;
 		} finally {
-			try {
-				rs.close();
-				ps.close();
-			} catch (SQLException e) {
-				log.error("Error during closing connection.");
-				log.debug("Stack trace:", e);
-			}
+			closeResultSet(rs);
+			closePreparedStatement(ps);
 		}
 		return output;
 	}
@@ -144,13 +159,8 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			log.debug("Stack trace:", e);
 			throw new JdbcException("Error during " + select);
 		} finally {
-			try {
-				rs.close();
-				ps.close();
-			} catch (SQLException e) {
-				log.error("Error during closing connection.");
-				log.debug("Stack trace:", e);
-			}
+			closeResultSet(rs);
+			closePreparedStatement(ps);
 		}
 	}
 
@@ -166,18 +176,21 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			delete = "DELETE FROM " + parameters.getTable() + " WHERE *pk*";
 		}
 		delete = composeSqlStatement(parameters, delete);
-		PreparedStatement preparedStatement = null;
+		PreparedStatement ps = null;
 		try {
-			preparedStatement = connection.prepareStatement(delete);
-			preparedStatement.executeUpdate();
+			ps = connection.prepareStatement(delete);
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);
 			throw new JdbcException("Error during " + delete);
+		} finally {
+			closePreparedStatement(ps);
 		}
 
 	}
 
-	protected void addToBatch(PreparedStatement preparedStatement) throws SQLException {
+	protected void addToBatch(PreparedStatement preparedStatement)
+			throws SQLException {
 		preparedStatement.addBatch();
 		preparedStatement.clearParameters();
 		batchSize++;
@@ -190,8 +203,9 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			executeBatch(preparedStatement);
 		}
 	}
-	
-	protected void executeBatch(PreparedStatement preparedStatement) throws SQLException {
+
+	protected void executeBatch(PreparedStatement preparedStatement)
+			throws SQLException {
 		batchSize = 0;
 		preparedStatement.executeBatch();
 		preparedStatement.clearBatch();
@@ -239,8 +253,8 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return methods;
 	}
 
-	private String toCamelCase(String s) {
-		String[] parts = s.split("_");
+	private String toCamelCase(String value) {
+		String[] parts = value.split("_");
 		String camelCaseString = "";
 		for (String part : parts) {
 			camelCaseString = camelCaseString + toProperCase(part);
@@ -248,8 +262,8 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return ("get" + camelCaseString);
 	}
 
-	private String toProperCase(String s) {
-		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+	private String toProperCase(String value) {
+		return value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
 	}
 
 }

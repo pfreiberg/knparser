@@ -20,17 +20,32 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 	private static final Logger log = Logger
 			.getLogger(HraniceParcelOracleDatabaseJdbcExporter.class);
 
+	private final static String name = "HRANICE_PARCEL";
+	private final static String insert = "INSERT INTO " + name + " VALUES"
+			+ "(?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String hisInsert = "INSERT INTO " + name + "_MIN"
+			+ " VALUES"
+			+ "(SEQ_HRANICE_PARCEL_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
+
 	private List<HraniceParcel> hraniceParcel;
+	private PreparedStatement psInsert;
+	private PreparedStatement psHisInsert;
 	private String parId1;
 	private String parId2;
-
-	private final static String name = "HRANICE_PARCEL";
 
 	public HraniceParcelOracleDatabaseJdbcExporter(
 			List<HraniceParcel> hraniceParcel,
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name);
 		this.hraniceParcel = hraniceParcel;
+		try {
+			psInsert = connection.prepareStatement(insert);
+			psHisInsert = connection.prepareStatement(hisInsert);
+		} catch (SQLException e) {
+			log.error("Error during initializing prepared statement for "
+					+ name + ".");
+			log.debug("Stack trace:", e);
+		}
 		prepareStatement();
 	}
 
@@ -39,7 +54,6 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			connection.setAutoCommit(false);
 			for (HraniceParcel record : hraniceParcel) {
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
-
 				try {
 					if (record.getDatumZaniku() == null) {
 						processRecord(record);
@@ -55,6 +69,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			log.error("Error during commiting batch in table " + name + ".");
 			log.debug("Stack trace: " + e);
 		} finally {
+			closePreparedStatement(psInsert);
+			closePreparedStatement(psHisInsert);
 			closeConnection(connection);
 		}
 	}
@@ -149,7 +165,8 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			delete(parameters, Operations.equal, true);
 	}
 
-	private void getParId(String table, String date, String dateValue) throws JdbcException {
+	private void getParId(String table, String date, String dateValue)
+			throws JdbcException {
 		String select = "SELECT PAR_ID_1, PAR_ID_2 FROM " + table
 				+ " WHERE *pk* AND " + date + "=" + dateValue;
 
@@ -159,10 +176,11 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 					+ " AND *pk*");
 		}
 		select = select.replace(" AND *pk*", "");
+		ResultSet resultSet = null;
+		PreparedStatement preparedStatement = null;
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(select);
-			ResultSet resultSet = preparedStatement.executeQuery();
+			preparedStatement = connection.prepareStatement(select);
+			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				parId1 = resultSet.getString("PAR_ID_1");
 				parId2 = resultSet.getString("PAR_ID_2");
@@ -171,85 +189,14 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 			return;
 		} catch (SQLException e) {
 			throw new JdbcException("Error during " + select);
-		}
-	}
-
-	@Override
-	public void insert(String table, Object rawRecord, boolean isRecord) throws JdbcException {
-		try {
-			if (isRecord) {
-				insertRecord(table, rawRecord);
-			} else
-				insertHistoricalRecord(table, rawRecord);
-		} catch (SQLException e) {
-			log.debug("Stack trace:", e);
-			throw new JdbcException("Error during inserting "
-					+ LogUtil.getHisMethodWhichThrowsException(e)
-					+ " in " + LogUtil.getClassWhichThrowsException(e)
-					+ "." + "\n" + rawRecord.toString());
-		}
-	}
-
-	private void insertRecord(String table, Object rawRecord)
-			throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		HraniceParcel record = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
-
-			record = (HraniceParcel) rawRecord;
-			preparedStatement.setObject(1, record.getId());
-			preparedStatement.setObject(2, 0);
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(5, 0);
-			preparedStatement.setObject(6, record.getRizeniIdVzniku());
-			preparedStatement.setObject(7, record.getRizeniIdZaniku());
-			preparedStatement.setObject(8, record.getTypppdKod());
-			preparedStatement.setObject(9, record.getParId1());
-			preparedStatement.setObject(10, record.getParId2());
-			preparedStatement.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
-
-			preparedStatement.executeUpdate();
 		} finally {
-			preparedStatement.close();
+			closeResultSet(resultSet);
+			closePreparedStatement(preparedStatement);
 		}
 	}
 
-	private void insertHistoricalRecord(String table, Object rawRecord)
-			throws SQLException {
-		String insert = "INSERT INTO " + table + " VALUES"
-				+ "(SEQ_HRANICE_PARCEL_MIN.nextval,?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = null;
-		try {
-			preparedStatement = connection.prepareStatement(insert);
-
-			HraniceParcel record = (HraniceParcel) rawRecord;
-			preparedStatement.setObject(1, record.getId());
-			preparedStatement.setObject(2, 0);
-			preparedStatement.setObject(3,
-					VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
-			preparedStatement.setObject(4,
-					VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
-			preparedStatement.setObject(5, 0);
-			preparedStatement.setObject(6, record.getRizeniIdVzniku());
-			preparedStatement.setObject(7, record.getRizeniIdZaniku());
-			preparedStatement.setObject(8, record.getTypppdKod());
-			preparedStatement.setObject(9, record.getParId1());
-			preparedStatement.setObject(10, record.getParId2());
-			preparedStatement.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
-
-			preparedStatement.executeUpdate();
-		} finally {
-			preparedStatement.close();
-		}
-	}
-
-	private boolean update(String table, HraniceParcel record) throws JdbcException {
+	private boolean update(String table, HraniceParcel record)
+			throws JdbcException {
 		String update = "UPDATE " + table + " SET PAR_ID_1 = "
 				+ record.getParId1() + " , PAR_ID_2 = " + record.getParId2()
 				+ " WHERE *pk*";
@@ -260,21 +207,74 @@ public class HraniceParcelOracleDatabaseJdbcExporter extends
 					+ " AND *pk*");
 		}
 		update = update.replace(" AND *pk*", "");
-		PreparedStatement preparedStatement = null;
+		PreparedStatement ps = null;
 		try {
-			preparedStatement = connection.prepareStatement(update);
-			int affectedRows = preparedStatement.executeUpdate();
+			ps = connection.prepareStatement(update);
+			int affectedRows = ps.executeUpdate();
 			return (affectedRows > 0);
 		} catch (SQLException e) {
 			throw new JdbcException("Error during " + update);
 		} finally {
-			try {
-				preparedStatement.close();
-			} catch (SQLException e) {
-				log.error("Error during closing connection.");
-				log.debug("Stack trace:", e);
-			}
+			closePreparedStatement(ps);
 		}
+	}
+
+	@Override
+	public void insert(String table, Object rawRecord, boolean isRecord)
+			throws JdbcException {
+		try {
+			if (isRecord) {
+				insertRecord(table, rawRecord);
+				psInsert.execute();
+				psInsert.clearParameters();
+			} else {
+				insertHistoricalRecord(table, rawRecord);
+				psHisInsert.execute();
+				psHisInsert.clearParameters();
+			}
+		} catch (SQLException e) {
+			log.debug("Stack trace:", e);
+			throw new JdbcException("Error during inserting "
+					+ LogUtil.getHisMethodWhichThrowsException(e) + " in "
+					+ LogUtil.getClassWhichThrowsException(e) + "." + "\n"
+					+ rawRecord.toString());
+		}
+	}
+
+	private void insertRecord(String table, Object rawRecord)
+			throws SQLException {
+		HraniceParcel record = (HraniceParcel) rawRecord;
+		psInsert.setObject(1, record.getId());
+		psInsert.setObject(2, 0);
+		psInsert.setObject(3,
+				VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+		psInsert.setObject(4,
+				VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+		psInsert.setObject(5, 0);
+		psInsert.setObject(6, record.getRizeniIdVzniku());
+		psInsert.setObject(7, record.getRizeniIdZaniku());
+		psInsert.setObject(8, record.getTypppdKod());
+		psInsert.setObject(9, record.getParId1());
+		psInsert.setObject(10, record.getParId2());
+		psInsert.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
+	}
+
+	private void insertHistoricalRecord(String table, Object rawRecord)
+			throws SQLException {
+		HraniceParcel record = (HraniceParcel) rawRecord;
+		psHisInsert.setObject(1, record.getId());
+		psHisInsert.setObject(2, 0);
+		psHisInsert.setObject(3,
+				VfkUtil.convertToDatabaseDate(record.getDatumVzniku()));
+		psHisInsert.setObject(4,
+				VfkUtil.convertToDatabaseDate(record.getDatumZaniku()));
+		psHisInsert.setObject(5, 0);
+		psHisInsert.setObject(6, record.getRizeniIdVzniku());
+		psHisInsert.setObject(7, record.getRizeniIdZaniku());
+		psHisInsert.setObject(8, record.getTypppdKod());
+		psHisInsert.setObject(9, record.getParId1());
+		psHisInsert.setObject(10, record.getParId2());
+		psHisInsert.setNull(11, Types.STRUCT, "MDSYS.SDO_GEOMETRY");
 	}
 
 }

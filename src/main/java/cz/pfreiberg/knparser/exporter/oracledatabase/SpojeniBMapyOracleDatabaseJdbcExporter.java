@@ -1,27 +1,19 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
 import cz.pfreiberg.knparser.domain.prvkykatastralnimapy.SpojeniBMapy;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
-/**
- * Speciální případ historizační tabulky. Primární klíče a jejich hodnoty se
- * určují pro každý záznam zvlášť.
- * 
- * @author Petr Freiberg (freibergp@gmail.com)
- * 
- */
 public class SpojeniBMapyOracleDatabaseJdbcExporter extends
-		HisOracleDatabaseJdbcExporter {
+		Stav2OracleDatabaseJdbcExporter {
 
 	private final static String name = "SPOJENI_B_MAPY";
 	private static final String insert = "INSERT INTO " + name + " VALUES"
 			+ "(?,?,?,?,?,?,?,?,?,?)";
-	private static final String hisInsert = "INSERT INTO " + name + " VALUES"
+	private static final String hisInsert = "INSERT INTO " + name + "_MIN" + " VALUES"
 			+ "(SEQ_SPOJENI_B_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?,?)";
 
 	public SpojeniBMapyOracleDatabaseJdbcExporter(
@@ -29,28 +21,6 @@ public class SpojeniBMapyOracleDatabaseJdbcExporter extends
 			ConnectionParameters connectionParameters) {
 		super(connectionParameters, name, insert, hisInsert);
 		prepareStatement(spojeniBMapy, name);
-	}
-
-	@Override
-	protected List<Object> getPrimaryKeysValues(Object record,
-			List<String> methodsName) {
-		SpojeniBMapy spojeniBMapy = (SpojeniBMapy) record;
-		primaryKeys.clear();
-		List<Object> actualPrimaryKeysValues = new ArrayList<>();
-		if (spojeniBMapy.getOpId() != null) {
-			primaryKeys.add("OP_ID");
-			actualPrimaryKeysValues.add(spojeniBMapy.getOpId());
-		} else if (spojeniBMapy.getDpmId() != null) {
-			primaryKeys.add("DPM_ID");
-			actualPrimaryKeysValues.add(spojeniBMapy.getDpmId());
-		} else if (spojeniBMapy.getHbpejId() != null) {
-			primaryKeys.add("HBPEJ_ID");
-			actualPrimaryKeysValues.add(spojeniBMapy.getHbpejId());
-		}
-		primaryKeys.add("PORADOVE_CISLO_BODU");
-		actualPrimaryKeysValues.add(spojeniBMapy.getPoradoveCisloBodu());
-
-		return actualPrimaryKeysValues;
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package cz.pfreiberg.knparser.exporter.oracledatabase;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,6 +14,10 @@ public interface OracleDatabaseJdbcOperations {
 	public Connection getConnection(ConnectionParameters connection) throws SQLException;
 	
 	public void closeConnection(Connection connection);
+	
+	public void closePreparedStatement(PreparedStatement preparedStatement);
+	
+	public void closeResultSet(ResultSet resultSet);
 	
 	public List<String> getPrimaryKeys(Connection connection, String table) throws SQLException;
 	

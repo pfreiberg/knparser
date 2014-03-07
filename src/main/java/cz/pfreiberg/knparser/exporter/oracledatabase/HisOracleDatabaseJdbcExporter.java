@@ -85,6 +85,8 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			log.error("Error during commiting batch in table " + name + ".");
 			log.debug("Stack trace: " + e);
 		} finally {
+			closePreparedStatement(psInsert);
+			closePreparedStatement(psHisInsert);
 			closeConnection(connection);
 		}
 	}

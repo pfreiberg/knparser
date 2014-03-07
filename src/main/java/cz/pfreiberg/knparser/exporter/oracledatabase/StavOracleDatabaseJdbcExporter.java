@@ -55,6 +55,7 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 			log.error("Error during commiting batch in table " + name + ".");
 			log.debug("Stack trace: " + e);
 		} finally {
+			closePreparedStatement(psInsert);
 			closeConnection(connection);
 		}
 	}
