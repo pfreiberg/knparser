@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -31,7 +33,7 @@ public class Parser {
 	private static final Logger log = Logger.getLogger(Parser.class);
 
 	private static boolean firstBatch = true;
-	
+
 	private boolean isParsing = true;
 	private Vfk batch;
 	private int escapedRows;
@@ -47,6 +49,8 @@ public class Parser {
 	private final char QUOTE_CHARACTER = '"';
 	private final char SEPARATOR = ';';
 
+	private final HashMap<String, Command> methodMap;
+
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
 		File file = new File(configuration.getInput());
@@ -54,6 +58,7 @@ public class Parser {
 		encoding = VfkUtil.getEncoding(file);
 		br = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), VfkUtil.convertEncoding(encoding)));
+		methodMap = getMethodMap();
 	}
 
 	public Vfk getBatch() {
@@ -97,21 +102,9 @@ public class Parser {
 				String node = values[0];
 				String[] tokens = Arrays.copyOfRange(values, 1, values.length);
 
-				if (tryParseNemovitosti(node, tokens)) {
-				} else if (tryParseJednotky(node, tokens)) {
-				} else if (tryParseBonitniDilParcely(node, tokens)) {
-				} else if (tryParseVlastnictvi(node, tokens)) {
-				} else if (tryParseJinePravniVztahy(node, tokens)) {
-				} else if (tryParseRizeni(node, tokens)) {
-				} else if (tryParsePrvkyKatastralniMapy(node, tokens)) {
-				} else if (tryParseBonitovanePudneEkologickeJednotky(node,
-						tokens)) {
-				} else if (tryParseGeometrickyPlan(node, tokens)) {
-				} else if (tryParseRezervovanaCisla(node, tokens)) {
-				} else if (tryParseDefinicniBody(node, tokens)) {
-				} else if (tryParseAdresniMista(node, tokens)) {
-				} else if (tryParseHead(node, tokens)) {
-				}
+				Command command = methodMap.get(node);
+				if (command != null)
+					command.runCommand(tokens);
 
 				if ((actualRow % ROWS_PER_BATCH) == 0) {
 					log.info("Currently parsed row: " + actualRow);
@@ -278,338 +271,414 @@ public class Parser {
 		return (buffer != null);
 	}
 
-	private boolean tryParseHead(String node, String[] tokens) {
-		switch (node) {
-		case "&HZMENY":
-			zmeny = Integer.parseInt(tokens[0]);
-			break;
-		default:
-			return false;
-		}
-		return true;
+	interface Command {
+		void runCommand(String[] tokens);
 	}
 
-	private boolean tryParseNemovitosti(String node, String[] tokens) {
-		switch (node) {
-		case "&DPAR":
-			batch.getParcely().add(ParcelyParser.parse(tokens));
-			break;
-		case "&DBUD":
-			batch.getBudovy().add(BudovyParser.parse(tokens));
-			break;
-		case "&DCABU":
-			batch.getCastiBudov().add(CastiBudovParser.parse(tokens));
-			break;
-		case "&DZPOCHN":
-			batch.getZpOchranyNem().add(ZpOchranyNemParser.parse(tokens));
-			break;
-		case "&DDRUPOZ":
-			batch.getDPozemku().add(DPozemkuParser.parse(tokens));
-			break;
-		case "&DZPVYPO":
-			batch.getZpVyuzitiPoz().add(ZpVyuzitiPozParser.parse(tokens));
-			break;
-		case "&DZDPAZE":
-			batch.getZdrojeParcelZe().add(ZdrojeParcelZeParser.parse(tokens));
-			break;
-		case "&DZPURVY":
-			batch.getZpUrceniVymery().add(ZpUrceniVymeryParser.parse(tokens));
-			break;
-		case "&DTYPBUD":
-			batch.getTBudov().add(TBudovParser.parse(tokens));
-			break;
-		case "&DMAPLIS":
-			batch.getMapoveListy().add(MapoveListyParser.parse(tokens));
-			break;
-		case "&DKATUZE":
-			batch.getKatastrUzemi().add(KatastrUzemiParser.parse(tokens));
-			break;
-		case "&DOBCE":
-			batch.getObce().add(ObceParser.parse(tokens));
-			break;
-		case "&DCASOBC":
-			batch.getCastiObci().add(CastiObciParser.parse(tokens));
-			break;
-		case "&DOKRESY":
-			batch.getOkresy().add(OkresyParser.parse(tokens));
-			break;
-		case "&DKRAJE":
-			batch.getKraje().add(KrajeParser.parse(tokens));
-			break;
-		case "&DNKRAJE":
-			batch.getNoveKraje().add(NoveKrajeParser.parse(tokens));
-			break;
-		case "&DRZO":
-			batch.getRZpochr().add(RZpochrParser.parse(tokens));
-			break;
-		case "&DZPVYBU":
-			batch.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
-			break;
-		case "&DPS":
-			batch.getPravaStavby().add(PravaStavbyParser.parse(tokens));
-			break;
-		case "&DRU":
-			batch.getRUcelNem().add(RUcelNemParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+	private HashMap<String, Command> getMethodMap() {
+		Map<String, Command> methodMap = new HashMap<>();
 
-	private boolean tryParseJednotky(String node, String[] tokens) {
-		switch (node) {
-		case "&DJED":
-			batch.getJednotky().add(JednotkyParser.parse(tokens));
-			break;
-		case "&DTYPJED":
-			batch.getTJednotek().add(TJednotekParser.parse(tokens));
-			break;
-		case "&DZPVYJE":
-			batch.getZpVyuzitiJed().add(ZpVyuzitiJedParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&HZMENY", new Command() {
+			public void runCommand(String[] tokens) {
+				zmeny = Integer.parseInt(tokens[0]);
+			};
+		});
 
-	private boolean tryParseBonitniDilParcely(String node, String[] tokens) {
-		switch (node) {
-		case "&DBDP":
-			batch.getBonitDilyParc().add(BonitDilyParcParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DPAR", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getParcely().add(ParcelyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DBUD", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getBudovy().add(BudovyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DCABU", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getCastiBudov().add(CastiBudovParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DZPOCHN", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getZpOchranyNem().add(ZpOchranyNemParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DDRUPOZ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getDPozemku().add(DPozemkuParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DZPVYPO", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getZpVyuzitiPoz().add(ZpVyuzitiPozParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DZDPAZE", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getZdrojeParcelZe().add(
+						ZdrojeParcelZeParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DZPURVY", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getZpUrceniVymery().add(
+						ZpUrceniVymeryParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPBUD", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTBudov().add(TBudovParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DMAPLIS", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getMapoveListy().add(MapoveListyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DKATUZE", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getKatastrUzemi().add(KatastrUzemiParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DOBCE", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getObce().add(ObceParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DCASOBC", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getCastiObci().add(CastiObciParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DOKRESY", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getOkresy().add(OkresyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DKRAJE", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getKraje().add(KrajeParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DNKRAJE", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getNoveKraje().add(NoveKrajeParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DRZO", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getRZpochr().add(RZpochrParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DZPVYBU", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getZpVyuzitiBud().add(ZpVyuzitiBudParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DPS", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getPravaStavby().add(PravaStavbyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DRU", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getRUcelNem().add(RUcelNemParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParseVlastnictvi(String node, String[] tokens) {
-		switch (node) {
-		case "&DOPSUB":
-			batch.getOpravSubjekty().add(OpravSubjektyParser.parse(tokens));
-			break;
-		case "&DVLA":
-			batch.getVlastnictvi().add(VlastnictviParser.parse(tokens));
-			break;
-		case "&DCHAROS":
-			batch.getCharOs().add(CharOsParser.parse(tokens));
-			break;
-		case "&DTEL":
-			batch.getTelesa().add(TelesaParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DJED", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getJednotky().add(JednotkyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPJED", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTJednotek().add(TJednotekParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DZPVYJE", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getZpVyuzitiJed().add(ZpVyuzitiJedParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParseJinePravniVztahy(String node, String[] tokens) {
-		switch (node) {
-		case "&DJPV":
-			batch.getJinePravVztahy().add(JinePravVztahyParser.parse(tokens));
-			break;
-		case "&DTYPRAV":
-			batch.getTPravnichVzt().add(TPravnichVztParser.parse(tokens));
-			break;
-		case "&DRJPV":
-			batch.getRJpv().add(RJpvParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DBDP", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getBonitDilyParc().add(BonitDilyParcParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParseRizeni(String node, String[] tokens) {
-		switch (node) {
-		case "&DRIZENI":
-			batch.getRizeni().add(RizeniParser.parse(tokens));
-			break;
-		case "&DRIZKU":
-			batch.getRizeniKu().add(RizeniKuParser.parse(tokens));
-			break;
-		case "&DOBJRIZ":
-			batch.getObjektyRizeni().add(ObjektyRizeniParser.parse(tokens));
-			break;
-		case "&DPRERIZ":
-			batch.getPredmetyRizeni().add(PredmetyRizeniParser.parse(tokens));
-			break;
-		case "&DUCAST":
-			batch.getUcastnici().add(UcastniciParser.parse(tokens));
-			break;
-		case "&DADRUC":
-			batch.getAdresy().add(AdresyParser.parse(tokens));
-			break;
-		case "&DLISTIN":
-			batch.getListiny().add(ListinyParser.parse(tokens));
-			break;
-		case "&DDUL":
-			batch.getDalsiUdajeListiny().add(
-					DalsiUdajeListinyParser.parse(tokens));
-			break;
-		case "&DLDU":
-			batch.getListinyDalsiUdaje().add(
-					ListinyDalsiUdajeParser.parse(tokens));
-			break;
-		case "&DTYPLIS":
-			batch.getTListin().add(TListinParser.parse(tokens));
-			break;
-		case "&DTYPPRE":
-			batch.getTPredmetuR().add(TPredmetuRParser.parse(tokens));
-			break;
-		case "&DTYPRIZ":
-			batch.getTypyRizeni().add(TypyRizeniParser.parse(tokens));
-			break;
-		case "&DTYPUCA":
-			batch.getTypyUcastniku().add(TypyUcastnikuParser.parse(tokens));
-			break;
-		case "&DUCTYP":
-			batch.getUcastniciTyp().add(UcastniciTypParser.parse(tokens));
-			break;
-		case "&DRL":
-			batch.getRList().add(RListParser.parse(tokens));
-			break;
-		case "&DOBESMF":
-			batch.getObeslaniMf().add(ObeslaniMfParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DOPSUB", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getOpravSubjekty().add(OpravSubjektyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DVLA", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getVlastnictvi().add(VlastnictviParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DCHAROS", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getCharOs().add(CharOsParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTEL", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTelesa().add(TelesaParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParsePrvkyKatastralniMapy(String node, String[] tokens) {
-		switch (node) {
-		case "&DSOBR":
-			batch.getSouradniceObrazu().add(
-					SouradniceObrazuParser.parse(tokens));
-			break;
-		case "&DSBP":
-			batch.getSpojeniBPoloh().add(SpojeniBPolohParser.parse(tokens));
-			break;
-		case "&DSBM":
-			batch.getSpojeniBMapy().add(SpojeniBMapyParser.parse(tokens));
-			break;
-		case "&DKODCHB":
-			batch.getKodyCharQBodu().add(KodyCharQBoduParser.parse(tokens));
-			break;
-		case "&DTYPSOS":
-			batch.getTSouradSys().add(TSouradSysParser.parse(tokens));
-			break;
-		case "&DHP":
-			batch.getHraniceParcel().add(HraniceParcelParser.parse(tokens));
-			break;
-		case "&DOP":
-			batch.getObrazyParcel().add(ObrazyParcelParser.parse(tokens));
-			break;
-		case "&DOB":
-			batch.getObrazyBudov().add(ObrazyBudovParser.parse(tokens));
-			break;
-		case "&DDPM":
-			batch.getDalsiPrvkyMapy().add(DalsiPrvkyMapyParser.parse(tokens));
-			break;
-		case "&DOBBP":
-			batch.getObrazyBoduBp().add(ObrazyBoduBpParser.parse(tokens));
-			break;
-		case "&DTYPPPD":
-			batch.getTPrvkuPDat().add(TPrvkuPDatParser.parse(tokens));
-			break;
-		case "&DZVB":
-			batch.getZobrazeniVb().add(ZobrazeniVbParser.parse(tokens));
-			break;
-		case "&DPOM":
-			batch.getPrvkyOMapy().add(PrvkyOMapyParser.parse(tokens));
-			break;
-		case "&DSPOM":
-			batch.getSpojeniPoMapy().add(SpojeniPoMapyParser.parse(tokens));
-			break;
-		case "&DSPOL":
-			batch.getSouradnicePolohy().add(
-					SouradnicePolohyParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DJPV", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getJinePravVztahy().add(
+						JinePravVztahyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPRAV", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTPravnichVzt().add(TPravnichVztParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DRJPV", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getRJpv().add(RJpvParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParseBonitovanePudneEkologickeJednotky(String node,
-			String[] tokens) {
-		switch (node) {
-		case "&DHBPEJ":
-			batch.getHraniceBpej().add(HraniceBpejParser.parse(tokens));
-			break;
-		case "&DOBPEJ":
-			batch.getOznaceniBpej().add(OznaceniBpejParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DRIZENI", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getRizeni().add(RizeniParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DRIZKU", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getRizeniKu().add(RizeniKuParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DOBJRIZ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getObjektyRizeni().add(ObjektyRizeniParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DPRERIZ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getPredmetyRizeni().add(
+						PredmetyRizeniParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DUCAST", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getUcastnici().add(UcastniciParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DADRUC", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getAdresy().add(AdresyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DLISTIN", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getListiny().add(ListinyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DDUL", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getDalsiUdajeListiny().add(
+						DalsiUdajeListinyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DLDU", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getListinyDalsiUdaje().add(
+						ListinyDalsiUdajeParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPLIS", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTListin().add(TListinParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPPRE", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTPredmetuR().add(TPredmetuRParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPRIZ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTypyRizeni().add(TypyRizeniParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPUCA", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTypyUcastniku().add(TypyUcastnikuParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DUCTYP", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getUcastniciTyp().add(UcastniciTypParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DRL", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getRList().add(RListParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DOBESMF", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getObeslaniMf().add(ObeslaniMfParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParseGeometrickyPlan(String node, String[] tokens) {
-		switch (node) {
-		case "&DNZ":
-			batch.getNavrhyZmenKm().add(NavrhyZmenKmParser.parse(tokens));
-			break;
-		case "&DZPMZ":
-			batch.getZpmz().add(ZpmzParser.parse(tokens));
-			break;
-		case "&DNZZP":
-			batch.getNzZpmz().add(NzZpmzParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DSOBR", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getSouradniceObrazu().add(
+						SouradniceObrazuParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DSBP", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getSpojeniBPoloh().add(SpojeniBPolohParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DSBM", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getSpojeniBMapy().add(SpojeniBMapyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DKODCHB", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getKodyCharQBodu().add(KodyCharQBoduParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPSOS", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTSouradSys().add(TSouradSysParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DHP", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getHraniceParcel().add(HraniceParcelParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DOP", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getObrazyParcel().add(ObrazyParcelParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DOB", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getObrazyBudov().add(ObrazyBudovParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DDPM", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getDalsiPrvkyMapy().add(
+						DalsiPrvkyMapyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DOBBP", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getObrazyBoduBp().add(ObrazyBoduBpParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DTYPPPD", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getTPrvkuPDat().add(TPrvkuPDatParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DZVB", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getZobrazeniVb().add(ZobrazeniVbParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DPOM", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getPrvkyOMapy().add(PrvkyOMapyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DSPOM", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getSpojeniPoMapy().add(SpojeniPoMapyParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DSPOL", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getSouradnicePolohy().add(
+						SouradnicePolohyParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParseRezervovanaCisla(String node, String[] tokens) {
-		switch (node) {
-		case "&DRECI":
-			batch.getRezParcelniCisla().add(
-					RezParcelniCislaParser.parse(tokens));
-			break;
-		case "&DDOCI":
-			batch.getDotcenaParCisla().add(DotcenaParCislaParser.parse(tokens));
-			break;
-		case "&DDOHICI":
-			batch.getDotHistParCisla().add(DotHistParCislaParser.parse(tokens));
-			break;
-		case "&DREZBP":
-			batch.getRezCislaPbpp().add(RezCislaPbppParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DHBPEJ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getHraniceBpej().add(HraniceBpejParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DOBPEJ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getOznaceniBpej().add(OznaceniBpejParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParseDefinicniBody(String node, String[] tokens) {
-		switch (node) {
-		case "&DOBDEBO":
-			batch.getObrazyDefBodu().add(ObrazyDefBoduParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
-	}
+		methodMap.put("&DNZ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getNavrhyZmenKm().add(NavrhyZmenKmParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DZPMZ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getZpmz().add(ZpmzParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DNZZP", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getNzZpmz().add(NzZpmzParser.parse(tokens));
+			};
+		});
 
-	private boolean tryParseAdresniMista(String node, String[] tokens) {
-		switch (node) {
-		case "&DBUDOBJ":
-			batch.getBudObj().add(BudObjParser.parse(tokens));
-			break;
-		case "&DADROBJ":
-			batch.getAdresa().add(AdresaParser.parse(tokens));
-			break;
-		default:
-			return false;
-		}
-		return true;
+		methodMap.put("&DRECI", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getRezParcelniCisla().add(
+						RezParcelniCislaParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DDOCI", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getDotcenaParCisla().add(
+						DotcenaParCislaParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DDOHICI", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getDotHistParCisla().add(
+						DotHistParCislaParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DREZBP", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getRezCislaPbpp().add(RezCislaPbppParser.parse(tokens));
+			};
+		});
+
+		methodMap.put("&DOBDEBO", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getObrazyDefBodu().add(ObrazyDefBoduParser.parse(tokens));
+			};
+		});
+
+		methodMap.put("&DBUDOBJ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getBudObj().add(BudObjParser.parse(tokens));
+			};
+		});
+		methodMap.put("&DADROBJ", new Command() {
+			public void runCommand(String[] tokens) {
+				batch.getAdresa().add(AdresaParser.parse(tokens));
+			};
+		});
+
+		return (HashMap<String, Command>) methodMap;
+
 	}
 }
