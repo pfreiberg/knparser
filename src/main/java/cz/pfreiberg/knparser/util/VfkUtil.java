@@ -18,8 +18,11 @@ import cz.pfreiberg.knparser.parser.ParserException;
  * 
  */
 public class VfkUtil {
-
-	private final static SimpleDateFormat format = new SimpleDateFormat(
+	
+	private final static SimpleDateFormat formatParse = new SimpleDateFormat(
+			"dd.MM.yyyy HH:mm:ss");
+	
+	private final static SimpleDateFormat formatStoring = new SimpleDateFormat(
 			"dd.MM.yyyy HH:mm:ss");
 
 	public static String getEncoding(File file) throws ParserException,
@@ -103,7 +106,7 @@ public class VfkUtil {
 			return null;
 
 		try {
-			return format.parse(value[i]);
+			return formatParse.parse(value[i]);
 		} catch (ParseException e) {
 			return null;
 		}
@@ -132,7 +135,7 @@ public class VfkUtil {
 
 		if (value instanceof Date) {
 			Date date = (Date) value;
-			return "\"" + format.format(date) + "\"";
+			return "\"" + formatStoring.format(date) + "\"";
 		} else {
 			return "\"" + value + "\"";
 		}
@@ -149,7 +152,7 @@ public class VfkUtil {
 			return "'" + (String) value + "'";
 		} else if (value instanceof Date) {
 			Date date = (Date) value;
-			return "to_date('" + format.format(date)
+			return "to_date('" + formatStoring.format(date)
 					+ "','dd.mm.yyyy hh24:mi:ss')";
 		} else {
 			return String.valueOf(value);

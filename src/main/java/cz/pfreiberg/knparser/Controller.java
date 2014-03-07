@@ -2,6 +2,8 @@ package cz.pfreiberg.knparser;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -28,9 +30,10 @@ public class Controller {
 	private static final Logger log = Logger.getLogger(Controller.class);
 
 	private final Configuration configuration;
+	private final int BUFFER_SIZE = 9;
 	private Parser parser;
 	private long seconds;
-	
+
 	private boolean parserRunning;
 
 	public Controller(Configuration configuration)
@@ -39,29 +42,35 @@ public class Controller {
 		parser = new Parser(configuration);
 	}
 
-	public void run() throws FileNotFoundException, IOException {
+	Object object;
+
+	public void run() {
 
 		ScheduledExecutorService executor = getTimer();
 
+		BlockingQueue<Vfk> queue = new ArrayBlockingQueue<>(BUFFER_SIZE);
+		Producer producer = new Producer(queue);
+		Consumer consumer = new Consumer(queue);
+
+		log.info("Parsing started.");
+		parserRunning = true;
+		Thread t1 = new Thread(producer);
+		Thread t2 = new Thread(consumer);
+		t1.start();
+		t2.start();
 		try {
-			Vfk vfk;
-			log.info("Parsing started.");
-			parserRunning = true;
-			do {
-				vfk = parseBatch();
-				log.info("Batch is parsed. Starting the storage sequence.");
-				storeParsedData(vfk);
-				Parser.setFirstBatchToFalse();
-			} while (parserRunning);
-
-			log.info(parser.getEscapedRows() + " row/s was escaped.");
-			log.info("Parsing finished.");
-		} finally {
-			executor.shutdown();
+			t1.join();
+			t2.join();
+		} catch (InterruptedException e) {
+			log.fatal("Fatal error during parsing.");
+			log.debug("Stack trace:", e);
 		}
+		log.info(parser.getEscapedRows() + " row/s was escaped.");
+		log.info("Parsing finished.");
 
+		executor.shutdown();
 	}
-
+	
 	private ScheduledExecutorService getTimer() {
 
 		Runnable runnableTime = new Runnable() {
@@ -76,7 +85,63 @@ public class Controller {
 		return executor;
 	}
 
-	private Vfk parseBatch() throws FileNotFoundException, IOException {
+
+	private class Producer implements Runnable {
+
+		private BlockingQueue<Vfk> queue;
+
+		public Producer(BlockingQueue<Vfk> queue) {
+			this.queue = queue;
+		}
+
+		@Override
+		public void run() {
+			Vfk vfk;
+			try {
+				do {
+					vfk = parseBatch();
+					log.info("Batch buffer size:  " + (queue.size() + 1));
+					queue.put(vfk);
+				} while (parserRunning);
+			} catch (IOException e) {
+				log.fatal("Error during reading input file.");
+				log.debug("Stack trace:", e);
+			} catch (InterruptedException e) {
+				log.fatal("Last parsed batch is lost.");
+				log.debug("Stack trace:", e);
+			}
+		}
+	}
+
+	private class Consumer implements Runnable {
+
+		private BlockingQueue<Vfk> queue;
+
+		public Consumer(BlockingQueue<Vfk> queue) {
+			this.queue = queue;
+		}
+
+		@Override
+		public void run() {
+			Vfk vfk = null;
+			while (parserRunning || queue.size() > 0) {
+				try {
+					vfk = queue.take();
+					storeParsedData(vfk);
+					Parser.setFirstBatchToFalse();
+					log.info("Batch is stored.");
+				} catch (InterruptedException e) {
+					log.error("Error during storing last batch. Trying again.");
+					log.debug("Stack trace:", e);
+					Thread.currentThread().interrupt();
+				}
+			}
+
+		}
+
+	}
+
+	private Vfk parseBatch() throws IOException {
 		parser.parseFile();
 		parserRunning = parser.isParsing();
 		return parser.getBatch();
