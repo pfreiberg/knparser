@@ -48,7 +48,8 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		methodsName = getMethods(primaryKeys);
 	}
 
-	private Connection establishConnection(ConnectionParameters connectionParameters) {
+	private Connection establishConnection(
+			ConnectionParameters connectionParameters) {
 		do {
 			try {
 				return getConnection(connectionParameters);
@@ -226,6 +227,10 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 
 	protected final void executeBatch(PreparedStatement preparedStatement)
 			throws SQLException {
+		
+		if (batchSize == 0)
+			return;
+
 		batchSize = 0;
 		preparedStatement.executeBatch();
 		preparedStatement.clearBatch();

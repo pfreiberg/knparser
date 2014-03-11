@@ -100,7 +100,7 @@ public class Controller {
 			try {
 				do {
 					vfk = parseBatch();
-					log.info("Batch buffer size:  " + (queue.size() + 1));
+					log.info("Batch buffer size: " + (queue.size() + 1));
 					queue.put(vfk);
 				} while (parserRunning);
 			} catch (IOException e) {
@@ -158,7 +158,8 @@ public class Controller {
 					EncodingCzech.windows1250.getEncodingVfk(),
 					configuration.getOutput());
 		}
-
+		exporterFactory.getKatastrUzemiExporter(vfk.getKatastrUzemi());
+		
 		exportBonitniDilParcely(vfk, exporterFactory);
 		exportJednotky(vfk, exporterFactory);
 		exporterJinePravniVztahy(vfk, exporterFactory);
