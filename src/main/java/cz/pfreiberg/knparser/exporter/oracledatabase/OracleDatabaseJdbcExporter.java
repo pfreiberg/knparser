@@ -30,7 +30,6 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			.getLogger(OracleDatabaseJdbcExporter.class);
 
 	protected static final int BATCH_MAX = 250;
-	private int batchSize = 0;
 
 	protected final Connection connection;
 	protected List<String> primaryKeys;
@@ -210,30 +209,9 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return primaryKeyValues;
 	}
 
-	protected final void addToBatch(PreparedStatement preparedStatement)
-			throws SQLException {
-		preparedStatement.addBatch();
+	protected void executeStatement(PreparedStatement preparedStatement) throws SQLException {
+		preparedStatement.execute();
 		preparedStatement.clearParameters();
-		batchSize++;
-		executeBatchIfFull(preparedStatement);
-	}
-
-	private void executeBatchIfFull(PreparedStatement preparedStatement)
-			throws SQLException {
-		if (batchSize >= BATCH_MAX) {
-			executeBatch(preparedStatement);
-		}
-	}
-
-	protected final void executeBatch(PreparedStatement preparedStatement)
-			throws SQLException {
-		
-		if (batchSize == 0)
-			return;
-
-		batchSize = 0;
-		preparedStatement.executeBatch();
-		preparedStatement.clearBatch();
 	}
 
 	private String composeSqlStatement(OracleDatabaseParameters parameters,

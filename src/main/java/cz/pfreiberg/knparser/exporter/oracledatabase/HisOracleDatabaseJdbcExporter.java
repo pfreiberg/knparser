@@ -26,10 +26,6 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 	protected final PreparedStatement psInsert;
 	protected final PreparedStatement psHisInsert;
 
-	private enum LastInserted {
-		record(), hisRecord(), nothing();
-	}
-
 	public HisOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name,
 			String insert, String hisInsert) {
@@ -52,36 +48,20 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			List<T> list, String name) {
 		try {
 			connection.setAutoCommit(false);
-			LastInserted lastInserted = LastInserted.nothing;
 			for (T record : list) {
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 						name, "DATUM_VZNIKU", record.getDatumVzniku());
 				try {
 					if (record.getDatumZaniku() == null) {
-
-						if (lastInserted != LastInserted.record)
-							executeBatch(psHisInsert);
-
 						processRecord(parameters, record);
-						lastInserted = LastInserted.record;
 					} else {
-
-						if (lastInserted != LastInserted.hisRecord)
-							executeBatch(psInsert);
-
 						processHistoricalRecord(parameters, record);
-						lastInserted = LastInserted.hisRecord;
 					}
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
 				}
 			}
-
-			if (lastInserted == LastInserted.record)
-				executeBatch(psInsert);
-			else
-				executeBatch(psHisInsert);
 			connection.commit();
 		} catch (SQLException e) {
 			log.error("Error during commiting batch in table " + name + ".");
@@ -124,10 +104,10 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 		try {
 			if (isRecord) {
 				insertRecord(rawRecord);
-				addToBatch(psInsert);
+				executeStatement(psInsert);
 			} else {
 				insertHistoricalRecord(rawRecord);
-				addToBatch(psHisInsert);
+				executeStatement(psHisInsert);
 			}
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);

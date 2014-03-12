@@ -51,7 +51,6 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 					log.error(e.getMessage());
 				}
 			}
-			executeBatch(psInsert);
 			connection.commit();
 		} catch (SQLException e) {
 			log.error("Error during commiting batch in table " + name + ".");
@@ -67,13 +66,13 @@ public abstract class StavOracleDatabaseJdbcExporter extends
 		delete(parameters, null, false);
 		try {
 			insert(parameters.getTable(), record, false);
-			addToBatch(psInsert);
+			executeStatement(psInsert);
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);
 			throw new JdbcException("Error during inserting record in "
 					+ LogUtil.getClassWhichThrowsException(e) + "."
 					+ "\n" + record.toString());
-		}
+		} 
 	}
 
 }
