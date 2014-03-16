@@ -2,7 +2,7 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 
 import java.util.List;
 
-import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.HraniceBpej;
+import cz.pfreiberg.knparser.domain.bpej.HraniceBpej;
 
 public class HraniceBpejOracleLoaderFileExporter extends OracleLoaderFileExporter {
 

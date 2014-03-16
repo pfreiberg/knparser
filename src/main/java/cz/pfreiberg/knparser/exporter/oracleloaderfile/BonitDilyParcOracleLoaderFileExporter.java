@@ -2,7 +2,7 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 
 import java.util.List;
 
-import cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc;
+import cz.pfreiberg.knparser.domain.bonitnidilyparcel.BonitDilyParc;
 
 public class BonitDilyParcOracleLoaderFileExporter extends OracleLoaderFileExporter {
 

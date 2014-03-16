@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import cz.pfreiberg.knparser.ConnectionParameters;
-import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.HraniceBpej;
+import cz.pfreiberg.knparser.domain.bpej.HraniceBpej;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class HraniceBpejOracleDatabaseJdbcExporter extends

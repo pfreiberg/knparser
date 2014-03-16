@@ -2,7 +2,7 @@ package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 
 import java.util.List;
 
-import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.OznaceniBpej;
+import cz.pfreiberg.knparser.domain.bpej.OznaceniBpej;
 
 public class OznaceniBpejOracleLoaderFileExporter extends OracleLoaderFileExporter {
 

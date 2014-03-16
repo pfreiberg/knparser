@@ -24,7 +24,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
  * 
  */
 public abstract class OracleDatabaseJdbcExporter implements Exporter,
-		OracleDatabaseJdbcOperations {
+		JdbcOperations {
 
 	private static final Logger log = Logger
 			.getLogger(OracleDatabaseJdbcExporter.class);

@@ -5,9 +5,9 @@ import java.util.List;
 
 import cz.pfreiberg.knparser.domain.adresnimista.Adresa;
 import cz.pfreiberg.knparser.domain.adresnimista.BudObj;
-import cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc;
-import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.HraniceBpej;
-import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.OznaceniBpej;
+import cz.pfreiberg.knparser.domain.bonitnidilyparcel.BonitDilyParc;
+import cz.pfreiberg.knparser.domain.bpej.HraniceBpej;
+import cz.pfreiberg.knparser.domain.bpej.OznaceniBpej;
 import cz.pfreiberg.knparser.domain.definicnibody.ObrazyDefBodu;
 import cz.pfreiberg.knparser.domain.geometrickyplan.NavrhyZmenKm;
 import cz.pfreiberg.knparser.domain.geometrickyplan.NzZpmz;

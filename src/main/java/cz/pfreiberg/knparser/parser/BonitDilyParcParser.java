@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.parser;
 
-import cz.pfreiberg.knparser.domain.bonitnidilparcely.BonitDilyParc;
+import cz.pfreiberg.knparser.domain.bonitnidilyparcel.BonitDilyParc;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class BonitDilyParcParser {

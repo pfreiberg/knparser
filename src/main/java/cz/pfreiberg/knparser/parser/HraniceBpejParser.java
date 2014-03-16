@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.parser;
 
-import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.HraniceBpej;
+import cz.pfreiberg.knparser.domain.bpej.HraniceBpej;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class HraniceBpejParser {

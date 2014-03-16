@@ -158,8 +158,7 @@ public class Controller {
 					EncodingCzech.windows1250.getEncodingVfk(),
 					configuration.getOutput());
 		}
-		exporterFactory.getKatastrUzemiExporter(vfk.getKatastrUzemi());
-		
+
 		exportBonitniDilParcely(vfk, exporterFactory);
 		exportJednotky(vfk, exporterFactory);
 		exporterJinePravniVztahy(vfk, exporterFactory);

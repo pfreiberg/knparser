@@ -1,6 +1,6 @@
 package cz.pfreiberg.knparser.parser;
 
-import cz.pfreiberg.knparser.domain.bonitovanepudneekologickejednotky.OznaceniBpej;
+import cz.pfreiberg.knparser.domain.bpej.OznaceniBpej;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 public class OznaceniBpejParser {
