@@ -34,6 +34,18 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	protected List<String> methodsName;
 	protected List<Object> primaryKeysValues;
 
+	protected long findCount = 0;
+	protected long insertCount = 0;
+	protected long deleteCount = 0;
+	protected boolean debug = false;
+
+	public OracleDatabaseJdbcExporter(
+			ConnectionParameters connectionParameters, String name,
+			boolean debug) {
+		this(connectionParameters, name);
+		this.debug = debug;
+	}
+
 	public OracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name) {
 		Connection tempConnection = null;
@@ -161,6 +173,12 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		}
 
 		select = composeSqlStatement(parameters, select);
+
+		if (debug) {
+			findCount++;
+			log.info(select);
+		}
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -189,6 +207,12 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 			delete = "DELETE FROM " + parameters.getTable() + " WHERE *pk*";
 		}
 		delete = composeSqlStatement(parameters, delete);
+
+		if (debug) {
+			deleteCount++;
+			log.info(delete);
+		}
+
 		PreparedStatement ps = null;
 		try {
 			ps = connection.prepareStatement(delete);

@@ -29,7 +29,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 	public HisOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name,
 			String insert, String hisInsert) {
-		super(connectionParameters, name);
+		super(connectionParameters, name, true);
 		PreparedStatement tempPsInsert = null;
 		PreparedStatement tempHisPsInsert = null;
 		try {
@@ -48,21 +48,33 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			List<T> list, String name) {
 		try {
 			connection.setAutoCommit(false);
+			int i = 1;
+			log.info("Zacatek ukladani - workflow Historicke tabulky");
 			for (T record : list) {
+				log.info("--- zpracovani zaznamu (" + i + ")" + "---");
 				primaryKeysValues = getPrimaryKeysValues(record, methodsName);
 				OracleDatabaseParameters parameters = new OracleDatabaseParameters(
 						name, "DATUM_VZNIKU", record.getDatumVzniku());
 				try {
 					if (record.getDatumZaniku() == null) {
+						log.info("- zaznam -");
 						processRecord(parameters, record);
 					} else {
+						log.info("- historicky zaznam -");
 						processHistoricalRecord(parameters, record);
 					}
 				} catch (JdbcException e) {
 					log.error(e.getMessage());
 				}
+				log.info("--- zaznam zpracovan ---");
+				i++;
 			}
+			log.info("--- zacatek commit ---");
 			connection.commit();
+			log.info("--- konec commitu ---");
+			log.info("Konec ukladani");
+			log.info("Vysledky zpracovani");
+			log.info("Provedeno: " + findCount + " FIND/SELECT, " + deleteCount + " DELETE, " + insertCount + " INSERT");
 		} catch (SQLException e) {
 			log.error("Error during commiting batch in table " + name + ".");
 			log.debug("Stack trace: " + e);
@@ -105,9 +117,13 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 			if (isRecord) {
 				insertRecord(rawRecord);
 				executeStatement(psInsert);
+				insertCount++;
+				log.info("insert do tabulky");
 			} else {
 				insertHistoricalRecord(rawRecord);
 				executeStatement(psHisInsert);
+				insertCount++;
+				log.info("insert do historicke tabulky");
 			}
 		} catch (SQLException e) {
 			log.debug("Stack trace:", e);
