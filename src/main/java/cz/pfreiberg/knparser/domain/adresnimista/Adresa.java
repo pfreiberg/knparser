@@ -6,7 +6,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
  * 
- * Třída reprezentující "Adresy".
+ * Třída reprezentující "Adresa".
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 

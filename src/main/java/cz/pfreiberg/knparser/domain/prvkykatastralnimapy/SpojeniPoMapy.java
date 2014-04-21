@@ -8,7 +8,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 /**
  * 
  * Třída reprezentující
- * "Spojení prvků orientační mapy – definuje liniové prvky.".
+ * "Spojení prvků orientační mapy – definuje liniové prvky".
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 

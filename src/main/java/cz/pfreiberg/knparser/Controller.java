@@ -12,8 +12,8 @@ import org.apache.log4j.Logger;
 
 import cz.pfreiberg.knparser.domain.Vfk;
 import cz.pfreiberg.knparser.exporterfactory.ExporterFactory;
-import cz.pfreiberg.knparser.exporterfactory.OracleDatabaseExporterFactory;
-import cz.pfreiberg.knparser.exporterfactory.OracleLoaderExporterFactory;
+import cz.pfreiberg.knparser.exporterfactory.OracleDatabaseJdbcExporterFactory;
+import cz.pfreiberg.knparser.exporterfactory.OracleLoaderFileExporterFactory;
 import cz.pfreiberg.knparser.parser.Parser;
 import cz.pfreiberg.knparser.parser.ParserException;
 import cz.pfreiberg.knparser.util.EncodingCzech;
@@ -34,8 +34,6 @@ public class Controller {
 	private final Parser parser;
 	private long seconds;
 
-	private boolean parserRunning;
-
 	public Controller(Configuration configuration)
 			throws FileNotFoundException, ParserException, IOException {
 		this.configuration = configuration;
@@ -53,7 +51,6 @@ public class Controller {
 		Consumer consumer = new Consumer(queue);
 
 		log.info("Parsing started.");
-		parserRunning = true;
 		Thread t1 = new Thread(producer);
 		Thread t2 = new Thread(consumer);
 		t1.start();
@@ -70,7 +67,7 @@ public class Controller {
 
 		executor.shutdown();
 	}
-	
+
 	private ScheduledExecutorService getTimer() {
 
 		Runnable runnableTime = new Runnable() {
@@ -84,7 +81,6 @@ public class Controller {
 		executor.scheduleAtFixedRate(runnableTime, 0, 10, TimeUnit.SECONDS);
 		return executor;
 	}
-
 
 	private class Producer implements Runnable {
 
@@ -102,7 +98,7 @@ public class Controller {
 					vfk = parseBatch();
 					log.info("Batch buffer size: " + (queue.size() + 1));
 					queue.put(vfk);
-				} while (parserRunning);
+				} while (!vfk.isLastBatch());
 			} catch (IOException e) {
 				log.fatal("Error during reading input file.");
 				log.debug("Stack trace:", e);
@@ -124,12 +120,17 @@ public class Controller {
 		@Override
 		public void run() {
 			Vfk vfk = null;
-			while (parserRunning || queue.size() > 0) {
+			while (true) {
 				try {
 					vfk = queue.take();
 					storeParsedData(vfk);
 					Parser.setFirstBatchToFalse();
 					log.info("Batch is stored.");
+
+					if (vfk.isLastBatch()) {
+						break;
+					}
+
 				} catch (InterruptedException e) {
 					log.error("Error during storing last batch. Trying again.");
 					log.debug("Stack trace:", e);
@@ -143,7 +144,6 @@ public class Controller {
 
 	private Vfk parseBatch() throws IOException {
 		parser.parseFile();
-		parserRunning = parser.isParsing();
 		return parser.getBatch();
 	}
 
@@ -151,11 +151,11 @@ public class Controller {
 
 		ExporterFactory exporterFactory;
 		if (configuration.isConnectionParametersValid()) {
-			exporterFactory = new OracleDatabaseExporterFactory(
+			exporterFactory = new OracleDatabaseJdbcExporterFactory(
 					configuration.getConnection());
 		} else {
-			exporterFactory = new OracleLoaderExporterFactory(vfk.getZmeny(),
-					EncodingCzech.windows1250.getEncodingVfk(),
+			exporterFactory = new OracleLoaderFileExporterFactory(
+					vfk.getZmeny(), EncodingCzech.windows1250.getEncodingVfk(),
 					configuration.getOutput());
 		}
 
@@ -171,6 +171,7 @@ public class Controller {
 		exporterRezervovanaCisla(vfk, exporterFactory);
 		exporterDefinicniBody(vfk, exporterFactory);
 		exporterAdresniMista(vfk, exporterFactory);
+
 	}
 
 	private void exportBonitniDilParcely(Vfk vfk,

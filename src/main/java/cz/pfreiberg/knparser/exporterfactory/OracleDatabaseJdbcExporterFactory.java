@@ -150,14 +150,14 @@ import cz.pfreiberg.knparser.exporter.oracledatabase.ZpVyuzitiJedOracleDatabaseJ
 import cz.pfreiberg.knparser.exporter.oracledatabase.ZpVyuzitiPozOracleDatabaseJdbcExporter;
 import cz.pfreiberg.knparser.exporter.oracledatabase.ZpmzOracleDatabaseJdbcExporter;
 
-public class OracleDatabaseExporterFactory implements ExporterFactory {
+public class OracleDatabaseJdbcExporterFactory implements ExporterFactory {
 
 	private static final Logger log = Logger
-			.getLogger(OracleDatabaseExporterFactory.class);
+			.getLogger(OracleDatabaseJdbcExporterFactory.class);
 	
 	private final ConnectionParameters connection;
 
-	public OracleDatabaseExporterFactory(ConnectionParameters connection) {
+	public OracleDatabaseJdbcExporterFactory(ConnectionParameters connection) {
 		this.connection = connection;
 	}
 

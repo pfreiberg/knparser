@@ -11,8 +11,7 @@ public class SpojeniPoMapyOracleDatabaseJdbcExporter extends
 		HisOracleDatabaseJdbcExporter {
 
 	private final static String name = "SPOJENI_PO_MAPY";
-	private final static String insert = "INSERT INTO " + name + "_MIN"
-			+ " VALUES" + "(?,?,?,?,?,?,?,?,?)";
+	private final static String insert = "INSERT INTO " + name + " VALUES" + "(?,?,?,?,?,?,?,?,?)";
 	private final static String hisInsert = "INSERT INTO " + name + "_MIN"
 			+ " VALUES" + "(SEQ_SPOJENI_PO_MAPY_MIN.nextval,?,?,?,?,?,?,?,?,?)";
 

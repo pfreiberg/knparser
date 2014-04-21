@@ -189,6 +189,8 @@ public class Vfk {
 	private List<Telesa> telesa;
 	private List<Vlastnictvi> vlastnictvi;
 
+	private boolean lastBatch;
+
 	public Vfk() {
 		// Adresní místa
 		adresa = new ArrayList<Adresa>();
@@ -896,6 +898,14 @@ public class Vfk {
 
 	public void setRJpv(List<RJpv> rJpv) {
 		this.rJpv = rJpv;
+	}
+
+	public boolean isLastBatch() {
+		return lastBatch;
+	}
+
+	public void setLastBatch(boolean lastBatch) {
+		this.lastBatch = lastBatch;
 	}
 
 }

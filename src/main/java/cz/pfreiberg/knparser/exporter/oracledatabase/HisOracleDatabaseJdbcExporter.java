@@ -25,7 +25,7 @@ public abstract class HisOracleDatabaseJdbcExporter extends
 
 	protected final PreparedStatement psInsert;
 	protected final PreparedStatement psHisInsert;
-
+	
 	public HisOracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name,
 			String insert, String hisInsert) {

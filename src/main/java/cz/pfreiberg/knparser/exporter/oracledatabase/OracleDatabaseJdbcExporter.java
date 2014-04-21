@@ -29,8 +29,6 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	private static final Logger log = Logger
 			.getLogger(OracleDatabaseJdbcExporter.class);
 
-	protected static final int BATCH_MAX = 250;
-
 	protected final Connection connection;
 	protected List<String> primaryKeys;
 	protected List<String> methodsName;
@@ -39,30 +37,48 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 	public OracleDatabaseJdbcExporter(
 			ConnectionParameters connectionParameters, String name) {
 		Connection tempConnection = null;
+		int attempts = 5;
 		do {
-			tempConnection = establishConnection(connectionParameters);
-			primaryKeys = getPrimaryKeys(tempConnection, name);
-		} while (tempConnection == null && primaryKeys == null);
+			tempConnection = establishConnection(connectionParameters, attempts);
+			attempts--;
+		} while (tempConnection == null && attempts > 0);
+
+		if (tempConnection == null) {
+			log.fatal("Can't established connection for table " + name);
+			log.info("Exiting.");
+			System.exit(0);
+		}
+
+		primaryKeys = getPrimaryKeys(tempConnection, name);
+		if (primaryKeys == null) {
+			log.fatal("Can't fetch primary keys for table " + name + ".");
+			log.info("Exiting.");
+			closeConnection(tempConnection);
+			System.exit(0);
+		}
+
 		connection = tempConnection;
 		methodsName = getMethods(primaryKeys);
 	}
 
 	private Connection establishConnection(
-			ConnectionParameters connectionParameters) {
-		do {
+			ConnectionParameters connectionParameters, int attempts) {
+		try {
+			return getConnection(connectionParameters);
+		} catch (SQLException e) {
+			log.error("Connection failed.");
+			log.debug("Stack trace:", e);
 			try {
-				return getConnection(connectionParameters);
-			} catch (SQLException e) {
-				log.error("Connection failed.");
-				log.debug("Stack trace:", e);
-				log.info("Attempting to reconnect in 5 seconds.");
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException i) {
-					Thread.currentThread().interrupt();
+				if ((attempts - 1) > 0) {
+					log.info("Attempting to reconnect in 10 seconds.");
+					log.info((attempts - 1) + " attempts remaining.");
+					Thread.sleep(10000);
 				}
+			} catch (InterruptedException i) {
+				Thread.currentThread().interrupt();
 			}
-		} while (true);
+			return null;
+		}
 	}
 
 	@Override
@@ -209,7 +225,8 @@ public abstract class OracleDatabaseJdbcExporter implements Exporter,
 		return primaryKeyValues;
 	}
 
-	protected void executeStatement(PreparedStatement preparedStatement) throws SQLException {
+	protected void executeStatement(PreparedStatement preparedStatement)
+			throws SQLException {
 		preparedStatement.execute();
 		preparedStatement.clearParameters();
 	}

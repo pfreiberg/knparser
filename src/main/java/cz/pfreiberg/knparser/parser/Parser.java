@@ -20,11 +20,11 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
  * Parser výměnného formátu katastru nemovitostí. Z konfiguračního souboru je
- * zjištěno, kolik řádků se má najednou maximálně zpracovat a ze souboru se
- * získá jeho kódování. Po načtení a rozparsování jednoho řádku je určeno, do
- * jaké doménové třídy má být uložen. Po zpracování daného počtu řádku (nebo
- * dosažení konce souboru) jsou pak již instance doménových tříd vráceny
- * Controlleru.
+ * zjištěno kolik řádků se má najednou maximálně zpracovat a ze souboru se získá
+ * kódování. Po načtení a zpracování jednoho řádku je určeno do jaké doménové
+ * třídy má být uložen. Po zpracování daného počtu řádku (nebo dosažení konce
+ * souboru) jsou pak již instance doménových tříd (zapouzdřeny ve třídě Vfk)
+ * vráceny Controlleru.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 
@@ -35,7 +35,6 @@ public class Parser {
 
 	private static boolean firstBatch = true;
 
-	private boolean isParsing = true;
 	private int escapedRows;
 
 	private BufferedReader br;
@@ -70,10 +69,6 @@ public class Parser {
 		return escapedRows;
 	}
 
-	public boolean isParsing() {
-		return isParsing;
-	}
-
 	public static boolean isFirstBatch() {
 		return firstBatch;
 	}
@@ -86,6 +81,7 @@ public class Parser {
 
 	public void parseFile() throws IOException {
 		batch = new Vfk();
+		batch.setLastBatch(false);
 		do {
 			String[] values;
 			try {
@@ -118,7 +114,7 @@ public class Parser {
 		} while (true);
 
 		log.info("Last row: " + actualRow);
-		isParsing = false;
+		batch.setLastBatch(true);
 		batch.setZmeny(zmeny);
 	}
 

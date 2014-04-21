@@ -4,7 +4,7 @@ import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
  * 
- * Třída reprezentující "Hlavičky geometrických plánů a ostatních změn KM.".
+ * Třída reprezentující "Hlavičky geometrických plánů a ostatních změn KM".
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
  * 

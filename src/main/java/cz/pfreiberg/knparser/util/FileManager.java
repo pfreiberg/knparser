@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 /**
  * Vytváří soubory pro ukládání dat a konfiguračních souborů. Následně tyto
@@ -19,10 +20,12 @@ import org.apache.commons.io.FileUtils;
  */
 public class FileManager {
 
+	private static final Logger log = Logger.getLogger(FileManager.class);
+
 	private final static String END_OF_LINE = "\n";
 
 	public static void writeToDataFile(File file, String encoding,
-			Collection<?> lines) throws IOException {
+			Collection<?> lines) {
 
 		OutputStream output = null;
 		try {
@@ -32,8 +35,13 @@ public class FileManager {
 			writeData(lines, buffer, Charset.forName(encoding), filledFile);
 			buffer.flush();
 			output.close();
+		} catch (IOException e) {
+			log.fatal("Can't open output stream for storing processed data.");
+			log.debug(e);
+			log.info("Exiting.");
+			System.exit(0);
 		} finally {
-			output.close();
+			closeOutputStream(output);
 		}
 	}
 
@@ -41,15 +49,19 @@ public class FileManager {
 		return (file.exists() && file.length() > 0);
 	}
 
-	public static void writeToConfigFile(File file, String data, String encoding)
-			throws IOException {
+	public static void writeToConfigFile(File file, String data, String encoding) {
 		OutputStream output = null;
 		try {
-			output = FileUtils.openOutputStream(file, true);
+			output = FileUtils.openOutputStream(file, false);
 			writeConfig(data, output, Charset.forName(encoding));
 			output.close();
+		} catch (IOException e) {
+			log.fatal("Can't open output stream for storing configuration file.");
+			log.debug(e);
+			log.info("Exiting.");
+			System.exit(0);
 		} finally {
-			output.close();
+			closeOutputStream(output);
 		}
 	}
 
@@ -84,6 +96,17 @@ public class FileManager {
 			Charset encoding) throws IOException {
 		if (config != null) {
 			output.write(config.getBytes(encoding));
+		}
+	}
+
+	private static void closeOutputStream(OutputStream output) {
+		if (output != null) {
+			try {
+				output.close();
+			} catch (IOException e) {
+				log.error("Can't close output stream.");
+				log.debug(e);
+			}
 		}
 	}
 

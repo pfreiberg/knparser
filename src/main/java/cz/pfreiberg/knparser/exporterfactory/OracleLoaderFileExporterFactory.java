@@ -154,13 +154,13 @@ import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpVyuzitiJedOracleLoaderF
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpVyuzitiPozOracleLoaderFileExporter;
 import cz.pfreiberg.knparser.exporter.oracleloaderfile.ZpmzOracleLoaderFileExporter;
 
-public class OracleLoaderExporterFactory implements ExporterFactory {
+public class OracleLoaderFileExporterFactory implements ExporterFactory {
 
 	private final String characterSet;
 	private final String prefix;
 	private final String output;
 
-	public OracleLoaderExporterFactory(int zmeny, String characterSet,
+	public OracleLoaderFileExporterFactory(int zmeny, String characterSet,
 			String output) {
 		this.characterSet = characterSet;
 		this.prefix = (zmeny == 1) ? "TMP_" : "";

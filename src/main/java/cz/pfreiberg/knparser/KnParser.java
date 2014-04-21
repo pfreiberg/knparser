@@ -45,7 +45,7 @@ public class KnParser {
 				break;
 			case "--output":
 				i++;
-				configuration.setOutput(args[i] + "\\");
+				configuration.setOutput(args[i]);
 				break;
 			default:
 				log.fatal("Invalid command line switch.");
@@ -54,20 +54,23 @@ public class KnParser {
 		}
 
 		try {
-			loadPropertyFile(toDatabase, configuration);
-			if (toDatabase && !configuration.isConnectionParametersValid()) {
-				log.fatal("KnParser.properties must contain url, username and password to be able to connect to database.");
+
+			if (configuration.getInput() == null) {
+				log.fatal("Input is not specified.");
 				return;
+			}
+
+			loadPropertyFile(toDatabase, configuration);
+			if (toDatabase) {
+				if (!configuration.isConnectionParametersValid()) {
+					log.fatal("KnParser.properties must contain url, username and password to be able to connect to database.");
+					return;
+				}
 			} else {
 				if (configuration.getOutput() == null) {
 					log.fatal("Output is not specified.");
 					return;
 				}
-			}
-
-			if (configuration.getInput() == null) {
-				log.fatal("Input file was NOT found.");
-				return;
 			}
 		} catch (NullPointerException e) {
 			log.fatal("KnParser.properties was not found.");
@@ -121,8 +124,8 @@ public class KnParser {
 		List<String> files = getFilenames(input);
 
 		for (int i = 0; i < files.size(); i++) {
-			configuration = new Configuration(input + "\\" + files.get(i),
-					output + files.get(i) + "\\",
+			configuration = new Configuration(input + File.separator + files.get(i),
+					output + files.get(i) + File.separator,
 					configuration.getNumberOfRows(),
 					configuration.getConnection());
 			parseFile(configuration);

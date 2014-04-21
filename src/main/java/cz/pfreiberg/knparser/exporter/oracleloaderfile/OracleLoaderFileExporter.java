@@ -1,7 +1,6 @@
 package cz.pfreiberg.knparser.exporter.oracleloaderfile;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import cz.pfreiberg.knparser.util.FileManager;
 import cz.pfreiberg.knparser.util.VfkUtil;
 
 /**
- * Abstraktní třída poskytující logiku pro práci s loader file
+ * Abstraktní třída poskytující logiku pro práci s SQL*Loaderem.
  *
  * @author Petr Freiberg (freibergp@gmail.com)
  *
@@ -27,7 +26,6 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 
 	public OracleLoaderFileExporter(List<?> list, String characterSet,
 			String output, String prefix, String name) {
-
 		output = output + prefix + name;
 		if (Parser.isFirstBatch()) {
 			String controlFileTemplate = getTemplateOfControlFile(characterSet,
@@ -55,7 +53,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 		try {
 			FileManager.writeToConfigFile(new File(name + ".CFG"), controlFile,
 					VfkUtil.convertEncoding(characterSet));
-		} catch (IOException | ParserException e) {
+		} catch (ParserException e) {
 			log.error("Error during writing to " + name + ".CFG");
 			log.debug("Stack trace:", e);
 		}
@@ -69,7 +67,7 @@ public abstract class OracleLoaderFileExporter implements Exporter,
 			File file = new File(name + ".TXT");
 			FileManager.writeToDataFile(file,
 					VfkUtil.convertEncoding(characterSet), lines);
-		} catch (IOException | ParserException e) {
+		} catch (ParserException e) {
 			log.error("Error during writing to " + name + ".TXT");
 			log.debug("Stack trace:", e);
 		}
