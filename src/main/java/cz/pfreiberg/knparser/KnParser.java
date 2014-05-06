@@ -41,11 +41,20 @@ public class KnParser {
 				break;
 			case "--input":
 				i++;
-				configuration.setInput(args[i]);
+				if (i < args.length) {
+					configuration.setInput(args[i]);
+				}
 				break;
 			case "--output":
 				i++;
-				configuration.setOutput(args[i]);
+				if (i < args.length) {
+					String path = args[i];
+					String lastChar = args[i].substring(args[i].length() - 1);
+					if (!lastChar.equals(File.separator)) {
+						path = args[i] + File.separator;
+					}
+					configuration.setOutput(path);
+				}
 				break;
 			default:
 				log.fatal("Invalid command line switch.");
@@ -124,8 +133,8 @@ public class KnParser {
 		List<String> files = getFilenames(input);
 
 		for (int i = 0; i < files.size(); i++) {
-			configuration = new Configuration(input + File.separator + files.get(i),
-					output + files.get(i) + File.separator,
+			configuration = new Configuration(input + File.separator
+					+ files.get(i), output + files.get(i) + File.separator,
 					configuration.getNumberOfRows(),
 					configuration.getConnection());
 			parseFile(configuration);
@@ -134,6 +143,12 @@ public class KnParser {
 
 	private static List<String> getFilenames(String path) {
 		File folder = new File(path);
+
+		if (!folder.isDirectory()) {
+			log.fatal("Input must be a directory.");
+			System.exit(0);
+		}
+
 		File[] listOfFiles = folder.listFiles();
 		List<String> output = new ArrayList<String>();
 
@@ -152,7 +167,7 @@ public class KnParser {
 			Controller controller = new Controller(configuration);
 			controller.run();
 		} catch (FileNotFoundException e) {
-			log.fatal("Input file was NOT found.");
+			log.fatal("Input file was not found, or can't be read.");
 			log.debug("Stack trace:", e);
 		} catch (ParserException e) {
 			log.fatal(e.getMessage());

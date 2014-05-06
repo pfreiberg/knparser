@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
 
 import cz.pfreiberg.knparser.parser.ParserException;
 
@@ -19,9 +22,11 @@ import cz.pfreiberg.knparser.parser.ParserException;
  */
 public class VfkUtil {
 
+	private static final Logger log = Logger.getLogger(VfkUtil.class);
+
 	/**
-	 * SimpleDateFormat není vláknově bezpečný (jedna instance pro
-	 * producenta, druhá pro konzumenta).
+	 * SimpleDateFormat není vláknově bezpečný (jedna instance pro producenta,
+	 * druhá pro konzumenta).
 	 */
 	private final static SimpleDateFormat formatParse = new SimpleDateFormat(
 			"dd.MM.yyyy HH:mm:ss");
@@ -54,72 +59,83 @@ public class VfkUtil {
 		} else if (EncodingCzech.iso88592.equalsVfk(encoding)) {
 			return EncodingCzech.iso88592.getEncoding();
 		}
-		throw new ParserException("Unsupported encoding.");
+		throw new ParserException("Unsupported encoding defined in HCODEPAGE.");
 	}
 
 	public static Integer getInteger(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i)) {
 			return null;
+		}
 
 		try {
 			return Integer.valueOf(value[i]);
 		} catch (NumberFormatException e) {
+			logConvertError(value, i, "Integer");
 			return null;
 		}
 	}
 
 	public static Long getLong(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i)) {
 			return null;
+		}
 
 		try {
 			return Long.valueOf(value[i]);
 		} catch (NumberFormatException e) {
+			logConvertError(value, i, "Long");
 			return null;
 		}
 	}
 
 	public static BigInteger getBigInteger(String[] value, int i) {
-		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i)) {
 			return null;
+		}
 
 		try {
 			return new BigInteger(value[i]);
 		} catch (NumberFormatException e) {
+			logConvertError(value, i, "BigInteger");
 			return null;
 		}
 	}
 
 	public static Double getDouble(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i)) {
 			return null;
+		}
 
 		try {
 			return Double.valueOf(value[i]);
 		} catch (NumberFormatException e) {
+			logConvertError(value, i, "Double");
 			return null;
 		}
 	}
 
 	public static Date getDate(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i)) {
 			return null;
+		}
 
 		try {
 			return formatParse.parse(value[i]);
 		} catch (ParseException e) {
+			logConvertError(value, i, "Date");
 			return null;
 		}
 	}
 
 	public static String getString(String[] value, int i) {
 
-		if (isOutOfIndex(value, i) || isEmptyValue(value, i))
+		if (isOutOfIndex(value, i) || isEmptyValue(value, i)) {
 			return null;
+		}
 
 		return value[i];
 	}
@@ -166,6 +182,11 @@ public class VfkUtil {
 
 	public static String getTerminator() {
 		return "|" + Character.toString((char) 21);
+	}
+
+	private static void logConvertError(String[] value, int i, String type) {
+		log.warn("Failed to get " + type + " at position " + i + ".");
+		log.warn(Arrays.toString(value));
 	}
 
 	private static boolean isOutOfIndex(String[] value, int i) {

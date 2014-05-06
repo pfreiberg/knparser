@@ -32,10 +32,10 @@ public class JinePravVztahyParser {
 		jinePravVztahy.setDatumVzniku2(VfkUtil.getDate(tokens, i++));
 		jinePravVztahy.setRizeniIdVzniku2(VfkUtil.getLong(tokens, i++));
 		jinePravVztahy.setOpsubId2Pro(VfkUtil.getLong(tokens, i++));
+		jinePravVztahy.setPsIdPro(VfkUtil.getLong(tokens, i++));
 		jinePravVztahy.setPopis2(VfkUtil.getString(tokens, i++));
 		jinePravVztahy.setPoradiCas(VfkUtil.getDate(tokens, i++));
 		jinePravVztahy.setPoradiText(VfkUtil.getString(tokens, i++));
-		jinePravVztahy.setPsIdPro(VfkUtil.getLong(tokens, i++));
 		jinePravVztahy.setDatumUkonceni(VfkUtil.getDate(tokens, i++));
 
 		return jinePravVztahy;

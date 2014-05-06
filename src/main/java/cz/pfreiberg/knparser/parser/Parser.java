@@ -33,7 +33,7 @@ public class Parser {
 
 	private static final Logger log = Logger.getLogger(Parser.class);
 
-	private static boolean firstBatch = true;
+	private static boolean firstBatch;
 
 	private int escapedRows;
 
@@ -43,7 +43,7 @@ public class Parser {
 	private long actualRow;
 
 	private String encoding;
-	private int zmeny;
+	private int zmeny = 0;
 
 	private final long ROWS_PER_BATCH;
 	private final char QUOTE_CHARACTER = '"';
@@ -54,6 +54,7 @@ public class Parser {
 	public Parser(Configuration configuration) throws FileNotFoundException,
 			ParserException, IOException {
 		File file = new File(configuration.getInput());
+		firstBatch = true;
 		ROWS_PER_BATCH = configuration.getNumberOfRows();
 		encoding = VfkUtil.getEncoding(file);
 		br = new BufferedReader(new InputStreamReader(
@@ -202,7 +203,7 @@ public class Parser {
 			} else {
 				String temp = new String(buffer);
 				buffer = null;
-				throw new ParserException("Row " + actualRow
+				throw new ParserException("Row " + (actualRow + 1)
 						+ " is NOT valid! Skipping.\n" + temp + "\n");
 			}
 		}
@@ -278,7 +279,18 @@ public class Parser {
 
 		methodMap.put("&HZMENY", new Action() {
 			public void run(String[] tokens) {
-				zmeny = Integer.parseInt(tokens[0]);
+				try {
+					zmeny = Integer.parseInt(tokens[0]);
+				} catch (NumberFormatException e) {
+					log.fatal("HZMENY has NOT number value.");
+					log.info("Exiting.");
+					System.exit(0);
+				}
+				if (!(zmeny == 0 || zmeny == 1)) {
+					log.fatal("HZMENY has incorrect value.");
+					log.info("Exiting.");
+					System.exit(0);
+				}
 			};
 		});
 

@@ -96,7 +96,7 @@ public class Controller {
 			try {
 				do {
 					vfk = parseBatch();
-					log.info("Batch buffer size: " + (queue.size() + 1));
+					log.debug("Batch buffer size ~ " + (queue.size() + 1));
 					queue.put(vfk);
 				} while (!vfk.isLastBatch());
 			} catch (IOException e) {
