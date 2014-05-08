@@ -17,7 +17,7 @@ import cz.pfreiberg.knparser.parser.ParserException;
  * během.
  * 
  * @author Petr Freiberg (freibergp@gmail.com)
- * @version 2.0 (6.3.2014)
+ * @version 2.0.1 (8.5.2014)
  * 
  */
 public class KnParser {
