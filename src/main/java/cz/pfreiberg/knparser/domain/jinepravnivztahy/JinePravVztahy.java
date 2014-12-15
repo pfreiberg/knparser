@@ -36,11 +36,12 @@ public class JinePravVztahy implements DomainWithDate {
 	private Date datumVzniku2;
 	private Long rizeniIdVzniku2;
 	private Long opsubId2Pro;
+	private Long psIdPro;
 	private String popis2;
 	private Date poradiCas;
 	private String poradiText;
-	private Long psIdPro;
 	private Date datumUkonceni;
+	private Long psIdK;
 
 	public Long getId() {
 		return id;
@@ -226,6 +227,14 @@ public class JinePravVztahy implements DomainWithDate {
 		this.opsubId2Pro = opsubId2Pro;
 	}
 
+	public Long getPsIdPro() {
+		return psIdPro;
+	}
+
+	public void setPsIdPro(Long psIdPro) {
+		this.psIdPro = psIdPro;
+	}
+
 	public String getPopis2() {
 		return popis2;
 	}
@@ -250,20 +259,20 @@ public class JinePravVztahy implements DomainWithDate {
 		this.poradiText = poradiText;
 	}
 
-	public Long getPsIdPro() {
-		return psIdPro;
-	}
-
-	public void setPsIdPro(Long psIdPro) {
-		this.psIdPro = psIdPro;
-	}
-
 	public Date getDatumUkonceni() {
 		return datumUkonceni;
 	}
 
 	public void setDatumUkonceni(Date datumUkonceni) {
 		this.datumUkonceni = datumUkonceni;
+	}
+
+	public Long getPsIdK() {
+		return psIdK;
+	}
+
+	public void setPsIdK(Long psIdK) {
+		this.psIdK = psIdK;
 	}
 
 	@Override
@@ -290,12 +299,13 @@ public class JinePravVztahy implements DomainWithDate {
 				+ VfkUtil.formatValue(hjpvId) + ","
 				+ VfkUtil.formatValue(datumVzniku2) + ","
 				+ VfkUtil.formatValue(rizeniIdVzniku2) + ","
-				+ VfkUtil.formatValue(opsubId2Pro)  + ","
-				+ VfkUtil.formatValue(popis2)  + ","
-				+ VfkUtil.formatValue(poradiCas)  + ","
-				+ VfkUtil.formatValue(poradiText) + ","
+				+ VfkUtil.formatValue(opsubId2Pro) + ","
 				+ VfkUtil.formatValue(psIdPro) + ","
-				+ VfkUtil.formatValue(datumUkonceni)
+				+ VfkUtil.formatValue(popis2) + ","
+				+ VfkUtil.formatValue(poradiCas) + ","
+				+ VfkUtil.formatValue(poradiText) + ","
+				+ VfkUtil.formatValue(datumUkonceni) + ","
+				+ VfkUtil.formatValue(psIdK)
 				+ VfkUtil.getTerminator();
 	}
 

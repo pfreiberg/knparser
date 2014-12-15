@@ -21,6 +21,8 @@ public class KatastrUzemiOracleLoaderFileExporter extends OracleLoaderFileExport
 		controlFile = super.insertVarcharColumn(controlFile, "NAZEV", "48");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_OD");
 		controlFile = super.insertDateColumn(controlFile, "PLATNOST_DO");
+		controlFile = super.insertColumn(controlFile, "CISLO");
+		controlFile = super.insertColumn(controlFile, "CISELNA_RADA");
 		controlFile = super.end(controlFile);
 
 		return controlFile;

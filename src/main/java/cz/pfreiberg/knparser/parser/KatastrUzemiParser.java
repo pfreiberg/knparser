@@ -14,6 +14,8 @@ public class KatastrUzemiParser {
 		katastrUzemi.setNazev(VfkUtil.getString(tokens, i++));
 		katastrUzemi.setPlatnostOd(VfkUtil.getDate(tokens, i++));
 		katastrUzemi.setPlatnostDo(VfkUtil.getDate(tokens, i++));
+		katastrUzemi.setCislo(VfkUtil.getInteger(tokens, i++));
+		katastrUzemi.setCiselnaRada(VfkUtil.getInteger(tokens, i++));
 
 		return katastrUzemi;
 	}

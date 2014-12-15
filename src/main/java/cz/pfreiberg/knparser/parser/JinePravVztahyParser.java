@@ -37,6 +37,7 @@ public class JinePravVztahyParser {
 		jinePravVztahy.setPoradiCas(VfkUtil.getDate(tokens, i++));
 		jinePravVztahy.setPoradiText(VfkUtil.getString(tokens, i++));
 		jinePravVztahy.setDatumUkonceni(VfkUtil.getDate(tokens, i++));
+		jinePravVztahy.setPsIdK(VfkUtil.getLong(tokens, i++));
 
 		return jinePravVztahy;
 	}

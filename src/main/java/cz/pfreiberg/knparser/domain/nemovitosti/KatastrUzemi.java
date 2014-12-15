@@ -17,6 +17,8 @@ public class KatastrUzemi {
 	private String nazev;
 	private Date platnostOd;
 	private Date platnostDo;
+	private Integer cislo;
+	private Integer ciselnaRada;
 
 	public Integer getKod() {
 		return kod;
@@ -58,13 +60,31 @@ public class KatastrUzemi {
 		this.platnostDo = platnostDo;
 	}
 
+	public Integer getCislo() {
+		return cislo;
+	}
+
+	public void setCislo(Integer cislo) {
+		this.cislo = cislo;
+	}
+
+	public Integer getCiselnaRada() {
+		return ciselnaRada;
+	}
+
+	public void setCiselnaRada(Integer ciselnaRada) {
+		this.ciselnaRada = ciselnaRada;
+	}
+
 	@Override
 	public String toString() {
 		return "" + VfkUtil.formatValue(kod) + ","
 				+ VfkUtil.formatValue(obceKod) + ","
 				+ VfkUtil.formatValue(nazev) + ","
 				+ VfkUtil.formatValue(platnostOd) + ","
-				+ VfkUtil.formatValue(platnostDo) 
+				+ VfkUtil.formatValue(platnostDo) + ","
+				+ VfkUtil.formatValue(cislo) + ","
+				+ VfkUtil.formatValue(ciselnaRada)
 				+ VfkUtil.getTerminator();
 	}
 
